@@ -3,9 +3,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Main extends CI_Controller
 {
-        public function __construct()
-        {
-        }
+        public function index()
+	{
+		$data = array(
+			'page_content' => $this->load->view('dashboard', '', TRUE),
+			'title_name' => "Team4"
+		);
+		$this->load->view('main', $data);
+	}
 
         public function getTable()
         {

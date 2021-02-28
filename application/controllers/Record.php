@@ -1,8 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-require_once('Home.php');
+require_once('Main.php');
 
-class Record extends Home
+class Record extends Main
 {
 
 	public function __construct()
