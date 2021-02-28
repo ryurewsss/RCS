@@ -22,6 +22,8 @@
   <!-- Custom styles for this page -->
   <link href="<?= base_url() ?>assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 
 <body id="page-top">
@@ -62,6 +64,21 @@
         <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/record" aria-expanded="false">
           <i class="fas fa-clipboard-list" style='font-size:20px'></i>
           <span>บันทึกรายรับ-รายจ่าย</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/search" aria-expanded="false">
+          <i class="fas fa-clipboard-list" style='font-size:20px'></i>
+          <span>ค้นหา</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/report" aria-expanded="false">
+          <i class="fas fa-clipboard-list" style='font-size:20px'></i>
+          <span>รายงาน</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/record" aria-expanded="false">
+          <i class="fas fa-clipboard-list" style='font-size:20px'></i>
+          <span>ข้อมูลส่วนตัว</span></a>
       </li>
 
       <!-- Divider -->

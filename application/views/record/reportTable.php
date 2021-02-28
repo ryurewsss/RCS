@@ -2,18 +2,16 @@
 <!-- Open Table -->
 <div class="card">
     <div class="card-header bg-dark">
-        <a class="m-b-0 text-white" style="font-size: 17px;">ข้อมูลรายละเอียดการเงิน</a>
+        <a class="m-b-0 text-white" style="font-size: 17px;">รายงาน</a>
     </div>
     <div class="card-body">
-        <div id="commerceTable"></div>
+        <div id="reportTable"></div>
     </div>
 </div>
 <!-- End Table -->
 
-
 <script>
     getList();
-    
     function getList() {
         var data = {};
         data['tableName'] = 'ie_transaction';
@@ -22,7 +20,7 @@
         data['order'] = '';
         data['arrayJoinTable'] = '';
         data['groupBy'] = '';
-        data['pathView'] = 'record/tableRecord';
+        data['pathView'] = 'record/tableRepot';
 
         $.ajax({
             method: "POST",
