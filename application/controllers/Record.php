@@ -33,7 +33,8 @@ class Record extends Main
 	// __________________ Start Record __________________
 	public function report()
 	{
-		$data['page_content'] = $this->load->view('record/reportTable', '', TRUE);
+		$yearData['select_box'] = $this->ieModel->getAll('ie_transaction', 'SUBSTRING(transaction_date, 1, 4) as year','transaction_delete_status = "active" ','','','year'); //select_box Year
+		$data['page_content'] = $this->load->view('record/reportTable', $yearData, TRUE);
 		$this->load->view('main', $data);
 	}
 	// ___________________ End Record ____________________

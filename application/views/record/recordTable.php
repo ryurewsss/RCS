@@ -135,7 +135,7 @@
         }
     })
 
-    function getList() {
+    function getList() { 
         var data = {};
         data['tableName'] = 'ie_transaction';
         data['colName'] = '';

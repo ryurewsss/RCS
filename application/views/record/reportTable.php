@@ -5,6 +5,18 @@
         <a class="m-b-0 text-white" style="font-size: 17px;">รายงาน</a>
     </div>
     <div class="card-body">
+        <label style="text-indent: 20px; word-spacing: 10px;">ปี <a style="color: red; word-spacing: 1px;"> *</a> : </label>&ensp;
+        <select style="width: 250px;" class="form-control valYear" >
+            <option value="" disabled selected>กรุณาเลือกปี</option>
+            <?php
+            if (isset($select_box)) {
+                $checkYear = "";
+                foreach ($select_box as $key => $val) {
+                    echo "<option value=" . $val->year . ">" . $val->year . "</option>";
+                }
+            }
+            ?>
+        </select><br><br>
         <div id="reportTable"></div>
     </div>
 </div>
@@ -12,22 +24,59 @@
 
 <script>
     getList();
-    function getList() {
+    $(".valYear").change(function() {
+        var data = $(this).val();
+        console.log(data)
+        if (!data) {
+            var where = '';
+        } else {
+            var where = "transaction_delete_status = 'active' AND transaction_date LIKE '"+ data + "%'";
+        }
+        getList(where);
+    });
+
+    /*
+     * getList
+     * get table from db to show
+     * @input -
+     * @output table 
+     * @author Kittichai Anansinchai
+     * @Update Date 01-03-2564
+     */
+    function getList(where='') {
+        var column = "CASE "+
+                    "WHEN SUBSTRING(transaction_date, 6, 2) = '01' THEN 'มกราคม' "+
+                    "WHEN SUBSTRING(transaction_date, 6, 2) = '02' THEN 'กุมภาพันธ์' "+
+                    "WHEN SUBSTRING(transaction_date, 6, 2) = '03' THEN 'มีนาคม' "+
+                    "WHEN SUBSTRING(transaction_date, 6, 2) = '04' THEN 'เมษายน' "+
+                    "WHEN SUBSTRING(transaction_date, 6, 2) = '05' THEN 'พฤษภาคม' "+
+                    "WHEN SUBSTRING(transaction_date, 6, 2) = '06' THEN 'มิถุนายน' "+
+                    "WHEN SUBSTRING(transaction_date, 6, 2) = '07' THEN 'กรกฎาคม' "+
+                    "WHEN SUBSTRING(transaction_date, 6, 2) = '08' THEN 'สิงหาคม' "+
+                    "WHEN SUBSTRING(transaction_date, 6, 2) = '09' THEN 'กันยายน' "+
+                    "WHEN SUBSTRING(transaction_date, 6, 2) = '10' THEN 'ตุลาคม' "+
+                    "WHEN SUBSTRING(transaction_date, 6, 2) = '11' THEN 'พฤศจิกายน' "+
+                    "WHEN SUBSTRING(transaction_date, 6, 2) = '12' THEN 'ธันวาคม' "+
+                "ELSE 'ข้อมูลเดือนผิด' "+
+                "END AS Mounth , COUNT(SUBSTRING(transaction_date, 6, 2)) AS AmountList, "+ 
+            "SUM(CASE WHEN transaction_cash < 0 THEN transaction_cash END) AS expends, "+
+            "SUM(CASE WHEN transaction_cash > 0 THEN transaction_cash END) AS incomes"; 
+                  
         var data = {};
         data['tableName'] = 'ie_transaction';
-        data['colName'] = '';
-        data['where'] = '';
-        data['order'] = '';
+        data['colName'] = column;
+        data['where'] = where;
+        data['order'] = 'SUBSTRING(transaction_date, 6, 2)';
         data['arrayJoinTable'] = '';
-        data['groupBy'] = '';
-        data['pathView'] = 'record/tableRepot';
+        data['groupBy'] = 'Mounth';
+        data['pathView'] = 'record/tableReport';
 
         $.ajax({
             method: "POST",
             url: "getTable",
             data: data,
         }).done(function(returnedData) {
-            $('#commerceTable').html(returnedData.html);
+            $('#reportTable').html(returnedData.html);
             $('.mytb').dataTable({
                 "oLanguage": {
                     "sLengthMenu": "แสดง _MENU_ ข้อมูล",
