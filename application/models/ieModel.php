@@ -28,4 +28,30 @@ class ieModel extends CI_Model
             return FALSE;
         }
     }
+
+    public function add($table, $arrayData)
+    {
+        $this->db->insert($table, $arrayData);
+        if ($this->db->affected_rows() > 0) {
+            return $this->db->insert_id();
+        } else {
+            return false;
+        }
+    }
+
+    public function update($table, $arrayWhere, $arrayData)
+    {
+        $this->db->where($arrayWhere);
+        $this->db->update($table, $arrayData);
+    }
+
+    public function softDelete($table, $columnIdName, $rowId, $deleteStatus, $updateColumn)
+    {
+        $data = array(
+            $deleteStatus => 2,
+            $updateColumn => $_SESSION['id']
+        );
+        $this->db->where($columnIdName, $rowId);
+        $this->db->update($table, $data);
+    }
 }
