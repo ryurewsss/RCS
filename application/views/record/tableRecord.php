@@ -26,7 +26,7 @@
                             <td><?= $val->transaction_description ?></td>
                             <?php if ($val->transaction_cash < 0) { ?>
                                 <td>-</td>
-                                <td><?= $val->transaction_cash ?></td>
+                                <td><?= $val->transaction_cash*-1 ?></td>
                             <?php } else { ?>
                                 <td><?= $val->transaction_cash ?></td>
                                 <td>-</td>
