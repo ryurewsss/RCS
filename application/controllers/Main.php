@@ -32,7 +32,9 @@ class Main extends CI_Controller
                 $arrayData = $getData['arrayData'];
                 if ($tableData['tableName'] == 'scs_stock_transaction_detail' || $tableData['tableName'] == 'scs_bill_detail' || $tableData['tableName'] == 'scs_product_loss_detail') {
                 } else {
-                        $arrayData[$getData['createColumn']] = $_SESSION['id'];
+                        // $arrayData[$getData['createColumn']] = $_SESSION['id'];
+
+                        $arrayData[$getData['createColumn']] = 1;
                 }
                 $addedId = $this->ieModel->add($tableData['tableName'], $arrayData);
                 $this->output->set_content_type('application/json')->set_output(json_encode($addedId));
