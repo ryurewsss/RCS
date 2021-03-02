@@ -32,8 +32,8 @@
                     <tr class="text-center">
                         <td hidden><?= $i++ ?></td>
                         <td><?= $val->Mounth ?></td>
-                        <td><?= $val->expends ?></td>
-                        <td><?= $val->incomes ?></td>
+                        <td><?= $val->incomes  ?></td>
+                        <td><?= $val->expends?></td>
                     </tr>
                 <?php } ?>
             <?php } ?>
