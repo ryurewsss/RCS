@@ -1,5 +1,6 @@
 <div class="row">
-    <table id="myTable" class="table table-bordered table-striped">
+<div class="col-md-12">
+    <table id="myTable" class="table table-bordered table-striped mytb">
         <thead>
             <tr class="text-center">
                 <th>วันที่</th>
@@ -18,20 +19,20 @@
                 $i = 1 //กำหนดลำดับ 
             ?>
                 <?php foreach ($table as $key => $val) { 
-                    $sum = $sum+$val->transaction_cash;
+                    $sum += $val->transaction_cash;
                     ?>
                     <?php if ($val->transaction_delete_status == "active") { ?>
                         <tr class="text-center">
                             <td><?= substr($val->transaction_date, 0, 10) ?></td>
-                            <td><?= $val->transaction_description ?></td>
+                            <td class="text-left"><?= $val->transaction_description ?></td>
                             <?php if ($val->transaction_cash < 0) { ?>
                                 <td>-</td>
-                                <td><?= $val->transaction_cash*-1 ?></td>
+                                <td><?= number_format($val->transaction_cash*-1, 2) ?></td>
                             <?php } else { ?>
-                                <td><?= $val->transaction_cash ?></td>
+                                <td><?= number_format($val->transaction_cash, 2) ?></td>
                                 <td>-</td>
                             <?php } ?>
-                            <td><?= $sum ?></td>
+                            <td><?= number_format($sum, 2) ?></td>
                             <td>
                                 <button type="button" class="btn waves-effect waves-light btn-warning btn-sm btn_edit"><i class="fas fa-pencil-alt"></i></button>
                                 <button type="button" class="btn waves-effect waves-light btn-danger btn-sm btn_delete"><i class="fas fa-trash-alt"></i></button>
@@ -44,4 +45,5 @@
             <!-- End loop -->
         </tbody>
     </table>
+    </div>
 </div>
