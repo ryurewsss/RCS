@@ -76,7 +76,7 @@
           <span>รายงาน</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/record" aria-expanded="false">
+        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/profile" aria-expanded="false">
           <i class="fas fa-clipboard-list" style='font-size:20px'></i>
           <span>ข้อมูลส่วนตัว</span></a>
       </li>
