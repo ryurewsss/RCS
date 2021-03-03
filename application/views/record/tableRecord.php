@@ -15,12 +15,14 @@
             <!-- Start loop show db to table -->
             <?php
             $sum = 0;
+            $sum_income = 0;
+            $sum_expense = 0;
             if (isset($table) && $table) {
                 $i = 1 //กำหนดลำดับ 
             ?>
-            <?php foreach ($table as $key => $valSum) {
-                $sum += $valSum->transaction_cash;
-            } ?>
+                <?php foreach ($table as $key => $valSum) {
+                    $sum += $valSum->transaction_cash;
+                } ?>
                 <?php foreach ($table as $key => $val) { ?>
 
                     <?php if ($val->transaction_delete_status == "active") { ?>
@@ -28,10 +30,12 @@
                             <td hidden>i++</td>
                             <td><?= substr($val->transaction_date, 0, 10) ?></td>
                             <td class="text-left"><?= $val->transaction_description ?></td>
-                            <?php if ($val->transaction_cash < 0) { ?>
+                            <?php if ($val->transaction_cash < 0) {
+                                $sum_expense += $val->transaction_cash; ?>
                                 <td>-</td>
                                 <td><?= number_format($val->transaction_cash * -1, 2) ?></td>
-                            <?php } else { ?>
+                            <?php } else {
+                                $sum_income += $val->transaction_cash; ?>
                                 <td><?= number_format($val->transaction_cash, 2) ?></td>
                                 <td>-</td>
                             <?php } ?>
@@ -41,7 +45,7 @@
                                 <button type="button" class="btn waves-effect waves-light btn-danger btn-sm btn_delete" id="<?= $val->transaction_id  ?>"><i class="fas fa-trash-alt"></i></button>
                             </td>
                         </tr>
-                        <?php $sum = $sum - ($val->transaction_cash);?>
+                        <?php $sum = $sum - ($val->transaction_cash); ?>
                     <?php } ?>
                 <?php } ?>
             <?php } ?>
@@ -54,6 +58,16 @@
 
 <script>
     var x = false;
+    var sum_income = <?php echo json_encode($sum_income) ?>;
+    var sum_expense = <?php echo json_encode($sum_expense) ?>;
+    sum_expense *= -1;
+    var sum = sum_income - sum_expense;
+
+    
+    $('#sum_income').html(numberWithCommas(parseFloat(sum_income).toFixed(2)) + " บาท");
+    $('#sum_expense').html(numberWithCommas(parseFloat(sum_expense).toFixed(2)) + " บาท");
+    $('#sum').html(numberWithCommas(parseFloat(sum).toFixed(2)) + " บาท");
+
     $('#editData').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget)
         var description = button.data('description');
@@ -111,4 +125,7 @@
 
     })
     //delete row of that 
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 </script>

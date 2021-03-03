@@ -13,6 +13,45 @@
             <button style="margin-left: 83%;" type="button" class="btn btn-success d-none d-lg-block m-l-15" data-toggle="modal" data-toggle="modal" data-target="#modalAddmoney" id="addMoney" data-whatever="@mdo">รายรับ (+)</button> &ensp;
             <button type="button" class="btn btn-warning d-none d-lg-block m-l-5" data-toggle="modal" data-toggle="modal" data-target="#modalOutmoney" id="outMoney" data-whatever="@fat">รายจ่าย (-)</button>
         </div><br> -->
+
+        <div class="row">
+            <!-- card -->
+            <div class="col-xl-4 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                            <div class="col mr-2">
+                                <div class="h3 font-weight-bold text-secondary text-uppercase mb-1">รวมรายรับ</div>
+                                <div class="h3 mb-0 font-weight-bold text-gray-800" id="sum_income"></div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <!-- card -->
+            <!-- card -->
+            <div class="col-xl-4 col-md-6 mb-4">
+                <div class="card border-left-danger shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="col mr-2">
+                            <div class="h3 font-weight-bold text-secondary text-uppercase mb-1">รวมรายจ่าย</div>
+                            <div class="h3 mb-0 font-weight-bold text-gray-800" id="sum_expense"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- card -->
+            <!-- card -->
+            <div class="col-xl-4 col-md-6 mb-4">
+                <div class="card border-left-secondary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="col mr-2">
+                            <div class="h3 font-weight-bold text-secondary text-uppercase mb-1">ยอดเงินคงเหลือ</div>
+                            <div class="h3 mb-0 font-weight-bold text-gray-800" id="sum"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- card -->
+        </div>
         <div id="commerceTable"></div>
     </div>
 </div>
@@ -111,7 +150,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" id="transaction_id">    
+                    <input type="hidden" id="transaction_id">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
                     <button type="submit" class="btn waves-effect waves-light btn-success">บันทึก</button>
                 </div>
