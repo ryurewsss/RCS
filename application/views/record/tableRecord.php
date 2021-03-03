@@ -1,4 +1,3 @@
-
 <div class="col-md-12">
     <table id="myTable" class="table table-bordered table-striped mytb">
         <thead>
@@ -34,13 +33,14 @@
                             <?php } ?>
                             <td><?= number_format($sum, 2) ?></td>
                             <td>
-                                <button type="button" class="btn waves-effect waves-light btn-warning btn-sm btn_edit" data-toggle="modal" data-toggle="modal" data-target="#editData"><i class="fas fa-pencil-alt"></i></button>
+                                <button type="button" class="btn waves-effect waves-light btn-warning btn-sm btn_edit" data-toggle="modal" data-toggle="modal" data-target="#editData" data-cash="<?= $val->transaction_cash ?>" data-description="<?= $val->transaction_description ?>" data-id="<?= $val->transaction_id ?>"><i class="fas fa-pencil-alt"></i></button>
                                 <button type="button" class="btn waves-effect waves-light btn-danger btn-sm btn_delete" id="<?= $val->transaction_id  ?>"><i class="fas fa-trash-alt"></i></button>
                             </td>
                         </tr>
                     <?php } ?>
                 <?php } ?>
             <?php } ?>
+
             <!-- End loop -->
         </tbody>
     </table>
@@ -48,6 +48,26 @@
 
 
 <script>
+    var x = 0;
+    $('#editData').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget)
+        var description = button.data('description');
+        var cash = button.data('cash');
+        var id = button.data('id');
+
+        if (cash < 0) {
+            cash = cash * (-1);
+            x++;
+        }
+
+        var modal = $(this);
+
+        modal.find('#transaction_description[name="EditData[]"]').val(description);
+        modal.find('#transaction_cash[name="EditData[]"]').val(cash);
+        modal.find('#transaction_id').val(id);
+
+    })
+
     $('.btn_delete').click(function() {
         var id = $(this).attr("id");
         var data = {};

@@ -1,7 +1,7 @@
 <!-- Open Table -->
 <div class="card">
     <div class="card-header bg-dark">
-        
+
         <div class="row">
             <a class="m-b-0 text-white" style="font-size: 23px; margin-left: 10px;">ข้อมูลรายละเอียดการเงิน</a>
             <button style="margin-left: 64%;" type="button" class="btn btn-success d-none d-lg-block m-l-15" data-toggle="modal" data-toggle="modal" data-target="#modalAddmoney" id="addMoney" data-whatever="@mdo">รายรับ (+)</button> &ensp;
@@ -83,7 +83,7 @@
             </form>
         </div>
     </div>
-</div>    
+</div>
 <!-- End Modal Outmoney -->
 
 <!-- Start EditData -->
@@ -96,23 +96,24 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="incomeForm">
+            <form id="EditcomeForm">
                 <div class="modal-body">
                     <div class="row">
                         <label style="text-indent: 20px; margin-right: 40px;">รายละเอียด</label> : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="commerceInputData[]" id="transaction_description" autocomplete="off" placeholder="รายละเอียดรายรับ">
+                        <input style="width: 250px;" type="text" class="form-control" name="EditData[]" id="transaction_description" autocomplete="off">
                         <label style="margin-left: 11px;"> บาท </label><br><br>
                     </div>
                     <div class="row">
                         <label style="text-indent: 20px; word-spacing: 10px;">จำนวนเงิน <a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
-                        <input style="width: 250px;" type="number" min="0" step="0.01" oninput="validity.valid||(value='');" class="form-control" name="commerceInputData[]" id="transaction_cash" autocomplete="off" placeholder="0.00">
+                        <input style="width: 250px;" type="number" min="0" step="0.01" oninput="validity.valid||(value='');" class="form-control" name="EditData[]" id="transaction_cash" autocomplete="off" placeholder="0.00">
                         <label style="margin-left: 11px;"> บาท </label>
-                        <label style="margin-left: 20px;" id="incomeError" class="text-danger"></label>
+                        <label style="margin-left: 20px;" id="EditcomeError" class="text-danger"></label>
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <input type="hidden" id="transaction_id">    
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-                    <button type="submit" class="btn waves-effect waves-light btn-success" id="submitAdd">บันทึก</button>
+                    <button type="submit" class="btn waves-effect waves-light btn-success">บันทึก</button>
                 </div>
             </form>
         </div>
@@ -127,14 +128,62 @@
     //     $('#incomeForm')[0].reset();
     //     $('#incomeError').html('');
     // });
+    $('#EditcomeForm').on('submit', function(event) {
+        event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
+        var formData = {};
+        $("[name^='EditData']").each(function() {
+            formData[this.id] = this.value;
+        });
+
+        if (formData['transaction_cash'] == '' || parseFloat(formData['transaction_cash']) <= 0) {
+            $('#EditcomeError').html('กรุณากรอกจำนวนเงินให้ถูกต้อง');
+        } else {
+            $('#EditcomeError').html('');
+
+            var formData = {};
+            $("[name^='EditData']").each(function() {
+                formData[this.id] = this.value;
+            });
+
+            if (x == 1) {
+                formData['transaction_cash'] = formData['transaction_cash'] * -1;
+                x = 0;
+            }
+
+
+            var tableData = {};
+            tableData['tableName'] = 'ie_transaction';
+
+
+            var whereData = {
+
+                'transaction_id': document.getElementById("transaction_id").value
+
+            };
+
+            $.ajax({
+                method: "POST",
+                url: "editData",
+                data: {
+                    table: tableData,
+                    arrayData: formData,
+                    arrayWhere: whereData
+                },
+            }).done(function(returnData) {
+                getList();
+                $('#editData form')[0].reset();
+                $('#editData').modal('hide'); //ปิด modal
+            });
+        }
+    })
 
     $('#incomeForm').on('submit', function(event) {
         event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
         var formData = {};
-            $("[name^='commerceInputData']").each(function() {
-                formData[this.id] = this.value;
-            });
-            
+        $("[name^='commerceInputData']").each(function() {
+            formData[this.id] = this.value;
+        });
+
         if (formData['transaction_cash'] == '' || parseFloat(formData['transaction_cash']) <= 0) {
             $('#incomeError').html('กรุณากรอกจำนวนเงินให้ถูกต้อง');
             // $.toast({
@@ -186,12 +235,11 @@
 
     $('#outcomeForm').on('submit', function(event) {
         event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
-        console.log('checksss')
         var formData = {};
-            $("[name^='commerceOutputData']").each(function() {
-                formData[this.id] = this.value;
-            });
-            
+        $("[name^='commerceOutputData']").each(function() {
+            formData[this.id] = this.value;
+        });
+
         if (formData['transaction_cash'] == '' || parseFloat(formData['transaction_cash']) <= 0) {
             $('#outcomeError').html('กรุณากรอกจำนวนเงินให้ถูกต้อง');
             // $.toast({
@@ -210,8 +258,8 @@
             $("[name^='commerceOutputData']").each(function() {
                 formData[this.id] = this.value;
             });
-            
-            formData['transaction_cash'] = formData['transaction_cash'] *-1 ;
+
+            formData['transaction_cash'] = formData['transaction_cash'] * -1;
 
             var tableData = {};
             tableData['tableName'] = 'ie_transaction';
@@ -243,7 +291,7 @@
         }
     })
 
-    function getList() { 
+    function getList() {
         var data = {};
         data['tableName'] = 'ie_transaction';
         data['colName'] = '';

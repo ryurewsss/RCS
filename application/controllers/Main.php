@@ -47,7 +47,7 @@ class Main extends CI_Controller
                 $tableData = $getData['table'];
 
                 $arrayData = $getData['arrayData'];
-                $arrayData[$getData['updateColumn']] = $_SESSION['id'];
+ 
 
                 $arrayWhere = $getData['arrayWhere'];
 
