@@ -20,8 +20,8 @@
                 <div class="card border-left-success shadow h-100 py-2">
                     <div class="card-body">
                             <div class="col mr-2">
-                                <div class="h3 font-weight-bold text-secondary text-uppercase mb-1">รวมรายรับ</div>
-                                <div class="h3 mb-0 font-weight-bold text-gray-800" id="sum_income"></div>
+                                <div class="h3 font-weight-bold text-gray-900 text-uppercase mb-1">รวมรายรับ</div>
+                                <div class="h3 mb-0 font-weight-bold text-gray-900" align = "right" id="sum_income"></div>
                             </div>
                     </div>
                 </div>
@@ -32,8 +32,8 @@
                 <div class="card border-left-danger shadow h-100 py-2">
                     <div class="card-body">
                         <div class="col mr-2">
-                            <div class="h3 font-weight-bold text-secondary text-uppercase mb-1">รวมรายจ่าย</div>
-                            <div class="h3 mb-0 font-weight-bold text-gray-800" id="sum_expense"></div>
+                            <div class="h3 font-weight-bold text-gray-900 text-uppercase mb-1">รวมรายจ่าย</div>
+                            <div class="h3 mb-0 font-weight-bold text-gray-900" align = "right"  id="sum_expense"></div>
                         </div>
                     </div>
                 </div>
@@ -44,8 +44,8 @@
                 <div class="card border-left-secondary shadow h-100 py-2">
                     <div class="card-body">
                         <div class="col mr-2">
-                            <div class="h3 font-weight-bold text-secondary text-uppercase mb-1">ยอดเงินคงเหลือ</div>
-                            <div class="h3 mb-0 font-weight-bold text-gray-800" id="sum"></div>
+                            <div class="h3 font-weight-bold text-gray-900 text-uppercase mb-1">ยอดเงินคงเหลือ</div>
+                            <div class="h3 mb-0 font-weight-bold text-gray-900" align = "right"  id="sum"></div>
                         </div>
                     </div>
                 </div>
