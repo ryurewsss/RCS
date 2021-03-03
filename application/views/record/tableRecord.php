@@ -48,7 +48,7 @@
 
 
 <script>
-    var x = 0;
+    var x = false;
     $('#editData').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget)
         var description = button.data('description');
@@ -57,7 +57,7 @@
 
         if (cash < 0) {
             cash = cash * (-1);
-            x++;
+            x = true;
         }
 
         var modal = $(this);

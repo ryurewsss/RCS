@@ -145,9 +145,10 @@
                 formData[this.id] = this.value;
             });
 
-            if (x == 1) {
+            if (x) {
                 formData['transaction_cash'] = formData['transaction_cash'] * -1;
-                x = 0;
+                x = false;
+                console.log(x);
             }
 
 
