@@ -31,8 +31,16 @@
                     <tr class="text-center">
                         <td hidden><?= $i++ ?></td>
                         <td><?= $val->Mounth ?></td>
-                        <td><?= $val->incomes  ?></td>
-                        <td><?= $val->expends?></td>
+                        <?php if ($val->incomes == '') { ?>
+                            <td>-</td>
+                        <?php } else { ?>
+                            <td><?= $val->incomes ?></td>
+                        <?php } ?>
+                        <?php if ($val->expends == '') { ?>
+                            <td>-</td>
+                        <?php } else { ?>
+                            <td><?= $val->expends * -1 ?></td>
+                        <?php } ?>
                     </tr>
                 <?php } ?>
             <?php } ?>

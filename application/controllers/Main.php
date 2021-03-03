@@ -30,7 +30,7 @@ class Main extends CI_Controller
 
                 $tableData = $getData['table'];
                 $arrayData = $getData['arrayData'];
-                if ($tableData['tableName'] == 'scs_stock_transaction_detail' || $tableData['tableName'] == 'scs_bill_detail' || $tableData['tableName'] == 'scs_product_loss_detail') {
+                if ($tableData['tableName'] == 'ie_user') {
                 } else {
                         // $arrayData[$getData['createColumn']] = $_SESSION['id'];
 

@@ -1,331 +1,428 @@
-<html>
-<style>
-    @import url('https://fonts.googleapis.com/css?family=Poppins');
-
-    /* BASIC */
-
-    html {
-        background-color: #56baed;
-    }
-
+<!-- <style>
     body {
-        font-family: "Poppins", sans-serif;
-        height: 100vh;
+        padding-top: 90px;
     }
 
-    a {
-        color: #92badd;
-        display: inline-block;
-        text-decoration: none;
-        font-weight: 400;
+    .panel-login {
+        border-color: #ccc;
+        -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
     }
 
-    h2 {
-        text-align: center;
-        font-size: 16px;
-        font-weight: 600;
-        text-transform: uppercase;
-        display: inline-block;
-        margin: 40px 8px 10px 8px;
-        color: #cccccc;
-    }
-
-
-
-    /* STRUCTURE */
-
-    .wrapper {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: center;
-        width: 100%;
-        min-height: 100%;
-        padding: 20px;
-    }
-
-    #formContent {
-        -webkit-border-radius: 10px 10px 10px 10px;
-        border-radius: 10px 10px 10px 10px;
-        background: #fff;
-        padding: 30px;
-        width: 90%;
-        max-width: 450px;
-        position: relative;
-        padding: 0px;
-        -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
-        box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
-        text-align: center;
-    }
-
-    #formFooter {
-        background-color: #f6f6f6;
-        border-top: 1px solid #dce8f1;
-        padding: 25px;
-        text-align: center;
-        -webkit-border-radius: 0 0 10px 10px;
-        border-radius: 0 0 10px 10px;
-    }
-
-
-
-    /* TABS */
-
-    h2.inactive {
-        color: #cccccc;
-    }
-
-    h2.active {
-        color: #0d0d0d;
-        border-bottom: 2px solid #5fbae9;
-    }
-
-
-
-    /* FORM TYPOGRAPHY*/
-
-    input[type=button],
-    input[type=submit],
-    input[type=reset] {
-        background-color: #56baed;
-        border: none;
-        color: white;
-        padding: 15px 80px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        text-transform: uppercase;
-        font-size: 13px;
-        -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
-        box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
-        -webkit-border-radius: 5px 5px 5px 5px;
-        border-radius: 5px 5px 5px 5px;
-        margin: 5px 20px 40px 20px;
-        -webkit-transition: all 0.3s ease-in-out;
-        -moz-transition: all 0.3s ease-in-out;
-        -ms-transition: all 0.3s ease-in-out;
-        -o-transition: all 0.3s ease-in-out;
-        transition: all 0.3s ease-in-out;
-    }
-
-    input[type=button]:hover,
-    input[type=submit]:hover,
-    input[type=reset]:hover {
-        background-color: #39ace7;
-    }
-
-    input[type=button]:active,
-    input[type=submit]:active,
-    input[type=reset]:active {
-        -moz-transform: scale(0.95);
-        -webkit-transform: scale(0.95);
-        -o-transform: scale(0.95);
-        -ms-transform: scale(0.95);
-        transform: scale(0.95);
-    }
-
-    input[type=text] {
-        background-color: #f6f6f6;
-        border: none;
-        color: #0d0d0d;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 5px;
-        width: 85%;
-        border: 2px solid #f6f6f6;
-        -webkit-transition: all 0.5s ease-in-out;
-        -moz-transition: all 0.5s ease-in-out;
-        -ms-transition: all 0.5s ease-in-out;
-        -o-transition: all 0.5s ease-in-out;
-        transition: all 0.5s ease-in-out;
-        -webkit-border-radius: 5px 5px 5px 5px;
-        border-radius: 5px 5px 5px 5px;
-    }
-
-    input[type=text]:focus {
+    .panel-login>.panel-heading {
+        color: #00415d;
         background-color: #fff;
-        border-bottom: 2px solid #5fbae9;
+        border-color: #fff;
+        text-align: center;
     }
 
-    input[type=text]:placeholder {
-        color: #cccccc;
+    .panel-login>.panel-heading a {
+        text-decoration: none;
+        color: #666;
+        font-weight: bold;
+        font-size: 15px;
+        -webkit-transition: all 0.1s linear;
+        -moz-transition: all 0.1s linear;
+        transition: all 0.1s linear;
     }
 
-
-
-    /* ANIMATIONS */
-
-    /* Simple CSS3 Fade-in-down Animation */
-    .fadeInDown {
-        -webkit-animation-name: fadeInDown;
-        animation-name: fadeInDown;
-        -webkit-animation-duration: 1s;
-        animation-duration: 1s;
-        -webkit-animation-fill-mode: both;
-        animation-fill-mode: both;
+    .panel-login>.panel-heading a.active {
+        color: #029f5b;
+        font-size: 18px;
     }
 
-    @-webkit-keyframes fadeInDown {
-        0% {
-            opacity: 0;
-            -webkit-transform: translate3d(0, -100%, 0);
-            transform: translate3d(0, -100%, 0);
-        }
-
-        100% {
-            opacity: 1;
-            -webkit-transform: none;
-            transform: none;
-        }
+    .panel-login>.panel-heading hr {
+        margin-top: 10px;
+        margin-bottom: 0px;
+        clear: both;
+        border: 0;
+        height: 1px;
+        background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+        background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+        background-image: -ms-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+        background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
     }
 
-    @keyframes fadeInDown {
-        0% {
-            opacity: 0;
-            -webkit-transform: translate3d(0, -100%, 0);
-            transform: translate3d(0, -100%, 0);
-        }
-
-        100% {
-            opacity: 1;
-            -webkit-transform: none;
-            transform: none;
-        }
+    .panel-login input[type="text"],
+    .panel-login input[type="email"],
+    .panel-login input[type="password"] {
+        height: 45px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+        -webkit-transition: all 0.1s linear;
+        -moz-transition: all 0.1s linear;
+        transition: all 0.1s linear;
     }
 
-    /* Simple CSS3 Fade-in Animation */
-    @-webkit-keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-
-        to {
-            opacity: 1;
-        }
-    }
-
-    @-moz-keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-
-        to {
-            opacity: 1;
-        }
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-
-        to {
-            opacity: 1;
-        }
-    }
-
-    .fadeIn {
-        opacity: 0;
-        -webkit-animation: fadeIn ease-in 1;
-        -moz-animation: fadeIn ease-in 1;
-        animation: fadeIn ease-in 1;
-
-        -webkit-animation-fill-mode: forwards;
-        -moz-animation-fill-mode: forwards;
-        animation-fill-mode: forwards;
-
-        -webkit-animation-duration: 1s;
-        -moz-animation-duration: 1s;
-        animation-duration: 1s;
-    }
-
-    .fadeIn.first {
-        -webkit-animation-delay: 0.4s;
-        -moz-animation-delay: 0.4s;
-        animation-delay: 0.4s;
-    }
-
-    .fadeIn.second {
-        -webkit-animation-delay: 0.6s;
-        -moz-animation-delay: 0.6s;
-        animation-delay: 0.6s;
-    }
-
-    .fadeIn.third {
-        -webkit-animation-delay: 0.8s;
-        -moz-animation-delay: 0.8s;
-        animation-delay: 0.8s;
-    }
-
-    .fadeIn.fourth {
-        -webkit-animation-delay: 1s;
-        -moz-animation-delay: 1s;
-        animation-delay: 1s;
-    }
-
-    /* Simple CSS3 Fade-in Animation */
-    .underlineHover:after {
-        display: block;
-        left: 0;
-        bottom: -10px;
-        width: 0;
-        height: 2px;
-        background-color: #56baed;
-        content: "";
-        transition: width 0.2s;
-    }
-
-    .underlineHover:hover {
-        color: #0d0d0d;
-    }
-
-    .underlineHover:hover:after {
-        width: 100%;
-    }
-
-
-
-    /* OTHERS */
-
-    *:focus {
+    .panel-login input:hover,
+    .panel-login input:focus {
         outline: none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        border-color: #ccc;
     }
 
-    #icon {
-        width: 60%;
+    .btn-login {
+        background-color: #59B2E0;
+        outline: none;
+        color: #fff;
+        font-size: 14px;
+        height: auto;
+        font-weight: normal;
+        padding: 14px 0;
+        text-transform: uppercase;
+        border-color: #59B2E6;
     }
 
-    * {
-        box-sizing: border-box;
+    .btn-login:hover,
+    .btn-login:focus {
+        color: #fff;
+        background-color: #53A3CD;
+        border-color: #53A3CD;
     }
-</style>
-</head>
-<html>
-<div class="wrapper fadeInDown">
-    <div id="formContent">
-        <!-- Tabs Titles -->
-        <h2 class="active"> Sign In </h2>
-        <h2 class="inactive underlineHover">Sign Up </h2>
 
-        <!-- Icon -->
-        <div class="fadeIn first">
-            <img src="assets/img/stocks.png" id="icon" alt="User Icon" />
+    .forgot-password {
+        text-decoration: underline;
+        color: #888;
+    }
+
+    .forgot-password:hover,
+    .forgot-password:focus {
+        text-decoration: underline;
+        color: #666;
+    }
+
+    .btn-register {
+        background-color: #1CB94E;
+        outline: none;
+        color: #fff;
+        font-size: 14px;
+        height: auto;
+        font-weight: normal;
+        padding: 14px 0;
+        text-transform: uppercase;
+        border-color: #1CB94A;
+    }
+
+    .btn-register:hover,
+    .btn-register:focus {
+        color: #fff;
+        background-color: #1CA347;
+        border-color: #1CA347;
+    }
+</style>-->
+<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<title>Login</title>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-login">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a href="#" class="active" id="login-form-link">Login</a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a href="#" id="register-form-link">Register</a>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+
+                            <form id="login-form" method="post" role="form" style="display: block;">
+                                <div class="form-group">
+                                    <input type="text" name="login[]" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="login[]" id="password" tabindex="2" class="form-control" placeholder="Password">
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-sm-offset-3">
+                                            <input type="submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form id="register-form" method="post" role="form" style="display: none;">
+                                <div class="form-group">
+                                    <input type="text" name="register[]" id="user_username" tabindex="1" class="form-control" placeholder="Username" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="register[]" id="user_name" tabindex="1" class="form-control" placeholder="กรอกชื่อ" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="register[]" id="user_password" tabindex="2" class="form-control" placeholder="Password">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-sm-offset-3">
+                                            <label style="margin-left: 20px;" id="regisError" class="text-danger"></label>
+                                            <input type="submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+</div>
 
-        <!-- Login Form -->
-        <form>
-            <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-            <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-            <input type="submit" class="fadeIn fourth" value="Log In">
-        </form>
 
-        <!-- Remind Passowrd -->
-        <div id="formFooter">
-            <a class="underlineHover" href="#">Forgot Password?</a>
+
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Custom fonts for this template-->
+    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+
+                                    <form id="login-form" method="post" role="form" style="display: block;">
+                                        <div class="form-group">
+                                            <input type="text" name="login[]" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="login[]" id="password" tabindex="2" class="form-control" placeholder="Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-6 col-sm-offset-3">
+                                                    <input type="submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <form id="register-form" method="post" role="form" style="display: none;">
+                                        <div class="form-group">
+                                            <input type="text" name="register[]" id="user_username" tabindex="1" class="form-control" placeholder="Username" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" name="register[]" id="user_name" tabindex="1" class="form-control" placeholder="กรอกชื่อ" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="register[]" id="user_password" tabindex="2" class="form-control" placeholder="Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-6 col-sm-offset-3">
+                                                    <label style="margin-left: 20px;" id="regisError" class="text-danger"></label>
+                                                    <input type="submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a href="#" class="active" id="login-form-link">Login</a>
+                                        &ensp;
+                                        &ensp;
+                                        &ensp;
+                                        <a href="#" id="register-form-link">Register</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
 
     </div>
-</div>
+
+</html>
+<!-- Bootstrap core JavaScript-->
+<script src="assets/vendor/jquery/jquery.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="assets/js/sb-admin-2.min.js"></script>
+
+<!-- Page level plugins -->
+<script src="assets/vendor/chart.js/Chart.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="assets/js/demo/chart-area-demo.js"></script>
+<script src="assets/js/demo/chart-pie-demo.js"></script>
+
+<!-- Page level plugins -->
+<script src="assets/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="assets/js/demo/datatables-demo.js"></script>
+</body>
+
+</html>
+
+<script>
+    $('#login-form-link').click(function(e) {
+        $("#login-form").delay(100).fadeIn(100);
+        $("#register-form").fadeOut(100);
+        $('#register-form-link').removeClass('active');
+        $(this).addClass('active');
+        e.preventDefault();
+    });
+    $('#register-form-link').click(function(e) {
+        $("#register-form").delay(100).fadeIn(100);
+        $("#login-form").fadeOut(100);
+        $('#login-form-link').removeClass('active');
+        $(this).addClass('active');
+        e.preventDefault();
+    });
+
+    $('#register-form').on('submit', function(event) {
+        event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
+        var formData = {};
+        $("[name^='register']").each(function() {
+            formData[this.id] = this.value;
+        });
+        var pass = true;
+        if (formData['user_username'] == '' || formData['user_password'] == '' || $('#confirm-password').val() == '') {
+            $('#regisError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');
+            pass = false;
+        }
+        if (formData['user_password'] != $('#confirm-password').val()) {
+            $('#regisError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');
+            pass = false;
+        }
+
+        var tableData = {};
+        tableData['tableName'] = 'ie_user';
+        tableData['user_username'] = formData['user_username'];
+        tableData['columnName'] = 'user_username';
+        $.ajax({
+            method: "POST",
+            url: "Login/checkUsername",
+            data: tableData,
+        }).done(function(returnData) {
+            console.log(returnData)
+            //return false = pass
+            if (!returnData && pass) {
+                $.ajax({
+                    method: "POST",
+                    url: "Login/addData",
+                    data: {
+                        table: tableData,
+                        arrayData: formData
+                    },
+                }).done(function(returnData) {
+                    alert('สมัครสำเร็จ')
+
+                    $("#login-form").delay(100).fadeIn(100);
+                    $("#register-form").fadeOut(100);
+                    $('#register-form-link').removeClass('active');
+                    $(this).addClass('active');
+                    e.preventDefault();
+                });
+            }
+        });
+
+
+
+
+    })
+
+    $('#login-form').on('submit', function(event) {
+        event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
+        var formData = {};
+        $("[name^='login']").each(function() {
+            formData[this.id] = this.value;
+        });
+        var pass = true;
+        if (formData['user_username'] == '' || formData['user_password'] == '') {
+            $('#loginError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');
+            pass = false;
+        }
+        if (formData['user_password'] != $('#confirm-password').val()) {
+            $('#loginError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');
+            pass = false;
+        }
+        if (pass) {
+            $.ajax({
+                method: "POST",
+                url: "Login/login",
+                data: {
+                    table: tableData,
+                    arrayData: formData
+                },
+            }).done(function(returnData) {
+
+            });
+        }
+    })
+</script>
