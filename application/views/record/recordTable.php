@@ -86,6 +86,39 @@
 </div>    
 <!-- End Modal Outmoney -->
 
+<!-- Start EditData -->
+<div class="modal fade" id="editData" tabindex="-1" role="dialog" aria-labelledby="search" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">แก้ไขข้อมูล</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="incomeForm">
+                <div class="modal-body">
+                    <div class="row">
+                        <label style="text-indent: 20px; margin-right: 40px;">รายละเอียด</label> : &ensp;
+                        <input style="width: 250px;" type="text" class="form-control" name="commerceInputData[]" id="transaction_description" autocomplete="off" placeholder="รายละเอียดรายรับ">
+                        <label style="margin-left: 11px;"> บาท </label><br><br>
+                    </div>
+                    <div class="row">
+                        <label style="text-indent: 20px; word-spacing: 10px;">จำนวนเงิน <a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
+                        <input style="width: 250px;" type="number" min="0" step="0.01" oninput="validity.valid||(value='');" class="form-control" name="commerceInputData[]" id="transaction_cash" autocomplete="off" placeholder="0.00">
+                        <label style="margin-left: 11px;"> บาท </label>
+                        <label style="margin-left: 20px;" id="incomeError" class="text-danger"></label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                    <button type="submit" class="btn waves-effect waves-light btn-success" id="submitAdd">บันทึก</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End EditData -->
 <script>
     getList();
 
