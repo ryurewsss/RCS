@@ -4,19 +4,21 @@
     <div class="card-header bg-dark">
         <a class="m-b-0 text-white" style="font-size: 17px;">รายงาน</a>
     </div>
-    <div class="card-body">
-        <label style="text-indent: 20px; word-spacing: 10px;">ปี <a style="color: red; word-spacing: 1px;"> *</a> : </label>&ensp;
-        <select style="width: 250px;" class="form-control valYear" >
-            <option value="" disabled selected>กรุณาเลือกปี</option>
-            <?php
-            if (isset($select_box)) {
-                $checkYear = "";
-                foreach ($select_box as $key => $val) {
-                    echo "<option value=" . $val->year . ">" . $val->year . "</option>";
+    <div class="col-md-12"><br>
+        <div class="row">
+            <label style="text-indent: 27px; word-spacing: 10px;">ปี <a style="color: red; word-spacing: 1px;"> *</a> : </label>&ensp;
+            <select style="width: 150px;  height: 33px; font-size:14px;" class="form-control valYear" >
+                <option value="" disabled selected>กรุณาเลือกปี</option>
+                <?php
+                if (isset($select_box)) {
+                    $checkYear = "";
+                    foreach ($select_box as $key => $val) {
+                        echo "<option value=" . $val->year . ">" . $val->year . "</option>";
+                    }
                 }
-            }
-            ?>
-        </select><br><br>
+                ?>
+            </select>
+        </div><br>
         <div id="reportTable"></div>
     </div>
 </div>

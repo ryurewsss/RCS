@@ -6,8 +6,7 @@
   * @author Somrutai Ketsada					    
   * @Create Date 01-03-2564
   -->
-
-  <div class="row">
+<div class="col-md-12">
     <table class="table table-bordered table-striped mytb">
         <thead>
             <tr class="text-center">
@@ -41,6 +40,7 @@
         </tbody>
     </table>
 </div>
+
 
 <script>
 </script>

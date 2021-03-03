@@ -1,4 +1,4 @@
-<div class="row">
+<div class="col-md-12">
     <table id="myTable" class="table table-bordered table-striped mytb">
         <thead>
             <tr class="text-center">
@@ -21,7 +21,7 @@
                     <?php if ($val->transaction_delete_status == "active") { ?>
                         <tr class="text-center">
                             <td><?= substr($val->transaction_date, 0, 10) ?></td>
-                            <td><?= $val->transaction_description ?></td>
+                            <td class="text-left"><?= $val->transaction_description ?></td>
                             <?php if ($val->transaction_cash < 0) { ?>
                                 <td>-</td>
                                 <td class="text-danger font-weight-bold"><?= $val->transaction_cash * -1 ?></td>
@@ -37,6 +37,7 @@
         </tbody>
     </table>
 </div>
+
 
 <script>
     var sum = <?php echo json_encode($sum) ?>;

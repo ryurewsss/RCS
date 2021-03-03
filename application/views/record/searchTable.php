@@ -8,22 +8,20 @@
 </head>
 <div class="card">
     <div class="card-header bg-dark">
-        <a class="m-b-0 text-white" style="font-size: 17px;">ค้นหารายรับ - รายจ่าย</a>
+        <a class="m-b-0 text-white" style="font-size: 23px;">ค้นหารายรับ - รายจ่าย</a>
     </div>
     <div class="card-body">
-        <form class="form-material">
-            <label style="text-indent: 20px; word-spacing: 10px;">วันที่ <a style="color: red;  margin-right: 37px;"> *</a> </label>: &ensp;
-            <input style="width: 300px; " type='text' class="form-control buttonClass" placeholder="กรุณาเลือกวัน" /><br><br>
-            <div id="searchTable"></div>
-            <div class="form-group">
-                <div>
-                    <a style="font-size:14pt; margin-right: 30px">ยอดเงินรวม &ensp; 
-                    <input style="width: 110px; height:35px; font-size:12pt; text-align:right;" type="text" class="form-control" id ="sum" placeholder="0.00" disabled>
-                    &ensp; บาท
-                    </a>
-                </div>
-            </div>
-        </form>
+        <div class="row">
+            <label style="font-size:13pt; text-indent: 25px; word-spacing: 10px;">วันที่ <a style="color: red;  margin-right: 37px;"> *</a> </label>: &ensp;
+            <input style="width: 250px; height: 33px; font-size:12pt;" type='text' class="form-control buttonClass" placeholder="กรุณาเลือกวัน" />
+        </div><br>
+
+        <div id="searchTable"></div><br>
+        <div class="row">
+            <label style="font-size:15pt; margin-left: 68%; margin-right: 15px">ยอดเงินรวม </label>
+            <input style="width: 200px; height: 33px; font-size:13pt; text-align:right;" type="text" class="form-control" id ="sum" placeholder="0.00" disabled>
+            <label style="font-size:15pt; margin-left: 5px">&ensp; บาท </label>
+        </div>
     </div>
 </div>
 
