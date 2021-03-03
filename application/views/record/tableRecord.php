@@ -2,6 +2,7 @@
     <table id="myTable" class="table table-bordered table-striped mytb">
         <thead>
             <tr class="text-center">
+                <th hidden>ลำดับ</th>
                 <th>วันที่</th>
                 <th class="text-left">รายละเอียด</th>
                 <th>รายรับ</th>
@@ -17,11 +18,14 @@
             if (isset($table) && $table) {
                 $i = 1 //กำหนดลำดับ 
             ?>
-                <?php foreach ($table as $key => $val) {
-                    $sum += $val->transaction_cash;
-                ?>
+            <?php foreach ($table as $key => $valSum) {
+                $sum += $valSum->transaction_cash;
+            } ?>
+                <?php foreach ($table as $key => $val) { ?>
+
                     <?php if ($val->transaction_delete_status == "active") { ?>
                         <tr class="text-center">
+                            <td hidden>i++</td>
                             <td><?= substr($val->transaction_date, 0, 10) ?></td>
                             <td class="text-left"><?= $val->transaction_description ?></td>
                             <?php if ($val->transaction_cash < 0) { ?>
@@ -37,6 +41,7 @@
                                 <button type="button" class="btn waves-effect waves-light btn-danger btn-sm btn_delete" id="<?= $val->transaction_id  ?>"><i class="fas fa-trash-alt"></i></button>
                             </td>
                         </tr>
+                        <?php $sum = $sum - ($val->transaction_cash);?>
                     <?php } ?>
                 <?php } ?>
             <?php } ?>
