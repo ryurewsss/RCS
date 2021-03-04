@@ -46,14 +46,14 @@
                             <label style="text-indent: 20px;  margin-right: 18px;">ชื่อ-นามสกุล </label>: &ensp;
                             <input type="text" style="width: 250px;" class="form-control" name="profileData[]" id="user_name" value="<?= $val->user_name ?>" placeholder="ชื่อ - นามสกุล">
                         </div><br>
-                        <div class="row">
+                        <div class="form-group">
                             <div class="col-lg-2 col-md-4">
-                                <button style="margin-left: 10px;" id="editPassword" type="button" class="btn btn-block btn-secondary" data-id='<?= $val->user_id ?>' data-toggle='modal' data-target='#changePasswordmodal' data-username='<?= $val->user_username ?>' ?>เปลี่ยนรหัสผ่าน</button>
+                                <button id="editPassword" type="button" class="btn btn-block btn-secondary" data-id='<?= $val->user_id ?>' data-toggle='modal' data-target='#changePasswordmodal' data-username='<?= $val->user_username ?>' ?>เปลี่ยนรหัสผ่าน</button>
                             </div>
                         </div>
                         <div class="row">
                             <p hidden id="base_url"><?php echo base_url(); ?></p>
-                            <button style="margin-left: 20px;" class="btn btn-success" type="button" id="submitEditProfile" data-id=''>บันทึก</button>&ensp;
+                            <button style="margin-left: 22px;" class="btn btn-success" type="button" id="submitEditProfile" data-id=''>บันทึก</button>&ensp;
                             <button class="btn btn-danger btn_delete" type="button" id="<?= $val->user_id ?>" data-id='' onclick="return confirm('Are you sure you want to delete this item?');">ลบบัญชีผู้ใช้</button>
                         </div>
                     <?php } ?>
