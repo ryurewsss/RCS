@@ -76,9 +76,9 @@ class Record extends Main
 		$tableData = $getData['table'];
 		$arrayData = $getData['arrayData'];
 		$arrayData['user_password'] = password_hash($arrayData['user_password'], PASSWORD_DEFAULT);
-		$arrayWhere = $getData['arrayWhere'];
+		$arrayWhere['user_id'] = $_SESSION['id'];
 
-		$this->scsModel->update($tableData['tableName'], $arrayWhere, $arrayData);
+		$this->ieModel->update($tableData['tableName'], $arrayWhere, $arrayData);
 	}
 	// __________________ End changePassword __________________
 }

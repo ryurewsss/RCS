@@ -14,7 +14,7 @@
   * @Create Date 17-10-2563
   -->
 
-  <!-- <style>
+<!-- <style>
     .bottomright {
         position: absolute;
         bottom: 5px;
@@ -73,7 +73,7 @@
         tableData['columnIdName'] = 'user_id';
 
         var whereData = {
-            'user_id': document.getElementById("user_id").value
+            'user_id': <?php echo $_SESSION['id'] ?>
         };
         var formData = {};
 
@@ -88,8 +88,7 @@
             data: {
                 table: tableData,
                 arrayData: formData,
-                arrayWhere: whereData,
-                updateColumn: ''
+                arrayWhere: whereData
             },
         }).done(function(returnData) {
             getList();
@@ -103,7 +102,7 @@
             //     stack: 3
             // });
         });
-    }) 
+    })
     //submit edit form
 
     $('.btn_delete').click(function() {

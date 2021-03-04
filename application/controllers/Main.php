@@ -52,14 +52,10 @@ class Main extends CI_Controller
 
                 $arrayData = $getData['arrayData'];
 
-
                 $arrayWhere = $getData['arrayWhere'];
 
-                if (isset($getData["updateOnTable"])) {
-                        $this->ieModel->updateOnTable($tableData['tableName'], $arrayWhere, $arrayData); //ไว้แก้ข้อมูลแบบ amount = amount - 1
-                } else {
-                        $this->ieModel->update($tableData['tableName'], $arrayWhere, $arrayData);
-                }
+                $this->ieModel->update($tableData['tableName'], $arrayWhere, $arrayData);
+
                 echo json_encode($this->db->last_query());
         }
 

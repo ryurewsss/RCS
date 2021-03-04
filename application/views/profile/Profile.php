@@ -1,4 +1,3 @@
-
 <!-- Open Table -->
 <div class="card">
     <div class="card-header bg-dark">
@@ -35,9 +34,6 @@
                     <div class="row">
                         <label style="text-indent: 20px; margin-right: 10px;">รหัสผ่านใหม่อีกครั้ง<a style="color: red; word-spacing: 1px;"> *</a></label> : &ensp;
                         <input type="password" style="width: 350px;" class="form-control newPass" name="changePassword[]" id="user_password" placeholder="ยืนยันรหัสผ่านใหม่อีกครั้ง">
-                    </div><br>
-                    <div class="row">
-                        <input style="width: 200px;" type="hidden" class="form-control" name="changePassword[]" id="user_id" placeholder="id">
                     </div>
                     <div class="modal-footer">
                         <label id="passwordEditError" class="text-danger"></label>
@@ -59,11 +55,11 @@
 
     getList();
 
-    
+
     $('#editForm').on('submit', function(event) {
         event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
         var pass = true;
-
+        // console.log(555)
         passwordNew = $("#passwordNew").val();
         passwordNewAgain = $("#user_password").val();
         if (passwordNew != passwordNewAgain || (passwordNew == '' && passwordNewAgain == '')) {
@@ -81,56 +77,57 @@
             method: "POST",
             data: passwordData
         }).done(function(returnData) {
-            console.log(returnData)
+            console.log(returnData + "ASD")
             if (!returnData) {
                 $('#passwordEditError').html('<span class="text-danger"> กรุณาใส่รหัสผ่านให้ถูกต้อง</span>');
             }
             if (pass && returnData) {
-                Swal.fire({
-                    title: 'ยืนยันการเปลี่ยนรหัส',
-                    text: "ต้องการเปลี่ยนรหัสหรือไม่",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'ยืนยัน',
-                    cancelButtonText: 'ยกเลิก'
-                }).then((result) => {
-                    var tableData = {};
-                    tableData['tableName'] = 'ie_user';
-                    tableData['columnIdName'] = 'user_id';
+                // Swal.fire({
+                //     title: 'ยืนยันการเปลี่ยนรหัส',
+                //     text: "ต้องการเปลี่ยนรหัสหรือไม่",
+                //     type: 'warning',
+                //     showCancelButton: true,
+                //     confirmButtonColor: '#3085d6',
+                //     cancelButtonColor: '#d33',
+                //     confirmButtonText: 'ยืนยัน',
+                //     cancelButtonText: 'ยกเลิก'
+                // }).then((result) => {
+                var tableData = {};
+                tableData['tableName'] = 'ie_user';
+                tableData['columnIdName'] = 'user_id';
 
-                    var whereData = {};
-                    whereData['user_id'] = $('#user_id').val();
-                    var formData = {};
+                var formData = {};
 
-                    $("[name^='changePassword']").each(function() {
-                        formData[this.id] = this.value;
-                    });
+                $("[name^='changePassword']").each(function() {
+                    formData[this.id] = this.value;
+                });
 
-                    console.log(formData);
-                    $.ajax({
-                        method: "POST",
-                        url: "changePassword",
-                        data: {
-                            table: tableData,
-                            arrayData: formData,
-                            arrayWhere: whereData
-                        },
-                    }).done(function(returnData) {
-                        getList();
-                        // $.toast({
-                        //     heading: 'สำเร็จ',
-                        //     text: 'แก้ไขข้อมูลสำเร็จ',
-                        //     position: 'top-right',
-                        //     loaderBg: '#ff6849',
-                        //     icon: 'success',
-                        //     hideAfter: 3500,
-                        //     stack: 3
-                        // });
-                        $('#changePasswordmodal').modal('hide'); //ปิด modal
-                    });
-                })
+                console.log(formData);
+                $.ajax({
+                    method: "POST",
+                    url: "changePassword",
+                    data: {
+                        table: tableData,
+                        arrayData: formData
+                    },
+                }).done(function(returnData) {
+                    getList();
+                    // $.toast({
+                    //     heading: 'สำเร็จ',
+                    //     text: 'แก้ไขข้อมูลสำเร็จ',
+                    //     position: 'top-right',
+                    //     loaderBg: '#ff6849',
+                    //     icon: 'success',
+                    //     hideAfter: 3500,
+                    //     stack: 3
+                    // });
+                    $('#changePasswordmodal form')[0].reset();
+                    $('#passwordEditError').html('');
+                    $('#changePasswordmodal').modal('hide'); //ปิด modal
+                });
+                // })
+            } else {
+                console.log("ASD")
             }
         });
 
