@@ -14,7 +14,7 @@
   * @Create Date 17-10-2563
   -->
 
-  <!-- <style>
+<!-- <style>
     .bottomright {
         position: absolute;
         bottom: 5px;
@@ -40,14 +40,14 @@
                 <!-- Start loop show db to table -->
                 <?php if (isset($table)) { ?>
                     <?php foreach ($table as $key => $val) { ?>
-                            <div class="form-group">
-                                <label style="text-indent: 20px; word-spacing: 10px;">บัญชีผู้ใช้ : </label>
-                                <input type="text" style="width: 200px;" class="form-control" name="profileData[]" id="user_username" value="<?= $val->user_username ?>" placeholder="บัญชีผู้ใช้" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label style="text-indent: 20px; word-spacing: 10px;">ชื่อ-นามสกุล : </label>
-                                <input type="text" style="width: 200px;" class="form-control" name="profileData[]" id="user_name" value="<?= $val->user_name ?>" placeholder="ชื่อ - นามสกุล">
-                            </div>
+                        <div class="form-group">
+                            <label style="text-indent: 20px; word-spacing: 10px;">บัญชีผู้ใช้ : </label>
+                            <input type="text" style="width: 200px;" class="form-control" name="profileData[]" id="user_username" value="<?= $val->user_username ?>" placeholder="บัญชีผู้ใช้" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-indent: 20px; word-spacing: 10px;">ชื่อ-นามสกุล : </label>
+                            <input type="text" style="width: 200px;" class="form-control" name="profileData[]" id="user_name" value="<?= $val->user_name ?>" placeholder="ชื่อ - นามสกุล">
+                        </div>
                         <div class="form-group">
                             <div class="col-lg-2 col-md-4">
                                 <button id="editPassword" type="button" class="btn btn-block btn-secondary" data-id='<?= $val->user_id ?>' data-toggle='modal' data-target='#changePasswordmodal' data-username='<?= $val->user_username ?>' ?>เปลี่ยนรหัสผ่าน</button>
@@ -75,7 +75,7 @@
         tableData['columnIdName'] = 'user_id';
 
         var whereData = {
-            'user_id': document.getElementById("user_id").value
+            'user_id': <?php echo $_SESSION['id'] ?>
         };
         var formData = {};
 
@@ -90,8 +90,7 @@
             data: {
                 table: tableData,
                 arrayData: formData,
-                arrayWhere: whereData,
-                updateColumn: ''
+                arrayWhere: whereData
             },
         }).done(function(returnData) {
             getList();
@@ -105,7 +104,7 @@
             //     stack: 3
             // });
         });
-    }) 
+    })
     //submit edit form
 
     $('.btn_delete').click(function() {
