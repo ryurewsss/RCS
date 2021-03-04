@@ -1,7 +1,7 @@
 <!-- Open Table -->
 <div class="card">
     <div class="card-header bg-dark">
-        <a class="m-b-0 text-white" style="font-size: 17px;">รายงาน</a>
+        <a class="m-b-0 text-white" style="font-size: 23px;">รายงาน</a>
     </div>
     <div class="row"><br>
         <div class="col-md-6">
