@@ -82,16 +82,16 @@
                 $('#passwordEditError').html('<span class="text-danger"> กรุณาใส่รหัสผ่านให้ถูกต้อง</span>');
             }
             if (pass && returnData) {
-                // Swal.fire({
-                //     title: 'ยืนยันการเปลี่ยนรหัส',
-                //     text: "ต้องการเปลี่ยนรหัสหรือไม่",
-                //     type: 'warning',
-                //     showCancelButton: true,
-                //     confirmButtonColor: '#3085d6',
-                //     cancelButtonColor: '#d33',
-                //     confirmButtonText: 'ยืนยัน',
-                //     cancelButtonText: 'ยกเลิก'
-                // }).then((result) => {
+                Swal.fire({
+                    title: 'ยืนยันการเปลี่ยนรหัส',
+                    text: "ต้องการเปลี่ยนรหัสหรือไม่",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'ยืนยัน',
+                    cancelButtonText: 'ยกเลิก'
+                }).then((result) => {
                 var tableData = {};
                 tableData['tableName'] = 'ie_user';
                 tableData['columnIdName'] = 'user_id';
@@ -125,7 +125,7 @@
                     $('#passwordEditError').html('');
                     $('#changePasswordmodal').modal('hide'); //ปิด modal
                 });
-                // })
+                })
             } else {
                 console.log("ASD")
             }
@@ -137,7 +137,7 @@
         var data = {};
         data['tableName'] = 'ie_user';
         data['colName'] = '';
-        data['where'] = '';
+        data['where'] = 'user_id = ' + <?php echo $_SESSION['id'] ?>;
         data['order'] = '';
         data['arrayJoinTable'] = '';
         data['groupBy'] = '';

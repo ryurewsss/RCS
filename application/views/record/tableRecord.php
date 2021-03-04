@@ -28,18 +28,18 @@
                     <?php if ($val->transaction_delete_status == "active") { ?>
                         <tr class="text-center">
                             <td hidden>i++</td>
-                            <td><?= substr($val->transaction_date, 0, 10) ?></td>
+                            <td><?= date("d/m/Y", strtotime($val->transaction_date)) ?></td>
                             <td class="text-left"><?= $val->transaction_description ?></td>
                             <?php if ($val->transaction_cash < 0) {
                                 $sum_expense += $val->transaction_cash; ?>
                                 <td>-</td>
-                                <td><?= number_format($val->transaction_cash * -1, 2) ?></td>
+                                <td class="text-danger font-weight-bold"><?= number_format($val->transaction_cash * -1, 2) ?></td>
                             <?php } else {
                                 $sum_income += $val->transaction_cash; ?>
-                                <td><?= number_format($val->transaction_cash, 2) ?></td>
+                                <td class="text-success font-weight-bold"><?= number_format($val->transaction_cash, 2) ?></td>
                                 <td>-</td>
                             <?php } ?>
-                            <td><?= number_format($sum, 2) ?></td>
+                            <td class="text-secondary font-weight-bold"><?= number_format($sum, 2) ?></td>
                             <td>
                                 <button type="button" class="btn waves-effect waves-light btn-warning btn-sm btn_edit" data-toggle="modal" data-toggle="modal" data-target="#editData" data-cash="<?= $val->transaction_cash ?>" data-description="<?= $val->transaction_description ?>" data-id="<?= $val->transaction_id ?>"><i class="fas fa-pencil-alt"></i></button>
                                 <button type="button" class="btn waves-effect waves-light btn-danger btn-sm btn_delete" id="<?= $val->transaction_id  ?>"><i class="fas fa-trash-alt"></i></button>
@@ -63,7 +63,7 @@
     sum_expense *= -1;
     var sum = sum_income - sum_expense;
 
-    
+
     $('#sum_income').html(numberWithCommas(parseFloat(sum_income).toFixed(2)) + " บาท");
     $('#sum_expense').html(numberWithCommas(parseFloat(sum_expense).toFixed(2)) + " บาท");
     $('#sum').html(numberWithCommas(parseFloat(sum).toFixed(2)) + " บาท");
@@ -88,7 +88,7 @@
     })
 
     $('.btn_delete').click(function() {
-        var id = $(this).attr("id");
+        var id = <?php echo $_SESSION['id'] ?>;
         var data = {};
         data['tableName'] = 'ie_transaction';
         data['columnIdName'] = 'transaction_id';

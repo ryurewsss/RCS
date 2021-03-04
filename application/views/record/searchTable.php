@@ -19,13 +19,14 @@
         <div id="searchTable"></div><br>
         <div class="row">
             <label style="font-size:15pt; margin-left: 68%; margin-right: 15px">ยอดเงินรวม </label>
-            <input style="width: 200px; height: 33px; font-size:13pt; text-align:right;" type="text" class="form-control" id ="sum" placeholder="0.00" disabled>
+            <input style="width: 200px; height: 33px; font-size:13pt; text-align:right;" type="text" class="form-control" id="sum" placeholder="0.00" disabled>
             <label style="font-size:15pt; margin-left: 5px">&ensp; บาท </label>
         </div>
     </div>
 </div>
 
 <script>
+    var searchDate = '';
     getList();
 
     $('.buttonClass').daterangepicker({
@@ -45,7 +46,8 @@
             'Last 7 Days': [moment().subtract(6, 'days'), moment()],
             'Last 30 Days': [moment().subtract(29, 'days'), moment()],
             'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+            'This Year': [moment().startOf('year'), moment().endOf('year')],
         },
         "alwaysShowCalendars": true,
     }, function(start, end, label) {
@@ -62,16 +64,16 @@
 
         secondRange = date[1].split('/');
         date[1] = secondRange[2] + "-" + secondRange[1] + "-" + secondRange[0];
-        searchDate = "transaction_date >= '" + date[0] + "' and  transaction_date <= '" + date[1] + " 23:59:59.999'";
+        searchDate = " and transaction_date >= '" + date[0] + "' and  transaction_date <= '" + date[1] + " 23:59:59.999'";
         console.log(searchDate)
         getList(searchDate);
     });
 
-    function getList(where = '') {
+    function getList() {
         var data = {};
         data['tableName'] = 'ie_transaction';
         data['colName'] = '';
-        data['where'] = where;
+        data['where'] = "transaction_user_id = " + <?php echo $_SESSION['id'] ?> + searchDate;
         data['order'] = '';
         data['arrayJoinTable'] = '';
         data['groupBy'] = '';

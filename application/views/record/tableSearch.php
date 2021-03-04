@@ -2,6 +2,7 @@
     <table id="myTable" class="table table-bordered table-striped mytb">
         <thead>
             <tr class="text-center">
+                <th hidden>ลำดับ</th>
                 <th>วันที่</th>
                 <th class="text-left">รายละเอียด</th>
                 <th>รายรับ</th>
@@ -20,13 +21,14 @@
                 ?>
                     <?php if ($val->transaction_delete_status == "active") { ?>
                         <tr class="text-center">
-                            <td><?= substr($val->transaction_date, 0, 10) ?></td>
+                            <td hidden><?= $i++ ?></td>
+                            <td><?= date("d/m/Y", strtotime($val->transaction_date))?></td>
                             <td class="text-left"><?= $val->transaction_description ?></td>
                             <?php if ($val->transaction_cash < 0) { ?>
                                 <td>-</td>
-                                <td class="text-danger font-weight-bold"><?= $val->transaction_cash * -1 ?></td>
+                                <td class="text-danger font-weight-bold"><?= number_format($val->transaction_cash * -1, 2) ?></td>
                             <?php } else { ?>
-                                <td class="text-success font-weight-bold"><?= $val->transaction_cash ?></td>
+                                <td class="text-success font-weight-bold"><?= number_format($val->transaction_cash, 2) ?></td>
                                 <td>-</td>
                             <?php } ?>
                         </tr>

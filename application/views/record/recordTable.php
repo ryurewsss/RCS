@@ -19,10 +19,10 @@
             <div class="col-xl-4 col-md-6 mb-4">
                 <div class="card border-left-success shadow h-100 py-2">
                     <div class="card-body">
-                            <div class="col mr-2">
-                                <div class="h3 font-weight-bold text-gray-900 text-uppercase mb-1">รวมรายรับ</div>
-                                <div class="h3 mb-0 font-weight-bold text-gray-900" align = "right" id="sum_income"></div>
-                            </div>
+                        <div class="col mr-2">
+                            <div class="h3 font-weight-bold text-gray-900 text-uppercase mb-1">รวมรายรับ</div>
+                            <div class="h3 mb-0 font-weight-bold text-gray-900" align="right" id="sum_income"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                     <div class="card-body">
                         <div class="col mr-2">
                             <div class="h3 font-weight-bold text-gray-900 text-uppercase mb-1">รวมรายจ่าย</div>
-                            <div class="h3 mb-0 font-weight-bold text-gray-900" align = "right"  id="sum_expense"></div>
+                            <div class="h3 mb-0 font-weight-bold text-gray-900" align="right" id="sum_expense"></div>
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                     <div class="card-body">
                         <div class="col mr-2">
                             <div class="h3 font-weight-bold text-gray-900 text-uppercase mb-1">ยอดเงินคงเหลือ</div>
-                            <div class="h3 mb-0 font-weight-bold text-gray-900" align = "right"  id="sum"></div>
+                            <div class="h3 mb-0 font-weight-bold text-gray-900" align="right" id="sum"></div>
                         </div>
                     </div>
                 </div>
@@ -190,15 +190,13 @@
                 console.log(x);
             }
 
-
             var tableData = {};
             tableData['tableName'] = 'ie_transaction';
 
 
             var whereData = {
-
-                'transaction_id': document.getElementById("transaction_id").value
-
+                'transaction_id': document.getElementById("transaction_id").value,
+                'transaction_user_id': <?php echo $_SESSION['id'] ?>
             };
 
             $.ajax({
@@ -254,7 +252,7 @@
                 data: {
                     table: tableData,
                     arrayData: formData,
-                    createColumn: 'transaction_employee_id'
+                    createColumn: 'transaction_user_id'
                 },
             }).done(function(returnData) {
                 getList();
@@ -312,7 +310,7 @@
                 data: {
                     table: tableData,
                     arrayData: formData,
-                    createColumn: 'transaction_employee_id'
+                    createColumn: 'transaction_user_id'
                 },
             }).done(function(returnData) {
                 getList();
@@ -335,7 +333,7 @@
         var data = {};
         data['tableName'] = 'ie_transaction';
         data['colName'] = '';
-        data['where'] = '';
+        data['where'] = "transaction_user_id = " + <?php echo $_SESSION['id'] ?>;
         data['order'] = 'transaction_date DESC';
         data['arrayJoinTable'] = '';
         data['groupBy'] = '';

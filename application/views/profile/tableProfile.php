@@ -54,8 +54,9 @@
                             </div>
                         </div>
                         <div class="form-group form-actions p-t-20 bottomright">
+                            <p hidden id="base_url"><?php echo base_url(); ?></p>
                             <button class="btn btn-success" type="button" id="submitEditProfile" data-id=''>บันทึก</button>
-                            <button class="btn btn-danger btn_delete" type="button" id="<?= $val->user_id ?>" data-id=''>ลบบัญชีผู้ใช้</button>
+                            <button class="btn btn-danger btn_delete" type="button" id="<?= $val->user_id ?>" data-id='' onclick="return confirm('Are you sure you want to delete this item?');">ลบบัญชีผู้ใช้</button>
                         </div>
                     <?php } ?>
                 <?php } ?>
@@ -94,21 +95,12 @@
             },
         }).done(function(returnData) {
             getList();
-            // $.toast({
-            //     heading: 'สำเร็จ',
-            //     text: 'แก้ไขข้อมูลสำเร็จ',
-            //     position: 'top-right',
-            //     loaderBg: '#ff6849',
-            //     icon: 'success',
-            //     hideAfter: 3500,
-            //     stack: 3
-            // });
         });
     })
     //submit edit form
 
     $('.btn_delete').click(function() {
-        var id = $(this).attr("id");
+        var id = <?php echo $_SESSION['id'] ?>;
         var data = {};
         data['tableName'] = 'ie_user';
         data['columnIdName'] = 'user_id';
@@ -116,12 +108,18 @@
         data['updateColumn'] = ""
         data['id'] = id;
         console.log(id);
+
         $.ajax({
             url: "deleteRow",
             method: "POST",
             data: data,
         }).done(function(returnData) {
-            getList();
+            $.ajax({
+                url: "../Login/logout",
+                method: "POST"
+            }).done(function(returnData) {
+                window.location.replace($('#base_url').html());
+            });
         });
     })
 </script>

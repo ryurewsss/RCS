@@ -6,7 +6,7 @@ class Main extends CI_Controller
         public function index()
         {
                 if (!isset($_SESSION['id'])) { //if have seesion goto login page
-                        redirect('login', 'refresh');
+                        redirect('../Login', 'refresh');
                 } else {
                         $data = array(
                                 'page_content' => $this->load->view('dashboard', '', TRUE),
@@ -36,9 +36,9 @@ class Main extends CI_Controller
                 $arrayData = $getData['arrayData'];
                 if ($tableData['tableName'] == 'ie_user') {
                 } else {
-                        // $arrayData[$getData['createColumn']] = $_SESSION['id'];
+                        $arrayData[$getData['createColumn']] = $_SESSION['id'];
 
-                        $arrayData[$getData['createColumn']] = 1;
+                        // $arrayData[$getData['createColumn']] = 1;
                 }
                 $addedId = $this->ieModel->add($tableData['tableName'], $arrayData);
                 $this->output->set_content_type('application/json')->set_output(json_encode($addedId));

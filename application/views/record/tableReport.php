@@ -14,6 +14,7 @@
                 <th>เดือน</th>
                 <th>รายรับ</th>
                 <th>รายจ่าย</th>
+                <th>คงเหลือ</th>
             </tr>
         </thead>
         <tbody>
@@ -34,12 +35,17 @@
                         <?php if ($val->incomes == '') { ?>
                             <td>-</td>
                         <?php } else { ?>
-                            <td><?= $val->incomes ?></td>
+                            <td class="text-success font-weight-bold"><?= number_format($val->incomes, 2) ?></td>
                         <?php } ?>
                         <?php if ($val->expends == '') { ?>
                             <td>-</td>
                         <?php } else { ?>
-                            <td><?= $val->expends * -1 ?></td>
+                            <td class="text-danger font-weight-bold"><?= number_format($val->expends * -1, 2) ?></td>
+                        <?php } ?>
+                        <?php if ($val->expends + $val->incomes >= 0) { ?>
+                            <td class="text-success font-weight-bold"><?= number_format($val->expends + $val->incomes, 2) ?></td>
+                        <?php } else { ?>
+                            <td class="text-danger font-weight-bold"><?= number_format($val->expends + $val->incomes, 2) ?></td>
                         <?php } ?>
                     </tr>
                 <?php } ?>
