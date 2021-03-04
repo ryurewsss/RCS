@@ -32,7 +32,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav  sidebar sidebar-dark accordion" style='background-color: #48AAAD;' id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url() ?>">
@@ -56,7 +56,7 @@
       <hr class="sidebar-divider">
 
       <!-- Heading -->
-      <div class="sidebar-heading">
+      <div class="sidebar-heading" style="font-size: 13px;">
         รายการ
       </div>
 
@@ -67,17 +67,17 @@
       </li>
       <li class="nav-item active">
         <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/search" aria-expanded="false">
-          <i class="fas fa-clipboard-list" style='font-size:20px'></i>
+          <i class="fa fa-search" style='font-size:20px'></i>
           <span>ค้นหา</span></a>
       </li>
       <li class="nav-item active">
         <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/report" aria-expanded="false">
-          <i class="fas fa-clipboard-list" style='font-size:20px'></i>
+          <i class="fas fa-scroll" style='font-size:20px'></i>
           <span>รายงาน</span></a>
       </li>
       <li class="nav-item active">
         <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/profile" aria-expanded="false">
-          <i class="fas fa-clipboard-list" style='font-size:20px'></i>
+          <i class="far fa-address-card" style='font-size:20px'></i>
           <span>ข้อมูลส่วนตัว</span></a>
       </li>
       <li class="nav-item active">
