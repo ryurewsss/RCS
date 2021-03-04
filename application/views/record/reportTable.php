@@ -14,7 +14,7 @@
                         if (isset($select_box)) {
                             $checkYear = "";
                             foreach ($select_box as $key => $val) {
-                                echo "<option value=" . $val->year . ">" . $val->year . "</option>";
+                                echo "<option selected value=" . $val->year . ">" . $val->year . "</option>";
                             }
                         }
                         ?>

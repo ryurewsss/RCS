@@ -28,6 +28,13 @@
         return s.join(dec);
     }
 
+    function commaSeparateNumber(val) {
+        while (/(\d+)(\d{3})/.test(val.toString())) {
+            val = val.toString().replace(/(\d+)(\d{3})/, '$1' + ',' + '$2');
+        }
+        return val;
+    }
+
     var test = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     // Area Chart Example
     var cData = JSON.parse(`<?php echo $chart_data; ?>`);
@@ -41,14 +48,14 @@
             datasets: [{
                 label: "รายรับ",
                 lineTension: 0.3,
-                backgroundColor: "rgba(78, 115, 223, 0.1)",
-                borderColor: "rgba(78, 115, 223, 1)",
+                backgroundColor: "rgb(50,205,50,0.1)",
+                borderColor: "rgb(50,205,50,1)",
                 pointRadius: 3,
-                pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                pointBorderColor: "rgba(78, 115, 223, 1)",
+                pointBackgroundColor: "rgb(50,205,50,1)",
+                pointBorderColor: "rgb(50,205,50,1)",
                 pointHoverRadius: 3,
-                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                pointHoverBackgroundColor: "rgb(50,205,50,1)",
+                pointHoverBorderColor: "rgb(50,205,50,1)",
                 pointHitRadius: 10,
                 pointBorderWidth: 2,
                 data: cData.incomes,
@@ -109,7 +116,7 @@
                         padding: 10,
                         // Include a dollar sign in the ticks
                         callback: function(value, index, values) {
-                            return number_format(value);
+                            return commaSeparateNumber(value);
                         }
                     },
                     gridLines: {
@@ -146,7 +153,7 @@
                 callbacks: {
                     label: function(tooltipItem, chart) {
                         var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                        return datasetLabel + ': ' + number_format((tooltipItem.yLabel).toFixed(2)) + ' บาท';
+                        return datasetLabel + ': ' + commaSeparateNumber(tooltipItem.yLabel.toFixed(2)) + ' บาท';      
                     }
                 }
             }
