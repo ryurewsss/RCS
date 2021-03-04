@@ -255,9 +255,12 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+                                                    <input type="submit" id="login-submit" tabindex="4" class="form-control" value="Log In">
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <a href="#" id="register-form-link">Register</a>
                                         </div>
                                     </form>
 
@@ -278,19 +281,22 @@
                                             <div class="row">
                                                 <div class="col-sm-6 col-sm-offset-3">
                                                     <label style="margin-left: 20px;" id="regisError" class="text-danger"></label>
-                                                    <input type="submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+                                                    <input type="submit" id="register-submit" tabindex="4" class="form-control" value="Register Now">
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="text-center">
+                                            <a href="#" class="active" id="login-form-link">Login</a>
+                                        </div>
                                     </form>
                                     <hr>
-                                    <div class="text-center">
+                                    <!-- <div class="text-center">
                                         <a href="#" class="active" id="login-form-link">Login</a>
                                         &ensp;
                                         &ensp;
                                         &ensp;
                                         <a href="#" id="register-form-link">Register</a>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
