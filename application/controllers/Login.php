@@ -46,15 +46,17 @@ class Login extends Main
 		$json['password'] = $getData['password'];
 
 		$result = $this->ieModel->getAll('ie_user', '*', array('user_username' => $json['username']));
-		if (isset($result)) {
-			if (password_verify($json['password'], $result[0]->user_password)) {
-				$_SESSION['name'] = $result[0]->user_name;
-				$_SESSION['id'] = $result[0]->user_id;
-				// $_SESSION['username'] = $result->row()->username;
-				$json['login'] = 'True';
-			} else {
-				$json['login'] = 'False';
-			} //wrong password
+		if ($result) {
+			if ($result[0]->user_password) {
+				if (password_verify($json['password'], $result[0]->user_password)) {
+					$_SESSION['name'] = $result[0]->user_name;
+					$_SESSION['id'] = $result[0]->user_id;
+					// $_SESSION['username'] = $result->row()->username;
+					$json['login'] = 'True';
+				} else {
+					$json['login'] = 'False';
+				} //wrong password
+			}
 		} else {
 			redirect('Main/index');
 		} // when already login

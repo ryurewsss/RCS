@@ -51,11 +51,12 @@
                                                 <div class="col-sm-6 col-sm-offset-3">
                                                     <input type="submit" id="login-submit" tabindex="4" class="form-control" value="Log In">
                                                 </div>
+                                                <div class="col-sm-6 col-sm-offset-3">
+                                                    <input type="button" class="form-control" id="register-form-link" value="Register">
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="text-center">
-                                            <a href="#" id="register-form-link">Register</a>
-                                        </div>
+                                        <label style="margin-left: 20px;" id="loginError" class="text-danger"></label>
                                     </form>
 
                                     <form id="register-form" method="post" role="form" style="display: none;">
@@ -74,14 +75,14 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-6 col-sm-offset-3">
-                                                    <label style="margin-left: 20px;" id="regisError" class="text-danger"></label>
                                                     <input type="submit" id="register-submit" tabindex="4" class="form-control" value="Register Now">
+                                                </div>
+                                                <div class="col-sm-6 col-sm-offset-3">
+                                                    <input type="button" class="active form-control" id="login-form-link" value="Login">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="text-center">
-                                            <a href="#" class="active" id="login-form-link">Login</a>
-                                        </div>
+                                        <label style="margin-left: 20px;" id="regisError" class="text-danger"></label>
                                     </form>
                                     <hr>
                                     <!-- <div class="text-center">
@@ -154,14 +155,7 @@
             formData[this.id] = this.value;
         });
         var pass = true;
-        if (formData['user_username'] == '' || formData['user_password'] == '' || $('#confirm-password').val() == '') {
-            $('#regisError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');
-            pass = false;
-        }
-        if (formData['user_password'] != $('#confirm-password').val()) {
-            $('#regisError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');
-            pass = false;
-        }
+
 
         var tableData = {};
         tableData['tableName'] = 'ie_user';
@@ -174,6 +168,14 @@
         }).done(function(returnData) {
             console.log(returnData)
             //return false = pass
+            if (formData['user_username'] == '' || formData['user_password'] == '' || $('#confirm-password').val() == '') {
+                $('#regisError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');
+                pass = false;
+            }
+            if (formData['user_password'] != $('#confirm-password').val()) {
+                $('#regisError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');
+                pass = false;
+            }
             if (!returnData && pass) {
                 $.ajax({
                     method: "POST",
@@ -204,6 +206,7 @@
         });
         var pass = true;
         if (formData['user_username'] == '' || formData['user_password'] == '') {
+            alert("ASD")
             $('#loginError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');
             pass = false;
         }

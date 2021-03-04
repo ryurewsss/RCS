@@ -29,8 +29,15 @@
         margin-top: 0px;
         color: black;
     }
+
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
 </style>
 </head>
 
 <body>
-    <h1>Dashboard</h1>
+    <h1>Welcome!</h1>
+    <img src="<?= base_url() ?>assets/img/stocks.png" />

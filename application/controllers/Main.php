@@ -36,9 +36,9 @@ class Main extends CI_Controller
                 $data = [];
 
                 foreach ($record as $row) {
-                        $data['month'][] = $row -> month;
-                        $data['incomes'][] = $row -> incomes;
-                        $data['expends'][] = abs($row -> expends);
+                        $data['month'][] = $row->month;
+                        $data['incomes'][] = $row->incomes;
+                        $data['expends'][] = abs($row->expends);
                 }
                 $data['chart_data'] = json_encode($data);
 
