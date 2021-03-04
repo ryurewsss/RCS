@@ -34,23 +34,21 @@
     <!-- Start card body -->
     <div class="card-body">
         <form class="form-material">
-            <h3 class="card-title">ข้อมูลส่วนตัว</h3>
             <div class="form-body">
-                <hr>
                 <!-- Start loop show db to table -->
                 <?php if (isset($table)) { ?>
                     <?php foreach ($table as $key => $val) { ?>
-                        <div class="form-group">
-                            <label style="text-indent: 20px; word-spacing: 10px;">บัญชีผู้ใช้ : </label>
-                            <input type="text" style="width: 200px;" class="form-control" name="profileData[]" id="user_username" value="<?= $val->user_username ?>" placeholder="บัญชีผู้ใช้" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label style="text-indent: 20px; word-spacing: 10px;">ชื่อ-นามสกุล : </label>
-                            <input type="text" style="width: 200px;" class="form-control" name="profileData[]" id="user_name" value="<?= $val->user_name ?>" placeholder="ชื่อ - นามสกุล">
-                        </div>
-                        <div class="form-group">
+                            <div class="row">
+                                <label style="text-indent: 20px; margin-right: 40px;">บัญชีผู้ใช้ </label>: &ensp;
+                                <input type="text" style="width: 250px;" class="form-control" name="profileData[]" id="user_username" value="<?= $val->user_username ?>" placeholder="บัญชีผู้ใช้" disabled>
+                            </div><br>
+                            <div class="row">
+                                <label style="text-indent: 20px;  margin-right: 18px;">ชื่อ-นามสกุล </label>: &ensp;
+                                <input type="text" style="width: 250px;" class="form-control" name="profileData[]" id="user_name" value="<?= $val->user_name ?>" placeholder="ชื่อ - นามสกุล">
+                            </div><br>
+                        <div class="row">
                             <div class="col-lg-2 col-md-4">
-                                <button id="editPassword" type="button" class="btn btn-block btn-secondary" data-id='<?= $val->user_id ?>' data-toggle='modal' data-target='#changePasswordmodal' data-username='<?= $val->user_username ?>' ?>เปลี่ยนรหัสผ่าน</button>
+                                <button style="margin-left: 10px;" id="editPassword" type="button" class="btn btn-block btn-secondary" data-id='<?= $val->user_id ?>' data-toggle='modal' data-target='#changePasswordmodal' data-username='<?= $val->user_username ?>' ?>เปลี่ยนรหัสผ่าน</button>
                             </div>
                         </div>
                         <div class="form-group form-actions p-t-20 bottomright">

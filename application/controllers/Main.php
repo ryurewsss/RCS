@@ -28,6 +28,24 @@ class Main extends CI_Controller
                 $this->output->set_content_type('application/json')->set_output(json_encode($json));
         }
 
+        public function getChart()
+        {
+                $getData = $this->input->post();
+                $record = $this->ieModel->getAll($getData['tableName'], $getData['colName'], $getData['where'], $getData['order'], $getData['arrayJoinTable'], $getData['groupBy']);
+                $json['table'] = $record;
+                $data = [];
+
+                foreach ($record as $row) {
+                        $data['month'][] = $row -> month;
+                        $data['incomes'][] = $row -> incomes;
+                        $data['expends'][] = abs($row -> expends);
+                }
+                $data['chart_data'] = json_encode($data);
+
+                $json['html'] = $this->load->view($getData['pathView'], $data, TRUE);
+                $this->output->set_content_type('application/json')->set_output(json_encode($json));
+        }
+
         public function addData()
         {
                 $getData = $this->input->post();
