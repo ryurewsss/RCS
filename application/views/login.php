@@ -52,7 +52,7 @@
                                                     <input type="submit" id="login-submit" tabindex="4" class="form-control" value="Log In">
                                                 </div>
                                                 <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="button" class="form-control" id="register-form-link" value="Register">
+                                                    <input type="button" class="form-control" id="register-form-link" value="To Register">
                                                 </div>
                                             </div>
                                         </div>
@@ -78,7 +78,7 @@
                                                     <input type="submit" id="register-submit" tabindex="4" class="form-control" value="Register Now">
                                                 </div>
                                                 <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="button" class="active form-control" id="login-form-link" value="Login">
+                                                    <input type="button" class="active form-control" id="login-form-link" value="To Login">
                                                 </div>
                                             </div>
                                         </div>
