@@ -35,18 +35,14 @@
                         <?php if ($val->incomes == '') { ?>
                             <td>-</td>
                         <?php } else { ?>
-                            <td class="text-success font-weight-bold"><?= number_format($val->incomes, 2) ?></td>
+                            <td><?= number_format($val->incomes, 2) ?></td>
                         <?php } ?>
                         <?php if ($val->expends == '') { ?>
                             <td>-</td>
                         <?php } else { ?>
-                            <td class="text-danger font-weight-bold"><?= number_format($val->expends * -1, 2) ?></td>
-                        <?php } ?>
-                        <?php if ($val->expends + $val->incomes >= 0) { ?>
-                            <td class="text-success font-weight-bold"><?= number_format($val->expends + $val->incomes, 2) ?></td>
-                        <?php } else { ?>
-                            <td class="text-danger font-weight-bold"><?= number_format($val->expends + $val->incomes, 2) ?></td>
-                        <?php } ?>
+                            <td><?= number_format(($val->expends * -1), 2) ?></td>
+                        <?php } $sumAmount += (($val->incomes) - ($val->expends * -1))?>
+                        <td><?= number_format($sumAmount, 2) ?></td>
                     </tr>
                 <?php } ?>
             <?php } ?>

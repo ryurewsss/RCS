@@ -28,6 +28,13 @@
         return s.join(dec);
     }
 
+    function commaSeparateNumber(val) {
+        while (/(\d+)(\d{3})/.test(val.toString())) {
+            val = val.toString().replace(/(\d+)(\d{3})/, '$1' + ',' + '$2');
+        }
+        return val;
+    }
+
     var test = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     // Area Chart Example
     var cData = JSON.parse(`<?php echo $chart_data; ?>`);
@@ -109,7 +116,7 @@
                         padding: 10,
                         // Include a dollar sign in the ticks
                         callback: function(value, index, values) {
-                            return number_format(value);
+                            return commaSeparateNumber(value);
                         }
                     },
                     gridLines: {
@@ -146,7 +153,7 @@
                 callbacks: {
                     label: function(tooltipItem, chart) {
                         var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                        return datasetLabel + ': ' + number_format((tooltipItem.yLabel).toFixed(2)) + ' บาท';
+                        return datasetLabel + ': ' + commaSeparateNumber(tooltipItem.yLabel.toFixed(2)) + ' บาท';      
                     }
                 }
             }
