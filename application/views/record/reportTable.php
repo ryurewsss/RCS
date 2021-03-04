@@ -62,7 +62,7 @@
 <script>
     var where = "transaction_delete_status = 'active' AND transaction_date LIKE '" + $(".valYear").val() + "%'";
     getList(where);
-    getListDetail();
+    // getListDetail();
     getChart(where);
 
     $(".valYear").change(function() {
@@ -145,54 +145,6 @@
 
     } //show auto
 
-
-    /*
-     * getListDetail
-     * get data from db to show
-     * @input -
-     * @output detail 
-     * @author Nitikron Piew-on
-     * @Update Date 03-03-2564
-     */
-    function getListDetail(where = '') {
-        var column = "CASE " +
-            "WHEN SUBSTRING(transaction_date, 6, 2) = '01' THEN 'มกราคม' " +
-            "WHEN SUBSTRING(transaction_date, 6, 2) = '02' THEN 'กุมภาพันธ์' " +
-            "WHEN SUBSTRING(transaction_date, 6, 2) = '03' THEN 'มีนาคม' " +
-            "WHEN SUBSTRING(transaction_date, 6, 2) = '04' THEN 'เมษายน' " +
-            "WHEN SUBSTRING(transaction_date, 6, 2) = '05' THEN 'พฤษภาคม' " +
-            "WHEN SUBSTRING(transaction_date, 6, 2) = '06' THEN 'มิถุนายน' " +
-            "WHEN SUBSTRING(transaction_date, 6, 2) = '07' THEN 'กรกฎาคม' " +
-            "WHEN SUBSTRING(transaction_date, 6, 2) = '08' THEN 'สิงหาคม' " +
-            "WHEN SUBSTRING(transaction_date, 6, 2) = '09' THEN 'กันยายน' " +
-            "WHEN SUBSTRING(transaction_date, 6, 2) = '10' THEN 'ตุลาคม' " +
-            "WHEN SUBSTRING(transaction_date, 6, 2) = '11' THEN 'พฤศจิกายน' " +
-            "WHEN SUBSTRING(transaction_date, 6, 2) = '12' THEN 'ธันวาคม' " +
-            "ELSE 'ข้อมูลเดือนผิด' " +
-            "END AS Mounth , COUNT(SUBSTRING(transaction_date, 6, 2)) AS AmountList, " +
-            "SUM(CASE WHEN transaction_cash < 0 THEN transaction_cash END) AS expends, " +
-            "SUM(CASE WHEN transaction_cash > 0 THEN transaction_cash END) AS incomes";
-
-        var data = {};
-        data['tableName'] = 'ie_transaction';
-        data['colName'] = column;
-        data['where'] = "transaction_delete_status = 'active'";
-        data['order'] = 'SUBSTRING(transaction_date, 6, 2)';
-        data['arrayJoinTable'] = '';
-        data['groupBy'] = 'Mounth';
-        data['pathView'] = 'record/tableReportDetail';
-
-        $.ajax({
-            method: "POST",
-            url: "getTable",
-            data: data,
-        }).done(function(returnedData) {
-            $('#reportDetail').html(returnedData.html);
-            console.log(returnedData.table)
-        });
-
-    } //show auto
-
     function getChart(where = '') {
 
         var joinTable = '';
@@ -217,6 +169,11 @@
             "END AS month, " +
             "SUM(CASE WHEN transaction_cash > 0 THEN transaction_cash END) incomes," +
             "SUM(CASE WHEN transaction_cash < 0 THEN transaction_cash END) expends,"
+        if (where != '') {
+            where = where + " and transaction_user_id = " + <?php echo $_SESSION['id'] ?>;
+        } else {
+            where = "transaction_user_id = " + <?php echo $_SESSION['id'] ?>;
+        }
         data['where'] = where;
         data['order'] = 'SUBSTRING(transaction_date, 6, 2)';
         data['arrayJoinTable'] = joinTable;
