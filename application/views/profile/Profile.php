@@ -34,7 +34,7 @@
                     <div class="row">
                         <label style="text-indent: 20px; margin-right: 10px;">รหัสผ่านใหม่อีกครั้ง<a style="color: red; word-spacing: 1px;"> *</a></label> : &ensp;
                         <input type="password" style="width: 350px;" class="form-control newPass" name="changePassword[]" id="user_password" placeholder="ยืนยันรหัสผ่านใหม่อีกครั้ง">
-                    </div>
+                    </div><br>
                     <div class="modal-footer">
                         <label id="passwordEditError" class="text-danger"></label>
                         <button type="button" class="btn waves-effect waves-light btn-danger" data-dismiss="modal">ยกเลิก</button>
