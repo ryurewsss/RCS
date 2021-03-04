@@ -74,7 +74,7 @@
         data['tableName'] = 'ie_transaction';
         data['colName'] = '';
         data['where'] = "transaction_user_id = " + <?php echo $_SESSION['id'] ?> + searchDate;
-        data['order'] = '';
+        data['order'] = 'transaction_date DESC';
         data['arrayJoinTable'] = '';
         data['groupBy'] = '';
         data['pathView'] = 'record/tableSearch';
