@@ -23,10 +23,8 @@
             <?php
             if (!empty($table)) {
                 $i = 1; //กำหนดลำดับ 
-                $sumAmount = 0;
-                $sumPrice = 0;
-                $sumCost = 0;
-                $sumProfit = 0;
+                $sumIncomes = 0;
+                $sumExpends = 0;
             ?>
                 <?php foreach ($table as $key => $val) { ?>
                     <tr class="text-center">
@@ -34,15 +32,23 @@
                         <td><?= $val->Mounth ?></td>
                         <?php if ($val->incomes == '') { ?>
                             <td>-</td>
-                        <?php } else { ?>
-                            <td><?= number_format($val->incomes, 2) ?></td>
+                        <?php } else {
+                            $sumIncomes = $sumIncomes + $val->incomes;
+                        ?>
+                            <td class="text-success font-weight-bold"><?= number_format($val->incomes, 2) ?></td>
                         <?php } ?>
                         <?php if ($val->expends == '') { ?>
                             <td>-</td>
+                        <?php } else {
+                            $sumExpends = $sumExpends + $val->expends;
+                        ?>
+                            <td class="text-danger font-weight-bold"><?= number_format($val->expends * -1, 2) ?></td>
+                        <?php } ?>
+                        <?php if ($val->expends + $val->incomes >= 0) { ?>
+                            <td class="text-success font-weight-bold"><?= number_format($val->expends + $val->incomes, 2) ?></td>
                         <?php } else { ?>
-                            <td><?= number_format(($val->expends * -1), 2) ?></td>
-                        <?php } $sumAmount += (($val->incomes) - ($val->expends * -1))?>
-                        <td><?= number_format($sumAmount, 2) ?></td>
+                            <td class="text-danger font-weight-bold"><?= number_format($val->expends + $val->incomes, 2) ?></td>
+                        <?php } ?>
                     </tr>
                 <?php } ?>
             <?php } ?>
@@ -53,4 +59,19 @@
 
 
 <script>
+    var sumIncomes = <?php echo json_encode($sumIncomes) ?>;
+    var sumExpends = <?php echo json_encode($sumExpends) ?>;
+    var balance = sumIncomes + sumExpends;
+    sumExpends = sumExpends * -1;
+
+    $('#sumIncomes').val((commaSeparateNumber(sumIncomes.toFixed(2))));
+    $('#sumExpends').val((commaSeparateNumber(Math.abs(sumExpends).toFixed(2))));
+    $('#balance').val((commaSeparateNumber(balance.toFixed(2))));
+
+    function commaSeparateNumber(val) {
+        while (/(\d+)(\d{3})/.test(val.toString())) {
+            val = val.toString().replace(/(\d+)(\d{3})/, '$1' + ',' + '$2');
+        }
+        return val;
+    }
 </script>
