@@ -2,7 +2,7 @@
 <!-- Open Table -->
 <div class="card">
     <div class="card-header bg-dark">
-        <a class="m-b-0 text-white" style="font-size: 17px;">ข้อมูลส่วนตัว</a>
+        <a class="m-b-0 text-white" style="font-size: 23px;">ข้อมูลส่วนตัว</a>
     </div>
     <div class="card-body">
         <div id="profileTable"></div>
@@ -20,23 +20,23 @@
             </div>
             <div class="modal-body">
                 <form class="form-material" method="post" id="editForm">
-                    <div class="form-group">
-                        <label style="text-indent: 20px; word-spacing: 5px;">บัญชีผู้ใช้ : </label>
+                    <div class="row">
+                        <label style="text-indent: 20px; margin-right: 89px;">บัญชีผู้ใช้ </label> : &ensp;
                         <input type="text" style="width: 350px;" class="form-control" name="changePassword[]" id="user_username" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label style="text-indent: 20px; word-spacing: 5px;">รหัสผ่านเดิม<a style="color: red; word-spacing: 1px;"> *</a> : </label>
+                    </div><br>
+                    <div class="row">
+                        <label style="text-indent: 20px; margin-right: 57px;">รหัสผ่านเดิม<a style="color: red; word-spacing: 1px;"> *</a></label> : &ensp;
                         <input type="password" style="width: 350px;" class="form-control passwordOld" placeholder="ใส่รหัสผ่านเดิม">
-                    </div>
-                    <div class="form-group">
-                        <label style="text-indent: 20px; word-spacing: 5px;">รหัสผ่านใหม่<a style="color: red; word-spacing: 1px;"> *</a> : </label>
+                    </div><br>
+                    <div class="row">
+                        <label style="text-indent: 20px; margin-right: 54px;">รหัสผ่านใหม่<a style="color: red; word-spacing: 1px;"> *</a> </label> : &ensp;
                         <input type="password" style="width: 350px;" class="form-control newPass" id="passwordNew" placeholder="ใส่รหัสผ่านใหม่">
-                    </div>
-                    <div class="form-group">
-                        <label style="text-indent: 20px; word-spacing: 5px;">รหัสผ่านใหม่อีกครั้ง<a style="color: red; word-spacing: 1px;"> *</a> : </label>
+                    </div><br>
+                    <div class="row">
+                        <label style="text-indent: 20px; margin-right: 10px;">รหัสผ่านใหม่อีกครั้ง<a style="color: red; word-spacing: 1px;"> *</a></label> : &ensp;
                         <input type="password" style="width: 350px;" class="form-control newPass" name="changePassword[]" id="user_password" placeholder="ยืนยันรหัสผ่านใหม่อีกครั้ง">
-                    </div>
-                    <div class="form-group">
+                    </div><br>
+                    <div class="row">
                         <input style="width: 200px;" type="hidden" class="form-control" name="changePassword[]" id="user_id" placeholder="id">
                     </div>
                     <div class="modal-footer">
