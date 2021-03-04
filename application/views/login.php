@@ -243,6 +243,8 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
 
+                                    <p hidden id="base_url"><?php echo base_url(); ?></p>
+
                                     <form id="login-form" method="post" role="form" style="display: block;">
                                         <div class="form-group">
                                             <input type="text" name="login[]" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
@@ -375,9 +377,8 @@
             if (!returnData && pass) {
                 $.ajax({
                     method: "POST",
-                    url: "Login/addData",
+                    url: "Login/addUser",
                     data: {
-                        table: tableData,
                         arrayData: formData
                     },
                 }).done(function(returnData) {
@@ -389,6 +390,8 @@
                     $(this).addClass('active');
                     e.preventDefault();
                 });
+            } else {
+                $('#regisError').html('บัญชีผู้ใช้ซ้ำ');
             }
         });
 
@@ -408,20 +411,28 @@
             $('#loginError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');
             pass = false;
         }
-        if (formData['user_password'] != $('#confirm-password').val()) {
-            $('#loginError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');
-            pass = false;
-        }
         if (pass) {
             $.ajax({
                 method: "POST",
                 url: "Login/login",
-                data: {
-                    table: tableData,
-                    arrayData: formData
-                },
+                data: formData,
             }).done(function(returnData) {
-
+                if (returnData.login == 'True') {
+                    console.log("ASD")
+                    window.location.replace($('#base_url').html());
+                    $('#loginError').html('');
+                } else {
+                    // $.toast({
+                    //     heading: 'ไม่สำเร็จ',
+                    //     text: 'กรุณากรอกข้อมูลให้ถูกต้อง',
+                    //     position: 'top-right',
+                    //     loaderBg: '#ff6849',
+                    //     icon: 'error',
+                    //     hideAfter: 3500,
+                    //     stack: 3
+                    // });
+                    $('#loginError').html('รหัสผ่านหรือบัญชีผู้ใช้ไม่ถูกต้อง');
+                }
             });
         }
     })

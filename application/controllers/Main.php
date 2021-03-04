@@ -5,11 +5,15 @@ class Main extends CI_Controller
 {
         public function index()
         {
-                $data = array(
-                        'page_content' => $this->load->view('dashboard', '', TRUE),
-                        'title_name' => "Team4"
-                );
-                $this->load->view('main', $data);
+                if (!isset($_SESSION['id'])) { //if have seesion goto login page
+                        redirect('login', 'refresh');
+                } else {
+                        $data = array(
+                                'page_content' => $this->load->view('dashboard', '', TRUE),
+                                'title_name' => "Team4"
+                        );
+                        $this->load->view('main', $data);
+                }
         }
 
         public function getTable()
@@ -47,7 +51,7 @@ class Main extends CI_Controller
                 $tableData = $getData['table'];
 
                 $arrayData = $getData['arrayData'];
- 
+
 
                 $arrayWhere = $getData['arrayWhere'];
 

@@ -80,6 +80,11 @@
           <i class="fas fa-clipboard-list" style='font-size:20px'></i>
           <span>ข้อมูลส่วนตัว</span></a>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Login/logout" aria-expanded="false">
+          <i class="fas fa-clipboard-list" style='font-size:20px'></i>
+          <span>ออกจากระบบ</span></a>
+      </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
