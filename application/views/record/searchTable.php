@@ -27,7 +27,7 @@
 
 <script>
     var searchDate = '';
-    getList();
+    // getList();
 
     $('.buttonClass').daterangepicker({
         autoclose: true,
@@ -48,6 +48,10 @@
             'This Month': [moment().startOf('month'), moment().endOf('month')],
             'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
             'This Year': [moment().startOf('year'), moment().endOf('year')],
+        },
+        setValue: function() {
+            $('#startTimestamp').val();
+            $('#endTimestamp').val();
         },
         "alwaysShowCalendars": true,
     }, function(start, end, label) {
