@@ -41,10 +41,10 @@
 
                                     <form id="login-form" method="post" role="form" style="display: block;">
                                         <div class="form-group">
-                                            <input type="text" name="login[]" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                                            <input type="text" name="login[]" id="user_username" tabindex="1" class="form-control" placeholder="Username" value="">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name="login[]" id="password" tabindex="2" class="form-control" placeholder="Password">
+                                            <input type="password" name="login[]" id="user_password" tabindex="2" class="form-control" placeholder="Password">
                                         </div>
                                         <div class="form-group">
                                             <div class="row">
@@ -207,6 +207,7 @@
             formData[this.id] = this.value;
         });
         var pass = true;
+        console.log(formData);
         if (formData['user_username'] == '' || formData['user_password'] == '') {
             // alert("ASD")
             $('#loginError').html('Please fill in the correct details.');

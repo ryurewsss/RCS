@@ -42,8 +42,8 @@ class Login extends Main
 	public function login()
 	{
 		$getData = $this->input->post();
-		$json['username'] = $getData['username'];
-		$json['password'] = $getData['password'];
+		$json['username'] = $getData['user_username'];
+		$json['password'] = $getData['user_password'];
 
 		$result = $this->ieModel->getAll('ie_user', '*', array('user_username' => $json['username']));
 		if ($result) {
