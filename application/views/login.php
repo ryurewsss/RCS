@@ -64,7 +64,7 @@
                                             <input type="text" name="register[]" id="user_username" tabindex="1" class="form-control" placeholder="Username" value="">
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" name="register[]" id="user_name" tabindex="1" class="form-control" placeholder="กรอกชื่อ" value="">
+                                            <input type="text" name="register[]" id="user_name" tabindex="1" class="form-control" placeholder="Name" value="">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="register[]" id="user_password" tabindex="2" class="form-control" placeholder="Password">
@@ -169,11 +169,13 @@
             console.log(returnData)
             //return false = pass
             if (formData['user_username'] == '' || formData['user_password'] == '' || $('#confirm-password').val() == '') {
-                $('#regisError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');
+                $('#regisError').html('Please fill in the correct details.');
+                // $('#regisError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');
                 pass = false;
             }
             if (formData['user_password'] != $('#confirm-password').val()) {
-                $('#regisError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');
+                $('#regisError').html('Please fill in the correct details.');
+                // $('#regisError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');
                 pass = false;
             }
             if (!returnData && pass) {
@@ -206,8 +208,9 @@
         });
         var pass = true;
         if (formData['user_username'] == '' || formData['user_password'] == '') {
-            alert("ASD")
-            $('#loginError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');
+            // alert("ASD")
+            $('#loginError').html('Please fill in the correct details.');
+            // $('#loginError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');
             pass = false;
         }
         if (pass) {
@@ -230,7 +233,8 @@
                     //     hideAfter: 3500,
                     //     stack: 3
                     // });
-                    $('#loginError').html('รหัสผ่านหรือบัญชีผู้ใช้ไม่ถูกต้อง');
+                    // $('#loginError').html('รหัสผ่านหรือบัญชีผู้ใช้ไม่ถูกต้อง');
+                    $('#loginError').html('The password or username is incorrect');
                 }
             });
         }
