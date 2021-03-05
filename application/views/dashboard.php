@@ -39,5 +39,5 @@
 </head>
 
 <body>
-    <h1>Welcome!</h1>
+    <h1>ระบบบัญชีรายรับรายจ่าย</h1>
     <img src="<?= base_url() ?>assets/img/stocks.png" />

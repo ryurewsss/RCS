@@ -174,6 +174,7 @@
         } else {
             where = "transaction_user_id = " + <?php echo $_SESSION['id'] ?>;
         }
+        console.log(where);
         data['where'] = where;
         data['order'] = 'SUBSTRING(transaction_date, 6, 2)';
         data['arrayJoinTable'] = joinTable;
