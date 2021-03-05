@@ -3,8 +3,8 @@
     <div class="card-header bg-dark">
 
         <div class="row">
-            <a class="m-b-0 text-white" style="font-size: 23px; margin-left: 10px;">ข้อมูลรายละเอียดการเงิน</a>
-            <button style="margin-left: 64%;" type="button" class="btn btn-success d-none d-lg-block m-l-15" data-toggle="modal" data-toggle="modal" data-target="#modalAddmoney" id="addMoney" data-whatever="@mdo">รายรับ (+)</button> &ensp;
+            <a class="m-b-0 text-white" style="font-size: 23px; margin-left: 10px;">บันทึกรายรับ-รายจ่ายในปีนี้</a>
+            <button style="margin-left: 62%;" type="button" class="btn btn-success d-none d-lg-block m-l-12" data-toggle="modal" data-toggle="modal" data-target="#modalAddmoney" id="addMoney" data-whatever="@mdo">รายรับ (+)</button> &ensp;
             <button type="button" class="btn btn-warning d-none d-lg-block m-l-5" data-toggle="modal" data-toggle="modal" data-target="#modalOutmoney" id="outMoney" data-whatever="@fat">รายจ่าย (-)</button>
         </div>
     </div>
