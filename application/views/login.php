@@ -21,9 +21,9 @@
 
 </head>
 <style>
-    .login-register {
-        background-image: url("<?= base_url() ?>assets/img/black_blog.jpg");
-        background-size: 670px;
+    .login-register{
+        background-image : url("<?= base_url() ?>assets/img/black_blog.jpg");
+        background-size: 700px;
         /* background-color: #cccccc; */
     }
 
@@ -51,24 +51,27 @@
 
                                     <form id="login-form" method="post" role="form" style="display: block;">
                                         <div class="form-group">
-                                            <h3 class="text-center m-b-20">เข้าสู่ระบบ</h3><br>
-                                            <h3 class="text-center m-b-20">บัญชีรายรับ - รายจ่าย</h3>
+                                        <h3 class="text-center m-b-20">เข้าสู่ระบบ</h3><br>
+                                        <h4 class="text-center m-b-20">บัญชีรายรับ - รายจ่าย</h4>
                                         </div><br>
-                                        <div class="form-group">
-                                            <input type="text" name="login[]" id="user_username" tabindex="1" class="form-control" placeholder="Username" value="">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" name="login[]" id="user_password" tabindex="2" class="form-control" placeholder="Password">
+                                        <div class="row">
+                                            <label style="margin-right: 10px;">บัญชีผู้ใช้ </label> : &ensp;
+                                            <input type="text" style="width: 270px;" name="login[]" id="user_username" tabindex="1" class="form-control" placeholder="บัญชีผู้ใช้" value="">
+                                        </div><br>
+                                        <div class="row">
+                                            <label style="margin-right: 15px;">รหัสผ่าน </label> : &ensp;
+                                            <input type="password" style="width: 270px;" name="login[]" id="user_password" tabindex="2" class="form-control" placeholder="รหัสผ่าน">
                                         </div>
 
-                                        <br>
+                                        <br><br>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="submit" id="login-submit" tabindex="4" class="form-control" value="เข้าสู่ระบบ">
+                                                    <input type="submit" id="login-submit" tabindex="4" class="form-control btn btn-primary btn-user btn-block" value="เข้าสู่ระบบ">
                                                 </div>
                                                 <div class="col-sm-6 col-sm-offset-3">
                                                     <input type="button" class="form-control" id="register-form-link" value="ฉันไม่มีบัญชี">
+                                                    <!-- <a class="small" id="register-form-link" >Create an Account!</a> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -79,24 +82,28 @@
                                         <div class="form-group">
                                             <h3 class="text-center m-b-20">สมัครสมาชิก</h3>
                                         </div><br>
-                                        <div class="form-group">
-                                            <input type="text" name="register[]" id="user_username" tabindex="1" class="form-control" placeholder="Username" value="">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" name="register[]" id="user_name" tabindex="1" class="form-control" placeholder="Name" value="">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" name="register[]" id="user_password" tabindex="2" class="form-control" placeholder="Password">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+                                        <div class="row">
+                                            <label style=" margin-right: 47px;">บัญชีผู้ใช้ </label> : &ensp;
+                                            <input type="text" style="width: 235px;" name="register[]" id="user_username" tabindex="1" class="form-control" placeholder="บัญชีผู้ใช้" value="">
+                                        </div><br>
+                                        <div class="row">
+                                            <label style=" margin-right: 25px;">ชื่อ-นามสกุล </label> : &ensp;
+                                            <input type="text" style="width: 235px;" name="register[]" id="user_name" tabindex="1" class="form-control" placeholder="ชื่อ-นามสกุล" value="">
+                                        </div><br>
+                                        <div class="row">
+                                            <label style=" margin-right: 52px;">รหัสผ่าน </label> : &ensp;
+                                            <input type="password" style="width: 235px;" name="register[]" id="user_password" tabindex="2" class="form-control" placeholder="รหัสผ่าน">
+                                        </div><br>
+                                        <div class="row">
+                                            <label style=" margin-right: 10px;">รหัสผ่านอีกครั้ง </label> : &ensp;
+                                            <input type="password" style="width: 235px;" id="confirm-password" tabindex="2" class="form-control" placeholder="รหัสผ่านอีกครั้ง">
                                         </div>
 
-                                        <br>
+                                        <br><br>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="submit" id="register-submit" tabindex="4" class="form-control" value="ยืนยันสมัครสมาชิก">
+                                                    <input type="submit" id="register-submit" tabindex="4" class="form-control btn btn-primary btn-user btn-block" value="ยืนยันสมัครสมาชิก">
                                                 </div>
                                                 <div class="col-sm-6 col-sm-offset-3">
                                                     <input type="button" class="active form-control" id="login-form-link" value="ลงชื่อเข้าสู่ระบบ">
