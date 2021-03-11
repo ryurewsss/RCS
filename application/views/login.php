@@ -20,32 +20,45 @@
     <link href="assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
-
-<body>
-    <div class="container">
+<style>
+    .login-register{
+        background-image : url("<?= base_url() ?>assets/img/black_blog.jpg");
+        background-size: 670px;
+        /* background-color: #cccccc; */
+    }
+    .login-body{
+        background-color: #f2f2f2;
+    }
+</style> 
+<body class="login-body">
+    <div class="container ">
 
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
-            <div class="col-xl-10 col-lg-12 col-md-9">
+            <div class="col-xl-10 col-lg-12 col-md-9 ">
 
                 <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
+                    <div class="card-body p-0 ">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6 d-none d-lg-block login-register"></div>
                             <div class="col-lg-6">
                                 <div class="p-5">
-
                                     <p hidden id="base_url"><?php echo base_url(); ?></p>
 
                                     <form id="login-form" method="post" role="form" style="display: block;">
+                                        <div class="form-group">
+                                        <h3 class="text-center m-b-20">บัญชีรายรับ - รายจ่าย</h3>
+                                        </div><br>
                                         <div class="form-group">
                                             <input type="text" name="login[]" id="user_username" tabindex="1" class="form-control" placeholder="Username" value="">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="login[]" id="user_password" tabindex="2" class="form-control" placeholder="Password">
                                         </div>
+
+                                        <br>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-6 col-sm-offset-3">
@@ -61,10 +74,13 @@
 
                                     <form id="register-form" method="post" role="form" style="display: none;">
                                         <div class="form-group">
-                                            <input type="text" name="register[]" id="user_username" tabindex="1" class="form-control" placeholder="Username" value="">
-                                        </div>
+                                            <h3 class="text-center m-b-20">Register</h3>
+                                        </div><br>
                                         <div class="form-group">
                                             <input type="text" name="register[]" id="user_name" tabindex="1" class="form-control" placeholder="Name" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" name="register[]" id="user_username" tabindex="1" class="form-control" placeholder="Username" value="">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="register[]" id="user_password" tabindex="2" class="form-control" placeholder="Password">
@@ -72,6 +88,8 @@
                                         <div class="form-group">
                                             <input type="password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
                                         </div>
+
+                                        <br>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-6 col-sm-offset-3">
@@ -84,14 +102,6 @@
                                         </div>
                                         <label style="margin-left: 20px;" id="regisError" class="text-danger"></label>
                                     </form>
-                                    <hr>
-                                    <!-- <div class="text-center">
-                                        <a href="#" class="active" id="login-form-link">Login</a>
-                                        &ensp;
-                                        &ensp;
-                                        &ensp;
-                                        <a href="#" id="register-form-link">Register</a>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -103,7 +113,6 @@
         </div>
 
     </div>
-
 </html>
 <!-- Bootstrap core JavaScript-->
 <script src="assets/vendor/jquery/jquery.min.js"></script>
