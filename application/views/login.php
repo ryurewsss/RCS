@@ -21,15 +21,17 @@
 
 </head>
 <style>
-    .login-register{
-        background-image : url("<?= base_url() ?>assets/img/black_blog.jpg");
+    .login-register {
+        background-image: url("<?= base_url() ?>assets/img/black_blog.jpg");
         background-size: 670px;
         /* background-color: #cccccc; */
     }
-    .login-body{
+
+    .login-body {
         background-color: #f2f2f2;
     }
-</style> 
+</style>
+
 <body class="login-body">
     <div class="container ">
 
@@ -49,7 +51,8 @@
 
                                     <form id="login-form" method="post" role="form" style="display: block;">
                                         <div class="form-group">
-                                        <h3 class="text-center m-b-20">บัญชีรายรับ - รายจ่าย</h3>
+                                            <h3 class="text-center m-b-20">เข้าสู่ระบบ</h3><br>
+                                            <h3 class="text-center m-b-20">บัญชีรายรับ - รายจ่าย</h3>
                                         </div><br>
                                         <div class="form-group">
                                             <input type="text" name="login[]" id="user_username" tabindex="1" class="form-control" placeholder="Username" value="">
@@ -62,10 +65,10 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="submit" id="login-submit" tabindex="4" class="form-control" value="Log In">
+                                                    <input type="submit" id="login-submit" tabindex="4" class="form-control" value="เข้าสู่ระบบ">
                                                 </div>
                                                 <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="button" class="form-control" id="register-form-link" value="To Register">
+                                                    <input type="button" class="form-control" id="register-form-link" value="ฉันไม่มีบัญชี">
                                                 </div>
                                             </div>
                                         </div>
@@ -74,7 +77,7 @@
 
                                     <form id="register-form" method="post" role="form" style="display: none;">
                                         <div class="form-group">
-                                            <h3 class="text-center m-b-20">Register</h3>
+                                            <h3 class="text-center m-b-20">สมัครสมาชิก</h3>
                                         </div><br>
                                         <div class="form-group">
                                             <input type="text" name="register[]" id="user_username" tabindex="1" class="form-control" placeholder="Username" value="">
@@ -93,10 +96,10 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="submit" id="register-submit" tabindex="4" class="form-control" value="Register Now">
+                                                    <input type="submit" id="register-submit" tabindex="4" class="form-control" value="ยืนยันสมัครสมาชิก">
                                                 </div>
                                                 <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="button" class="active form-control" id="login-form-link" value="To Login">
+                                                    <input type="button" class="active form-control" id="login-form-link" value="ลงชื่อเข้าสู่ระบบ">
                                                 </div>
                                             </div>
                                         </div>
@@ -113,6 +116,7 @@
         </div>
 
     </div>
+
 </html>
 <!-- Bootstrap core JavaScript-->
 <script src="assets/vendor/jquery/jquery.min.js"></script>
