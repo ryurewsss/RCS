@@ -88,19 +88,18 @@
     })
 
     $('.btn_delete').click(function() {
-        var id = <?php echo $_SESSION['id'] ?>;
+        var id = $(this).attr("id");
         var data = {};
         data['tableName'] = 'ie_transaction';
         data['columnIdName'] = 'transaction_id';
         data['columnDeleteStatus'] = 'transaction_delete_status';
-        data['updateColumn'] = ""
         data['id'] = id;
-        console.log(id);
         $.ajax({
             url: "deleteRow",
             method: "POST",
             data: data,
         }).done(function(returnData) {
+            alert("ลบข้อมูลสำเร็จ");
             getList();
         });
 

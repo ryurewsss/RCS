@@ -80,7 +80,8 @@ class Main extends CI_Controller
         public function deleteRow()
         {
                 $getData = $this->input->post();
-                $this->ieModel->softDelete($getData['tableName'], $getData['columnIdName'], $getData['id'], $getData['columnDeleteStatus'], $getData['updateColumn']);
+                $this->ieModel->softDelete($getData['tableName'], $getData['columnIdName'], $getData['id'], $getData['columnDeleteStatus']);
+                $getData['sql'] = $this->db->last_query(); //for dev
                 $this->output->set_content_type('application/json')->set_output(json_encode($getData));
         }
 }

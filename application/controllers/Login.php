@@ -46,6 +46,8 @@ class Login extends Main
 		$json['password'] = $getData['user_password'];
 
 		$result = $this->ieModel->getAll('ie_user', '*', array('user_username' => $json['username']));
+		// echo $result;
+		// die();
 		if ($result) {
 			if ($result[0]->user_password) {
 				if (password_verify($json['password'], $result[0]->user_password)) {

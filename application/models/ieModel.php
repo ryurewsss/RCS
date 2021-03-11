@@ -48,8 +48,7 @@ class ieModel extends CI_Model
     public function softDelete($table, $columnIdName, $rowId, $deleteStatus)
     {
         $data = array(
-            $deleteStatus => 2
-            // $updateColumn => $_SESSION['id']
+            $deleteStatus => 2,
         );
         $this->db->where($columnIdName, $rowId);
         $this->db->update($table, $data);
