@@ -77,10 +77,10 @@
                                             <h3 class="text-center m-b-20">Register</h3>
                                         </div><br>
                                         <div class="form-group">
-                                            <input type="text" name="register[]" id="user_name" tabindex="1" class="form-control" placeholder="Name" value="">
+                                            <input type="text" name="register[]" id="user_username" tabindex="1" class="form-control" placeholder="Username" value="">
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" name="register[]" id="user_username" tabindex="1" class="form-control" placeholder="Username" value="">
+                                            <input type="text" name="register[]" id="user_name" tabindex="1" class="form-control" placeholder="Name" value="">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="register[]" id="user_password" tabindex="2" class="form-control" placeholder="Password">
