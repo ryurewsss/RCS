@@ -19,7 +19,7 @@
         <div id="searchTable"></div><br>
         <div class="row">
             <label style="font-size:15pt; margin-left: 68%; margin-right: 15px">ยอดเงินรวม </label>
-            <input style="width: 200px; height: 33px; font-size:13pt; text-align:right;" type="text" class="form-control" id="sum" placeholder="0.00" disabled>
+            <input style="width: 200px; height: 33px; font-size:13pt; text-align:right;" type="text" class="form-control" id="sum" placeholder="0.00" readonly>
             <label style="font-size:15pt; margin-left: 5px">&ensp; บาท </label>
         </div>
     </div>
