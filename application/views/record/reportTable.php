@@ -32,22 +32,23 @@
             <form>
                 <div class="form-group row">
                     <label for="" class="col-sm-6 col-form-label col-form-label-lg text-right">รวมรายรับ</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control form-control-lg text-success text-right font-size" id="sumIncomes" value="0" readonly>
+                    <div class="col-md-4 bg-light " style="text-align: right;margin: 0 10px 0;vertical-align: middle;line-height: 50px; font-size: 150%;color: #4CAF50;">
+                        <a id="sumIncomes"></a>
                     </div>
                     <label for="" class="col-form-label col-form-label-lg">บาท</label>
                 </div>
                 <div class="form-group row">
                     <label for="" class="col-sm-6 col-form-label col-form-label-lg text-right">รวมรายจ่าย</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control form-control-lg text-danger text-right" id="sumExpends" value="0" readonly>
+                    <div class="col-md-4 bg-light " style="text-align: right;margin: 0 10px 0;vertical-align: middle;line-height: 50px; font-size: 150%;color: red;">
+                        <a id="sumExpends"></a>
                     </div>
                     <label for="" class="col-form-label col-form-label-lg">บาท</label>
                 </div>
                 <div class="form-group row">
                     <label for="" class="col-sm-6 col-form-label col-form-label-lg text-right">ยอดเงินคงเหลือ</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control form-control-lg text-right" id="balance" value="0" readonly>
+
+                    <div class="col-md-4 bg-light " style="text-align: right;margin: 0 10px 0;vertical-align: middle;line-height: 50px; font-size: 150%;">
+                        <a id="balance"></a>
                     </div>
                     <label for="" class="col-form-label col-form-label-lg">บาท</label>
                 </div>

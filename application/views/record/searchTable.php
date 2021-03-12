@@ -18,9 +18,14 @@
 
         <div id="searchTable"></div><br>
         <div class="row">
-            <label style="font-size:15pt; margin-left: 68%; margin-right: 15px">ยอดเงินรวม </label>
-            <input style="width: 200px; height: 33px; font-size:13pt; text-align:right;" type="text" class="form-control" id="sum" placeholder="0.00" readonly>
-            <label style="font-size:15pt; margin-left: 5px">&ensp; บาท </label>
+            <label for="" class="col-md-9 col-form-label col-form-label-lg text-right">ยอดเงินรวม</label>
+            <div class="col-md-2 bg-light " style="text-align: right;margin: 0 10px 0;vertical-align: middle;line-height: 50px; font-size: 150%;">
+                <a id="sum"></a>
+            </div>
+            <label for="" class="col-form-label col-form-label-lg">บาท</label>
+            <!-- <label style="font-size:15pt; margin-left: 68%; margin-right: 15px">ยอดเงินรวม </label>
+            <input style="width: 200px; height: 33px; font-size:13pt; text-align:right;" type="text" class="form-control" id="sum" placeholder="0.00" readonly> -->
+            <!-- <label style="font-size:15pt; margin-left: 5px">&ensp; บาท </label> -->
         </div>
     </div>
 </div>

@@ -64,9 +64,9 @@
     var balance = sumIncomes + sumExpends;
     sumExpends = sumExpends * -1;
 
-    $('#sumIncomes').val((commaSeparateNumber(sumIncomes.toFixed(2))));
-    $('#sumExpends').val((commaSeparateNumber(Math.abs(sumExpends).toFixed(2))));
-    $('#balance').val((commaSeparateNumber(balance.toFixed(2))));
+    $('#sumIncomes').html((commaSeparateNumber(sumIncomes.toFixed(2))));
+    $('#sumExpends').html((commaSeparateNumber(Math.abs(sumExpends).toFixed(2))));
+    $('#balance').html((commaSeparateNumber(balance.toFixed(2))));
 
     function commaSeparateNumber(val) {
         while (/(\d+)(\d{3})/.test(val.toString())) {

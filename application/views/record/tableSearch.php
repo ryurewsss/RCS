@@ -22,7 +22,7 @@
                     <?php if ($val->transaction_delete_status == "active") { ?>
                         <tr class="text-center">
                             <td hidden><?= $i++ ?></td>
-                            <td><?= date("d/m/Y", strtotime($val->transaction_date))?></td>
+                            <td><?= date("d/m/Y", strtotime($val->transaction_date)) ?></td>
                             <td class="text-left"><?= $val->transaction_description ?></td>
                             <?php if ($val->transaction_cash < 0) { ?>
                                 <td>-</td>
@@ -42,7 +42,13 @@
 
 
 <script>
+    function commaSeparateNumber(val) {
+        while (/(\d+)(\d{3})/.test(val.toString())) {
+            val = val.toString().replace(/(\d+)(\d{3})/, '$1' + ',' + '$2');
+        }
+        return val;
+    }
     var sum = <?php echo json_encode($sum) ?>;
 
-    $('#sum').val(parseFloat(sum).toFixed(2));
+    $('#sum').html(commaSeparateNumber(parseFloat(sum).toFixed(2)));
 </script>
