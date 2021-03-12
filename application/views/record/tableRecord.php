@@ -26,26 +26,30 @@
                 <?php foreach ($table as $key => $val) { ?>
 
                     <!-- <?php if ($val->transaction_delete_status == "active") { ?> -->
-                        <tr class="text-center">
-                            <td hidden>i++</td>
-                            <td><?= date("d/m/Y", strtotime($val->transaction_date)) ?></td>
-                            <td class="text-left"><?= $val->transaction_description ?></td>
-                            <?php if ($val->transaction_cash < 0) {
-                                $sum_expense += $val->transaction_cash; ?>
-                                <td>-</td>
-                                <td class="text-danger font-weight-bold"><?= number_format($val->transaction_cash * -1, 2) ?></td>
-                            <?php } else {
-                                $sum_income += $val->transaction_cash; ?>
-                                <td class="text-success font-weight-bold"><?= number_format($val->transaction_cash, 2) ?></td>
-                                <td>-</td>
-                            <?php } ?>
-                            <td class="text-secondary font-weight-bold"><?= number_format($sum, 2) ?></td>
-                            <td>
-                                <button type="button" class="btn waves-effect waves-light btn-warning btn-sm btn_edit" data-toggle="modal" data-toggle="modal" data-target="#editData" data-cash="<?= $val->transaction_cash ?>" data-description="<?= $val->transaction_description ?>" data-id="<?= $val->transaction_id ?>"><i class="fas fa-pencil-alt"></i></button>
-                                <button type="button" class="btn waves-effect waves-light btn-danger btn-sm btn_delete" id="<?= $val->transaction_id  ?>"><i class="fas fa-trash-alt"></i></button>
-                            </td>
-                        </tr>
-                        <?php $sum = $sum - ($val->transaction_cash); ?>
+                    <tr class="text-center">
+                        <td hidden>i++</td>
+                        <td>
+                            <div hidden><?=
+                                        date('Y-m-d', strtotime(substr($val->transaction_date, 0, 10)));
+                                        ?></div><?= date("d/m/Y", strtotime($val->transaction_date)) ?>
+                        </td>
+                        <td class="text-left"><?= $val->transaction_description ?></td>
+                        <?php if ($val->transaction_cash < 0) {
+                                    $sum_expense += $val->transaction_cash; ?>
+                            <td>-</td>
+                            <td class="text-danger font-weight-bold"><?= number_format($val->transaction_cash * -1, 2) ?></td>
+                        <?php } else {
+                                    $sum_income += $val->transaction_cash; ?>
+                            <td class="text-success font-weight-bold"><?= number_format($val->transaction_cash, 2) ?></td>
+                            <td>-</td>
+                        <?php } ?>
+                        <td class="text-secondary font-weight-bold"><?= number_format($sum, 2) ?></td>
+                        <td>
+                            <button type="button" class="btn waves-effect waves-light btn-warning btn-sm btn_edit" data-toggle="modal" data-toggle="modal" data-target="#editData" data-cash="<?= $val->transaction_cash ?>" data-description="<?= $val->transaction_description ?>" data-id="<?= $val->transaction_id ?>"><i class="fas fa-pencil-alt"></i></button>
+                            <button type="button" class="btn waves-effect waves-light btn-danger btn-sm btn_delete" id="<?= $val->transaction_id  ?>"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    <?php $sum = $sum - ($val->transaction_cash); ?>
                     <!-- <?php } ?> -->
                 <?php } ?>
             <?php } ?>
@@ -94,15 +98,16 @@
         data['columnIdName'] = 'transaction_id';
         data['columnDeleteStatus'] = 'transaction_delete_status';
         data['id'] = id;
-        $.ajax({
-            url: "deleteRow",
-            method: "POST",
-            data: data,
-        }).done(function(returnData) {
-            alert("ลบข้อมูลสำเร็จ");
-            getList();
-        });
-
+        if (confirm('ยืนยันการลบรายการนี้หรือไม่')) {
+            $.ajax({
+                url: "deleteRow",
+                method: "POST",
+                data: data,
+            }).done(function(returnData) {
+                alert("ลบข้อมูลสำเร็จ");
+                getList();
+            });
+        }
         // Swal.fire({
         //     title: 'ยืนยันการลบ',
         //     text: "ต้องการลบข้อมูลหรือไม่",

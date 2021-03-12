@@ -28,8 +28,10 @@
             ?>
                 <?php foreach ($table as $key => $val) { ?>
                     <tr class="text-center">
-                        <td hidden><?= $i++ ?></td>
-                        <td><?= $val->Mounth ?></td>
+                        <td hidden><?= $i ?></td>
+                        <td>
+                            <div hidden><?= $i++ ?></div><?= $val->Mounth ?>
+                        </td>
                         <?php if ($val->incomes == '') { ?>
                             <td>-</td>
                         <?php } else {

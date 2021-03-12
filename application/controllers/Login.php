@@ -45,7 +45,7 @@ class Login extends Main
 		$json['username'] = $getData['user_username'];
 		$json['password'] = $getData['user_password'];
 
-		$result = $this->ieModel->getAll('ie_user', '*', array('user_username' => $json['username']));
+		$result = $this->ieModel->getAll('ie_user', '*', array('user_username' => $json['username'], 'user_delete_status' => 'active'));
 		// echo $result;
 		// die();
 		if ($result) {

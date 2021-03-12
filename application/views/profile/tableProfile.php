@@ -54,7 +54,7 @@
                         <div class="row">
                             <p hidden id="base_url"><?php echo base_url(); ?></p>
                             <button style="margin-left: 22px;" class="btn btn-success" type="button" id="submitEditProfile" data-id=''>บันทึก</button>&ensp;
-                            <button class="btn btn-danger btn_delete" type="button" id="<?= $val->user_id ?>" data-id='' onclick="return confirm('Are you sure you want to delete this item?');">ลบบัญชีผู้ใช้</button>
+                            <button class="btn btn-danger btn_delete" type="button" id="<?= $val->user_id ?>" data-id=''>ลบบัญชีผู้ใช้</button>
                         </div>
                     <?php } ?>
                 <?php } ?>
@@ -98,6 +98,7 @@
     //submit edit form
 
     $('.btn_delete').click(function() {
+
         var id = <?php echo $_SESSION['id'] ?>;
         var data = {};
         data['tableName'] = 'ie_user';
@@ -106,18 +107,20 @@
         data['updateColumn'] = ""
         data['id'] = id;
         console.log(id);
-
-        $.ajax({
-            url: "deleteRow",
-            method: "POST",
-            data: data,
-        }).done(function(returnData) {
+        if (confirm('ยืนยันการลบบัญชีผู้ใช้หรือไม่')) {
             $.ajax({
-                url: "../Login/logout",
-                method: "POST"
+                url: "deleteRow",
+                method: "POST",
+                data: data,
             }).done(function(returnData) {
-                window.location.replace($('#base_url').html());
+                $.ajax({
+                    url: "../Login/logout",
+                    method: "POST"
+                }).done(function(returnData) {
+                    alert("ลบข้อมูลเสร็จสิ้น")
+                    window.location.replace($('#base_url').html());
+                });
             });
-        });
+        }
     })
 </script>

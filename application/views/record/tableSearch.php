@@ -22,7 +22,11 @@
                     <?php if ($val->transaction_delete_status == "active") { ?>
                         <tr class="text-center">
                             <td hidden><?= $i++ ?></td>
-                            <td><?= date("d/m/Y", strtotime($val->transaction_date)) ?></td>
+                            <td>
+                                <div hidden><?=
+                                            date('Y-m-d', strtotime(substr($val->transaction_date, 0, 10)));
+                                            ?></div><?= date("d/m/Y", strtotime($val->transaction_date)) ?>
+                            </td>
                             <td class="text-left"><?= $val->transaction_description ?></td>
                             <?php if ($val->transaction_cash < 0) { ?>
                                 <td>-</td>
