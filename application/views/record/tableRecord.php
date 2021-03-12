@@ -25,7 +25,7 @@
                 } ?>
                 <?php foreach ($table as $key => $val) { ?>
 
-                    <?php if ($val->transaction_delete_status == "active") { ?>
+                    <!-- <?php if ($val->transaction_delete_status == "active") { ?> -->
                         <tr class="text-center">
                             <td hidden>i++</td>
                             <td><?= date("d/m/Y", strtotime($val->transaction_date)) ?></td>
@@ -46,7 +46,7 @@
                             </td>
                         </tr>
                         <?php $sum = $sum - ($val->transaction_cash); ?>
-                    <?php } ?>
+                    <!-- <?php } ?> -->
                 <?php } ?>
             <?php } ?>
 

@@ -334,7 +334,7 @@
         var data = {};
         data['tableName'] = 'ie_transaction';
         data['colName'] = '';
-        data['where'] = "transaction_date LIKE '" + new Date().getFullYear() + "%' and transaction_user_id = " + <?php echo $_SESSION['id'] ?>;
+        data['where'] = "transaction_delete_status = 'active' and transaction_date LIKE '" + new Date().getFullYear() + "%' and transaction_user_id = " + <?php echo $_SESSION['id'] ?>;
         data['order'] = 'transaction_date DESC';
         data['arrayJoinTable'] = '';
         data['groupBy'] = '';
