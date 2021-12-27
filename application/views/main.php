@@ -10,7 +10,7 @@
   <meta name="author" content="">
 
   <!-- <title><?= $title_name ?></title> -->
-  <title>Team 4 Mini Project</title>
+  <title>Car rental system with blockchain technology</title>
 
 
   <!-- Page level plugins -->
@@ -41,9 +41,10 @@
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url() ?>">
         <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
+          <!-- <i class="fas fa-laugh-wink"></i> -->
+          <i class="fas fa-car" style='font-size:40px'></i>
         </div>
-        <div class="sidebar-brand-text mx-3">Team <sup>4</sup></div>
+        <div class="sidebar-brand-text mx-3">CRS</div>
       </a>
 
       <!-- Divider -->
@@ -65,28 +66,52 @@
       </div>
 
       <li class="nav-item active">
-        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/record" aria-expanded="false">
-          <i class="fas fa-clipboard-list" style='font-size:20px'></i>
-          <span>บันทึกรายรับ-รายจ่าย</span></a>
+        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>" aria-expanded="false">
+          <i class="fas fa-home" style='font-size:20px'></i>
+          <span>หน้าแรก</span></a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/search" aria-expanded="false">
-          <i class="fa fa-search" style='font-size:20px'></i>
-          <span>ค้นหา</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/report" aria-expanded="false">
-          <i class="fas fa-scroll" style='font-size:20px'></i>
-          <span>รายงาน</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/profile" aria-expanded="false">
-          <i class="far fa-address-card" style='font-size:20px'></i>
-          <span>ข้อมูลส่วนตัว</span></a>
-      </li>
+
+      <?php
+      $usertype = 'lessor';
+        if($usertype == 'lessor'){
+      ?>
+        <li class="nav-item active">
+          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/record" aria-expanded="false">
+            <i class="fa fa-search" style='font-size:20px'></i>
+            <span>ตรวจสอบการเช่า</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/record" aria-expanded="false">
+            <i class="far fa-address-card" style='font-size:20px'></i>
+            <span>แก้ไขบัญชีผู้ใช้</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/car" aria-expanded="false">
+            <i class="fas fa-clipboard-list" style='font-size:20px'></i>
+            <span>จัดการรถเช่า</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/record" aria-expanded="false">
+            <i class="fas fa-user-friends" style='font-size:20px'></i>
+            <span>จัดการสมาชิก</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/report" aria-expanded="false">
+            <i class="fas fa-scroll" style='font-size:20px'></i>
+            <span>ประวัติการเช่า</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/search" aria-expanded="false">
+            <i class="fa fa-search" style='font-size:20px'></i>
+            <span>ตรวจสอบการฝากเช่า</span></a>
+        </li>
+      <?php
+        }
+      ?>
+      
       <li class="nav-item active">
         <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Login/logout" aria-expanded="false">
-          <i class="fas fa-clipboard-list" style='font-size:20px'></i>
+          <i class="fas fa-sign-out-alt" style='font-size:20px'></i>
           <span>ออกจากระบบ</span></a>
       </li>
 
