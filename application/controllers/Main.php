@@ -52,7 +52,7 @@ class Main extends CI_Controller
 
                 $tableData = $getData['table'];
                 $arrayData = $getData['arrayData'];
-                if ($tableData['tableName'] == 'ie_user') {
+                if ($tableData['tableName'] == 'crs_car') {
                 } else {
                         $arrayData[$getData['createColumn']] = $_SESSION['id'];
 

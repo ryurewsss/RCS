@@ -22,6 +22,62 @@ class Car extends Main
 	}
 	// ___________________ End Car ____________________
 
+	// __________________ Start addCar __________________
+	public function addCar()
+	{
+		$config['upload_path'] = './img/';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size'] = '2000';
+		$config['max_width'] = '3000';
+		$config['max_height'] = '3000';
+
+		$this->load->library('upload', $config);
+
+		if(!$this->upload->do_upload('car_upload')){
+			echo $this->upload->display_errors();
+		}else{
+			$data = $this->upload->data();
+			$filename = $data['file_name'];
+			$arrayData = array(
+				'car_registration' => $this->input->post('car_registration'),
+				'car_brand' => $this->input->post('car_brand'),
+				'car_model' => $this->input->post('car_model'),
+				'car_feature' => $this->input->post('car_feature'),
+				'car_description' => $this->input->post('car_description'),
+				'car_price' => $this->input->post('car_price'),
+				'car_upload' => $filename
+			);
+			$addedId = $this->ieModel->add('crs_car', $arrayData);
+			$this->output->set_content_type('application/json')->set_output(json_encode($addedId));
+		}
+
+	}
+	// ___________________ End addCar ____________________
+
+	// __________________ Start addCar __________________
+	public function getCarTable()
+	{
+
+		$arrayData = array(
+			'tableName' => 'crs_car',
+			'colName' => '',
+			'where' => '',
+			'order' => '',
+			'arrayJoinTable' => '',
+			'groupBy' => '',
+			'pathView' => 'car/tableCar',
+		);
+
+		$data['table'] = $this->ieModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$json['table'] = $data['table'];
+		$json['sql'] = $this->db->last_query(); //for dev
+		if ($arrayData['pathView'] != "getData") {
+			$json['html'] = $this->load->view($arrayData['pathView'], $data, TRUE);
+		}
+		$this->output->set_content_type('application/json')->set_output(json_encode($json));
+	}
+	// ___________________ End addCar ____________________
+
 	// __________________ Start search __________________
 	public function search()
 	{
