@@ -22,8 +22,8 @@
 </head>
 <style>
     .login-register{
-        background-image : url("<?= base_url() ?>assets/img/black_blog.jpg");
-        background-size: 700px;
+        background-image : url("<?= base_url() ?>assets/img/CRS.jpg");
+        background-size: 600px;
         /* background-color: #cccccc; */
     }
 
@@ -56,7 +56,7 @@
                                         </div><br>
                                         <div class="row">
                                             <label style="margin-right: 25px;">อีเมลล์ </label> : &ensp;
-                                            <input type="text" style="width: 270px;" name="login[]" id="user_username" tabindex="1" class="form-control" placeholder="อีเมลล์" value="">
+                                            <input type="email" style="width: 270px;" name="login[]" id="user_email" tabindex="1" class="form-control" placeholder="อีเมลล์" value="">
                                         </div><br>
                                         <div class="row">
                                             <label style="margin-right: 15px;">รหัสผ่าน </label> : &ensp;
@@ -84,11 +84,15 @@
                                         </div><br>
                                         <div class="row">
                                             <label style=" margin-right: 63px;">อีเมลล์ </label> : &ensp;
-                                            <input type="text" style="width: 235px;" name="register[]" id="user_username" tabindex="1" class="form-control" placeholder="อีเมลล์" value="">
+                                            <input type="email" style="width: 235px;" name="register[]" id="user_email" tabindex="1" class="form-control" placeholder="อีเมลล์" value="">
                                         </div><br>
                                         <div class="row">
-                                            <label style=" margin-right: 25px;">ชื่อ-นามสกุล </label> : &ensp;
-                                            <input type="text" style="width: 235px;" name="register[]" id="user_name" tabindex="1" class="form-control" placeholder="ชื่อ-นามสกุล" value="">
+                                            <label style=" margin-right: 25px;">ชื่อ </label> : &ensp;
+                                            <input type="text" style="width: 235px;" name="register[]" id="user_fname" tabindex="1" class="form-control" placeholder="ชื่อ" value="">
+                                        </div><br>
+                                        <div class="row">
+                                            <label style=" margin-right: 25px;">นามสกุล </label> : &ensp;
+                                            <input type="text" style="width: 235px;" name="register[]" id="user_lname" tabindex="1" class="form-control" placeholder="นามสกุล" value="">
                                         </div><br>
                                         <div class="row">
                                             <label style=" margin-right: 52px;">รหัสผ่าน </label> : &ensp;
@@ -100,7 +104,7 @@
                                         </div><br>
                                         <div class="row">
                                             <label style=" margin-right: 18px;">เบอร์โทรศัพท์ </label> : &ensp;
-                                            <input type="text" style="width: 235px;" id="telephone" tabindex="2" class="form-control" placeholder="เบอร์โทรศัพท์">
+                                            <input type="tel" style="width: 235px;" name="register[]" id="user_phone" tabindex="2" class="form-control" placeholder="เบอร์โทรศัพท์" pattern="[0-9]{3}[0-9]{3}[0-9]{4}">
                                         </div>
 
                                         <br><br>
@@ -182,9 +186,9 @@
 
 
         var tableData = {};
-        tableData['tableName'] = 'ie_user';
-        tableData['user_username'] = formData['user_username'];
-        tableData['columnName'] = 'user_username';
+        tableData['tableName'] = 'crs_user';
+        tableData['user_email'] = formData['user_email'];
+        tableData['columnName'] = 'user_email';
         $.ajax({
             method: "POST",
             url: "Login/checkUsername",
@@ -192,7 +196,7 @@
         }).done(function(returnData) {
             console.log(returnData)
             //return false = pass
-            if (formData['user_username'] == '' || formData['user_password'] == '' || $('#confirm-password').val() == '') {
+            if (formData['user_email'] == '' || formData['user_password'] == '' || $('#confirm-password').val() == '') {
                 $('#regisError').html('Please fill in the correct details.');
                 // $('#regisError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');
                 pass = false;
@@ -232,7 +236,7 @@
         });
         var pass = true;
         console.log(formData);
-        if (formData['user_username'] == '' || formData['user_password'] == '') {
+        if (formData['user_email'] == '' || formData['user_password'] == '') {
             // alert("ASD")
             $('#loginError').html('Please fill in the correct details.');
             // $('#loginError').html('กรุณากรอกรายละเอียดให้ถูกต้อง');

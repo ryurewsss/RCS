@@ -25,7 +25,7 @@ class Login extends Main
 	public function checkUsername()
 	{
 		$getData = $this->input->post();
-		$returnData = $this->ieModel->getAll($getData['tableName'], '', array($getData['columnName'] => $getData['user_username']));
+		$returnData = $this->ieModel->getAll($getData['tableName'], '', array($getData['columnName'] => $getData['user_email']));
 		$this->output->set_content_type('application/json')->set_output(json_encode($returnData));
 	}
 
@@ -36,22 +36,23 @@ class Login extends Main
 
 		$arrayData['user_password'] = password_hash($arrayData['user_password'], PASSWORD_DEFAULT);
 
-		$this->ieModel->add('ie_user', $arrayData);
+		$this->ieModel->add('crs_user', $arrayData);
 	}
 
 	public function login()
 	{
 		$getData = $this->input->post();
-		$json['username'] = $getData['user_username'];
+		$json['email'] = $getData['user_email'];
 		$json['password'] = $getData['user_password'];
 
-		$result = $this->ieModel->getAll('ie_user', '*', array('user_username' => $json['username'], 'user_delete_status' => 'active'));
+		$result = $this->ieModel->getAll('crs_user', '*', array('user_email' => $json['email']));
+		// 'user_delete_status' => 'active'
 		// echo $result;
 		// die();
 		if ($result) {
 			if ($result[0]->user_password) {
 				if (password_verify($json['password'], $result[0]->user_password)) {
-					$_SESSION['name'] = $result[0]->user_name;
+					$_SESSION['name'] = $result[0]->user_fname;
 					$_SESSION['id'] = $result[0]->user_id;
 					// $_SESSION['username'] = $result->row()->username;
 					$json['login'] = 'True';
