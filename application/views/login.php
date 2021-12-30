@@ -21,18 +21,33 @@
 
 </head>
 <style>
-    .login-register{
+.card-body{
+    background-color: #48AAAD;
+}
+label,h3,h4{
+    color: #fcfcfc;
+}
+img{
+    margin-left: 38%;
+}
+.text-login{
+    margin-left: 10%;
+}
+
+    /* .login-register{
         background-image : url("<?= base_url() ?>assets/img/CRS.jpg");
         background-size: 600px;
-        /* background-color: #cccccc; */
+        background-color: #cccccc;
     }
 
     .login-body {
         background-color: #f2f2f2;
-    }
+    } */
 </style>
 
 <body class="login-body">
+
+
     <div class="container ">
 
         <!-- Outer Row -->
@@ -44,22 +59,30 @@
                     <div class="card-body p-0 ">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block login-register"></div>
+                            <!-- <div class="col-lg-6 d-none d-lg-block login-register"></div> -->
+                            <div class="col-md-3 register-left">
+                                <!-- <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/> -->
+                                <!-- <h3>Welcome</h3>
+                                <p>ระบบเช่ารถยนต์</p> -->
+                                <!-- <input type="submit" name="" value="Login"/><br/> -->
+                            </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <p hidden id="base_url"><?php echo base_url(); ?></p>
 
                                     <form id="login-form" method="post" role="form" style="display: block;">
                                         <div class="form-group">
-                                        <h3 class="text-center m-b-20">เข้าสู่ระบบ</h3><br>
-                                        <h4 class="text-center m-b-20">ระบบเช่ารถยนต์</h4>
-                                        </div><br>
+                                        <img src="Img/iconcar.png" width="120" height="120"><br><br>
+                                        <h4 class="text-center text-login m-b-20">เข้าสู่ระบบ</h4>
+                                        <!-- <h4 class="text-center m-b-20">ระบบเช่ารถยนต์</h4> -->
+                                        </div>
+                                        
                                         <div class="row">
-                                            <label style="margin-right: 25px;">อีเมลล์ </label> : &ensp;
+                                            <label style="margin-right: 25px;">อีเมลล์ :</label>  
                                             <input type="email" style="width: 270px;" name="login[]" id="user_email" tabindex="1" class="form-control" placeholder="อีเมลล์" value="">
                                         </div><br>
                                         <div class="row">
-                                            <label style="margin-right: 15px;">รหัสผ่าน </label> : &ensp;
+                                            <label style="margin-right: 15px;">รหัสผ่าน :</label>  
                                             <input type="password" style="width: 270px;" name="login[]" id="user_password" tabindex="2" class="form-control" placeholder="รหัสผ่าน">
                                         </div>
 
@@ -80,30 +103,31 @@
 
                                     <form id="register-form" method="post" role="form" style="display: none;">
                                         <div class="form-group">
-                                            <h3 class="text-center m-b-20">สมัครสมาชิก</h3>
-                                        </div><br>
+                                        <img src="Img/iconcar.png" width="120" height="120"><br><br>
+                                            <h4 class="text-center text-login m-b-20">สมัครสมาชิก</h4>
+                                        </div>
                                         <div class="row">
-                                            <label style=" margin-right: 63px;">อีเมลล์ </label> : &ensp;
+                                            <label style=" margin-right: 63px;">อีเมลล์ :</label>  
                                             <input type="email" style="width: 235px;" name="register[]" id="user_email" tabindex="1" class="form-control" placeholder="อีเมลล์" value="">
                                         </div><br>
                                         <div class="row">
-                                            <label style=" margin-right: 25px;">ชื่อ </label> : &ensp;
+                                            <label style=" margin-right: 86px;">ชื่อ :</label>  
                                             <input type="text" style="width: 235px;" name="register[]" id="user_fname" tabindex="1" class="form-control" placeholder="ชื่อ" value="">
                                         </div><br>
                                         <div class="row">
-                                            <label style=" margin-right: 25px;">นามสกุล </label> : &ensp;
+                                            <label style=" margin-right: 49px;">นามสกุล :</label>  
                                             <input type="text" style="width: 235px;" name="register[]" id="user_lname" tabindex="1" class="form-control" placeholder="นามสกุล" value="">
                                         </div><br>
                                         <div class="row">
-                                            <label style=" margin-right: 52px;">รหัสผ่าน </label> : &ensp;
+                                            <label style=" margin-right: 52px;">รหัสผ่าน :</label>  
                                             <input type="password" style="width: 235px;" name="register[]" id="user_password" tabindex="2" class="form-control" placeholder="รหัสผ่าน">
                                         </div><br>
                                         <div class="row">
-                                            <label style=" margin-right: 10px;">รหัสผ่านอีกครั้ง </label> : &ensp;
+                                            <label style=" margin-right: 10px;">รหัสผ่านอีกครั้ง :</label>  
                                             <input type="password" style="width: 235px;" id="confirm-password" tabindex="2" class="form-control" placeholder="รหัสผ่านอีกครั้ง">
                                         </div><br>
                                         <div class="row">
-                                            <label style=" margin-right: 18px;">เบอร์โทรศัพท์ </label> : &ensp;
+                                            <label style=" margin-right: 18px;">เบอร์โทรศัพท์ :</label>  
                                             <input type="tel" style="width: 235px;" name="register[]" id="user_phone" tabindex="2" class="form-control" placeholder="เบอร์โทรศัพท์" pattern="[0-9]{3}[0-9]{3}[0-9]{4}">
                                         </div>
 
