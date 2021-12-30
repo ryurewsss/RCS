@@ -25,12 +25,12 @@ class Car extends Main
 	// __________________ Start addCar __________________
 	public function addCar()
 	{
-		$config['upload_path'] = './img/';
+		$config['upload_path'] = './img/car_img/';
 		$config['allowed_types'] = 'gif|jpg|png';
 		$config['max_size'] = '2000';
 		$config['max_width'] = '3000';
 		$config['max_height'] = '3000';
-
+	
 		$this->load->library('upload', $config);
 
 		if(!$this->upload->do_upload('car_upload')){
