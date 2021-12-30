@@ -53,4 +53,11 @@ class ieModel extends CI_Model
         $this->db->where($columnIdName, $rowId);
         $this->db->update($table, $data);
     }
+
+    public function delete($table, $columnIdName, $rowId)
+    {
+        $this->db->where($columnIdName, $rowId);
+        $this->db->delete($table);
+    }
+
 }

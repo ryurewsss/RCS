@@ -21,6 +21,8 @@
 }
 .car_image{
     width: 50%;
+    max-width: 500px;
+    max-height: 500px;
     height: auto;
 }
 
@@ -95,14 +97,14 @@
                     </div>
                     <div class="row">
                         <div class="col-3">
-                            <label >รูปรถยนต์ </label>
+                            <label >รูปรถยนต์ <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <input style="width: 250px;" type="file" class="form-control" name="car_upload" id="car_upload" onchange="readURL(this); src='' ">
+                        <input style="width: 250px;" type="file" class="form-control" name="car_upload" id="car_upload" onchange="readURL(this,'add'); src='' ">
                         <!-- <input type="file" name="image_file" id="image_file" onchange="readURL(this);"/> -->
                     </div>
                     <div class="row">
                         <div class="col-3"></div>
-                        <img class="car_image" src="#" alt="your image" hidden/>
+                        <img class="car_image" id="car_image" src="#" alt="your image" hidden/>
                     </div>
 
                 </div>
@@ -168,18 +170,18 @@
                     </div>
                     <div class="row">
                         <div class="col-3">
-                            <label >รูปรถยนต์ </label>
+                            <label >รูปรถยนต์ <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <input style="width: 250px;" type="file" class="form-control" name="car_upload" id="e_car_upload" onchange="readURL(this);">
+                        <input style="width: 250px;" type="file" class="form-control" name="car_upload" id="e_car_upload" onchange="readURL(this,'edit');">
                     </div>
                     <div class="row">
                         <div class="col-3"></div>
-                        <img class="car_image" src="#" alt="your image" hidden/>
+                        <img class="car_image" id="e_car_image" src="#" alt="your image" hidden/>
                     </div>
-                    <input style="width: 250px;" type="hidden" class="form-control" name="car_id" id="e_car_id" autocomplete="off">
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="car_id" id="e_car_id">
+                    <input type="hidden" name="old_image" id="e_old_image">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
                     <button type="submit" class="btn waves-effect waves-light btn-success">บันทึก</button>
                 </div>
@@ -191,13 +193,18 @@
 <script>
     getList();
 
-    function readURL(input) {
+    function readURL(input,modal) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-            $('.car_image').attr('src', e.target.result);
-            $('.car_image').attr('hidden',false);
+                if(modal == 'add'){
+                    $('#car_image').attr('src', e.target.result);
+                    $('#car_image').attr('hidden',false);
+                }else if(modal == 'edit'){
+                    $('#e_car_image').attr('src', e.target.result);
+                    $('#e_car_image').attr('hidden',false);
+                }
             };
 
             reader.readAsDataURL(input.files[0]);
@@ -206,50 +213,41 @@
 
     $('#editCarForm').on('submit', function(event) {
         event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
-        var formData = {};
-        $("[name^='EditData']").each(function() {
-            formData[this.id] = this.value;
-        });
-
-        if (formData['transaction_cash'] == '' || parseFloat(formData['transaction_cash']) <= 0) {
-            $('#EditcomeError').html('กรุณากรอกจำนวนเงินให้ถูกต้อง');
-        } else {
-            $('#EditcomeError').html('');
-
-            var formData = {};
-            $("[name^='EditData']").each(function() {
-                formData[this.id] = this.value;
-            });
-
-            if (x) {
-                formData['transaction_cash'] = formData['transaction_cash'] * -1;
-                x = false;
-                console.log(x);
-            }
-
-            var tableData = {};
-            tableData['tableName'] = 'ie_transaction';
-
-
-            var whereData = {
-                'transaction_id': document.getElementById("transaction_id").value,
-                'transaction_user_id': <?php echo $_SESSION['id'] ?>
-            };
-
-            $.ajax({
-                method: "POST",
-                url: "editData",
-                data: {
-                    table: tableData,
-                    arrayData: formData,
-                    arrayWhere: whereData
-                },
+       
+        //เหลือดัก
+        if( document.getElementById("e_car_upload").files.length == 0 ){
+            $.ajax({  
+                url:"editCarNoFile",
+                method:"POST",  
+                data:new FormData(this),  
+                contentType: false,  
+                cache: false,  
+                processData:false,  
             }).done(function(returnData) {
                 getList();
-                $('#editData form')[0].reset();
-                $('#editData').modal('hide'); //ปิด modal
+                // $('#modalEditCar form')[0].reset();
+                $('#modalEditCar').modal('hide'); //ปิด modal
+                $('#e_car_image').attr('src', '');
+                $('#e_car_image').attr('hidden',true);
             });
-        }
+            //submit without file
+        }else{
+            $.ajax({  
+                url:"editCar",
+                method:"POST",  
+                data:new FormData(this),  
+                contentType: false,  
+                cache: false,  
+                processData:false,  
+            }).done(function(returnData) {
+                getList();
+                // $('#modalEditCar form')[0].reset();
+                $('#modalEditCar').modal('hide'); //ปิด modal
+                $('#e_car_image').attr('src', '');
+                $('#e_car_image').attr('hidden',true);
+            });
+        }//submit with file
+        
     })
 
     $('#addCarForm').on('submit', function(event) {
@@ -268,8 +266,8 @@
                 getList();
                 $('#modalAddcar form')[0].reset();
                 $('#modalAddcar').modal('hide'); //ปิด modal
-                $('.car_image').attr('src', '');
-                $('.car_image').attr('hidden',true);
+                $('#car_image').attr('src', '');
+                $('#car_image').attr('hidden',true);
             }); 
     })
 
