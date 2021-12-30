@@ -41,10 +41,10 @@
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url() ?>">
         <div class="sidebar-brand-icon rotate-n-15">
-          <!-- <i class="fas fa-laugh-wink"></i> -->
-          <i class="fas fa-car" style='font-size:40px'></i>
+          <!-- <i class="fas fa-car" style='font-size:40px'></i> -->
+          <img src="<?= base_url() ?>assets/img/iconcar.png" width="50px" height="50px">
         </div>
-        <div class="sidebar-brand-text mx-3">CRS</div>
+        <div class="sidebar-brand-text mx-3" style="font-size: 28px;">CRS</div>
       </a>
 
       <!-- Divider -->

@@ -34,10 +34,13 @@
         display: block;
         margin-left: auto;
         margin-right: auto;
+        max-width: 500px;
+        max-height: auto;
     }
 </style>
 </head>
 
 <body>
-    <h1>ระบบบัญชีรายรับรายจ่าย</h1>
-    <img src="<?= base_url() ?>assets/img/stocks.png" />
+    <h2 style="text-align: center">ระบบเช่ารถยนต์โดยใช้เทคโนโลยีบล็อกเชน</h2>
+    <!-- <img src="<?= base_url() ?>assets/img/stocks.png" /> -->
+    <img src="<?= base_url() ?>assets/img/order_a_car.svg" />
