@@ -9,8 +9,8 @@ class Main extends CI_Controller
                         redirect('../Login', 'refresh');
                 } else {
                         $data = array(
-                                'page_content' => $this->load->view('dashboard', '', TRUE),
-                                'title_name' => "Team4"
+                                'page_content' => $this->load->view('car/carMain', '', TRUE),
+                                'title_name' => "CRS"
                         );
                         $this->load->view('main', $data);
                 }

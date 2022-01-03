@@ -76,8 +76,8 @@
         modal.find('#e_car_price').val(price);
         modal.find('#e_old_image').val(upload);
 
-        $('.car_image').attr('src', '<?php echo base_url('img/car_img'); ?>/'+upload);
-        $('.car_image').attr('hidden',false);
+        $('#e_car_image').attr('src', '<?php echo base_url('img/car_img'); ?>/'+upload);
+        $('#e_car_image').attr('hidden',false);
 
         // modal.find('#e_car_upload').attr('src', <?php echo base_url('img/car_img'); ?>"/upload");
         

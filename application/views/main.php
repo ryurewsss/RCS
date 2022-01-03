@@ -81,7 +81,7 @@
             <span>ตรวจสอบการเช่า</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/record" aria-expanded="false">
+          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/profile" aria-expanded="false">
             <i class="far fa-address-card" style='font-size:20px'></i>
             <span>แก้ไขบัญชีผู้ใช้</span></a>
         </li>

@@ -85,7 +85,8 @@
                         <div class="col-3">
                             <label >คำอธิบาย <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="car_description" id="car_description" autocomplete="off" placeholder="คำอธิบายรถยนต์">
+                        <!-- <input style="width: 500px; height: 200px" type="text" class="form-control" name="car_description" id="car_description" autocomplete="off" placeholder="คำอธิบายรถยนต์"> -->
+                        <textarea style="width: 400px; height: 100px" class="form-control" rows="3" name="car_description" id="car_description" autocomplete="off" placeholder="คำอธิบายรถยนต์"></textarea>
                     </div>
                     <div class="row">
                         <div class="col-3">
@@ -100,7 +101,6 @@
                             <label >รูปรถยนต์ <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
                         <input style="width: 250px;" type="file" class="form-control" name="car_upload" id="car_upload" onchange="readURL(this,'add'); src='' ">
-                        <!-- <input type="file" name="image_file" id="image_file" onchange="readURL(this);"/> -->
                     </div>
                     <div class="row">
                         <div class="col-3"></div>
@@ -158,7 +158,8 @@
                         <div class="col-3">
                             <label >คำอธิบาย <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="car_description" id="e_car_description" autocomplete="off" placeholder="คำอธิบายรถยนต์">
+                        <!-- <input style="width: 250px;" type="text" class="form-control" name="car_description" id="e_car_description" autocomplete="off" placeholder="คำอธิบายรถยนต์"> -->
+                        <textarea style="width: 400px; height: 100px" class="form-control" rows="3" name="car_description" id="e_car_description" autocomplete="off" placeholder="คำอธิบายรถยนต์"></textarea>
                     </div>
                     <div class="row">
                         <div class="col-3">
@@ -272,10 +273,12 @@
     })
 
     function getList() {
-
+        var data = {};
+        data['type'] = 'manage';
         $.ajax({
             method: "POST",
             url: "getCarTable",
+            data: data,  
         }).done(function(returnedData) {
             $('#carTable').html(returnedData.html);
             $('.mytb').dataTable({

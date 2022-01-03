@@ -123,9 +123,15 @@ class Car extends Main
 			'where' => '',
 			'order' => '',
 			'arrayJoinTable' => '',
-			'groupBy' => '',
-			'pathView' => 'car/tableCar',
+			'groupBy' => ''
 		);
+		
+		if($this->input->post('type') == 'manage'){
+			$arrayData['pathView'] = 'car/tableCar';
+		}
+		if($this->input->post('type') == 'show'){
+			$arrayData['pathView'] = 'car/tableCarMain';
+		}
 
 		$data['table'] = $this->ieModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
 		$json['table'] = $data['table'];
