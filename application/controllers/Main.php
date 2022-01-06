@@ -19,7 +19,7 @@ class Main extends CI_Controller
         public function getTable()
         {
                 $getData = $this->input->post();
-                $data['table'] = $this->ieModel->getAll($getData['tableName'], $getData['colName'], $getData['where'], $getData['order'], $getData['arrayJoinTable'], $getData['groupBy']);
+                $data['table'] = $this->crsModel->getAll($getData['tableName'], $getData['colName'], $getData['where'], $getData['order'], $getData['arrayJoinTable'], $getData['groupBy']);
                 $json['table'] = $data['table'];
                 $json['sql'] = $this->db->last_query(); //for dev
                 if ($getData['pathView'] != "getData") {
@@ -31,7 +31,7 @@ class Main extends CI_Controller
         public function getChart()
         {
                 $getData = $this->input->post();
-                $record = $this->ieModel->getAll($getData['tableName'], $getData['colName'], $getData['where'], $getData['order'], $getData['arrayJoinTable'], $getData['groupBy']);
+                $record = $this->crsModel->getAll($getData['tableName'], $getData['colName'], $getData['where'], $getData['order'], $getData['arrayJoinTable'], $getData['groupBy']);
                 $json['table'] = $record;
                 $data = [];
 
@@ -58,7 +58,7 @@ class Main extends CI_Controller
 
                         // $arrayData[$getData['createColumn']] = 1;
                 }
-                $addedId = $this->ieModel->add($tableData['tableName'], $arrayData);
+                $addedId = $this->crsModel->add($tableData['tableName'], $arrayData);
                 $this->output->set_content_type('application/json')->set_output(json_encode($addedId));
         }
 
@@ -72,7 +72,7 @@ class Main extends CI_Controller
 
                 $arrayWhere = $getData['arrayWhere'];
 
-                $this->ieModel->update($tableData['tableName'], $arrayWhere, $arrayData);
+                $this->crsModel->update($tableData['tableName'], $arrayWhere, $arrayData);
 
                 echo json_encode($this->db->last_query());
         }
@@ -80,7 +80,7 @@ class Main extends CI_Controller
         public function deleteRow()
         {
                 $getData = $this->input->post();
-                $this->ieModel->softDelete($getData['tableName'], $getData['columnIdName'], $getData['id'], $getData['columnDeleteStatus']);
+                $this->crsModel->softDelete($getData['tableName'], $getData['columnIdName'], $getData['id'], $getData['columnDeleteStatus']);
                 $getData['sql'] = $this->db->last_query(); //for dev
                 $this->output->set_content_type('application/json')->set_output(json_encode($getData));
         }

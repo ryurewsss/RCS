@@ -31,7 +31,6 @@
     ?>
     <?php
     foreach ($table as $key => $val) { 
-        // if($i == 0 || ($i-1 % 3) == 2 ){
         if($i == 0 || ($i % 3) == 0 ){
     ?>
         <div class="row flex-row" style="user-select: auto;">
@@ -41,13 +40,13 @@
 
         <div class="col-xs-12 col-sm-4 carBlock" style="user-select: auto;">
             <div class="carImg row">
-                <img src="<?php echo base_url('img/car_img'); ?>/<?php echo $val->car_upload; ?>" alt="<?php echo $val->car_upload; ?>">
+                <img src="<?php echo base_url('img/car_img'); ?>/<?php echo $val->car_image; ?>" alt="<?php echo $val->car_image; ?>">
             </div>
             <div class="col-xs-12 col-sm-12 row-no-padding" style="user-select: auto;">
                 <h4 style="user-select: auto;">
                     <div class="float-left padding-bottom-5" style="user-select: auto;">
-                        <a href="" title="<?php echo $val->car_brand.' '.$val->car_model; ?>" style="user-select: auto;">
-                            <strong style="user-select: auto;"><?php echo $val->car_brand.' '.$val->car_model; ?></strong>
+                        <a href="" title="<?php echo $val->car_brand_name_en.' '.$val->car_model_name; ?>" style="user-select: auto;">
+                            <strong style="user-select: auto;"><?php echo $val->car_brand_name_en.' '.$val->car_model_name; ?></strong>
                         </a>
                     </div>
                     <br>
@@ -56,7 +55,7 @@
                     </div>
                     <br>
                     <div class="float-left padding-bottom-5" style="user-select: auto;">
-                        <h6 style="user-select: auto;"><?php echo $val->car_description; ?> </h6>
+                        <h6 style="user-select: auto;"><?php echo $val->car_model_description; ?> </h6>
                     </div>
                     <br>
                 </h4>
@@ -75,22 +74,3 @@
     <?php }//end foreach ?>
     <?php }//end if ?>
 </div>
-
-<!-- <div class="col-xs-12 col-sm-4" style="user-select: auto;">
-    <img class="" src="<?php echo base_url('img/car_img'); ?>/<?php echo $val->car_upload; ?>" alt="<?php echo $val->car_upload; ?>">
-</p>
-    </a>
-    <iv class="col-xs-12 col-sm-12 row-no-padding" style="user-select: auto;">
-        <h4 style="user-select: auto;">
-            <div class="float-left padding-bottom-5" style="user-select: auto;">
-                <a href="https://www.yougocarrental.com/car/266/TOYOTA  CROSS 2020 PREMIUM HYBRID.html" title="TOYOTA  CROSS 2020 PREMIUM HYBRID" style="user-select: auto;">
-                    <strong style="user-select: auto;">TOYOTA  CROSS 2020 PREMIUM HYBRID</strong>
-                </a>
-                <strong style="user-select: auto;">TOYOTA  CROSS 2020 PREMIUM HYBRID</strong>
-            </div>
-            <div class="float-right padding-bottom-5" style="user-select: auto;">
-                <strong class="color-blue" style="user-select: auto;"><s class="color-red" style="user-select: auto;">2,400</s>  2,490 บาท</strong>
-            </div>
-        </h4>
-    </iv>
-</div> -->

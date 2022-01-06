@@ -25,7 +25,7 @@ class Login extends Main
 	public function checkUsername()
 	{
 		$getData = $this->input->post();
-		$returnData = $this->ieModel->getAll($getData['tableName'], '', array($getData['columnName'] => $getData['user_email']));
+		$returnData = $this->crsModel->getAll($getData['tableName'], '', array($getData['columnName'] => $getData['user_email']));
 		$this->output->set_content_type('application/json')->set_output(json_encode($returnData));
 	}
 
@@ -36,7 +36,7 @@ class Login extends Main
 
 		$arrayData['user_password'] = password_hash($arrayData['user_password'], PASSWORD_DEFAULT);
 
-		$this->ieModel->add('crs_user', $arrayData);
+		$this->crsModel->add('crs_user', $arrayData);
 	}
 
 	public function login()
@@ -45,7 +45,7 @@ class Login extends Main
 		$json['email'] = $getData['user_email'];
 		$json['password'] = $getData['user_password'];
 
-		$result = $this->ieModel->getAll('crs_user', '*', array('user_email' => $json['email']));
+		$result = $this->crsModel->getAll('crs_user', '*', array('user_email' => $json['email']));
 		// 'user_delete_status' => 'active'
 		// echo $result;
 		// die();

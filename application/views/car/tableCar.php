@@ -30,17 +30,17 @@
                     <tr class="text-center">
                         <td hidden>i++</td>
                         <td class="text-center">
-                            <img class="car_image_table" src="<?php echo base_url('img/car_img'); ?>/<?php echo $val->car_upload; ?>" alt="<?php echo $val->car_upload; ?>">
+                            <img class="car_image_table" src="<?php echo base_url('img/car_img'); ?>/<?php echo $val->car_image; ?>" alt="<?php echo $val->car_image; ?>">
                         </td>
                         <td class="text-left"><?= $val->car_registration ?></td>
-                        <td class="text-left"><?= $val->car_brand ?></td>
-                        <td class="text-left"><?= $val->car_model ?></td>
-                        <td class="text-left"><?= $val->car_feature ?></td>
-                        <td class="text-left"><?= $val->car_description ?></td>
+                        <td class="text-left"><?= $val->car_brand_name_en ?></td>
+                        <td class="text-left"><?= $val->car_model_name ?></td>
+                        <td class="text-left"><?= $val->car_model_feature ?></td>
+                        <td class="text-left"><?= $val->car_model_description ?></td>
                         <td class="text-left"><?= $val->car_price ?></td>
                         <td>
-                            <button type="button" class="btn waves-effect waves-light btn-warning btn-sm btn_edit" data-toggle="modal" data-toggle="modal" data-target="#modalEditCar" data-id="<?= $val->car_id ?>" data-registration="<?= $val->car_registration ?>" data-brand="<?= $val->car_brand ?>" data-model="<?= $val->car_model ?>" data-feature="<?= $val->car_feature ?>" data-description="<?= $val->car_description ?>" data-price="<?= $val->car_price ?>" data-upload="<?= $val->car_upload ?>"><i class="fas fa-pencil-alt"></i></button>
-                            <button type="button" class="btn waves-effect waves-light btn-danger btn-sm btn_delete" id="<?= $val->car_id ?>" data-upload="<?= $val->car_upload ?>"><i class="fas fa-trash-alt"></i></button>
+                            <button type="button" class="btn waves-effect waves-light btn-warning btn-sm btn_edit" data-toggle="modal" data-toggle="modal" data-target="#modalEditCar" data-id="<?= $val->car_id ?>" data-registration="<?= $val->car_registration ?>" data-model="<?= $val->car_model_id ?>" data-feature="<?= $val->car_model_feature ?>" data-description="<?= $val->car_model_description ?>" data-price="<?= $val->car_price ?>" data-upload="<?= $val->car_image ?>"><i class="fas fa-pencil-alt"></i></button>
+                            <button type="button" class="btn waves-effect waves-light btn-danger btn-sm btn_delete" id="<?= $val->car_id ?>" data-upload="<?= $val->car_image ?>"><i class="fas fa-trash-alt"></i></button>
                         </td>
                     </tr>
                 <?php } ?>
@@ -69,8 +69,7 @@
 
         modal.find('#e_car_id').val(id);
         modal.find('#e_car_registration').val(registration);
-        modal.find('#e_car_brand').val(brand);
-        modal.find('#e_car_model').val(model);
+        modal.find('#e_car_model_id').val(model);
         modal.find('#e_car_feature').val(feature);
         modal.find('#e_car_description').val(description);
         modal.find('#e_car_price').val(price);
@@ -79,7 +78,7 @@
         $('#e_car_image').attr('src', '<?php echo base_url('img/car_img'); ?>/'+upload);
         $('#e_car_image').attr('hidden',false);
 
-        // modal.find('#e_car_upload').attr('src', <?php echo base_url('img/car_img'); ?>"/upload");
+        // modal.find('#e_car_image').attr('src', <?php echo base_url('img/car_img'); ?>"/upload");
         
     })
 

@@ -87,8 +87,18 @@
         </li>
         <li class="nav-item active">
           <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/car" aria-expanded="false">
-            <i class="fas fa-clipboard-list" style='font-size:20px'></i>
+            <i class="fas fa-car" style='font-size:20px'></i>
             <span>จัดการรถเช่า</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/carBrand" aria-expanded="false">
+            <i class="fas fa-car-side" style='font-size:20px'></i>
+            <span>จัดการยี่ห้อรถยนต์</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/carModel" aria-expanded="false">
+            <i class="fas fa-car-crash" style='font-size:20px'></i>
+            <span>จัดการรุ่นรถยนต์</span></a>
         </li>
         <li class="nav-item active">
           <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/record" aria-expanded="false">

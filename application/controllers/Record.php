@@ -33,7 +33,7 @@ class Record extends Main
 	// __________________ Start Record __________________
 	public function report()
 	{
-		$yearData['select_box'] = $this->ieModel->getAll('ie_transaction', 'SUBSTRING(transaction_date, 1, 4) as year', 'transaction_delete_status = "active" and transaction_user_id = ' . $_SESSION['id'], '', '', 'year'); //select_box Year
+		$yearData['select_box'] = $this->crsModel->getAll('ie_transaction', 'SUBSTRING(transaction_date, 1, 4) as year', 'transaction_delete_status = "active" and transaction_user_id = ' . $_SESSION['id'], '', '', 'year'); //select_box Year
 		$data['page_content'] = $this->load->view('record/reportTable', $yearData, TRUE);
 		$this->load->view('main', $data);
 	}
@@ -52,7 +52,7 @@ class Record extends Main
 	{
 		$getData = $this->input->post();
 		$getData['where'] = array('user_id' => $_SESSION['id']);
-		$data['table'] = $this->ieModel->getAll($getData['tableName'], $getData['colName'], $getData['where'], $getData['order'], $getData['arrayJoinTable'], $getData['groupBy']);
+		$data['table'] = $this->crsModel->getAll($getData['tableName'], $getData['colName'], $getData['where'], $getData['order'], $getData['arrayJoinTable'], $getData['groupBy']);
 		$json['html'] = $this->load->view($getData['pathView'], $data, TRUE);
 		$this->output->set_content_type('application/json')->set_output(json_encode($json));
 	}
@@ -62,7 +62,7 @@ class Record extends Main
 	public function checkPassword()
 	{
 		$getData = $this->input->post();
-		$result = $this->ieModel->getAll($getData['tableName'], $getData['columnName'], array('user_id' => $_SESSION['id'])); //password user
+		$result = $this->crsModel->getAll($getData['tableName'], $getData['columnName'], array('user_id' => $_SESSION['id'])); //password user
 		$passwordcodedb = $result[0]->user_password;
 		$returnData = password_verify($getData['password'], $passwordcodedb);
 		$this->output->set_content_type('application/json')->set_output(json_encode($returnData));
@@ -78,7 +78,7 @@ class Record extends Main
 		$arrayData['user_password'] = password_hash($arrayData['user_password'], PASSWORD_DEFAULT);
 		$arrayWhere['user_id'] = $_SESSION['id'];
 
-		$this->ieModel->update($tableData['tableName'], $arrayWhere, $arrayData);
+		$this->crsModel->update($tableData['tableName'], $arrayWhere, $arrayData);
 	}
 	// __________________ End changePassword __________________
 }

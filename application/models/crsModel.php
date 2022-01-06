@@ -1,6 +1,6 @@
 <?php
 
-class ieModel extends CI_Model
+class crsModel extends CI_Model
 {
     public function getAll($tableName, $getColName = '*', $arrayWhere = '', $order = '', $arrayJoinTable = array(), $groupby = '')
     {

@@ -33,7 +33,6 @@
 <!-- Open Table -->
 <div class="card">
     <div class="card-header bg-dark">
-
         <div class="row">
             <a class="m-b-0 text-white" style="font-size: 23px; margin-left: 10px;">ข้อมูลรถเช่า</a>
             <button style="margin-left: 77%;" type="button" class="btn btn-success d-none d-lg-block m-l-12 " data-toggle="modal" data-toggle="modal" data-target="#modalAddcar" id="Addcar" data-whatever="@mdo">เพิ่มรถเช่า (+)</button> &ensp;
@@ -65,28 +64,30 @@
                     </div>
                     <div class="row">
                         <div class="col-3">
-                            <label >ยี่ห้อ <a style="color: red;"> *</a></label>
+                            <label >รุ่นรถยนต์ <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="car_brand" id="car_brand" autocomplete="off" placeholder="ยี่ห้อรถยนต์">
-                    </div>
-                    <div class="row">
-                        <div class="col-3">
-                            <label >รุ่น <a style="color: red;"> *</a></label>
-                        </div>  : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="car_model" id="car_model" autocomplete="off" placeholder="รุ่นรถยนต์">
+                        <select style="width: 250px;" id="car_model_id" class="form-control form-control-line" name="car_model_id">
+                            <option disabled selected>เลือกรุ่นรถยนต์</option>
+                            <?php
+                            if (isset($select)) {
+                                foreach ($select as $key => $val) {
+                                    echo "<option value=" . $val->car_model_id . ">" . $val->car_brand_name_en." ".$val->car_model_name . "</option>";
+                                }
+                            }
+                            ?>
+                        </select>
                     </div>
                     <div class="row">
                         <div class="col-3">
                             <label >คุณสมบัติ <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="car_feature" id="car_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์">
+                        <input style="width: 250px;" type="text" class="form-control" name="car_feature" id="car_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์" disabled>
                     </div>
                     <div class="row">
                         <div class="col-3">
                             <label >คำอธิบาย <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <!-- <input style="width: 500px; height: 200px" type="text" class="form-control" name="car_description" id="car_description" autocomplete="off" placeholder="คำอธิบายรถยนต์"> -->
-                        <textarea style="width: 400px; height: 100px" class="form-control" rows="3" name="car_description" id="car_description" autocomplete="off" placeholder="คำอธิบายรถยนต์"></textarea>
+                        <textarea style="width: 400px; height: 100px" class="form-control" rows="3" name="car_description" id="car_description" autocomplete="off" placeholder="คำอธิบายรถยนต์" disabled></textarea>
                     </div>
                     <div class="row">
                         <div class="col-3">
@@ -106,7 +107,6 @@
                         <div class="col-3"></div>
                         <img class="car_image" id="car_image" src="#" alt="your image" hidden/>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn waves-effect waves-light btn-success">บันทึก</button>
@@ -138,28 +138,30 @@
                     </div>
                     <div class="row">
                         <div class="col-3">
-                            <label >ยี่ห้อ <a style="color: red;"> *</a></label>
+                            <label >รุ่นรถยนต์<a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="car_brand" id="e_car_brand" autocomplete="off" placeholder="ยี่ห้อรถยนต์">
-                    </div>
-                    <div class="row">
-                        <div class="col-3">
-                            <label >รุ่น <a style="color: red;"> *</a></label>
-                        </div>  : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="car_model" id="e_car_model" autocomplete="off" placeholder="รุ่นรถยนต์">
+                        <select style="width: 250px;" id="e_car_model_id" class="form-control form-control-line" name="car_model_id">
+                            <option disabled selected>เลือกรุ่นรถยนต์</option>
+                            <?php
+                            if (isset($select)) {
+                                foreach ($select as $key => $val) {
+                                    echo "<option value=" . $val->car_model_id . ">" . $val->car_brand_name_en." ".$val->car_model_name . "</option>";
+                                }
+                            }
+                            ?>
+                        </select>
                     </div>
                     <div class="row">
                         <div class="col-3">
                             <label >คุณสมบัติ <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="car_feature" id="e_car_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์">
+                        <input style="width: 250px;" type="text" class="form-control" name="car_feature" id="e_car_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์" disabled>
                     </div>
                     <div class="row">
                         <div class="col-3">
                             <label >คำอธิบาย <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <!-- <input style="width: 250px;" type="text" class="form-control" name="car_description" id="e_car_description" autocomplete="off" placeholder="คำอธิบายรถยนต์"> -->
-                        <textarea style="width: 400px; height: 100px" class="form-control" rows="3" name="car_description" id="e_car_description" autocomplete="off" placeholder="คำอธิบายรถยนต์"></textarea>
+                        <textarea style="width: 400px; height: 100px" class="form-control" rows="3" name="car_description" id="e_car_description" autocomplete="off" placeholder="คำอธิบายรถยนต์" disabled></textarea>
                     </div>
                     <div class="row">
                         <div class="col-3">
@@ -193,30 +195,66 @@
 <!-- End EditData -->
 <script>
     getList();
+    
+    $('#car_model_id').on('change', function(event) {
+        var formData = {};
+        formData['id'] = this.value;
+        $.ajax({  
+            url:"getCarSelectModel",
+            method:"POST",
+            data:formData
+        }).done(function(returnData) {
+            // console.log(returnData)
+            // console.log(returnData.table[0].car_model_description)
+            $('#car_feature').val(returnData.table[0].car_model_feature)
+            $('#car_description').val(returnData.table[0].car_model_description)
+        });
 
-    function readURL(input,modal) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+    })//get data when select model
 
-            reader.onload = function (e) {
-                if(modal == 'add'){
-                    $('#car_image').attr('src', e.target.result);
-                    $('#car_image').attr('hidden',false);
-                }else if(modal == 'edit'){
-                    $('#e_car_image').attr('src', e.target.result);
-                    $('#e_car_image').attr('hidden',false);
-                }
-            };
+    $('#e_car_model_id').on('change', function(event) {
+        var formData = {};
+        formData['id'] = this.value;
+        $.ajax({  
+            url:"getCarSelectModel",
+            method:"POST",
+            data:formData
+        }).done(function(returnData) {
+            // console.log(returnData)
+            // console.log(returnData.table[0].car_model_description)
+            $('#e_car_feature').val(returnData.table[0].car_model_feature)
+            $('#e_car_description').val(returnData.table[0].car_model_description)
+        });
 
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
+    })//get data when select model
+
+    $('#addCarForm').on('submit', function(event) {
+        event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
+
+        //เหลือดัก
+
+        $.ajax({  
+            url:"addCar",
+            method:"POST",  
+            data:new FormData(this),  
+            contentType: false,  
+            cache: false,  
+            processData:false,  
+        }).done(function(returnData) {
+            getList();
+            $('#modalAddcar form')[0].reset();
+            $('#modalAddcar').modal('hide'); //ปิด modal
+            $('#car_image').attr('src', '');
+            $('#car_image').attr('hidden',true);
+        }); 
+
+    })
 
     $('#editCarForm').on('submit', function(event) {
         event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
        
         //เหลือดัก
-        if( document.getElementById("e_car_upload").files.length == 0 ){
+        if(document.getElementById("e_car_upload").files.length == 0 ){
             $.ajax({  
                 url:"editCarNoFile",
                 method:"POST",  
@@ -248,28 +286,6 @@
                 $('#e_car_image').attr('hidden',true);
             });
         }//submit with file
-        
-    })
-
-    $('#addCarForm').on('submit', function(event) {
-        event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
-
-        //เหลือดัก
-
-            $.ajax({  
-                url:"addCar",
-                method:"POST",  
-                data:new FormData(this),  
-                contentType: false,  
-                cache: false,  
-                processData:false,  
-            }).done(function(returnData) {
-                getList();
-                $('#modalAddcar form')[0].reset();
-                $('#modalAddcar').modal('hide'); //ปิด modal
-                $('#car_image').attr('src', '');
-                $('#car_image').attr('hidden',true);
-            }); 
     })
 
     function getList() {
@@ -299,4 +315,22 @@
         });
 
     } //show auto
+
+    function readURL(input,modal) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                if(modal == 'add'){
+                    $('#car_image').attr('src', e.target.result);
+                    $('#car_image').attr('hidden',false);
+                }else if(modal == 'edit'){
+                    $('#e_car_image').attr('src', e.target.result);
+                    $('#e_car_image').attr('hidden',false);
+                }
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }//show image when choose
 </script>

@@ -17,10 +17,63 @@ class Car extends Main
 	// __________________ Start Car __________________
 	public function car()
 	{
-		$data['page_content'] = $this->load->view('car/carTable', '', TRUE);
+		// $arrayData = array(
+		// 	'tableName' => 'crs_car_model',
+		// 	'colName' => 'crs_car_model.car_model_id, crs_car_model.car_model_name, crs_car_model.car_model_feature, crs_car_model.car_model_description, crs_car_model.car_brand_id, crs_car_brand.car_brand_name_en',
+		// 	'where' => '',
+		// 	'order' => '',
+		// 	'arrayJoinTable' => array('crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id'),
+		// 	'groupBy' => ''
+		// );
+
+		$arrayData = array(
+			'tableName' => 'crs_car_model',
+			'colName' => '
+				crs_car_model.car_model_id, 
+				crs_car_model.car_model_name,
+				crs_car_model.car_brand_id,
+				crs_car_brand.car_brand_name_en',
+			'where' => '',
+			'order' => '',
+			'arrayJoinTable' => array('crs_car_brand' => 'crs_car_model.car_brand_id = crs_car_brand.car_brand_id',),
+			'groupBy' => ''
+		);
+
+		$modelCar['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+
+		$data['page_content'] = $this->load->view('car/carTable', $modelCar, TRUE);
 		$this->load->view('main', $data);
 	}
 	// ___________________ End Car ____________________
+
+	// __________________ Start carBrand __________________
+	public function carBrand()
+	{
+		$data['page_content'] = $this->load->view('car/carBrandTable', '', TRUE);
+		$this->load->view('main', $data);
+	}
+	// ___________________ End carBrand ____________________
+
+	// __________________ Start carModel __________________
+	public function carModel()
+	{
+
+		$arrayData = array(
+			'tableName' => 'crs_car_brand',
+			'colName' => 'car_brand_id, car_brand_name_th, car_brand_name_en',
+			'where' => '',
+			'order' => '',
+			'arrayJoinTable' => '',
+			'groupBy' => ''
+		);
+
+		$brand['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$data['page_content'] = $this->load->view('car/carModelTable', $brand, TRUE);
+		$this->load->view('main', $data);
+	}
+	// ___________________ End carModel ____________________
+
+
 
 	// __________________ Start addCar __________________
 	public function addCar()
@@ -40,15 +93,18 @@ class Car extends Main
 			$filename = $data['file_name'];
 			$arrayData = array(
 				'car_registration' => $this->input->post('car_registration'),
-				'car_brand' => $this->input->post('car_brand'),
-				'car_model' => $this->input->post('car_model'),
-				'car_feature' => $this->input->post('car_feature'),
-				'car_description' => $this->input->post('car_description'),
+				'car_model_id' => $this->input->post('car_model_id'),
+				'car_owner_id' => $_SESSION['id'],
 				'car_price' => $this->input->post('car_price'),
-				'car_upload' => $filename
+				'car_promotion' => 0,
+				'car_image' => $filename,
+				'car_proof_image' => $filename,
+				'user_create_id' => $_SESSION['id'],
+				'user_update_id' => $_SESSION['id']
 			);
-			$addedId = $this->ieModel->add('crs_car', $arrayData);
-			$this->output->set_content_type('application/json')->set_output(json_encode($addedId));
+			print_r($arrayData);
+			$addedId = $this->crsModel->add('crs_car', $arrayData);
+			// $this->output->set_content_type('application/json')->set_output(json_encode($addedId));
 		}
 
 	}
@@ -82,15 +138,16 @@ class Car extends Main
 			$filename = $data['file_name'];
 			$arrayData = array(
 				'car_registration' => $this->input->post('car_registration'),
-				'car_brand' => $this->input->post('car_brand'),
-				'car_model' => $this->input->post('car_model'),
-				'car_feature' => $this->input->post('car_feature'),
-				'car_description' => $this->input->post('car_description'),
+				'car_model_id' => $this->input->post('car_model_id'),
+				'car_owner_id' => $_SESSION['id'],
 				'car_price' => $this->input->post('car_price'),
-				'car_upload' => $filename
+				'car_promotion' => 0,
+				'car_image' => $filename,
+				'car_proof_image' => $filename,
+				'user_update_id' => $_SESSION['id']
 			);
 			$arrayWhere = array('car_id' => $this->input->post('car_id'));
-			$editedId = $this->ieModel->update('crs_car',$arrayWhere, $arrayData);
+			$editedId = $this->crsModel->update('crs_car',$arrayWhere, $arrayData);
 			// $this->output->set_content_type('application/json')->set_output(json_encode($editedId));
 		}
 	}
@@ -100,16 +157,24 @@ class Car extends Main
 	// __________________ Start editCarNoFile __________________
 	public function editCarNoFile()
 	{
+		// $arrayData = array(
+		// 	'car_registration' => $this->input->post('car_registration'),
+		// 	'car_brand' => $this->input->post('car_brand'),
+		// 	'car_model' => $this->input->post('car_model'),
+		// 	'car_feature' => $this->input->post('car_feature'),
+		// 	'car_description' => $this->input->post('car_description'),
+		// 	'car_price' => $this->input->post('car_price'),
+		// );
 		$arrayData = array(
 			'car_registration' => $this->input->post('car_registration'),
-			'car_brand' => $this->input->post('car_brand'),
-			'car_model' => $this->input->post('car_model'),
-			'car_feature' => $this->input->post('car_feature'),
-			'car_description' => $this->input->post('car_description'),
+			'car_model_id' => $this->input->post('car_model_id'),
+			'car_owner_id' => $_SESSION['id'],
 			'car_price' => $this->input->post('car_price'),
+			'car_promotion' => 0,
+			'user_update_id' => $_SESSION['id']
 		);
 		$arrayWhere = array('car_id' => $this->input->post('car_id'));
-		$editedId = $this->ieModel->update('crs_car',$arrayWhere, $arrayData);
+		$editedId = $this->crsModel->update('crs_car',$arrayWhere, $arrayData);
 		$this->output->set_content_type('application/json')->set_output(json_encode($editedId));
 	}
 	// ___________________ End editCarNoFile ____________________
@@ -117,15 +182,29 @@ class Car extends Main
 	// __________________ Start getCarTable __________________
 	public function getCarTable()
 	{
+		
 		$arrayData = array(
 			'tableName' => 'crs_car',
-			'colName' => '',
+			'colName' => '
+				crs_car.car_id,
+				crs_car.car_registration,
+				crs_car.car_price,
+				crs_car.car_image,
+				crs_car_model.car_model_id, 
+				crs_car_model.car_model_name, 
+				crs_car_model.car_model_feature, 
+				crs_car_model.car_model_description, 
+				crs_car_model.car_brand_id, 
+				crs_car_brand.car_brand_name_en',
 			'where' => '',
 			'order' => '',
-			'arrayJoinTable' => '',
+			'arrayJoinTable' => array(
+				'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
+				'crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id'
+			),
 			'groupBy' => ''
 		);
-		
+
 		if($this->input->post('type') == 'manage'){
 			$arrayData['pathView'] = 'car/tableCar';
 		}
@@ -133,7 +212,7 @@ class Car extends Main
 			$arrayData['pathView'] = 'car/tableCarMain';
 		}
 
-		$data['table'] = $this->ieModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
 		$json['table'] = $data['table'];
 		$json['sql'] = $this->db->last_query(); //for dev
 		if ($arrayData['pathView'] != "getData") {
@@ -161,11 +240,199 @@ class Car extends Main
 			'columnIdName' => 'car_id',
 			'id' => $this->input->post('id')
 		);
-		$this->ieModel->delete($arrayData['tableName'], $arrayData['columnIdName'], $arrayData['id']);
+		$this->crsModel->delete($arrayData['tableName'], $arrayData['columnIdName'], $arrayData['id']);
 		$arrayData['sql'] = $this->db->last_query(); //for dev
 		// $this->output->set_content_type('application/json')->set_output(json_encode($arrayData));
 	}
 	// ___________________ End deleteCar ____________________
+
+	// __________________ Start getCarBrandTable __________________
+	public function getCarBrandTable()
+	{
+		$arrayData = array(
+			'tableName' => 'crs_car_brand',
+			'colName' => '',
+			'where' => '',
+			'order' => '',
+			'arrayJoinTable' => '',
+			'groupBy' => '',
+			'pathView' => 'car/tableCarBrand'
+		);
+
+		$data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$json['table'] = $data['table'];
+		$json['sql'] = $this->db->last_query(); //for dev
+		if ($arrayData['pathView'] != "getData") {
+			$json['html'] = $this->load->view($arrayData['pathView'], $data, TRUE);
+		}
+		$this->output->set_content_type('application/json')->set_output(json_encode($json));
+	}
+	// ___________________ End getCarBrandTable ____________________
+
+	// __________________ Start addCarBrand __________________
+	public function addCarBrand()
+	{
+		
+		$getData = $this->input->post();
+		$arrayData = array(
+			'car_brand_name_th' => $getData['car_brand_name_th'],
+			'car_brand_name_en' => $getData['car_brand_name_en'],
+			'user_create_id' => $_SESSION['id'],
+			'user_update_id' => $_SESSION['id']
+		);
+		$addedId = $this->crsModel->add('crs_car_brand', $arrayData);
+		$this->output->set_content_type('application/json')->set_output(json_encode($addedId));
+
+	}
+	// ___________________ End addCarBrand ____________________
+
+	// __________________ Start editCarBrand __________________
+	public function editCarBrand()
+	{
+		$getData = $this->input->post();
+
+		$arrayData = array(
+			'car_brand_name_th' => $getData['car_brand_name_th'],
+			'car_brand_name_en' => $getData['car_brand_name_en'],
+			'user_update_id' => $_SESSION['id']
+		);
+		$arrayWhere = array('car_brand_id' => $getData['car_brand_id']);
+		$editedId = $this->crsModel->update('crs_car_brand',$arrayWhere, $arrayData);
+		$this->output->set_content_type('application/json')->set_output(json_encode($editedId));
+	}
+	// ___________________ End editCarBrand ____________________
+
+	// __________________ Start deleteCarBrand __________________
+	public function deleteCarBrand()
+	{
+
+		$arrayData = array(
+			'tableName' => 'crs_car_brand',
+			'columnIdName' => 'car_brand_id',
+			'id' => $this->input->post('id')
+		);
+		$this->crsModel->delete($arrayData['tableName'], $arrayData['columnIdName'], $arrayData['id']);
+		$arrayData['sql'] = $this->db->last_query(); //for dev
+		// $this->output->set_content_type('application/json')->set_output(json_encode($arrayData));
+	}
+	// ___________________ End deleteCarBrand ____________________
+
+	// __________________ Start getCarModelTable __________________
+	public function getCarModelTable()
+	{
+		$arrayData = array(
+			'tableName' => 'crs_car_model',
+			'colName' => 'crs_car_model.car_model_id, crs_car_model.car_model_name, crs_car_model.car_model_feature, crs_car_model.car_model_description, crs_car_model.car_brand_id, crs_car_brand.car_brand_name_en',
+			'where' => '',
+			'order' => '',
+			'arrayJoinTable' => array('crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id'),
+			'groupBy' => '',
+			'pathView' => 'car/tableCarModel'
+		);
+
+		$data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$json['table'] = $data['table'];
+		$json['sql'] = $this->db->last_query(); //for dev
+		$json['html'] = $this->load->view($arrayData['pathView'], $data, TRUE);
+		$this->output->set_content_type('application/json')->set_output(json_encode($json));
+	}
+	// ___________________ End getCarModelTable ____________________
+
+	// __________________ Start addCarModel __________________
+	public function addCarModel()
+	{
+		
+		$getData = $this->input->post();
+
+		if($getData['car_brand_id'] == 0){
+			
+			$arrayBrandData = array(
+				'car_brand_name_th' => $getData['car_brand_name_th'],
+				'car_brand_name_en' => $getData['car_brand_name_en'],
+				'user_create_id' => $_SESSION['id'],
+				'user_update_id' => $_SESSION['id']
+			);
+			$getData['car_brand_id'] = $this->crsModel->add('crs_car_brand', $arrayBrandData);
+		}
+
+		$arrayData = array(
+			'car_brand_id' => $getData['car_brand_id'],
+			'car_model_name' => $getData['car_model_name'],
+			'car_model_feature' => $getData['car_model_feature'],
+			'car_model_description' => $getData['car_model_description'],
+			'user_create_id' => $_SESSION['id'],
+			'user_update_id' => $_SESSION['id']
+		);
+		$addedId = $this->crsModel->add('crs_car_model', $arrayData);
+		$this->output->set_content_type('application/json')->set_output(json_encode($addedId));
+
+	}
+	// ___________________ End addCarModel ____________________
+
+	// __________________ Start editCarModel __________________
+	public function editCarModel()
+	{
+		$getData = $this->input->post();
+
+		if($getData['car_brand_id'] == 0){
+			
+			$arrayBrandData = array(
+				'car_brand_name_th' => $getData['car_brand_name_th'],
+				'car_brand_name_en' => $getData['car_brand_name_en'],
+				'user_create_id' => $_SESSION['id'],
+				'user_update_id' => $_SESSION['id']
+			);
+			$getData['car_brand_id'] = $this->crsModel->add('crs_car_brand', $arrayBrandData);
+		}
+
+		$arrayData = array(
+			'car_brand_id' => $getData['car_brand_id'],
+			'car_model_name' => $getData['car_model_name'],
+			'car_model_feature' => $getData['car_model_feature'],
+			'car_model_description' => $getData['car_model_description'],
+			'user_update_id' => $_SESSION['id']
+		);
+		$arrayWhere = array('car_model_id' => $getData['car_model_id']);
+		$editedId = $this->crsModel->update('crs_car_model',$arrayWhere, $arrayData);
+		$this->output->set_content_type('application/json')->set_output(json_encode($editedId));
+	}
+	// ___________________ End editCarModel ____________________
+
+	// __________________ Start deleteCarModel __________________
+	public function deleteCarModel()
+	{
+
+		$arrayData = array(
+			'tableName' => 'crs_car_model',
+			'columnIdName' => 'car_model_id',
+			'id' => $this->input->post('id')
+		);
+		$this->crsModel->delete($arrayData['tableName'], $arrayData['columnIdName'], $arrayData['id']);
+		$arrayData['sql'] = $this->db->last_query(); //for dev
+		// $this->output->set_content_type('application/json')->set_output(json_encode($arrayData));
+	}
+	// ___________________ End deleteCarModel ____________________
+
+	// __________________ Start getCarSelectModel __________________
+	public function getCarSelectModel()
+	{
+		$arrayData = array(
+			'tableName' => 'crs_car_model',
+			'colName' => 'car_model_id, car_model_name, car_model_feature, car_model_description',
+			'where' => 'car_model_id = '.$this->input->post('id'),
+			'order' => '',
+			'arrayJoinTable' => '',
+			'groupBy' => ''
+		);
+
+		$data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$json['table'] = $data['table'];
+		$json['sql'] = $this->db->last_query(); //for dev
+		$this->output->set_content_type('application/json')->set_output(json_encode($json));
+	}
+	// ___________________ End getCarModelTable ____________________
+
+
 
 
 
@@ -180,7 +447,7 @@ class Car extends Main
 	// __________________ Start report __________________
 	public function report()
 	{
-		$yearData['select_box'] = $this->ieModel->getAll('ie_transaction', 'SUBSTRING(transaction_date, 1, 4) as year', 'transaction_delete_status = "active" and transaction_user_id = ' . $_SESSION['id'], '', '', 'year'); //select_box Year
+		$yearData['select_box'] = $this->crsModel->getAll('ie_transaction', 'SUBSTRING(transaction_date, 1, 4) as year', 'transaction_delete_status = "active" and transaction_user_id = ' . $_SESSION['id'], '', '', 'year'); //select_box Year
 		$data['page_content'] = $this->load->view('car/reportTable', $yearData, TRUE);
 		$this->load->view('main', $data);
 	}
@@ -199,7 +466,7 @@ class Car extends Main
 	{
 		$getData = $this->input->post();
 		$getData['where'] = array('user_id' => $_SESSION['id']);
-		$data['table'] = $this->ieModel->getAll($getData['tableName'], $getData['colName'], $getData['where'], $getData['order'], $getData['arrayJoinTable'], $getData['groupBy']);
+		$data['table'] = $this->crsModel->getAll($getData['tableName'], $getData['colName'], $getData['where'], $getData['order'], $getData['arrayJoinTable'], $getData['groupBy']);
 		$json['html'] = $this->load->view($getData['pathView'], $data, TRUE);
 		$this->output->set_content_type('application/json')->set_output(json_encode($json));
 	}
@@ -209,7 +476,7 @@ class Car extends Main
 	public function checkPassword()
 	{
 		$getData = $this->input->post();
-		$result = $this->ieModel->getAll($getData['tableName'], $getData['columnName'], array('user_id' => $_SESSION['id'])); //password user
+		$result = $this->crsModel->getAll($getData['tableName'], $getData['columnName'], array('user_id' => $_SESSION['id'])); //password user
 		$passwordcodedb = $result[0]->user_password;
 		$returnData = password_verify($getData['password'], $passwordcodedb);
 		$this->output->set_content_type('application/json')->set_output(json_encode($returnData));
@@ -225,7 +492,7 @@ class Car extends Main
 		$arrayData['user_password'] = password_hash($arrayData['user_password'], PASSWORD_DEFAULT);
 		$arrayWhere['user_id'] = $_SESSION['id'];
 
-		$this->ieModel->update($tableData['tableName'], $arrayWhere, $arrayData);
+		$this->crsModel->update($tableData['tableName'], $arrayWhere, $arrayData);
 	}
 	// __________________ End changePassword __________________
 }
