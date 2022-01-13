@@ -103,7 +103,7 @@ img{
 
                                     <form id="register-form" method="post" role="form" style="display: none;">
                                         <div class="form-group">
-                                        <img src="Img/iconcar.png" width="120" height="120"><br><br>
+                                        <img src="assets/img/iconcar.png" width="120" height="120"><br><br>
                                             <h4 class="text-center text-login m-b-20">สมัครสมาชิก</h4>
                                         </div>
                                         <div class="row">

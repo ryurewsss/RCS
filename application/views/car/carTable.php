@@ -77,12 +77,18 @@
                             ?>
                         </select>
                     </div>
-                    <div class="row">
-                        <div class="col-3">
-                            <label >คุณสมบัติ <a style="color: red;"> *</a></label>
-                        </div>  : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="car_feature" id="car_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์" disabled>
+
+                    <div class="field_wrapper">
+                        <div class="row">
+                            <div class="col-3">
+                                <label >คุณสมบัติรถยนต์ <a style="color: red;"> *</a></label>
+                            </div>  : &ensp;
+                            <div class="form-inline">
+                                <input style="width: 250px;" type="text" class="form-control" name="feature[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์" disabled> &ensp;               
+                            </div>
+                        </div>
                     </div>
+
                     <div class="row">
                         <div class="col-3">
                             <label >คำอธิบาย <a style="color: red;"> *</a></label>
@@ -151,12 +157,18 @@
                             ?>
                         </select>
                     </div>
-                    <div class="row">
-                        <div class="col-3">
-                            <label >คุณสมบัติ <a style="color: red;"> *</a></label>
-                        </div>  : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="car_feature" id="e_car_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์" disabled>
+
+                    <div class="field_wrapper">
+                        <div class="row">
+                            <div class="col-3">
+                                <label >คุณสมบัติรถยนต์ <a style="color: red;"> *</a></label>
+                            </div>  : &ensp;
+                            <div class="form-inline">
+                                <input style="width: 250px;" type="text" class="form-control" name="feature[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์" disabled> &ensp;               
+                            </div>
+                        </div>
                     </div>
+
                     <div class="row">
                         <div class="col-3">
                             <label >คำอธิบาย <a style="color: red;"> *</a></label>
@@ -196,6 +208,10 @@
 <script>
     getList();
     
+
+    var wrapper = $('.field_wrapper');
+    var fieldHTML = '<div class="row"><div class="col-3"></div>&ensp;&ensp;<div class="form-inline"><input style="width: 250px;" type="text" class="form-control" name="feature[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์"/> &ensp;<button type="button" class="remove_button btn waves-effect waves-light btn-danger" title="Remove field">-</button></div></div>'; //New input field html 
+
     $('#car_model_id').on('change', function(event) {
         var formData = {};
         formData['id'] = this.value;
@@ -206,7 +222,18 @@
         }).done(function(returnData) {
             // console.log(returnData)
             // console.log(returnData.table[0].car_model_description)
-            $('#car_feature').val(returnData.table[0].car_model_feature)
+            removeField()
+            var wrapper = $('.field_wrapper'); //Input field wrapper
+            var fieldHTML = ''; //New input field html
+            $.each(JSON.parse(returnData.table[0].car_model_feature), function( index, value ) {
+                if(index == 0){
+                    $('#modalAddcar').find('#car_model_feature[name="feature[]"]').val(value);
+                }else{
+                    fieldHTML = '<div class="row"><div class="col-3"></div>&ensp;&ensp;<div class="form-inline"><input style="width: 250px;" type="text" class="form-control" name="feature[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์" value="'+value+'" disabled/><button type="button" class="remove_button btn waves-effect waves-light btn-danger" title="Remove field" hidden>-</button></div></div>';
+                    $('#modalAddcar').find(wrapper).append(fieldHTML);
+                }
+            });
+
             $('#car_description').val(returnData.table[0].car_model_description)
         });
 
@@ -222,7 +249,18 @@
         }).done(function(returnData) {
             // console.log(returnData)
             // console.log(returnData.table[0].car_model_description)
-            $('#e_car_feature').val(returnData.table[0].car_model_feature)
+            removeField()
+            var wrapper = $('.field_wrapper'); //Input field wrapper
+            var fieldHTML = ''; //New input field html
+            $.each(JSON.parse(returnData.table[0].car_model_feature), function( index, value ) {
+                if(index == 0){
+                    $('#modalEditCar').find('#car_model_feature[name="feature[]"]').val(value);
+                }else{
+                    fieldHTML = '<div class="row"><div class="col-3"></div>&ensp;&ensp;<div class="form-inline"><input style="width: 250px;" type="text" class="form-control" name="feature[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์" value="'+value+'" disabled/><button type="button" class="remove_button btn waves-effect waves-light btn-danger" title="Remove field" hidden>-</button></div></div>';
+                    $('#modalEditCar').find(wrapper).append(fieldHTML);
+                }
+            });
+
             $('#e_car_description').val(returnData.table[0].car_model_description)
         });
 
@@ -287,6 +325,12 @@
             });
         }//submit with file
     })
+
+    function removeField() {
+        $('.remove_button').each(function() {
+            $(this).parent('div').parent('div').remove(); //Remove field html
+        });
+    }
 
     function getList() {
         var data = {};

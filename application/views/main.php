@@ -101,6 +101,11 @@
             <span>จัดการรุ่นรถยนต์</span></a>
         </li>
         <li class="nav-item active">
+          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Place/place" aria-expanded="false">
+            <i class="fas fa-warehouse" style='font-size:20px'></i>
+            <span>จัดการสถานที่</span></a>
+        </li>
+        <li class="nav-item active">
           <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/record" aria-expanded="false">
             <i class="fas fa-user-friends" style='font-size:20px'></i>
             <span>จัดการสมาชิก</span></a>

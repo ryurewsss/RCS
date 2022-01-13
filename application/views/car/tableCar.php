@@ -35,11 +35,21 @@
                         <td class="text-left"><?= $val->car_registration ?></td>
                         <td class="text-left"><?= $val->car_brand_name_en ?></td>
                         <td class="text-left"><?= $val->car_model_name ?></td>
-                        <td class="text-left"><?= $val->car_model_feature ?></td>
+                        <td class="text-left">
+                            <!-- <?= $val->car_model_feature ?> -->
+                            <?php
+                            foreach (json_decode($val->car_model_feature) as $key2 => $val2) {
+                            if($key2 != 0){?>    <br>    <?php  }  ?>
+                            <i class="fas fa-check-circle" style='font-size:20px; color:#39e600;'></i>
+                                <?= $val2 ?>
+                            <?php
+                            }
+                            ?>
+                        </td>
                         <td class="text-left"><?= $val->car_model_description ?></td>
                         <td class="text-left"><?= $val->car_price ?></td>
                         <td>
-                            <button type="button" class="btn waves-effect waves-light btn-warning btn-sm btn_edit" data-toggle="modal" data-toggle="modal" data-target="#modalEditCar" data-id="<?= $val->car_id ?>" data-registration="<?= $val->car_registration ?>" data-model="<?= $val->car_model_id ?>" data-feature="<?= $val->car_model_feature ?>" data-description="<?= $val->car_model_description ?>" data-price="<?= $val->car_price ?>" data-upload="<?= $val->car_image ?>"><i class="fas fa-pencil-alt"></i></button>
+                            <button type="button" class="btn waves-effect waves-light btn-warning btn-sm btn_edit" data-toggle="modal" data-toggle="modal" data-target="#modalEditCar" data-id="<?= $val->car_id ?>" data-registration="<?= $val->car_registration ?>" data-model="<?= $val->car_model_id ?>" data-feature='<?= $val->car_model_feature ?>' data-description="<?= $val->car_model_description ?>" data-price="<?= $val->car_price ?>" data-upload="<?= $val->car_image ?>"><i class="fas fa-pencil-alt"></i></button>
                             <button type="button" class="btn waves-effect waves-light btn-danger btn-sm btn_delete" id="<?= $val->car_id ?>" data-upload="<?= $val->car_image ?>"><i class="fas fa-trash-alt"></i></button>
                         </td>
                     </tr>
@@ -70,10 +80,22 @@
         modal.find('#e_car_id').val(id);
         modal.find('#e_car_registration').val(registration);
         modal.find('#e_car_model_id').val(model);
-        modal.find('#e_car_feature').val(feature);
         modal.find('#e_car_description').val(description);
         modal.find('#e_car_price').val(price);
         modal.find('#e_old_image').val(upload);
+        // modal.find('#e_car_feature').val(feature);
+
+        removeField()
+        var wrapper = $('.field_wrapper'); //Input field wrapper
+        var fieldHTML = ''; //New input field html 
+        $.each(feature, function( index, value ) {
+            if(index == 0){
+                modal.find('#car_model_feature[name="feature[]"]').val(value);
+            }else{
+                fieldHTML = '<div class="row"><div class="col-3"></div>&ensp;&ensp;<div class="form-inline"><input style="width: 250px;" type="text" class="form-control" name="feature[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์" value="'+value+'" disabled/><button type="button" class="remove_button btn waves-effect waves-light btn-danger" title="Remove field" hidden>-</button></div></div>';
+                modal.find(wrapper).append(fieldHTML);
+            }
+        });
 
         $('#e_car_image').attr('src', '<?php echo base_url('img/car_img'); ?>/'+upload);
         $('#e_car_image').attr('hidden',false);

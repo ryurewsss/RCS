@@ -86,12 +86,19 @@
                         </div>  : &ensp;
                         <input style="width: 250px;" type="text" class="form-control" name="inputData[]" id="car_model_name" autocomplete="off" placeholder="รุ่นรถยนต์">
                     </div>
-                    <div class="row">
-                        <div class="col-3">
-                            <label >คุณสมบัติรถยนต์ <a style="color: red;"> *</a></label>
-                        </div>  : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="inputData[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์">
+
+                    <div class="field_wrapper">
+                        <div class="row">
+                            <div class="col-3">
+                                <label >คุณสมบัติรถยนต์ <a style="color: red;"> *</a></label>
+                            </div>  : &ensp;
+                            <div class="form-inline">
+                                <input style="width: 250px;" type="text" class="form-control" name="feature[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์"> &ensp;               
+                                <button type="button" class="add_button btn waves-effect waves-light btn-success" title="Add field">+</button>                                
+                            </div>
+                        </div>
                     </div>
+
                     <div class="row">
                         <div class="col-3">
                             <label >คำอธิบายรถยนต์ <a style="color: red;"> *</a></label>
@@ -159,12 +166,19 @@
                         </div>  : &ensp;
                         <input style="width: 250px;" type="text" class="form-control" name="editData[]" id="car_model_name" autocomplete="off" placeholder="รุ่นรถยนต์">
                     </div>
-                    <div class="row">
-                        <div class="col-3">
-                            <label >คุณสมบัติรถยนต์ <a style="color: red;"> *</a></label>
-                        </div>  : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="editData[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์">
+
+                    <div class="field_wrapper">
+                        <div class="row">
+                            <div class="col-3">
+                                <label >คุณสมบัติรถยนต์ <a style="color: red;"> *</a></label>
+                            </div>  : &ensp;
+                            <div class="form-inline">
+                                <input style="width: 250px;" type="text" class="form-control" name="feature[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์"> &ensp;               
+                                <button type="button" class="add_button btn waves-effect waves-light btn-success" title="Add field">+</button>                                
+                            </div>
+                        </div>
                     </div>
+
                     <div class="row">
                         <div class="col-3">
                             <label >คำอธิบายรถยนต์ <a style="color: red;"> *</a></label>
@@ -190,18 +204,27 @@
         event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
 
         var formData = {};
+        var featureData = {};
+        var i = 0;
         $("[name^='inputData']").each(function() {
             formData[this.id] = this.value;
+        });
+        $(this).find("[name^='feature']").each(function() {
+            featureData[i++] = this.value;
         });
 
         $.ajax({  
             url:"addCarModel",
             method:"POST",  
-            data:formData
+            data:{
+                formData: formData,
+                featureData:featureData
+            }
         }).done(function(returnData) {
             getList();
             $('#modalAddCarModel form')[0].reset();
             $('#modalAddCarModel').modal('hide'); //ปิด modal
+            removeField();
         });
     })
 
@@ -209,18 +232,29 @@
         event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
        
         var formData = {};
+        var featureData = {};
+        var i = 0;
         $("[name^='editData']").each(function() {
             formData[this.id] = this.value;
         });
 
+        $(this).find("[name^='feature']").each(function() {
+            featureData[i++] = this.value;
+        });
+
+
         $.ajax({  
             url:"editCarModel",
             method:"POST",  
-            data:formData
+            data:{
+                formData: formData,
+                featureData:featureData
+            }
         }).done(function(returnData) {
             getList();
             $('#modalEditCarModel form')[0].reset();
             $('#modalEditCarModel').modal('hide'); //ปิด modal
+            removeField();
         });
     })
 
@@ -238,6 +272,36 @@
             $('#editAddBrand').attr('hidden',false);
         }
     })
+
+    var maxField = 6; //Input fields increment limitation
+    var addButton = $('.add_button'); //Add button selector
+    var wrapper = $('.field_wrapper');
+    var fieldHTML = '<div class="row"><div class="col-3"></div>&ensp;&ensp;<div class="form-inline"><input style="width: 250px;" type="text" class="form-control" name="feature[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์"/> &ensp;<button type="button" class="remove_button btn waves-effect waves-light btn-danger" title="Remove field">-</button></div></div>'; //New input field html 
+    var x = 1; //Initial field counter is 1
+
+    //Once add button is clicked
+    $(addButton).click(function(){
+        //Check maximum number of input fields
+        // console.log(x)
+        if(x < maxField){ 
+            x++; //Increment field counter
+            $(wrapper).append(fieldHTML); //Add field html
+        }
+    });
+    
+    //Once remove button is clicked
+    $(wrapper).on('click', '.remove_button', function(e){
+        e.preventDefault();
+        $(this).parent('div').parent('div').remove(); //Remove field html
+        x--; //Decrement field counter
+    });
+
+    function removeField() {
+        $('.remove_button').each(function() {
+            $(this).parent('div').parent('div').remove(); //Remove field html
+        });
+        x = 1;
+    }
 
     function getList() {
         $.ajax({

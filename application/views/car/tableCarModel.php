@@ -27,10 +27,20 @@
                         <td><?php echo $i++; ?></td>
                         <td class="text-left"><?= $val->car_brand_name_en ?></td>
                         <td class="text-left"><?= $val->car_model_name ?></td>
-                        <td class="text-left"><?= $val->car_model_feature ?></td>
+                        <td class="text-left">
+                            <!-- <?= $val->car_model_feature ?> -->
+                            <?php
+                            foreach (json_decode($val->car_model_feature) as $key2 => $val2) {
+                            if($key2 != 0){?>    <br>    <?php  }  ?>
+                            <i class="fas fa-check-circle" style='font-size:20px; color:#39e600;'></i>
+                                <?= $val2 ?>
+                            <?php
+                            }
+                            ?>
+                        </td>
                         <td class="text-left"><?= $val->car_model_description ?></td>
                         <td>
-                            <button type="button" class="btn waves-effect waves-light btn-warning btn-sm btn_edit" data-toggle="modal" data-toggle="modal" data-target="#modalEditCarModel" data-id="<?= $val->car_model_id ?>" data-brand="<?= $val->car_brand_id ?>" data-model="<?= $val->car_model_name ?>" data-feature="<?= $val->car_model_feature ?>" data-description="<?= $val->car_model_description ?>"><i class="fas fa-pencil-alt"></i></button>
+                            <button type="button" class="btn waves-effect waves-light btn-warning btn-sm btn_edit" data-toggle="modal" data-toggle="modal" data-target="#modalEditCarModel" data-id="<?= $val->car_model_id ?>" data-brand="<?= $val->car_brand_id ?>" data-model="<?= $val->car_model_name ?>" data-feature='<?= $val->car_model_feature ?>' data-description="<?= $val->car_model_description ?>"><i class="fas fa-pencil-alt"></i></button>
                             <button type="button" class="btn waves-effect waves-light btn-danger btn-sm btn_delete" id="<?= $val->car_model_id ?>" ><i class="fas fa-trash-alt"></i></button>
                         </td>
                     </tr>
@@ -46,6 +56,8 @@
 <script>
 
     $('#modalEditCarModel').on('show.bs.modal', function(event) {
+        removeField();
+
         var button = $(event.relatedTarget)
         var id = button.data('id');
         var brand = button.data('brand');
@@ -57,8 +69,24 @@
         modal.find('#car_model_id[name="editData[]"]').val(id);
         modal.find('#car_brand_id[name="editData[]"]').val(brand);
         modal.find('#car_model_name[name="editData[]"]').val(model);
-        modal.find('#car_model_feature[name="editData[]"]').val(feature);
         modal.find('#car_model_description[name="editData[]"]').val(description);
+
+        var wrapper = $('.field_wrapper'); //Input field wrapper
+        var fieldHTML = ''; //New input field html 
+        $.each(feature, function( index, value ) {
+            if(index == 0){
+                modal.find('#car_model_feature[name="feature[]"]').val(value);
+            }else{
+                x++;
+                fieldHTML = '<div class="row"><div class="col-3"></div>&ensp;&ensp;<div class="form-inline"><input style="width: 250px;" type="text" class="form-control" name="featureEdit[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์" value="'+value+'"/> &ensp;<button type="button" class="remove_button btn waves-effect waves-light btn-danger" title="Remove field">-</button></div></div>'; //New input field html 
+                modal.find(wrapper).append(fieldHTML);
+            }
+        });
+
+    })
+    
+    $('#modalAddCarModel').on('show.bs.modal', function(event) {
+        removeField();
     })
 
     $('.btn_delete').click(function() {

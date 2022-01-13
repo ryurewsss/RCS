@@ -45,7 +45,7 @@
             <div class="col-xs-12 col-sm-12 row-no-padding" style="user-select: auto;">
                 <h4 style="user-select: auto;">
                     <div class="float-left padding-bottom-5" style="user-select: auto;">
-                        <a href="" title="<?php echo $val->car_brand_name_en.' '.$val->car_model_name; ?>" style="user-select: auto;">
+                        <a href="<?= base_url() ?>Car/carDetail?type=detail&carId=<?php echo $val->car_id; ?>" title="<?php echo $val->car_brand_name_en.' '.$val->car_model_name; ?>" style="user-select: auto;">
                             <strong style="user-select: auto;"><?php echo $val->car_brand_name_en.' '.$val->car_model_name; ?></strong>
                         </a>
                     </div>

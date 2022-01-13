@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 13, 2022 at 12:55 PM
+-- Generation Time: Jan 13, 2022 at 12:54 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -24,25 +24,13 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `crs_transaction`
+-- Table structure for table `crs_place`
 --
 
-CREATE TABLE `crs_transaction` (
-  `transaction_id` int(10) NOT NULL,
-  `car_id` int(10) NOT NULL,
-  `user_lessor_id` int(10) NOT NULL,
-  `user_rental_id` int(10) NOT NULL,
-  `user_doc_id` int(10) NOT NULL,
+CREATE TABLE `crs_place` (
   `place_id` int(10) NOT NULL,
-  `transaction_status` varchar(30) NOT NULL,
-  `transaction_price` int(10) NOT NULL,
-  `transaction_lessor_approve` varchar(10) NOT NULL,
-  `transaction_rental_approve` varchar(10) NOT NULL,
-  `transaction_image` varchar(100) NOT NULL,
-  `transaction_iden_approve` varchar(10) NOT NULL,
-  `transaction_transfer_approve` varchar(10) NOT NULL,
-  `transaction_reject_iden` varchar(100) NOT NULL,
-  `transaction_reject_transfer` varchar(100) NOT NULL,
+  `place_name` varchar(100) NOT NULL,
+  `place_address` varchar(300) NOT NULL,
   `create_date` datetime NOT NULL DEFAULT current_timestamp(),
   `update_date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `user_create_id` int(10) NOT NULL,
@@ -54,20 +42,20 @@ CREATE TABLE `crs_transaction` (
 --
 
 --
--- Indexes for table `crs_transaction`
+-- Indexes for table `crs_place`
 --
-ALTER TABLE `crs_transaction`
-  ADD PRIMARY KEY (`transaction_id`);
+ALTER TABLE `crs_place`
+  ADD PRIMARY KEY (`place_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `crs_transaction`
+-- AUTO_INCREMENT for table `crs_place`
 --
-ALTER TABLE `crs_transaction`
-  MODIFY `transaction_id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `crs_place`
+  MODIFY `place_id` int(10) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
