@@ -12,7 +12,7 @@
                 <th>ยี่ห้อรถยนต์ </th>
                 <th>รุ่นรถยนต์</th>
                 <th>คุณสมบัติ</th>
-                <th>คำอธิบาย</th>
+                <th style="width: 50%;">คำอธิบาย</th>
                 <th>ดำเนินการ</th>
             </tr>
         </thead>
@@ -64,7 +64,7 @@
         var model = button.data('model');
         var feature = button.data('feature');
         var description = button.data('description');
-        
+        console.log(description)
         var modal = $(this);
         modal.find('#car_model_id[name="editData[]"]').val(id);
         modal.find('#car_brand_id[name="editData[]"]').val(brand);

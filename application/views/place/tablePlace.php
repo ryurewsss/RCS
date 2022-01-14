@@ -20,6 +20,7 @@
                         <td><?php echo $i++; ?></td>
                         <td class="text-left"><?= $val->place_name ?></td>
                         <td class="text-left"><?= $val->place_address ?></td>
+                        <!-- <td class="text-left"><a href="<?= $val->place_address ?>" target="_blank"><?= $val->place_address ?></a></td> -->
                         <td>
                             <button type="button" class="btn waves-effect waves-light btn-warning btn-sm btn_edit" data-toggle="modal" data-toggle="modal" data-target="#modalEditPlace" data-id="<?= $val->place_id ?>" data-name="<?= $val->place_name ?>" data-address="<?= $val->place_address ?>" ><i class="fas fa-pencil-alt"></i></button>
                             <button type="button" class="btn waves-effect waves-light btn-danger btn-sm btn_delete" id="<?= $val->place_id ?>" ><i class="fas fa-trash-alt"></i></button>

@@ -452,13 +452,28 @@ class Car extends Main
 			),
 			'groupBy' => ''
 		);
-		$modelCar['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
 		
+		$arrayPlace = array(
+			'tableName' => 'crs_place',
+			'colName' => '
+				crs_place.place_id,
+				crs_place.place_name,
+				crs_place.place_address,
+				crs_place.place_id',
+			'where' => '',
+			'order' => '',
+			'arrayJoinTable' => '',
+			'groupBy' => ''
+		);
+		$data['placeSelect'] = $this->crsModel->getAll($arrayPlace['tableName'], $arrayPlace['colName'], $arrayPlace['where'], $arrayPlace['order'], $arrayPlace['arrayJoinTable'], $arrayPlace['groupBy']);
+		
+
 		if ($_GET['type'] == 'detail') {
-			$data['page_content'] = $this->load->view('car/carDetail', $modelCar, TRUE);
+			$data['page_content'] = $this->load->view('car/carDetail', $data, TRUE);
 		}
 		if ($_GET['type'] == 'rent') {
-			$data['page_content'] = $this->load->view('car/carRent', $modelCar, TRUE);
+			$data['page_content'] = $this->load->view('car/carRent', $data, TRUE);
 		}
 
 		$this->load->view('main', $data);
