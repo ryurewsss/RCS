@@ -33,7 +33,7 @@ class Login extends Main
 	{
 		$getData = $this->input->post();
 		$arrayData = $getData['arrayData'];
-
+		$arrayData['user_type_id'] = 3;
 		$arrayData['user_password'] = password_hash($arrayData['user_password'], PASSWORD_DEFAULT);
 
 		$this->crsModel->add('crs_user', $arrayData);

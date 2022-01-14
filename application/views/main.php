@@ -106,7 +106,7 @@
             <span>จัดการสถานที่</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/record" aria-expanded="false">
+          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>User/user" aria-expanded="false">
             <i class="fas fa-user-friends" style='font-size:20px'></i>
             <span>จัดการสมาชิก</span></a>
         </li>
