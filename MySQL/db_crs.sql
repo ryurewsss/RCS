@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 06, 2022 at 04:36 PM
+-- Generation Time: Jan 14, 2022 at 08:08 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -49,7 +49,7 @@ CREATE TABLE `crs_car` (
 INSERT INTO `crs_car` (`car_id`, `car_registration`, `car_model_id`, `car_owner_id`, `car_price`, `car_promotion`, `car_image`, `car_proof_image`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
 (1, 'ฎง 9999 กรุงเทพมหานคร', 1, 1, 2200, 0, 'hondabrio.jpg', 'hondabrio.jpg', '2022-01-06 11:35:00', '2022-01-06 11:35:00', 1, 1),
 (2, 'กก 1150 ชลบุรี', 3, 1, 2600, 0, 'MITSUBISHI_PAJERO.jpg', 'MITSUBISHI_PAJERO.jpg', '2022-01-06 21:26:00', '2022-01-06 21:33:02', 1, 1),
-(28, '45', 1, 1, 4, 0, '2peaceHam.jpg', '2peaceHam.jpg', '2022-01-06 22:18:01', '2022-01-06 22:20:52', 1, 1);
+(28, '45', 18, 1, 4, 0, '2peaceHam.jpg', '2peaceHam.jpg', '2022-01-06 22:18:01', '2022-01-13 17:34:16', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -103,8 +103,33 @@ CREATE TABLE `crs_car_model` (
 --
 
 INSERT INTO `crs_car_model` (`car_model_id`, `car_brand_id`, `car_model_name`, `car_model_feature`, `car_model_description`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
-(1, 7, 'Brio', '5 ที่นั่ง', 'Honda Brio รถยนต์อีโคคาร์จากค่ายฮอนด้าที่มาพร้อมรูปลักษณ์รูปทรงภายนอกที่เป็นเอกลักษณ์ของฮอนด้า โดยมีให้เลือกทั้ง 4 ประตูภายใต้ชื่อ Honda Brio Amaze และแบบ 5 ประตู Honda Brio V ภายในดีไซน์ได้อย่างลงตัว มาพร้อมเครื่องยนต์ 1.2 ลิตร 4 สูบ 90 แรงม้า', '2022-01-06 16:51:57', '2022-01-06 17:20:35', 1, 1),
-(3, 8, 'Pajero 2019', '7 ที่นั่ง', 'NEW MITSUBISHI PAJERO SPORT รุ่นล่าสุดที่บุกตลาดรถอเนกประสงค์ในเวลานี้ ได้รับการปรับปรุง และพัฒนาให้ดีขึ้นมากกว่ารุ่นเดิมหลายด้าน ทั้งการดีไซน์รูปลักษณ์ภายนอกใหม่เพิ่มความล้ำสมัย และภายในห้องโดยสารตกแต่งใหม่ เพิ่มเติมออฟชั่นจำเป็นในการใช้งานที่น่าสนใจหลายด้าน รวมถึงการปรับเซ็ทช่วงล่างใหม่ให้นุ่มนวล', '2022-01-06 20:09:09', '2022-01-06 20:10:27', 1, 1);
+(1, 7, 'Brio', '[\"5 ที่นั่ง\",\"ฟรีเงินมัดจำ\"]', 'Honda Brio รถยนต์อีโคคาร์จากค่ายฮอนด้าที่มาพร้อมรูปลักษณ์รูปทรงภายนอกที่เป็นเอกลักษณ์ของฮอนด้า โดยมีให้เลือกทั้ง 4 ประตูภายใต้ชื่อ Honda Brio Amaze และแบบ 5 ประตู Honda Brio V ภายในดีไซน์ได้อย่างลงตัว มาพร้อมเครื่องยนต์ 1.2 ลิตร 4 สูบ 90 แรงม้า', '2022-01-06 16:51:57', '2022-01-13 15:23:20', 1, 1),
+(3, 8, 'Pajero 2019', '[\"4 ที่นั่ง\",\"ฟรีเงินมัดจำ\"]', 'NEW MITSUBISHI PAJERO SPORT รุ่นล่าสุดที่บุกตลาดรถอเนกประสงค์ในเวลานี้ ได้รับการปรับปรุง และพัฒนาให้ดีขึ้นมากกว่ารุ่นเดิมหลายด้าน ทั้งการดีไซน์รูปลักษณ์ภายนอกใหม่เพิ่มความล้ำสมัย และภายในห้องโดยสารตกแต่งใหม่ เพิ่มเติมออฟชั่นจำเป็นในการใช้งานที่น่าสนใจหลายด้าน รวมถึงการปรับเซ็ทช่วงล่างใหม่ให้นุ่มนวล', '2022-01-06 20:09:09', '2022-01-13 15:23:26', 1, 1),
+(18, 2, '4', '[\"1\",\"2\",\"3\",\"4\"]', '4', '2022-01-13 14:16:06', '2022-01-13 16:49:04', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `crs_place`
+--
+
+CREATE TABLE `crs_place` (
+  `place_id` int(10) NOT NULL,
+  `place_name` varchar(100) NOT NULL,
+  `place_address` varchar(300) NOT NULL,
+  `create_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `update_date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `user_create_id` int(10) NOT NULL,
+  `user_update_id` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `crs_place`
+--
+
+INSERT INTO `crs_place` (`place_id`, `place_name`, `place_address`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
+(1, 'สนามบินสุวรรณภูมิ', 'shorturl.at/ghvL0', '2022-01-13 19:04:27', '2022-01-13 19:05:39', 1, 1),
+(2, 'สนามบินเชียงใหม่', 'shorturl.at/biF28', '2022-01-13 19:07:26', '2022-01-13 19:07:26', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -118,10 +143,16 @@ CREATE TABLE `crs_transaction` (
   `user_lessor_id` int(10) NOT NULL,
   `user_rental_id` int(10) NOT NULL,
   `user_doc_id` int(10) NOT NULL,
+  `place_id` int(10) NOT NULL,
   `transaction_status` varchar(30) NOT NULL,
   `transaction_price` int(10) NOT NULL,
   `transaction_lessor_approve` varchar(10) NOT NULL,
   `transaction_rental_approve` varchar(10) NOT NULL,
+  `transaction_image` varchar(100) NOT NULL,
+  `transaction_iden_approve` varchar(10) NOT NULL,
+  `transaction_transfer_approve` varchar(10) NOT NULL,
+  `transaction_reject_iden` varchar(100) NOT NULL,
+  `transaction_reject_transfer` varchar(100) NOT NULL,
   `create_date` datetime NOT NULL DEFAULT current_timestamp(),
   `update_date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `user_create_id` int(10) NOT NULL,
@@ -231,6 +262,12 @@ ALTER TABLE `crs_car_model`
   ADD PRIMARY KEY (`car_model_id`);
 
 --
+-- Indexes for table `crs_place`
+--
+ALTER TABLE `crs_place`
+  ADD PRIMARY KEY (`place_id`);
+
+--
 -- Indexes for table `crs_transaction`
 --
 ALTER TABLE `crs_transaction`
@@ -269,7 +306,7 @@ ALTER TABLE `crs_user_type`
 -- AUTO_INCREMENT for table `crs_car`
 --
 ALTER TABLE `crs_car`
-  MODIFY `car_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `car_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `crs_car_brand`
@@ -281,7 +318,13 @@ ALTER TABLE `crs_car_brand`
 -- AUTO_INCREMENT for table `crs_car_model`
 --
 ALTER TABLE `crs_car_model`
-  MODIFY `car_model_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `car_model_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `crs_place`
+--
+ALTER TABLE `crs_place`
+  MODIFY `place_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `crs_transaction`
@@ -306,17 +349,6 @@ ALTER TABLE `crs_user_doc`
 --
 ALTER TABLE `crs_user_type`
   MODIFY `user_type_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `crs_transaction_user`
---
-ALTER TABLE `crs_transaction_user`
-  ADD CONSTRAINT `FKcrs_transa700116` FOREIGN KEY (`transaction_id`) REFERENCES `crs_transaction` (`transaction_id`),
-  ADD CONSTRAINT `FKcrs_transa971945` FOREIGN KEY (`user_id`) REFERENCES `crs_user` (`user_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
