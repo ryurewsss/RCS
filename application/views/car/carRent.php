@@ -78,7 +78,6 @@
         <div class="tab">
         <button class="tablinks active" onclick="openTab(event, 'setDate')">กำหนดวันเวลา</button>
         <button class="tablinks" onclick="openTab(event, 'uploadDoc')">อัปโหลดเอกสาร</button>
-        <button class="tablinks" onclick="openTab(event, 'confirmPay')">ยืนยันการชำระเงิน</button>
         <button class="tablinks" onclick="openTab(event, 'uploadPay')">อัปโหลดหลักฐานการโอนเงิน</button>
         </div>
 
@@ -126,15 +125,15 @@
 
                         <br>
                         <div class="row">
-                            <div class="col-5">
+                            <div class="col-4">
                                 <h4 >สถานที่รับส่งรถเช่า <a style="color: red;"> *</a></h4>
                             </div>  : &ensp;
-                            <select style="width: 300px;" id="car_brand_id" class="form-control form-control-line" name="editData[]">
+                            <select style="width: 350px;" id="car_brand_id" class="form-control form-control-line" name="editData[]">
                                 <option disabled selected>เลือกสถานที่รับส่ง</option>
                                 <?php
                                 if (isset($placeSelect)) {
-                                    foreach ($placeSelect as $key => $val) {
-                                        echo "<option value=" . $val->place_id . ">" . $val->place_name . "</option>";
+                                    foreach ($placeSelect as $key => $place) {
+                                        echo "<option value=" . $place->place_id . ">" . $place->place_name . "</option>";
                                     }
                                 }
                                 ?>
@@ -143,10 +142,37 @@
 
                         <br>
                         <div class="row">
-                            <div class="col-5">
+                            <div class="col-4">
                                 <h4 >ช่วงวันและเวลา <a style="color: red;"> *</a></h4>
                             </div>  : &ensp;
-                            <input type="text" style="width: 300px;" class="form-control" name="datetimes" />
+                            <input type="text" style="width: 350px;" class="form-control" name="datetimes" />
+                        </div>
+
+                        <br>
+                        <div class="row">
+                            <div class="col-4">
+                                <h4 >ระยะเวลาที่เช่า</h4>
+                            </div>  : &ensp;
+                            <input type="text" style="width: 200px; text-align: right;" class="form-control" id="rentHours"  disabled/>
+                            <h5 style="margin-top:10px">&ensp; ชั่วโมง</h5>
+                        </div>
+
+                        <br>
+                        <div class="row">
+                            <div class="col-4">
+                                <h4 >ราคา</h4>
+                            </div>  : &ensp;
+                            <input type="text" style="width: 200px; text-align: right;" class="form-control" id="rentPrice" value="<?php echo number_format($val->car_price); ?>" disabled/>
+                            <h5 style="margin-top:10px;">&ensp; บาท/วัน</h5>
+                        </div>
+
+                        <br>
+                        <div class="row">
+                            <div class="col-4">
+                                <h4 >ยอดที่ต้องโอน</h4>
+                            </div>  : &ensp;
+                            <input type="text" style="width: 200px; text-align: right;" class="form-control rentTotal" disabled/>
+                            <h5 style="margin-top:10px">&ensp; บาท</h5>
                         </div>
 
                         <br>
@@ -157,10 +183,9 @@
                         </div>
 
                         <br><br><br>
-                        <br><br><br>
                         <div class="row">
                             <div class="col-12 text-center">
-                                <button type="button" style="margin:auto; width: 100px;" class="btn btn-success d-none d-lg-block m-l-12">ถัดไป</button>
+                                <button type="button" style="margin:auto; width: 100px;" class="btn btn-success d-none d-lg-block m-l-12" onclick="openTab(event, 'uploadDoc')">ถัดไป &raquo;</button>
                             </div>
                         </div>
                     </div>
@@ -209,11 +234,13 @@
                             <img class="doc_image" id="license_image" src="#" alt="your image" hidden/>
                         </div>
                         
-                        <br><div class="row">
-                            <div class="col-12 text-center">
-                                <!-- <a href="<?= base_url() ?>Car/carDetail?type=rent&carId=<?php echo $val->car_id; ?>"> -->
-                                    <button type="button" style="margin:auto;" class="btn btn-success d-none d-lg-block m-l-12">ตรวจสอบการจอง</button>
-                                <!-- </a> -->
+                        <br><br><br>
+                        <div class="row">
+                            <div class="col-6 text-center">
+                                <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab(event, 'setDate')">&laquo; ย้อนกลับ</button>
+                            </div>
+                            <div class="col-6 text-center">
+                                <button type="button" style="margin:auto; width: 100px;" class="btn btn-success d-none d-lg-block m-l-12" onclick="openTab(event, 'uploadPay')">ถัดไป &raquo;</button>
                             </div>
                         </div>
                         <br>
@@ -222,14 +249,63 @@
             </div>
         </div>
 
-        <div id="confirmPay" class="tabcontent">
-            <h3>Tokyo</h3>
-            <p>Tokyo is the capital of Japan.</p>
-        </div>
-
         <div id="uploadPay" class="tabcontent">
-            <h3>Tokyo</h3>
-            <p>Tokyo is the capital of Japan.</p>
+            <div class="col-xs-12 col-md-12 showCarTable" style="user-select: auto;">
+                <div class="row flex-row" style="user-select: auto;">
+                    <div class="col-xs-12 col-sm-12" style="user-select: auto;">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <h2 class="text-black" style="user-select: auto;"><b>อัปโหลดหลักฐานการโอนเงิน</b></h2>
+                            </div>
+                        </div>
+                        
+                        <br><div class="row">
+                            <div class="col-3">
+                                <h4 >ยอดที่ต้องโอน</h4>
+                            </div>  : &ensp;
+                            <input type="text" style="width: 200px; text-align: right;" class="form-control rentTotal" disabled/>
+                            <h5 style="margin-top:10px">&ensp; บาท</h5>
+                        </div>
+
+                        <br><div class="row">
+                            <div class="col-6 text-center">
+                                <h3>บัญชีธนาคาร</h3>
+                                <br><br>
+                                <h5>386-0-662XX-X</h5>
+                                <h5>กรุงไทย</h5>
+                                <h5>สิรภพ คูณสินชัย</h5>
+                            </div>
+                            <div class="col-6 text-center">
+                                <h3>บัญชีพร้อมเพย์</h3>
+                                <div id="qrImage"></div>
+                            </div>
+                        </div>
+
+                        <br><br><div class="row">
+                            <div class="col-3">
+                                <h4>หลักฐานการโอนเงิน </a></h4>
+                            </div>
+                            <div class="col-5 text-center">
+                                <input type="file" class="form-control" name="license_upload" id="license_upload" onchange="readURL(this,'license'); src='' ">
+                            </div>
+                        </div>
+                        <br><div class="row">
+                            <div class="col-12 text-center"></div>
+                            <img class="doc_image" id="license_image" src="#" alt="your image" hidden/>
+                        </div>
+                        
+                        <br><div class="row">
+                            <div class="col-6 text-center">
+                                <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab(event, 'uploadDoc')">&laquo; ย้อนกลับ</button>
+                            </div>
+                            <div class="col-6 text-center">
+                                <button type="button" style="margin:auto; width: 130px;" class="btn btn-success d-none d-lg-block m-l-12" >ยืนยันการจอง &raquo;</button>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -239,12 +315,52 @@
 
 $('input[name="datetimes"]').daterangepicker({
     timePicker: true,
+    timePicker24Hour: true,
     startDate: moment().startOf('hour'),
-    endDate: moment().startOf('hour').add(32, 'hour'),
+    endDate: moment().startOf('hour').add(24, 'hour'),
     locale: {
-      format: 'M/DD hh:mm A'
+      format: 'DD/MM/YYYY HH:mm'
     }
 });
+
+$('input[name="datetimes"]').on('change', function(event) {
+    var startDate = this.value.substring(10, 0);
+    var startTime = this.value.substring(16, 11);
+    var endDate = this.value.substring(29, 19);
+    var endTime = this.value.substring(35, 30);
+    var start = new Date(ConvertDateFormat(startDate,startTime));
+    var end = new Date(ConvertDateFormat(endDate,endTime));
+    var diff = new Date(end - start);
+
+    var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+    var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / 1000 / 60 / 60);
+    var totalHours = Math.floor(diff / 1000 / 60 / 60 );
+    $('#rentHours').val(totalHours);
+    var price = parseInt($('#rentPrice').val().replace(/,/g, ''));
+    if(days == 0){
+        days++;
+        $('.rentTotal').val(parseInt(days) * price); //rent less than 1 day
+    }else if(hours > 5){
+        days++;
+        $('.rentTotal').val(parseInt(days) * price); //rent more 1 day and 5 hours+
+    }else{
+        $('.rentTotal').val((parseInt(days) * price) + (parseInt(hours) * parseInt(price / 10))); //rent more 1 day and 5 hours-
+    }
+    $('.rentTotal').val(addCommas($('.rentTotal').val()));
+    getQRcode();
+})
+$('input[name="datetimes"]').trigger("change"); //trigger
+
+function addCommas(x) {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+}
+
+function ConvertDateFormat(d, t) {
+    var dt = d.split('/'); //split date
+    return dt[1] + '/' + dt[0] + '/' + dt[2] + ' ' + t; //convert date to mm/dd/yy hh:mm format for date creation.
+}
 
 function openTab(evt, tabName) {
   var i, tabcontent, tablinks;
@@ -277,4 +393,19 @@ function readURL(input,type) {
         reader.readAsDataURL(input.files[0]);
     }
 }//show image when choose
+
+function getQRcode() {
+        var data = {};
+        data['price'] = $('.rentTotal').val().replace(/,/g, '');
+        data['tel'] = '0809425365';
+        $.ajax({
+            method: "POST",
+            // url: "getCarBrandTable",
+            url: "getQRcode",
+            data: data,  
+        }).done(function(returnedData) {
+            // console.log(returnedData)
+            $('#qrImage').html(returnedData.html);
+        });
+    }
 </script>

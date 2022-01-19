@@ -9,7 +9,6 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <!-- <title><?= $title_name ?></title> -->
   <title>Car rental system with blockchain technology</title>
 
   <!-- Custom fonts for this template-->
@@ -151,6 +150,13 @@
             <i class="fa fa-search" style='font-size:20px'></i>
             <span>ตรวจสอบการฝากเช่า</span></a>
         </li>
+
+        <li class="nav-item active">
+          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/genQR" aria-expanded="false">
+            <i class="fa fa-search" style='font-size:20px'></i>
+            <span>TEST QRCODE</span></a>
+        </li>
+
       <?php
         }
       ?>

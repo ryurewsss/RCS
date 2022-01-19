@@ -425,9 +425,9 @@ class Car extends Main
 		$json['sql'] = $this->db->last_query(); //for dev
 		$this->output->set_content_type('application/json')->set_output(json_encode($json));
 	}
-	// ___________________ End getCarModelTable ____________________
+	// ___________________ End getCarSelectModel ____________________
 
-	// __________________ Start Car __________________
+	// __________________ Start carDetail __________________
 	public function carDetail()
 	{
 
@@ -478,11 +478,28 @@ class Car extends Main
 
 		$this->load->view('main', $data);
 	}
-	// ___________________ End Car ____________________
+	// ___________________ End carDetail ____________________
 
+	// __________________ Start genQR __________________
+	public function genQR()
+	{
+		$data['page_content'] = $this->load->view('qrcode/QRPaymentAPI', '', TRUE);
+		// $data['page_content'] = $this->load->view(base_url().'application/libraries/PromptPay-QR-generator-master/test.php', '', TRUE);
+		$this->load->view('main', $data);
+	}
+	// ___________________ End genQR ____________________
 
-
-
+	// __________________ Start getQRcode __________________
+	public function getQRcode()
+	{
+		$getData = $this->input->post();
+		// $getData['tel'] = '';
+		// $getData['price'] = '';
+		$json['html'] = $this->load->view('qrcode/QRPaymentAPI', $getData, TRUE);
+		$this->output->set_content_type('application/json')->set_output(json_encode($json));
+	}
+	// ___________________ End getQRcode ____________________
+	
 
 
 
