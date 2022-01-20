@@ -20,8 +20,8 @@
             <div class="modal-body">
                 <form class="form-material" method="post" id="editForm">
                     <div class="row">
-                        <label style="text-indent: 20px; margin-right: 89px;">บัญชีผู้ใช้ </label> : &ensp;
-                        <input type="text" style="width: 350px;" class="form-control" name="changePassword[]" id="user_username" disabled>
+                        <label style="text-indent: 20px; margin-right: 105px;">อีเมลล์ </label> : &ensp;
+                        <input type="email" style="width: 350px;" class="form-control" name="changePassword[]" id="user_email" disabled>
                     </div><br>
                     <div class="row">
                         <label style="text-indent: 20px; margin-right: 57px;">รหัสผ่านเดิม<a style="color: red; word-spacing: 1px;"> *</a></label> : &ensp;
@@ -68,7 +68,7 @@
         }
         // console.log(passwordNew + "___" + passwordNewAgain)
         var passwordData = {};
-        passwordData['tableName'] = 'ie_user';
+        passwordData['tableName'] = 'crs_user';
         passwordData['columnName'] = 'user_password';
         passwordData['password'] = $(".passwordOld").val();
 
@@ -93,7 +93,7 @@
                     cancelButtonText: 'ยกเลิก'
                 }).then((result) => {
                 var tableData = {};
-                tableData['tableName'] = 'ie_user';
+                tableData['tableName'] = 'crs_user';
                 tableData['columnIdName'] = 'user_id';
 
                 var formData = {};
@@ -135,7 +135,7 @@
 
     function getList() {
         var data = {};
-        data['tableName'] = 'ie_user';
+        data['tableName'] = 'crs_user';
         data['colName'] = '';
         data['where'] = 'user_id = ' + <?php echo $_SESSION['id'] ?>;
         data['order'] = '';
