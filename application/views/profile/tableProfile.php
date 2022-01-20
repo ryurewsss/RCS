@@ -31,8 +31,8 @@
 
     .car_image{
     width: 50%;
-    max-width: 500px;
-    max-height: 500px;
+    max-width: 250px;
+    max-height: 250px;
     height: auto;
 }
 </style>
@@ -40,38 +40,50 @@
 <div class="row">
     <!-- Start card body -->
     <div class="card-body">
-        <form class="form-material">
+        <form class="form-material" id="submitEditProfile">
             <div class="form-body">
                 <!-- Start loop show db to table -->
                 <?php if (isset($table)) { ?>
                     <?php foreach ($table as $key => $val) { ?>
                         <div class="row">
                             <label style="text-indent: 20px; margin-right: 66px;">อีเมลล์ </label>: &ensp;
-                            <input type="email" style="width: 250px;" class="form-control" name="profileData[]" id="user_email" value="<?= $val->user_email ?>" placeholder="อีเมลล์" disabled>
+                            <input type="email" style="width: 250px;" class="form-control" name="user_email" id="user_email" value="<?= $val->user_email ?>" placeholder="อีเมลล์" disabled>
                         </div><br>
                         <div class="row">
                             <label style="text-indent: 20px;  margin-right: 90px;">ชื่อ </label>: &ensp;
-                            <input type="text" style="width: 250px;" class="form-control" name="profileData[]" id="user_fname" value="<?= $val->user_fname ?>" placeholder="ชื่อ">
+                            <input type="text" style="width: 250px;" class="form-control" name="user_fname" id="user_fname" value="<?= $val->user_fname ?>" placeholder="ชื่อ">
                         </div><br>
                         <div class="row">
                             <label style="text-indent: 20px;  margin-right: 53px;">นามสกุล </label>: &ensp;
-                            <input type="text" style="width: 250px;" class="form-control" name="profileData[]" id="user_lname" value="<?= $val->user_lname ?>" placeholder="นามสกุล">
+                            <input type="text" style="width: 250px;" class="form-control" name="user_lname" id="user_lname" value="<?= $val->user_lname ?>" placeholder="นามสกุล">
                         </div><br>
                         <div class="row">
                             <label style="text-indent: 20px;  margin-right: 18px;">เบอร์โทรศัพท์ </label>: &ensp;
-                            <input type="text" style="width: 250px;" class="form-control" name="profileData[]" id="user_phone" value="<?= $val->user_phone ?>" placeholder="">
+                            <input type="text" style="width: 250px;" class="form-control" name="user_phone" id="user_phone" value="<?= $val->user_phone ?>" placeholder="">
                         </div><br>
-                        
+                        <div class="row">
+                            <label style="text-indent: 20px;  margin-right: 62px;">รูปภาพ </label>: &ensp;
+                            <input type="file" style="width: 250px;" class="form-control" name="user_upload" id="user_upload" onchange="readURL(this,'add'); " placeholder="">
+                        </div><br>
+                        <div class="row">
+                        <div class="col-1"></div>
+                        <?php if ($val->user_image != ""){?>
+                        <img class="car_image" id="car_image" src="<?php echo base_url('img/user_img'); ?>/<?php echo $val->user_image; ?>" alt="your image" />
+                        <?php }else{ ?>
+                        <img class="car_image" id="car_image" src="#" alt="your image" hidden/>
+                        <?php } ?>
+                        </div><br>
                         <div class="form-group">
+                        <div class="row">
                             <div class="col-lg-2 col-md-4">
-                                <button id="editPassword" type="button" class="btn btn-block btn-secondary" data-id='<?= $val->user_id ?>' data-toggle='modal' data-target='#changePasswordmodal' data-username='<?= $val->user_username ?>' ?>เปลี่ยนรหัสผ่าน</button>
+                                <button id="editPassword" type="button" class="btn btn-block btn-secondary" data-id='<?= $val->user_id ?>' data-toggle='modal' data-target='#changePasswordmodal' data-email='<?= $val->user_email ?>' ?>เปลี่ยนรหัสผ่าน</button>      
+                            </div>
+                            <div class="col-lg-2 col-md-4">
+                                <input type="hidden" name="user_id" id="user_id" value="<?= $val->user_id ?>">
+                                <input type="hidden" name="old_image" id="e_old_image" value="<?= isset($val->user_image) ? $val->user_image : ''; ?>">
+                                <button style="margin-left: 22px;" class="btn btn-success" type="submit" data-id=''>บันทึก</button>&ensp;
                             </div>
                         </div>
-                        <div class="row">
-                        <input type="hidden" name="old_image" id="e_old_image">
-                            <p hidden id="base_url"><?php echo base_url(); ?></p>
-                            <button style="margin-left: 22px;" class="btn btn-success" type="button" id="submitEditProfile" data-id=''>บันทึก</button>&ensp;
-                            <button class="btn btn-danger btn_delete" type="button" id="<?= $val->user_id ?>" data-id=''>ลบบัญชีผู้ใช้</button>
                         </div>
                     <?php } ?>
                 <?php } ?>
@@ -83,69 +95,61 @@
 </div>
 
 <script>
-    var data = <?php echo json_encode($val->user_username) ?>;
-    $('#user_username[name="changePassword[]"]').val(data);
-    $('#submitEditProfile').click(function() {
-        var tableData = {};
-        tableData['tableName'] = 'crs_user';
-        tableData['columnIdName'] = 'user_id';
-
-        var whereData = {
-            'user_id': <?php echo $_SESSION['id'] ?>
-        };
-        var formData = {};
-
-        $("[name^='profileData']").each(function() {
-            formData[this.id] = this.value;
-        });
-
-        console.log(formData);
+    $('#submitEditProfile').on('submit', function(event) {
+        event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
+        if(document.getElementById("user_upload").files.length == 0 ){
+            $.ajax({  
+                url:"editProfileNoFile",
+                method:"POST",  
+                data:new FormData(this),  
+                contentType: false,  
+                cache: false,  
+                processData:false,  
+            }).done(function(returnData) {
+                getList();
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Edit Profile Complete',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
+            });
+            //submit without file
+        }else{
         $.ajax({
             method: "POST",
-            url: "editData",
-            data: {
-                table: tableData,
-                arrayData: formData,
-                arrayWhere: whereData
-            },
+            url: "editProfile",
+            data:new FormData(this),  
+            contentType: false,  
+            cache: false,  
+            processData:false, 
         }).done(function(returnData) {
             getList();
+            Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Edit Profile Complete',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
         });
+        }
     })
     //submit edit form
 
-    $('.btn_delete').click(function() {
-
-        var id = <?php echo $_SESSION['id'] ?>;
-        var data = {};
-        data['tableName'] = 'ie_user';
-        data['columnIdName'] = 'user_id';
-        data['columnDeleteStatus'] = 'user_delete_status';
-        data['updateColumn'] = ""
-        data['id'] = id;
-        console.log(id);
-        if (confirm('ยืนยันการลบบัญชีผู้ใช้หรือไม่')) {
-            $.ajax({
-                url: "deleteRow",
-                method: "POST",
-                data: data,
-            }).done(function(returnData) {
-                $.ajax({
-                    url: "../Login/logout",
-                    method: "POST"
-                }).done(function(returnData) {
-                    alert("ลบข้อมูลเสร็จสิ้น")
-                    window.location.replace($('#base_url').html());
-                });
-            });
-        }
+    $('#changePasswordmodal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget)
+        var id = button.data('id');
+        var email = button.data('email');
+        var modal = $(this);
+        modal.find('#user_id[name="changePassword[]"]').val(id);
+        modal.find('#user_email[name="changePassword[]"]').val(email);
     })
 
     function readURL(input,modal) {
-        alert("aunnn");
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-        alert("ryuuuu");
             reader.onload = function (e) {
                 if(modal == 'add'){
                     $('#car_image').attr('src', e.target.result);

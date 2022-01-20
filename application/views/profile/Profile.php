@@ -37,6 +37,7 @@
                     </div><br>
                     <div class="modal-footer">
                         <label id="passwordEditError" class="text-danger"></label>
+                        <input type="hidden" name="changePassword[]" id="user_id">
                         <button type="button" class="btn waves-effect waves-light btn-danger" data-dismiss="modal">ยกเลิก</button>
                         <button type="submit" class="btn waves-effect waves-light btn-success" id="submitEdit">บันทึก</button>
                     </div>
@@ -82,16 +83,7 @@
                 $('#passwordEditError').html('<span class="text-danger"> กรุณาใส่รหัสผ่านให้ถูกต้อง</span>');
             }
             if (pass && returnData) {
-                Swal.fire({
-                    title: 'ยืนยันการเปลี่ยนรหัส',
-                    text: "ต้องการเปลี่ยนรหัสหรือไม่",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'ยืนยัน',
-                    cancelButtonText: 'ยกเลิก'
-                }).then((result) => {
+                
                 var tableData = {};
                 tableData['tableName'] = 'crs_user';
                 tableData['columnIdName'] = 'user_id';
@@ -112,20 +104,18 @@
                     },
                 }).done(function(returnData) {
                     getList();
-                    // $.toast({
-                    //     heading: 'สำเร็จ',
-                    //     text: 'แก้ไขข้อมูลสำเร็จ',
-                    //     position: 'top-right',
-                    //     loaderBg: '#ff6849',
-                    //     icon: 'success',
-                    //     hideAfter: 3500,
-                    //     stack: 3
-                    // });
+                    Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Change Password Complete',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
                     $('#changePasswordmodal form')[0].reset();
                     $('#passwordEditError').html('');
                     $('#changePasswordmodal').modal('hide'); //ปิด modal
                 });
-                })
+                
             } else {
                 console.log("ASD")
             }

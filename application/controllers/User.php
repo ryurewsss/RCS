@@ -156,4 +156,68 @@ class User extends Main
 
 	}
 	// ___________________ End addCarModel ____________________
+
+	// __________________ Start editProfile __________________
+	public function editProfile()
+	{
+		$config['upload_path'] = './img/user_img/';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size'] = '2000';
+		$config['max_width'] = '3000';
+		$config['max_height'] = '3000';
+
+		$this->load->library('upload', $config);
+
+		if(!$this->upload->do_upload('user_upload')){
+			echo $this->upload->display_errors();
+		}else{
+
+			$file_pointer = './img/user_img/' . $this->input->post('old_image');
+			// print_r($file_pointer);
+			if (!unlink($file_pointer)) { 
+				echo ("$file_pointer cannot be deleted due to an error"); 
+			} 
+			else { 
+				echo ("$file_pointer has been deleted"); 
+			}//delete file
+
+			$data = $this->upload->data();
+			$filename = $data['file_name'];
+			$arrayData = array(
+				'user_id' => $_SESSION['id'],
+				'user_fname' => $this->input->post('user_fname'),
+				'user_lname' => $this->input->post('user_lname'),
+				'user_phone' => $this->input->post('user_phone'),
+				'user_image' => $filename,
+				'user_update_id' => $_SESSION['id']
+			);
+			$arrayWhere = array('user_id' => $_SESSION['id']);
+			$editedId = $this->crsModel->update('crs_user',$arrayWhere, $arrayData);
+			// $this->output->set_content_type('application/json')->set_output(json_encode($editedId));
+		}
+	}
+	// ___________________ End editProfile ____________________
+	
+	// __________________ Start editProfileNoFile __________________
+	public function editProfileNoFile()
+	{
+		// $arrayData = array(
+		// 	'car_registration' => $this->input->post('car_registration'),
+		// 	'car_brand' => $this->input->post('car_brand'),
+		// 	'car_model' => $this->input->post('car_model'),
+		// 	'car_feature' => $this->input->post('car_feature'),
+		// 	'car_description' => $this->input->post('car_description'),
+		// 	'car_price' => $this->input->post('car_price'),
+		// );
+		$arrayData = array(
+			'user_id' => $_SESSION['id'],
+			'user_fname' => $this->input->post('user_fname'),
+			'user_lname' => $this->input->post('user_lname'),
+			'user_phone' => $this->input->post('user_phone'),
+			'user_update_id' => $_SESSION['id']
+		);
+		$arrayWhere = array('user_id' => $_SESSION['id']);
+		$editedId = $this->crsModel->update('crs_user',$arrayWhere, $arrayData);
+	}
+	// ___________________ End editProfileNoFile ____________________
 }
