@@ -108,7 +108,7 @@
         if($usertype == 'lessor'){
       ?>
         <li class="nav-item active">
-          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/record" aria-expanded="false">
+          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Transaction/transaction" aria-expanded="false">
             <i class="fa fa-search" style='font-size:20px'></i>
             <span>ตรวจสอบการเช่า</span></a>
         </li>
@@ -143,20 +143,14 @@
             <span>จัดการสมาชิก</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/report" aria-expanded="false">
+          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>" aria-expanded="false">
             <i class="fas fa-scroll" style='font-size:20px'></i>
             <span>ประวัติการเช่า</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Record/search" aria-expanded="false">
+          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>" aria-expanded="false">
             <i class="fa fa-search" style='font-size:20px'></i>
             <span>ตรวจสอบการฝากเช่า</span></a>
-        </li>
-
-        <li class="nav-item active">
-          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/genQR" aria-expanded="false">
-            <i class="fa fa-search" style='font-size:20px'></i>
-            <span>TEST QRCODE</span></a>
         </li>
 
       <?php

@@ -480,15 +480,6 @@ class Car extends Main
 	}
 	// ___________________ End carDetail ____________________
 
-	// __________________ Start genQR __________________
-	public function genQR()
-	{
-		$data['page_content'] = $this->load->view('qrcode/QRPaymentAPI', '', TRUE);
-		// $data['page_content'] = $this->load->view(base_url().'application/libraries/PromptPay-QR-generator-master/test.php', '', TRUE);
-		$this->load->view('main', $data);
-	}
-	// ___________________ End genQR ____________________
-
 	// __________________ Start getQRcode __________________
 	public function getQRcode()
 	{
@@ -499,7 +490,90 @@ class Car extends Main
 		$this->output->set_content_type('application/json')->set_output(json_encode($json));
 	}
 	// ___________________ End getQRcode ____________________
+
+	// __________________ Start addCarRent __________________
+	public function addCarRent()
+	{
+		$config['upload_path'] = './img/user_doc_img/';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size'] = '2000';
+		$config['max_width'] = '3000';
+		$config['max_height'] = '3000';
 	
+		$pass = TRUE;
+
+		// UPLOAD DOC
+		$this->load->library('upload', $config, 'docUpload');
+		if(!$this->docUpload->do_upload('iden_upload') ){
+			echo $this->docUpload->display_errors();
+			$pass = FALSE;
+		}else{
+			$data = $this->docUpload->data();
+			$filename['iden_upload'] = $data['file_name'];
+		}
+		if(!$this->docUpload->do_upload('license_upload') ){
+			echo $this->docUpload->display_errors();
+			$pass = FALSE;
+		}else{
+			$data = $this->docUpload->data();
+			$filename['license_upload'] = $data['file_name'];
+		}
+
+		$arrayData = array(
+			'user_id' => $_SESSION['id'],
+			'user_doc_iden_image' => $filename['iden_upload'],
+			'user_doc_license_image' => $filename['license_upload'],
+			'user_create_id' => $_SESSION['id'],
+			'user_update_id' => $_SESSION['id']
+		);
+		$addedId = $this->crsModel->add('crs_user_doc', $arrayData);
+		//END UPLOAD DOC
+
+		$config['upload_path'] = './img/transaction_img/';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size'] = '2000';
+		$config['max_width'] = '3000';
+		$config['max_height'] = '3000';
+		$this->load->library('upload', $config, 'transactionUpload');
+		if(!$this->transactionUpload->do_upload('transaction_upload')){
+			echo $this->transactionUpload->display_errors();
+			$pass = FALSE;
+		}else{
+			$data = $this->transactionUpload->data();
+			$filename['transaction_upload'] = $data['file_name'];
+		}
+		if($pass){
+			$datetimes = $this->input->post('datetimes');
+			$date['startDate'] = substr($datetimes,0,10); //substr
+			$date['startTime'] = substr($datetimes,11,5);
+			$date['endDate'] = substr($datetimes,19,10);
+			$date['endTime'] = substr($datetimes,30,5);
+			$date['startDate'] = date("Y-m-d", strtotime(str_replace('/', '-', $date['startDate']))); // change 31/12/2000 to 2000-12-31
+			$date['endDate'] = date("Y-m-d", strtotime(str_replace('/', '-', $date['endDate'])));
+			$arrayData = array(
+				'car_id' => $this->input->post('car_id'),
+				'user_rental_id' => $_SESSION['id'],
+				'user_doc_id' => $addedId,
+				'place_id' => $this->input->post('place_id'),
+				'transaction_receive_date' => $date['startDate'].' '.$date['startTime'],
+				'transaction_return_date' => $date['endDate'].' '.$date['endTime'],
+				'transaction_status' => '1',
+				'transaction_price' => (int)str_replace(',', '', $this->input->post('rentTotal')),
+				'transaction_rental_approve' => '1',
+				'transaction_image' => $filename['transaction_upload'],
+				'user_create_id' => $_SESSION['id'],
+				'user_update_id' => $_SESSION['id']
+			);
+			$addedId = $this->crsModel->add('crs_transaction', $arrayData);
+			$this->output->set_content_type('application/json')->set_output(json_encode($addedId));
+		}
+	}
+
+	public function addCarRent2(){
+		echo (int)str_replace(',', '', $this->input->post('rentTotal'));
+	}// for test
+
+
 
 
 

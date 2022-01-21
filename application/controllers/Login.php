@@ -54,6 +54,7 @@ class Login extends Main
 				if (password_verify($json['password'], $result[0]->user_password)) {
 					$_SESSION['name'] = $result[0]->user_fname;
 					$_SESSION['id'] = $result[0]->user_id;
+					$_SESSION['type'] = $result[0]->user_type_id;
 					// $_SESSION['username'] = $result->row()->username;
 					$json['login'] = 'True';
 				} else {
