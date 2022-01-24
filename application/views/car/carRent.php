@@ -76,9 +76,9 @@
     </div>
     <div class="card-body">
         <div class="tab">
-            <button class="tablinks active" onclick="openTab(event, 'setDate')">กำหนดวันเวลา</button>
-            <button class="tablinks" onclick="openTab(event, 'uploadDoc')">อัปโหลดเอกสาร</button>
-            <button class="tablinks" onclick="openTab(event, 'uploadPay')">อัปโหลดหลักฐานการโอนเงิน</button>
+            <button class="tablinks active" id="setDate2" onclick="openTab('setDate')">กำหนดวันเวลา</button>
+            <button class="tablinks" id="uploadDoc2" onclick="openTab('uploadDoc')">อัปโหลดเอกสาร</button>
+            <button class="tablinks" id="uploadPay2" onclick="openTab('uploadPay')">อัปโหลดหลักฐานการโอนเงิน</button>
         </div>
         <form id="addCarRentForm" method="post" enctype="multipart/form-data">
             <div id="setDate" class="tabcontent" style="display: block;">
@@ -190,7 +190,7 @@
                             <br><br><br>
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-success d-none d-lg-block m-l-12" onclick="openTab(event, 'uploadDoc')">ถัดไป &raquo;</button>
+                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-success d-none d-lg-block m-l-12" onclick="openTab('uploadDoc')">ถัดไป &raquo;</button>
                                 </div>
                             </div>
                         </div>
@@ -242,10 +242,10 @@
                             <br><br><br>
                             <div class="row">
                                 <div class="col-6 text-center">
-                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab(event, 'setDate')">&laquo; ย้อนกลับ</button>
+                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab('setDate')">&laquo; ย้อนกลับ</button>
                                 </div>
                                 <div class="col-6 text-center">
-                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-success d-none d-lg-block m-l-12" onclick="openTab(event, 'uploadPay')">ถัดไป &raquo;</button>
+                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-success d-none d-lg-block m-l-12" onclick="openTab('uploadPay')">ถัดไป &raquo;</button>
                                 </div>
                             </div>
                             <br>
@@ -301,7 +301,7 @@
                             
                             <br><div class="row">
                                 <div class="col-6 text-center">
-                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab(event, 'uploadDoc')">&laquo; ย้อนกลับ</button>
+                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab('uploadDoc')">&laquo; ย้อนกลับ</button>
                                 </div>
                                 <div class="col-6 text-center">
                                     <input type="hidden" name="car_id" id="car_id" value="<?php echo $val->car_id; ?>">
@@ -389,7 +389,7 @@ function ConvertDateFormat(d, t) {
     return dt[1] + '/' + dt[0] + '/' + dt[2] + ' ' + t; //convert date to mm/dd/yy hh:mm format for date creation.
 }
 
-function openTab(evt, tabName) {
+function openTab(tabName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
   for (i = 0; i < tabcontent.length; i++) {
@@ -400,7 +400,9 @@ function openTab(evt, tabName) {
     tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
   document.getElementById(tabName).style.display = "block";
-  evt.currentTarget.className += " active";
+
+  var elem = document.getElementById(tabName+"2");
+  elem.classList.add("active");
 }
 
 function readURL(input,type) {

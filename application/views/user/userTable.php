@@ -27,8 +27,8 @@
             <form id="addUser">
                 <div class="modal-body">
                     <div class="row">
-                        <label style="text-indent: 20px; margin-right: 87px;">อีเมลล์<a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
-                        <input style="width: 250px;" type="email" class="form-control" name="register[]" id="user_email" autocomplete="off" placeholder="อีเมลล์" value="">
+                        <label style="text-indent: 20px; margin-right: 87px;">อีเมล<a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
+                        <input style="width: 250px;" type="email" class="form-control" name="register[]" id="user_email" autocomplete="off" placeholder="อีเมล" value="">
                         <br><br>
                     </div>
                     <div class="row">
@@ -97,8 +97,8 @@
             <form id="editUser">
                 <div class="modal-body">
                 <div class="row">
-                        <label style="text-indent: 20px; margin-right: 87px;">อีเมลล์<a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
-                        <input style="width: 250px;" type="email" class="form-control" name="editData[]" id="user_email" autocomplete="off" placeholder="อีเมลล์" value="">
+                        <label style="text-indent: 20px; margin-right: 87px;">อีเมล<a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
+                        <input style="width: 250px;" type="email" class="form-control" name="editData[]" id="user_email" autocomplete="off" placeholder="อีเมล" value="">
                         <br><br>
                     </div>
                     <div class="row">

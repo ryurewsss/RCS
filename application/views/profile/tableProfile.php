@@ -46,8 +46,8 @@
                 <?php if (isset($table)) { ?>
                     <?php foreach ($table as $key => $val) { ?>
                         <div class="row">
-                            <label style="text-indent: 20px; margin-right: 66px;">อีเมลล์ </label>: &ensp;
-                            <input type="email" style="width: 250px;" class="form-control" name="user_email" id="user_email" value="<?= $val->user_email ?>" placeholder="อีเมลล์" disabled>
+                            <label style="text-indent: 20px; margin-right: 66px;">อีเมล </label>: &ensp;
+                            <input type="email" style="width: 250px;" class="form-control" name="user_email" id="user_email" value="<?= $val->user_email ?>" placeholder="อีเมล" disabled>
                         </div><br>
                         <div class="row">
                             <label style="text-indent: 20px;  margin-right: 90px;">ชื่อ </label>: &ensp;

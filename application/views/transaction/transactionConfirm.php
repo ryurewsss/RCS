@@ -76,11 +76,12 @@
     </div>
     <div class="card-body">
         <div class="tab">
-            <button class="tablinks active" onclick="openTab(event, 'setDate')">กำหนดวันเวลา</button>
-            <button class="tablinks" onclick="openTab(event, 'uploadDoc')">อัปโหลดเอกสาร</button>
-            <button class="tablinks" onclick="openTab(event, 'uploadPay')">อัปโหลดหลักฐานการโอนเงิน</button>
+            <button class="tablinks active" id="setDate2" onclick="openTab('setDate')">วันเวลาที่จอง</button>
+            <button class="tablinks" id="uploadDoc2" onclick="openTab('uploadDoc')">ตรวจสอบเอกสาร</button>
+            <button class="tablinks" id="uploadPay2" onclick="openTab('uploadPay')">ตรวจสอบหลักฐานการโอนเงิน</button>
+            <button class="tablinks" id="userDeatail2" onclick="openTab('userDeatail')">ข้อมูลผู้จอง</button>
         </div>
-        <form id="addCarRentForm" method="post" enctype="multipart/form-data">
+        <form id="addConfirmRentForm" method="post" enctype="multipart/form-data">
             <div id="setDate" class="tabcontent" style="display: block;">
                 <div class="col-xs-12 col-md-12 showCarTable" style="user-select: auto;">
                     <div class="row flex-row" style="user-select: auto;">
@@ -131,16 +132,11 @@
                             <br>
                             <div class="row">
                                 <div class="col-4">
-                                    <h4 >สถานที่รับส่งรถเช่า <a style="color: red;"> *</a></h4>
+                                    <h4 >สถานที่รับส่งรถเช่า</h4>
                                 </div>  : &ensp;
-                                <select style="width: 350px;" class="form-control form-control-line" name="place_id" id="place_id">
-                                    <option disabled selected>เลือกสถานที่รับส่ง</option>
+                                <select style="width: 350px;" class="form-control form-control-line" name="place_id" id="place_id" disabled>
                                     <?php
-                                    if (isset($placeSelect)) {
-                                        foreach ($placeSelect as $key => $place) {
-                                            echo "<option value=" . $place->place_id . ">" . $place->place_name . "</option>";
-                                        }
-                                    }
+                                        echo "<option selected value=" . $val->place_id . ">" . $val->place_name . "</option>";
                                     ?>
                                 </select>
                             </div>
@@ -148,9 +144,12 @@
                             <br>
                             <div class="row">
                                 <div class="col-4">
-                                    <h4 >ช่วงวันและเวลา <a style="color: red;"> *</a></h4>
+                                    <h4 >ช่วงวันและเวลา</h4>
                                 </div>  : &ensp;
-                                <input type="text" style="width: 350px;" class="form-control" name="datetimes" id="datetimes" />
+                                <input type="text" style="width: 350px;" class="form-control" id="datetimes"                             
+                                value="<?php echo date("d/m/Y", strtotime(str_replace('-', '/', substr($val->transaction_receive_date,0,10)))).' '.substr($val->transaction_receive_date,11,5)
+                                .' - '.date("d/m/Y", strtotime(str_replace('-', '/', substr($val->transaction_return_date,0,10)))).' '.substr($val->transaction_return_date,11,5)
+                                 ?>" readonly>
                             </div>
 
                             <br>
@@ -158,7 +157,7 @@
                                 <div class="col-4">
                                     <h4 >ระยะเวลาที่เช่า</h4>
                                 </div>  : &ensp;
-                                <input type="text" style="width: 200px; text-align: right;" class="form-control" name="rentHours" id="rentHours"  readonly/>
+                                <input type="text" style="width: 200px; text-align: right;" class="form-control rentHours" name="rentHours" readonly/>
                                 <h5 style="margin-top:10px">&ensp; ชั่วโมง</h5>
                             </div>
 
@@ -180,17 +179,11 @@
                                 <h5 style="margin-top:10px">&ensp; บาท</h5>
                             </div>
 
-                            <br>
-                            <div class="row">
-                                <div class="col-12 text-center">
-                                    <button type="button" style="margin:auto;" class="btn btn-info d-none d-lg-block m-l-12">ตรวจสอบการจอง</button>
-                                </div>
-                            </div>
-
+                            <br><br><br>
                             <br><br><br>
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-success d-none d-lg-block m-l-12" onclick="openTab(event, 'uploadDoc')">ถัดไป &raquo;</button>
+                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-success d-none d-lg-block m-l-12" onclick="openTab('uploadDoc')">ถัดไป &raquo;</button>
                                 </div>
                             </div>
                         </div>
@@ -214,38 +207,39 @@
                             </div>
                             
                             <br><div class="row">
-                                <div class="col-5 text-center">
+                                <div class="col-6 text-center">
                                     <h4 >เอกสารระบุตัวตน <br>(หนังสือเดินทางหรือบัตรประชาชน) </h4>
-                                </div>
-                                <div class="col-5 text-center">
-                                    <input type="file" class="form-control" name="iden_upload" id="iden_upload" onchange="readURL(this,'iden'); src='' ">
-                                </div>
-                            </div>
-                            <br><div class="row">
-                                <div class="col-12 text-center"></div>
-                                <img class="doc_image" id="iden_image" src="#" alt="your image" hidden/>
-                            </div>
-
-                            <br><div class="row">
-                                <div class="col-5 text-center">
+                                    <img class="doc_image" id="iden_image" src="<?php echo base_url('img/user_doc_img'); ?>/<?php echo $val->user_doc_iden_image; ?>"/>
+                                    <br><br><br>
                                     <h4 >ใบอนุญาตขับขี่ </a></h4>
+                                    <img class="doc_image" id="license_image" src="<?php echo base_url('img/user_doc_img'); ?>/<?php echo $val->user_doc_license_image; ?>"/>
                                 </div>
-                                <div class="col-5 text-center">
-                                    <input type="file" class="form-control" name="license_upload" id="license_upload" onchange="readURL(this,'license'); src='' ">
+                                <div class="col-6 text-center">
+                                    <h4>ปฏิเสธเอกสาร <br><br> </h4>
+                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="transaction_reject_iden" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ"><?php echo isset($val->transaction_reject_iden) ? $val->transaction_reject_iden : ''; ?></textarea>
+                                    <br>
+                                        <h2 class="text-danger" id="reject_iden_1" style="user-select: auto; display: <?php echo isset($val->transaction_iden_approve) && $val->transaction_iden_approve == 0 ? 'display' : 'none'; ?>"><b>ปฏิเสธเอกสาร</b></h2>
+                                        <h2 class="text-success" id="reject_iden_2" style="user-select: auto; display: <?php echo isset($val->transaction_iden_approve) && $val->transaction_iden_approve == 1 ? 'display' : 'none'; ?>"><b>ยอมรับเอกสาร</b></h2>
+                                        <input type="hidden" name="inputData[]" id="reject_iden" value="<?php echo isset($val->transaction_iden_approve) ? $val->transaction_iden_approve : ''; ?>">
+                                    <div class="row">
+                                        <div class="col-6 text-center">
+                                            <button type="button" style="margin:auto; width: 100px;" class="btn btn-danger d-none d-lg-block m-l-12 reject_iden_btn" value="0">ปฏิเสธ</button>
+                                        </div>
+                                        <div class="col-6 text-center">
+                                            <button type="button" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12 reject_iden_btn" value="1">ยอมรับ</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <br><div class="row">
-                                <div class="col-12 text-center"></div>
-                                <img class="doc_image" id="license_image" src="#" alt="your image" hidden/>
-                            </div>
+                            <br>
                             
                             <br><br><br>
                             <div class="row">
                                 <div class="col-6 text-center">
-                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab(event, 'setDate')">&laquo; ย้อนกลับ</button>
+                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab('setDate')">&laquo; ย้อนกลับ</button>
                                 </div>
                                 <div class="col-6 text-center">
-                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-success d-none d-lg-block m-l-12" onclick="openTab(event, 'uploadPay')">ถัดไป &raquo;</button>
+                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-success d-none d-lg-block m-l-12" onclick="openTab('uploadPay')">ถัดไป &raquo;</button>
                                 </div>
                             </div>
                             <br>
@@ -260,52 +254,62 @@
                         <div class="col-xs-12 col-sm-12" style="user-select: auto;">
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <h2 class="text-black" style="user-select: auto;"><b>อัปโหลดหลักฐานการโอนเงิน</b></h2>
-                                </div>
-                            </div>
-                            
-                            <br><div class="row">
-                                <div class="col-3">
-                                    <h4 >ยอดที่ต้องโอน</h4>
-                                </div>  : &ensp;
-                                <input type="text" style="width: 200px; text-align: right;" class="form-control rentTotal" disabled/>
-                                <h5 style="margin-top:10px">&ensp; บาท</h5>
-                            </div>
-
-                            <br><div class="row">
-                                <div class="col-6 text-center">
-                                    <h3>บัญชีธนาคาร</h3>
-                                    <br><br>
-                                    <h5>386-0-662XX-X</h5>
-                                    <h5>กรุงไทย</h5>
-                                    <h5>สิรภพ คูณสินชัย</h5>
-                                </div>
-                                <div class="col-6 text-center">
-                                    <h3>บัญชีพร้อมเพย์</h3>
-                                    <div id="qrImage"></div>
-                                </div>
-                            </div>
-
-                            <br><br><div class="row">
-                                <div class="col-3">
-                                    <h4>หลักฐานการโอนเงิน </a></h4>
-                                </div>
-                                <div class="col-5 text-center">
-                                    <input type="file" class="form-control" name="transaction_upload" id="transaction_upload" onchange="readURL(this,'transaction'); src='' ">
+                                    <h2 class="text-black" style="user-select: auto;"><b>ตรวจสอบหลักฐานการโอนเงิน</b></h2>
                                 </div>
                             </div>
                             <br><div class="row">
-                                <div class="col-12 text-center"></div>
-                                <img class="doc_image" id="transaction_image" src="#" alt="your image" hidden/>
-                            </div>
-                            
-                            <br><div class="row">
                                 <div class="col-6 text-center">
-                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab(event, 'uploadDoc')">&laquo; ย้อนกลับ</button>
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <h4>หลักฐานการโอนเงิน </a></h4>
+                                        </div>
+                                    </div>
+                                    <br><div class="row">
+                                        <div class="col-12 text-center"></div>
+                                        <img class="doc_image" id="transaction_image" src="<?php echo base_url('img/transaction_img'); ?>/<?php echo $val->transaction_image; ?>"/>
+                                    </div>
+                                    <br><h4>ข้อมูลการเช่า</h4>
+                                    <br><div class="row">
+                                        <div class="col-4">
+                                            <h4 >ระยะเวลาที่เช่า</h4>
+                                        </div>  : &ensp;
+                                        <input type="text" style="width: 200px; text-align: right;" class="form-control rentHours" name="rentHours" readonly/>
+                                        <h5 style="margin-top:10px">&ensp; ชั่วโมง</h5>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <h4 >ยอดที่ต้องโอน</h4>
+                                        </div>  : &ensp;
+                                        <input type="text" style="width: 200px; text-align: right;" class="form-control rentTotal" name="rentTotal" readonly/>
+                                        <h5 style="margin-top:10px">&ensp; บาท</h5>
+                                    </div>
                                 </div>
                                 <div class="col-6 text-center">
-                                    <input type="hidden" name="car_id" id="car_id" value="<?php echo $val->car_id; ?>">
-                                    <button type="submit" style="margin:auto; width: 130px;" class="btn btn-success d-none d-lg-block m-l-12" >ยืนยันการจอง &raquo;</button>
+                                    <h4>ปฏิเสธเอกสาร <br><br> </h4>
+                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="transaction_reject_transfer" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ"><?php echo isset($val->transaction_reject_transfer) ? $val->transaction_reject_transfer : ''; ?></textarea>
+                                    <br>
+                                        <h2 class="text-danger" id="reject_tran_1" style="user-select: auto; display: <?php echo isset($val->transaction_transfer_approve) && $val->transaction_transfer_approve == 0 ? 'display' : 'none'; ?>"><b>ปฏิเสธเอกสาร</b></h2>
+                                        <h2 class="text-success" id="reject_tran_2" style="user-select: auto; display: <?php echo isset($val->transaction_transfer_approve) && $val->transaction_transfer_approve == 1 ? 'display' : 'none'; ?>"><b>ยอมรับเอกสาร</b></h2>
+                                        <input type="hidden" name="inputData[]" id="reject_tran" value="<?php echo isset($val->transaction_transfer_approve) ? $val->transaction_transfer_approve : ''; ?>">
+                                    <div class="row">
+                                        <div class="col-6 text-center">
+                                            <button type="button" style="margin:auto; width: 100px;" class="btn btn-danger d-none d-lg-block m-l-12 reject_tran_btn" value="0">ปฏิเสธ</button>
+                                        </div>
+                                        <div class="col-6 text-center">
+                                            <button type="button" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12 reject_tran_btn" value="1">ยอมรับ</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br><br><br>
+                            <div class="row">
+                                <div class="col-6 text-center">
+                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab('setDate')">&laquo; ย้อนกลับ</button>
+                                </div>
+                                <div class="col-6 text-center">
+                                    <input type="hidden" name="inputData[]" id="transaction_id" value="<?php echo $val->transaction_id; ?>">
+                                    <button type="submit" style="margin:auto; width: 130px;" class="btn btn-success d-none d-lg-block m-l-12" >ยืนยันการเช่า</button>
                                 </div>
                             </div>
                             <br>
@@ -314,22 +318,64 @@
                 </div>
             </div>
         </form>
+
+        <div id="userDeatail" class="tabcontent">
+            <div class="col-xs-12 col-md-12 showCarTable" style="user-select: auto;">
+                <div class="row flex-row" style="user-select: auto;">
+                    <div class="col-xs-12 col-sm-12" style="user-select: auto;">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <h2 class="text-black" style="user-select: auto;"><b>ข้อมูลผู้จอง</b></h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <br><div class="row">
+                                    <div class="col-4">
+                                        <h4 >อีเมล</h4>
+                                    </div>  : &ensp;
+                                    <input type="text" style="width: 300px;" class="form-control" value="<?php echo $val->user_email; ?>" disabled/>
+                                </div>
+
+                                <br><div class="row">
+                                    <div class="col-4">
+                                        <h4 >ชื่อ - นามสกุล</h4>
+                                    </div>  : &ensp;
+                                    <input type="text" style="width: 300px;" class="form-control" value="<?php echo $val->user_fname.' '.$val->user_lname; ?>" disabled/>
+                                </div>
+
+                                <br><div class="row">
+                                    <div class="col-4">
+                                        <h4 >เบอร์โทรศัพท์</h4>
+                                    </div>  : &ensp;
+                                    <input type="text" style="width: 300px;" class="form-control" value="<?php echo $val->user_phone; ?>" disabled/>
+                                </div>
+
+                                <br>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <button type="button" style="margin:auto;" class="btn btn-info d-none d-lg-block m-l-12">ดูประวัติการจอง</button>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="col-6">
+                                <br><div class="row">
+                                    <div class="col-12 text-center"></div>
+                                    <img class="doc_image" id="transaction_image" src="<?php echo base_url('img/user_img'); ?>/<?php echo $val->user_image; ?>" onerror="this.style.display='none'" />
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
-
-$('input[name="datetimes"]').daterangepicker({
-    timePicker: true,
-    timePicker24Hour: true,
-    startDate: moment().startOf('hour'),
-    endDate: moment().startOf('hour').add(24, 'hour'),
-    locale: {
-      format: 'DD/MM/YYYY HH:mm'
-    }
-});
-
-$('input[name="datetimes"]').on('change', function(event) {
+$('#datetimes').on('change', function(event) {
     var startDate = this.value.substring(10, 0);
     var startTime = this.value.substring(16, 11);
     var endDate = this.value.substring(29, 19);
@@ -341,7 +387,7 @@ $('input[name="datetimes"]').on('change', function(event) {
     var days = Math.floor(diff / 1000 / 60 / 60 / 24);
     var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / 1000 / 60 / 60);
     var totalHours = Math.floor(diff / 1000 / 60 / 60 );
-    $('#rentHours').val(totalHours);
+    $('.rentHours').val(totalHours);
     var price = parseInt($('#rentPrice').val().replace(/,/g, ''));
     if(days == 0){
         days++;
@@ -353,30 +399,59 @@ $('input[name="datetimes"]').on('change', function(event) {
         $('.rentTotal').val((parseInt(days) * price) + (parseInt(hours) * parseInt(price / 10))); //rent more 1 day and 5 hours-
     }
     $('.rentTotal').val(addCommas($('.rentTotal').val()));
-    getQRcode();
 })
-$('input[name="datetimes"]').trigger("change"); //trigger on open
+$('#datetimes').trigger("change"); //trigger on open
 
-$('#addCarRentForm').on('submit', function(event) {
-        event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
 
-        //เหลือดัก
+$('.reject_iden_btn').click(function() {
 
-        $.ajax({  
-            url:"addCarRent",
-            method:"POST",  
-            data:new FormData(this),  
-            contentType: false,  
-            cache: false,  
-            processData:false,  
-        }).done(function(returnData) {
-            getList();
-            $('#addCarRentForm form')[0].reset();
-            // $('#car_image').attr('src', '');
-            // $('#car_image').attr('hidden',true);
-        }); 
+    //swal fire
 
-    })
+    if(this.value == 0){
+        $('#reject_iden_1').show();
+        $('#reject_iden_2').hide();
+        $('#reject_iden').val(0);
+    }
+    if(this.value == 1){
+        $('#reject_iden_1').hide();
+        $('#reject_iden_2').show();
+        $('#reject_iden').val(1);
+    }
+})
+$('.reject_tran_btn').click(function() {
+
+    //swal fire
+
+    if(this.value == 0){
+        $('#reject_tran_1').show();
+        $('#reject_tran_2').hide();
+        $('#reject_tran').val(0);
+    }
+    if(this.value == 1){
+        $('#reject_tran_1').hide();
+        $('#reject_tran_2').show();
+        $('#reject_tran').val(1);
+    }
+})
+
+$('#addConfirmRentForm').on('submit', function(event) {
+    event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
+
+    //swal fire
+
+    var formData = {};
+    $("[name^='inputData']").each(function() {
+        formData[this.id] = this.value;
+    });
+
+    $.ajax({  
+        url:"editTransactionDetail",
+        method:"POST",  
+        data:formData
+    }).done(function(returnData) {
+        // $('#addConfirmRentForm form')[0].reset();
+    }); 
+})
 
 function addCommas(x) {
     var parts = x.toString().split(".");
@@ -389,7 +464,7 @@ function ConvertDateFormat(d, t) {
     return dt[1] + '/' + dt[0] + '/' + dt[2] + ' ' + t; //convert date to mm/dd/yy hh:mm format for date creation.
 }
 
-function openTab(evt, tabName) {
+function openTab(tabName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
   for (i = 0; i < tabcontent.length; i++) {
@@ -400,7 +475,9 @@ function openTab(evt, tabName) {
     tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
   document.getElementById(tabName).style.display = "block";
-  evt.currentTarget.className += " active";
+
+  var elem = document.getElementById(tabName+"2");
+  elem.classList.add("active");
 }
 
 function readURL(input,type) {

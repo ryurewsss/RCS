@@ -78,8 +78,8 @@ img{
                                         </div>
                                         
                                         <div class="row">
-                                            <label style="margin-right: 25px;">อีเมลล์ :</label>  
-                                            <input type="email" style="width: 270px;" name="login[]" id="user_email" tabindex="1" class="form-control" placeholder="อีเมลล์" value="">
+                                            <label style="margin-right: 25px;">อีเมล :</label>  
+                                            <input type="email" style="width: 270px;" name="login[]" id="user_email" tabindex="1" class="form-control" placeholder="อีเมล" value="">
                                         </div><br>
                                         <div class="row">
                                             <label style="margin-right: 15px;">รหัสผ่าน :</label>  
@@ -107,8 +107,8 @@ img{
                                             <h4 class="text-center text-login m-b-20">สมัครสมาชิก</h4>
                                         </div>
                                         <div class="row">
-                                            <label style=" margin-right: 63px;">อีเมลล์ :</label>  
-                                            <input type="email" style="width: 235px;" name="register[]" id="user_email" tabindex="1" class="form-control" placeholder="อีเมลล์" value="">
+                                            <label style=" margin-right: 63px;">อีเมล :</label>  
+                                            <input type="email" style="width: 235px;" name="register[]" id="user_email" tabindex="1" class="form-control" placeholder="อีเมล" value="">
                                         </div><br>
                                         <div class="row">
                                             <label style=" margin-right: 86px;">ชื่อ :</label>  

@@ -3,7 +3,7 @@
         <thead>
             <tr class="text-center">
                 <th>ลำดับ</th>
-                <th>อีเมลล์</th>
+                <th>อีเมล</th>
                 <th>ชื่อ</th>
                 <th>นามสกุล</th>
                 <th>เบอร์โทรศัพท์</th>
