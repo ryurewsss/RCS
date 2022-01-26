@@ -54,7 +54,6 @@
   <script src="<?= base_url() ?>assets/js/demo/datatables-demo.js"></script>
   
   <!-- Date Picker -->
-  <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
   <!-- sweetalert2 -->
@@ -82,20 +81,22 @@
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
-      <!-- Nav Item - Dashboard -->
-      <!-- <li class="nav-item active">
-        <a class="nav-link" href="<?= base_url() ?>">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li> -->
-
       <!-- Divider -->
       <hr class="sidebar-divider">
 
+      <li class="nav-item active">
+        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>User/profile" aria-expanded="false">
+          <img class="img-profile rounded-circle" src="<?php echo isset( $_SESSION['user_img']) ? base_url('img/user_img').'/'. $_SESSION['user_img'] : base_url('img/user_img').'/'. 'profile.png'; ?>">
+          <span class="mr-2 d-none d-lg-inline text-center"><?php echo $_SESSION['name'];?></span>
+        </a>
+      </li>
+
+      <hr class="sidebar-divider">
+
       <!-- Heading -->
-      <div class="sidebar-heading" style="font-size: 13px;">
+      <!-- <div class="sidebar-heading" style="font-size: 13px;">
         รายการ
-      </div>
+      </div> -->
 
       <li class="nav-item active">
         <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>" aria-expanded="false">
@@ -104,49 +105,55 @@
       </li>
 
       <?php
-      $usertype = 'lessor';
-        if($usertype == 'lessor'){
+        if($_SESSION['type'] == 1){
       ?>
         <li class="nav-item active">
           <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Transaction/transaction" aria-expanded="false">
             <i class="fa fa-search" style='font-size:20px'></i>
             <span>ตรวจสอบการเช่า</span></a>
         </li>
+
         <li class="nav-item active">
-          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>User/profile" aria-expanded="false">
-            <i class="far fa-address-card" style='font-size:20px'></i>
-            <span>แก้ไขบัญชีผู้ใช้</span></a>
+          <a class="nav-link collapsed waves-effect waves-dark" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-folder" style='font-size:20px'></i>
+            <span>จัดการข้อมูล</span>
+          </a>
+          <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <h5 class="collapse-header">ข้อมูลรถเช่า:</h5>
+
+              <a class="collapse-item" href="<?= base_url() ?>Car/car" aria-expanded="false">
+                <i class="fas fa-car" style='font-size:20px'></i>
+                &ensp;<span>จัดการรถเช่า</span>
+              </a>
+
+              <a class="collapse-item" href="<?= base_url() ?>Car/carBrand" aria-expanded="false">
+                <i class="fas fa-car-side" style='font-size:20px'></i>
+                &ensp;<span>จัดการยี่ห้อรถยนต์</span>
+              </a>
+              
+              <a class="collapse-item" href="<?= base_url() ?>Car/carModel" aria-expanded="false">
+                <i class="fas fa-car-crash" style='font-size:20px'></i>
+                &ensp;<span>จัดการรุ่นรถยนต์</span>
+              </a>
+
+              <div class="collapse-divider"></div>
+              <h5 class="collapse-header">ข้อมูลอื่นๆ:</h5>
+
+              <a class="collapse-item" href="<?= base_url() ?>Place/place" aria-expanded="false">
+                <i class="fas fa-warehouse" style='font-size:20px'></i>
+                &ensp;<span>จัดการสถานที่</span>
+              </a>
+
+              <a class="collapse-item" href="<?= base_url() ?>User/user" aria-expanded="false">
+                <i class="fas fa-user-friends" style='font-size:20px'></i>
+                &ensp;<span>จัดการสมาชิก</span>
+              </a>
+
+            </div>
+          </div>
         </li>
-        <li class="nav-item active">
-          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/car" aria-expanded="false">
-            <i class="fas fa-car" style='font-size:20px'></i>
-            <span>จัดการรถเช่า</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/carBrand" aria-expanded="false">
-            <i class="fas fa-car-side" style='font-size:20px'></i>
-            <span>จัดการยี่ห้อรถยนต์</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/carModel" aria-expanded="false">
-            <i class="fas fa-car-crash" style='font-size:20px'></i>
-            <span>จัดการรุ่นรถยนต์</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Place/place" aria-expanded="false">
-            <i class="fas fa-warehouse" style='font-size:20px'></i>
-            <span>จัดการสถานที่</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>User/user" aria-expanded="false">
-            <i class="fas fa-user-friends" style='font-size:20px'></i>
-            <span>จัดการสมาชิก</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>" aria-expanded="false">
-            <i class="fas fa-scroll" style='font-size:20px'></i>
-            <span>ประวัติการเช่า</span></a>
-        </li>
+        
         <li class="nav-item active">
           <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>" aria-expanded="false">
             <i class="fa fa-search" style='font-size:20px'></i>
@@ -156,7 +163,19 @@
       <?php
         }
       ?>
+
+      <li class="nav-item active">
+        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Transaction/transaction" aria-expanded="false">
+          <i class="fas fa-scroll" style='font-size:20px'></i>
+          <span>ดูประวัติการเช่า</span></a>
+      </li>
       
+      <li class="nav-item active">
+        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>User/profile" aria-expanded="false">
+          <i class="far fa-address-card" style='font-size:20px'></i>
+          <span>แก้ไขบัญชีผู้ใช้</span></a>
+      </li>
+
       <li class="nav-item active">
         <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Login/logout" aria-expanded="false">
           <i class="fas fa-sign-out-alt" style='font-size:20px'></i>

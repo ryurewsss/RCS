@@ -309,7 +309,7 @@
                                 </div>
                                 <div class="col-6 text-center">
                                     <input type="hidden" name="inputData[]" id="transaction_id" value="<?php echo $val->transaction_id; ?>">
-                                    <button type="submit" style="margin:auto; width: 130px;" class="btn btn-success d-none d-lg-block m-l-12" >ยืนยันการเช่า</button>
+                                    <button type="submit" style="margin:auto; width: 160px;" class="btn btn-success d-none d-lg-block m-l-12" >ยืนยันการตรวจสอบ</button>
                                 </div>
                             </div>
                             <br>
@@ -449,6 +449,7 @@ $('#addConfirmRentForm').on('submit', function(event) {
         method:"POST",  
         data:formData
     }).done(function(returnData) {
+        alert("ยืนยันการตรวจสอบ");
         // $('#addConfirmRentForm form')[0].reset();
     }); 
 })

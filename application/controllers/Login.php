@@ -33,7 +33,7 @@ class Login extends Main
 	{
 		$getData = $this->input->post();
 		$arrayData = $getData['arrayData'];
-		$arrayData['user_type_id'] = 3;
+		$arrayData['user_type_id'] = 2;
 		$arrayData['user_password'] = password_hash($arrayData['user_password'], PASSWORD_DEFAULT);
 
 		$this->crsModel->add('crs_user', $arrayData);
@@ -52,9 +52,10 @@ class Login extends Main
 		if ($result) {
 			if ($result[0]->user_password) {
 				if (password_verify($json['password'], $result[0]->user_password)) {
-					$_SESSION['name'] = $result[0]->user_fname;
+					$_SESSION['name'] = $result[0]->user_fname . ' ' . $result[0]->user_lname;
 					$_SESSION['id'] = $result[0]->user_id;
 					$_SESSION['type'] = $result[0]->user_type_id;
+					$_SESSION['user_img'] = $result[0]->user_image;
 					// $_SESSION['username'] = $result->row()->username;
 					$json['login'] = 'True';
 				} else {

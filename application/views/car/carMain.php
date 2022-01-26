@@ -12,7 +12,7 @@
         color: black;
     }
 
-    img {
+    #car_main {
         display: block;
         margin-left: auto;
         margin-right: auto;
@@ -24,7 +24,7 @@
 
 <body>
     <h2 style="text-align: center">ระบบเช่ารถยนต์โดยใช้เทคโนโลยีบล็อกเชน</h2>
-    <img src="<?= base_url() ?>assets/img/order_a_car.svg" />
+    <img id="car_main" src="<?= base_url() ?>assets/img/order_a_car.svg" />
     <div id="carTable"></div>
 
 <script>

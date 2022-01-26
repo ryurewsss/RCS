@@ -17,6 +17,7 @@ class Transaction extends Main
 	// __________________ Start Transaction __________________
 	public function transaction()
 	{
+		
 		$data['page_content'] = $this->load->view('transaction/transactionTable', '', TRUE);
 		$this->load->view('main', $data);
 	}
@@ -34,7 +35,7 @@ class Transaction extends Main
 			crs_transaction.transaction_status,
 			crs_place.place_name,
 			crs_car.car_registration',
-			'where' => '',
+			'where' => 'crs_transaction.transaction_status != 5',
 			'order' => '',
 			'arrayJoinTable' => array('crs_car' => 'crs_car.car_id = crs_transaction.car_id',
 								'crs_place' => 'crs_place.place_id = crs_transaction.place_id'),
@@ -42,12 +43,17 @@ class Transaction extends Main
 			'pathView' => 'transaction/tableTransaction'
 		);
 
+		// if ($_SESSION['type'] == '1') {
+		// 	$arrayData['where'] = 'crs_transaction.user_lessor_id = '.$_SESSION['id'];
+		// }
+		if ($_SESSION['type'] == '2') {
+			$arrayData['where'] = 'crs_transaction.user_rental_id = '.$_SESSION['id'];
+		}
+		
 		$data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
 		$json['table'] = $data['table'];
 		$json['sql'] = $this->db->last_query(); //for dev
-		if ($arrayData['pathView'] != "getData") {
-			$json['html'] = $this->load->view($arrayData['pathView'], $data, TRUE);
-		}
+		$json['html'] = $this->load->view($arrayData['pathView'], $data, TRUE);
 		$this->output->set_content_type('application/json')->set_output(json_encode($json));
 	}
 	// ___________________ End getTransactionTable ____________________
@@ -100,7 +106,7 @@ class Transaction extends Main
 			$data['page_content'] = $this->load->view('transaction/transactionConfirm', $data, TRUE);
 		}
 		if ($_SESSION['type'] == '2') {
-			// $data['page_content'] = $this->load->view('transaction/carRent', $data, TRUE);
+			$data['page_content'] = $this->load->view('transaction/transactionEdit', $data, TRUE);
 		}
 
 		$this->load->view('main', $data);
@@ -130,4 +136,42 @@ class Transaction extends Main
 		$this->output->set_content_type('application/json')->set_output(json_encode($editedId));
 	}
 	// ___________________ End editTransactionDetail ____________________
+
+	// __________________ Start editTransactionApprove __________________
+	public function editTransactionApprove()
+	{
+		$config['upload_path'] = './img/car_img/';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size'] = '2000';
+		$config['max_width'] = '3000';
+		$config['max_height'] = '3000';
+
+		$this->load->library('upload', $config);
+
+		$getData = $this->input->post();
+
+
+
+
+		
+		$arrayData = array(
+			'transaction_reject_iden' => $getData['transaction_reject_iden'],
+			'transaction_iden_approve' => $getData['reject_iden'],
+			'transaction_reject_transfer' => $getData['transaction_reject_transfer'],
+			'transaction_transfer_approve' => $getData['reject_tran'],
+			'user_lessor_id' => $_SESSION['id'],
+			'user_update_id' => $_SESSION['id']
+		);
+		if($getData['reject_iden'] == 1 && $getData['reject_tran'] == 1 ){
+			$arrayData['transaction_status'] = 3;//รอรับรถเช่า
+		}else{
+			$arrayData['transaction_status'] = 2;//เอกสารถูกปฏิเสธ
+		}
+		$arrayWhere = array('transaction_id' => $getData['transaction_id']);
+		$editedId = $this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
+		$this->output->set_content_type('application/json')->set_output(json_encode($editedId));
+	}
+	// ___________________ End editTransactionApprove ____________________
+
+	
 }
