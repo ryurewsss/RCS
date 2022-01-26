@@ -107,7 +107,7 @@ img{
                                             <h4 class="text-center text-login m-b-20">สมัครสมาชิก</h4>
                                         </div>
                                         <div class="row">
-                                            <label style=" margin-right: 63px;">อีเมล :</label>  
+                                            <label style=" margin-right: 70px;">อีเมล :</label>  
                                             <input type="email" style="width: 235px;" name="register[]" id="user_email" tabindex="1" class="form-control" placeholder="อีเมล" value="">
                                         </div><br>
                                         <div class="row">
