@@ -78,7 +78,7 @@ img{
                                         </div>
                                         
                                         <div class="row">
-                                            <label style="margin-right: 25px;">อีเมล :</label>  
+                                            <label style="margin-right: 35px;">อีเมล :</label>  
                                             <input type="email" style="width: 270px;" name="login[]" id="user_email" tabindex="1" class="form-control" placeholder="อีเมล" value="">
                                         </div><br>
                                         <div class="row">

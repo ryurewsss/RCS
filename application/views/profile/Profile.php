@@ -20,7 +20,7 @@
             <div class="modal-body">
                 <form class="form-material" method="post" id="editForm">
                     <div class="row">
-                        <label style="text-indent: 20px; margin-right: 105px;">อีเมล </label> : &ensp;
+                        <label style="text-indent: 20px; margin-right: 115px;">อีเมล </label> : &ensp;
                         <input type="email" style="width: 350px;" class="form-control" name="changePassword[]" id="user_email" disabled>
                     </div><br>
                     <div class="row">
