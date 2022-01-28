@@ -280,6 +280,13 @@
             processData:false,  
         }).done(function(returnData) {
             getList();
+            Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Add Car Complete',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
             $('#modalAddcar form')[0].reset();
             $('#modalAddcar').modal('hide'); //ปิด modal
             $('#car_image').attr('src', '');
@@ -302,6 +309,13 @@
                 processData:false,  
             }).done(function(returnData) {
                 getList();
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Edit Data Car Complete',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
                 // $('#modalEditCar form')[0].reset();
                 $('#modalEditCar').modal('hide'); //ปิด modal
                 $('#e_car_image').attr('src', '');
@@ -318,6 +332,13 @@
                 processData:false,  
             }).done(function(returnData) {
                 getList();
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Edit Data Car Complete',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
                 // $('#modalEditCar form')[0].reset();
                 $('#modalEditCar').modal('hide'); //ปิด modal
                 $('#e_car_image').attr('src', '');

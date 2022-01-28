@@ -222,6 +222,13 @@
             }
         }).done(function(returnData) {
             getList();
+            Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Add Car Madel Complete',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
             $('#modalAddCarModel form')[0].reset();
             $('#modalAddCarModel').modal('hide'); //ปิด modal
             removeField();
@@ -252,6 +259,13 @@
             }
         }).done(function(returnData) {
             getList();
+            Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Edit Data Car Model Complete',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
             $('#modalEditCarModel form')[0].reset();
             $('#modalEditCarModel').modal('hide'); //ปิด modal
             removeField();

@@ -126,6 +126,13 @@
             data:formData
         }).done(function(returnData) {
             getList();
+            Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Add Place Complete',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
             $('#modalAddPlace form')[0].reset();
             $('#modalAddPlace').modal('hide'); //ปิด modal
         });
@@ -145,6 +152,13 @@
             data:formData
         }).done(function(returnData) {
             getList();
+            Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Edit Place Complete',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
             $('#modalEditPlace form')[0].reset();
             $('#modalEditPlace').modal('hide'); //ปิด modal
         });

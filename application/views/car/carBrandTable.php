@@ -126,6 +126,13 @@
             data:formData
         }).done(function(returnData) {
             getList();
+            Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Add Car Brand Complete',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
             $('#modalAddCarBrand form')[0].reset();
             $('#modalAddCarBrand').modal('hide'); //ปิด modal
         });
@@ -145,6 +152,13 @@
             data:formData
         }).done(function(returnData) {
             getList();
+            Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Edit Data Car Brand Complete',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
             $('#modalEditCarBrand form')[0].reset();
             $('#modalEditCarBrand').modal('hide'); //ปิด modal
         });

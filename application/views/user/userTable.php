@@ -27,7 +27,7 @@
             <form id="addUser">
                 <div class="modal-body">
                     <div class="row">
-                        <label style="text-indent: 20px; margin-right: 87px;">อีเมล<a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
+                        <label style="text-indent: 20px; margin-right: 98px;">อีเมล<a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
                         <input style="width: 250px;" type="email" class="form-control" name="register[]" id="user_email" autocomplete="off" placeholder="อีเมล" value="">
                         <br><br>
                     </div>
@@ -97,7 +97,7 @@
             <form id="editUser">
                 <div class="modal-body">
                 <div class="row">
-                        <label style="text-indent: 20px; margin-right: 87px;">อีเมล<a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
+                        <label style="text-indent: 20px; margin-right: 100px;">อีเมล<a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
                         <input style="width: 250px;" type="email" class="form-control" name="editData[]" id="user_email" autocomplete="off" placeholder="อีเมล" value="">
                         <br><br>
                     </div>
@@ -169,6 +169,13 @@
             data:formData
         }).done(function(returnData) {
             getList();
+            Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Add User Complete',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
             $('#modalAddUser form')[0].reset();
             $('#modalAddUser').modal('hide'); //ปิด modal
         });
@@ -190,6 +197,13 @@
             data:formData
         }).done(function(returnData) {
             getList();
+            Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Add Data User Complete',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
             $('#editData form')[0].reset();
             $('#editData').modal('hide'); //ปิด modal
         });
