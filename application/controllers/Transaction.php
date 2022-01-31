@@ -17,11 +17,41 @@ class Transaction extends Main
 	// __________________ Start Transaction __________________
 	public function transaction()
 	{
-		
 		$data['page_content'] = $this->load->view('transaction/transactionTable', '', TRUE);
 		$this->load->view('main', $data);
 	}
 	// ___________________ End Transaction ____________________
+
+	// __________________ Start transactionRecord __________________
+	public function transactionRecord()
+	{
+		$data['page_content'] = $this->load->view('transaction/transactionRecord', '', TRUE);
+		$this->load->view('main', $data);
+	}
+	// ___________________ End transactionRecord ____________________
+
+	// __________________ Start transactionUser __________________
+	public function transactionUser()
+	{
+
+		$arrayData = array(
+			'tableName' => 'crs_user',
+			'colName' => '
+				user_id,
+				user_fname,
+				user_lname',
+			'where' => 'user_id = '.$_GET['userId'],
+			'order' => '',
+			'arrayJoinTable' => '',
+			'groupBy' => ''
+		);
+
+		$user['user'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+
+		$data['page_content'] = $this->load->view('transaction/transactionUser', $user, TRUE);
+		$this->load->view('main', $data);
+	}
+	// ___________________ End transactionUser ____________________
 
 	// __________________ Start getTransactionTable __________________
 	public function getTransactionTable()
@@ -36,7 +66,7 @@ class Transaction extends Main
 			crs_place.place_name,
 			crs_car.car_registration',
 			'where' => 'crs_transaction.transaction_status != 5',
-			'order' => '',
+			'order' => 'crs_transaction.update_date DESC',
 			'arrayJoinTable' => array('crs_car' => 'crs_car.car_id = crs_transaction.car_id',
 								'crs_place' => 'crs_place.place_id = crs_transaction.place_id'),
 			'groupBy' => '',
@@ -58,6 +88,66 @@ class Transaction extends Main
 	}
 	// ___________________ End getTransactionTable ____________________
 
+	// __________________ Start getTransactionRecordTable __________________
+	public function getTransactionRecordTable()
+	{
+		$arrayData = array(
+			'tableName' => 'crs_transaction',
+			'colName' => '
+			crs_transaction.transaction_id,
+			crs_transaction.transaction_receive_date,
+			crs_transaction.transaction_return_date,
+			crs_transaction.transaction_status,
+			crs_place.place_name,
+			crs_car.car_registration',
+			'where' => '',
+			'order' => 'crs_transaction.update_date DESC',
+			'arrayJoinTable' => array('crs_car' => 'crs_car.car_id = crs_transaction.car_id',
+								'crs_place' => 'crs_place.place_id = crs_transaction.place_id'),
+			'groupBy' => '',
+			'pathView' => 'transaction/tableTransaction'
+		);
+		
+		if ($_SESSION['type'] == '2') {
+			$arrayData['where'] = "crs_transaction.user_rental_id = ".$_SESSION['id'];
+		}
+
+		$data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$json['table'] = $data['table'];
+		$json['sql'] = $this->db->last_query(); //for dev
+		$json['html'] = $this->load->view($arrayData['pathView'], $data, TRUE);
+		$this->output->set_content_type('application/json')->set_output(json_encode($json));
+	}
+	// ___________________ End getTransactionRecordTable ____________________
+
+	// __________________ Start getTransactionUserTable __________________
+	public function getTransactionUserTable()
+	{
+		$arrayData = array(
+			'tableName' => 'crs_transaction',
+			'colName' => '
+			crs_transaction.transaction_id,
+			crs_transaction.transaction_receive_date,
+			crs_transaction.transaction_return_date,
+			crs_transaction.transaction_status,
+			crs_place.place_name,
+			crs_car.car_registration',
+			'where' => 'crs_transaction.user_rental_id = '.$this->input->post('user_id'),
+			'order' => 'crs_transaction.update_date DESC',
+			'arrayJoinTable' => array('crs_car' => 'crs_car.car_id = crs_transaction.car_id',
+								'crs_place' => 'crs_place.place_id = crs_transaction.place_id'),
+			'groupBy' => '',
+			'pathView' => 'transaction/tableTransaction'
+		);
+
+		$data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$json['table'] = $data['table'];
+		$json['sql'] = $this->db->last_query(); //for dev
+		$json['html'] = $this->load->view($arrayData['pathView'], $data, TRUE);
+		$this->output->set_content_type('application/json')->set_output(json_encode($json));
+	}
+	// ___________________ End getTransactionUserTable ____________________
+	
 	// __________________ Start transactionDetail __________________
 	public function transactionDetail()
 	{
@@ -74,13 +164,16 @@ class Transaction extends Main
 				crs_transaction.transaction_transfer_approve,
 				crs_transaction.transaction_reject_iden,
 				crs_transaction.transaction_reject_transfer,
+				crs_transaction.transaction_status,
 				crs_car.car_registration,
 				crs_car.car_price,
 				crs_car.car_image,
 				crs_car_brand.car_brand_name_en,
 				crs_car_model.car_model_name,
+				crs_user_doc.user_doc_id,
 				crs_user_doc.user_doc_iden_image,
 				crs_user_doc.user_doc_license_image,
+				crs_user.user_id,
 				crs_user.user_email,
 				crs_user.user_fname,
 				crs_user.user_lname,
@@ -128,8 +221,10 @@ class Transaction extends Main
 		);
 		if($getData['reject_iden'] == 1 && $getData['reject_tran'] == 1 ){
 			$arrayData['transaction_status'] = 3;//รอรับรถเช่า
+			$arrayData['transaction_lessor_approve'] = 1;
 		}else{
 			$arrayData['transaction_status'] = 2;//เอกสารถูกปฏิเสธ
+			$arrayData['transaction_lessor_approve'] = 0;
 		}
 		$arrayWhere = array('transaction_id' => $getData['transaction_id']);
 		$editedId = $this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
@@ -140,38 +235,93 @@ class Transaction extends Main
 	// __________________ Start editTransactionApprove __________________
 	public function editTransactionApprove()
 	{
-		$config['upload_path'] = './img/car_img/';
+		$config['upload_path'] = './img/user_doc_img/';
 		$config['allowed_types'] = 'gif|jpg|png';
 		$config['max_size'] = '2000';
 		$config['max_width'] = '3000';
 		$config['max_height'] = '3000';
 
-		$this->load->library('upload', $config);
+		$pass = TRUE;
 
 		$getData = $this->input->post();
-
-
-
-
 		
+		$this->load->library('upload', $config, 'docUpload');
+		if(!$this->docUpload->do_upload('iden_upload') ){
+			echo $this->docUpload->display_errors();
+			$filename['iden_upload'] = $getData['old_iden_upload'];
+		}else{
+			$data = $this->docUpload->data();
+			$filename['iden_upload'] = $data['file_name'];
+			$file_pointer = './img/user_doc_img/' . $getData['old_iden_upload'];
+			if (!unlink($file_pointer)) { 
+				echo ("$file_pointer cannot be deleted due to an error"); 
+			} 
+			else { 
+				echo ("$file_pointer has been deleted"); 
+			}//delete file
+		}
+		if(!$this->docUpload->do_upload('license_upload') ){
+			echo $this->docUpload->display_errors();
+			$filename['license_upload'] = $getData['old_license_upload'];
+		}else{
+			$data = $this->docUpload->data();
+			$filename['license_upload'] = $data['file_name'];
+			$file_pointer = './img/user_doc_img/' . $getData['old_license_upload'];
+			if (!unlink($file_pointer)) { 
+				echo ("$file_pointer cannot be deleted due to an error"); 
+			} 
+			else { 
+				echo ("$file_pointer has been deleted"); 
+			}//delete file
+		}
 		$arrayData = array(
-			'transaction_reject_iden' => $getData['transaction_reject_iden'],
-			'transaction_iden_approve' => $getData['reject_iden'],
-			'transaction_reject_transfer' => $getData['transaction_reject_transfer'],
-			'transaction_transfer_approve' => $getData['reject_tran'],
-			'user_lessor_id' => $_SESSION['id'],
+			'user_doc_iden_image' => $filename['iden_upload'],
+			'user_doc_license_image' => $filename['license_upload'],
 			'user_update_id' => $_SESSION['id']
 		);
-		if($getData['reject_iden'] == 1 && $getData['reject_tran'] == 1 ){
-			$arrayData['transaction_status'] = 3;//รอรับรถเช่า
+		$arrayWhere = array('user_doc_id' => $getData['user_doc_id']);
+		$this->crsModel->update('crs_user_doc',$arrayWhere, $arrayData);
+
+
+		$config['upload_path'] = './img/transaction_img/';
+		$this->load->library('upload', $config, 'transactionUpload');
+		if(!$this->transactionUpload->do_upload('transaction_upload')){
+			echo $this->transactionUpload->display_errors();
+			$filename['transaction_upload'] = $getData['old_tran_upload'];
 		}else{
-			$arrayData['transaction_status'] = 2;//เอกสารถูกปฏิเสธ
+			$data = $this->transactionUpload->data();
+			$filename['transaction_upload'] = $data['file_name'];
+			$file_pointer = './img/transaction_img/' . $getData['old_tran_upload'];
+			if (!unlink($file_pointer)) { 
+				echo ("$file_pointer cannot be deleted due to an error"); 
+			} 
+			else { 
+				echo ("$file_pointer has been deleted"); 
+			}//delete file
 		}
+		$arrayData = array(
+			'transaction_status' => 1,
+			'transaction_image' => $filename['transaction_upload'],
+			'user_update_id' => $_SESSION['id']
+		);
+		$arrayWhere = array('transaction_id' => $getData['transaction_id']);
+		$editedId = $this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
+		// $this->output->set_content_type('application/json')->set_output(json_encode($editedId));
+	}
+	// ___________________ End editTransactionApprove ____________________
+
+	// __________________ Start changeTransactionStatus __________________
+	public function changeTransactionStatus()
+	{
+		$getData = $this->input->post();
+
+		$arrayData = array(
+			'transaction_status' => $getData['transaction_status'],
+			'user_update_id' => $_SESSION['id']
+		);
 		$arrayWhere = array('transaction_id' => $getData['transaction_id']);
 		$editedId = $this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
 		$this->output->set_content_type('application/json')->set_output(json_encode($editedId));
 	}
-	// ___________________ End editTransactionApprove ____________________
-
-	
+	// ___________________ End changeTransactionStatus ____________________
 }

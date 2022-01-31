@@ -29,7 +29,7 @@ class Place extends Main
 			'tableName' => 'crs_place',
 			'colName' => '',
 			'where' => '',
-			'order' => '',
+			'order' => 'place_id DESC',
 			'arrayJoinTable' => '',
 			'groupBy' => '',
 			'pathView' => 'place/tablePlace'

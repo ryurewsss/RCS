@@ -360,19 +360,35 @@ $('input[name="datetimes"]').trigger("change"); //trigger on open
 $('#addCarRentForm').on('submit', function(event) {
         event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
 
-        //เหลือดัก
-
-        $.ajax({  
-            url:"addCarRent",
-            method:"POST",  
-            data:new FormData(this),  
-            contentType: false,  
-            cache: false,  
-            processData:false,  
-        }).done(function(returnData) {
-            alert("ยืนยันการเช่า");
-        }); 
-
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You Confirm Rent a Car",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#dc3545',
+            confirmButtonColor: '#28a745',
+            confirmButtonText: 'Yes, Confirm it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({  
+                    url:"addCarRent",
+                    method:"POST",  
+                    data:new FormData(this),  
+                    contentType: false,  
+                    cache: false,  
+                    processData:false,  
+                }).done(function(returnData) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Save Complete',
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+                    window.location = "<?php echo base_url(); ?>";
+                }); 
+            }
+        })
     })
 
 function addCommas(x) {

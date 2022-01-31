@@ -165,7 +165,7 @@
       ?>
 
       <li class="nav-item active">
-        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Transaction/transaction" aria-expanded="false">
+        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Transaction/transactionRecord" aria-expanded="false">
           <i class="fas fa-scroll" style='font-size:20px'></i>
           <span>ดูประวัติการเช่า</span></a>
       </li>

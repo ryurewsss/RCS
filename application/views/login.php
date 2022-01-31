@@ -273,7 +273,7 @@ img{
                 data: formData,
             }).done(function(returnData) {
                 if (returnData.login == 'True') {
-                    console.log("ASD")
+                    // console.log("ASD")
                     window.location.replace($('#base_url').html());
                     $('#loginError').html('');
                 } else {

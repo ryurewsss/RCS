@@ -219,7 +219,7 @@
                                 </div>
                                 <div class="col-6 text-center">
                                     <h4>ตรวจสอบเอกสาร <br><br> </h4>
-                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="transaction_reject_iden" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" readonly><?php echo isset($val->transaction_reject_iden) ? $val->transaction_reject_iden : ''; ?></textarea>
+                                    <textarea style="height: 300px" class="form-control" rows="3" id="transaction_reject_iden" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" readonly><?php echo isset($val->transaction_reject_iden) ? $val->transaction_reject_iden : ''; ?></textarea>
                                     <br><br>
                                     <div class="col-12 text-center text-danger" style="user-select: auto; display: <?php echo isset($val->transaction_iden_approve) && $val->transaction_iden_approve == 0 ? 'display' : 'none'; ?>">
                                         <h2><b>เอกสารถูกปฏิเสธ</b></h2>
@@ -281,7 +281,6 @@
                                     <div id="qrImage"></div>
                                 </div>
                             </div>
-
                             
                             <br>
                             <div class="row">
@@ -292,7 +291,7 @@
                                     <div class="col-12">
                                         <h2>ตรวจสอบเอกสาร</h2>
                                     </div>
-                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="transaction_reject_transfer" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" readonly><?php echo isset($val->transaction_reject_transfer) ? $val->transaction_reject_transfer : ''; ?></textarea>
+                                    <textarea style="height: 300px" class="form-control" rows="3" id="transaction_reject_transfer" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" readonly><?php echo isset($val->transaction_reject_transfer) ? $val->transaction_reject_transfer : ''; ?></textarea>
                                     <br>
                                     <div class="col-12 text-danger" style="user-select: auto; display: <?php echo isset($val->transaction_transfer_approve) && $val->transaction_transfer_approve == 0 ? 'display' : 'none'; ?>">
                                         <h2><b>เอกสารถูกปฏิเสธ</b></h2>
@@ -311,7 +310,6 @@
                                     <h4>แก้ไขหลักฐานการโอนเงิน </a></h4>
                                 </div>
                                 <div class="col-5 text-center">
-                                    <input type="hidden" name="old_license_upload" id="old_license_upload" value="<?php echo $val->transaction_image; ?>">
                                     <input type="file" class="form-control" name="transaction_upload" id="transaction_upload" onchange="readURL(this,'transaction');" <?php echo isset($val->transaction_transfer_approve) && $val->transaction_transfer_approve ? 'disabled': ''; ?>>
                                 </div>
                             </div>
@@ -321,6 +319,11 @@
                                     <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab('uploadDoc')">&laquo; ย้อนกลับ</button>
                                 </div>
                                 <div class="col-6 text-center">
+                                    <input type="hidden" name="transaction_id" id="transaction_id" value="<?php echo $val->transaction_id; ?>">
+                                    <input type="hidden" name="user_doc_id" id="user_doc_id" value="<?php echo $val->user_doc_id; ?>">
+                                    <input type="hidden" name="old_iden_upload" id="old_iden_upload" value="<?php echo $val->user_doc_iden_image; ?>">
+                                    <input type="hidden" name="old_license_upload" id="old_license_upload" value="<?php echo $val->user_doc_license_image; ?>">
+                                    <input type="hidden" name="old_tran_upload" id="old_license_upload" value="<?php echo $val->transaction_image; ?>">
                                     <button type="submit" style="margin:auto; width: 130px;" class="btn btn-success d-none d-lg-block m-l-12" >บันทึกข้อมูล</button>
                                 </div>
                             </div>
@@ -366,18 +369,35 @@ $('#datetimes').trigger("change"); //trigger on open
 $('#addConfirmRentForm').on('submit', function(event) {
     event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
 
-    //swal fire
-
-    $.ajax({  
-        url:"editTransactionApprove",
-        method:"POST",  
-        data:new FormData(this),  
-        contentType: false,  
-        cache: false,  
-        processData:false,  
-    }).done(function(returnData) {
-        alert("ยืนยันการเช่า");
-    }); 
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You Confirm Edit Document",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonColor: '#dc3545',
+        confirmButtonColor: '#28a745',
+        confirmButtonText: 'Yes, Confirm it!'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({  
+                url:"editTransactionApprove",
+                method:"POST",  
+                data:new FormData(this),  
+                contentType: false,  
+                cache: false,  
+                processData:false,  
+            }).done(function(returnData) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Save Complete',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+                window.location = "<?php echo base_url(); ?>";
+            }); 
+        }
+    })
 })
 
 function addCommas(x) {

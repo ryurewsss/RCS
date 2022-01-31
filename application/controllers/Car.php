@@ -17,14 +17,6 @@ class Car extends Main
 	// __________________ Start Car __________________
 	public function car()
 	{
-		// $arrayData = array(
-		// 	'tableName' => 'crs_car_model',
-		// 	'colName' => 'crs_car_model.car_model_id, crs_car_model.car_model_name, crs_car_model.car_model_feature, crs_car_model.car_model_description, crs_car_model.car_brand_id, crs_car_brand.car_brand_name_en',
-		// 	'where' => '',
-		// 	'order' => '',
-		// 	'arrayJoinTable' => array('crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id'),
-		// 	'groupBy' => ''
-		// );
 
 		$arrayData = array(
 			'tableName' => 'crs_car_model',
@@ -35,7 +27,7 @@ class Car extends Main
 				crs_car_brand.car_brand_name_en',
 			'where' => '',
 			'order' => '',
-			'arrayJoinTable' => array('crs_car_brand' => 'crs_car_model.car_brand_id = crs_car_brand.car_brand_id',),
+			'arrayJoinTable' => array('crs_car_brand' => 'crs_car_model.car_brand_id = crs_car_brand.car_brand_id'),
 			'groupBy' => ''
 		);
 
@@ -194,7 +186,7 @@ class Car extends Main
 				crs_car_model.car_brand_id, 
 				crs_car_brand.car_brand_name_en',
 			'where' => '',
-			'order' => '',
+			'order' => 'crs_car.create_date DESC',
 			'arrayJoinTable' => array(
 				'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
 				'crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id'
@@ -320,7 +312,7 @@ class Car extends Main
 			'tableName' => 'crs_car_model',
 			'colName' => 'crs_car_model.car_model_id, crs_car_model.car_model_name, crs_car_model.car_model_feature, crs_car_model.car_model_description, crs_car_model.car_brand_id, crs_car_brand.car_brand_name_en',
 			'where' => '',
-			'order' => '',
+			'order' => 'crs_car_model.car_model_id DESC',
 			'arrayJoinTable' => array('crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id'),
 			'groupBy' => '',
 			'pathView' => 'car/tableCarModel'
@@ -459,10 +451,9 @@ class Car extends Main
 			'colName' => '
 				crs_place.place_id,
 				crs_place.place_name,
-				crs_place.place_address,
-				crs_place.place_id',
+				crs_place.place_address',
 			'where' => '',
-			'order' => '',
+			'order' => 'crs_place.place_id DESC',
 			'arrayJoinTable' => '',
 			'groupBy' => ''
 		);

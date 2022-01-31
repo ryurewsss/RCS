@@ -25,6 +25,10 @@
     max-width: 400px;
     max-height: 400px;
 }
+#user_image{
+    max-width: 300px;
+    max-height: 300px;
+}
 
 /* Style the tab */
 .tab {
@@ -216,17 +220,17 @@
                                 </div>
                                 <div class="col-6 text-center">
                                     <h4>ปฏิเสธเอกสาร <br><br> </h4>
-                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="transaction_reject_iden" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ"><?php echo isset($val->transaction_reject_iden) ? $val->transaction_reject_iden : ''; ?></textarea>
+                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="transaction_reject_iden" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" <?php echo $val->transaction_status == 5 ? 'readonly' : '' ; ?>><?php echo isset($val->transaction_reject_iden) ? $val->transaction_reject_iden : ''; ?></textarea>
                                     <br>
                                         <h2 class="text-danger" id="reject_iden_1" style="user-select: auto; display: <?php echo isset($val->transaction_iden_approve) && $val->transaction_iden_approve == 0 ? 'display' : 'none'; ?>"><b>ปฏิเสธเอกสาร</b></h2>
                                         <h2 class="text-success" id="reject_iden_2" style="user-select: auto; display: <?php echo isset($val->transaction_iden_approve) && $val->transaction_iden_approve == 1 ? 'display' : 'none'; ?>"><b>ยอมรับเอกสาร</b></h2>
                                         <input type="hidden" name="inputData[]" id="reject_iden" value="<?php echo isset($val->transaction_iden_approve) ? $val->transaction_iden_approve : ''; ?>">
                                     <div class="row">
                                         <div class="col-6 text-center">
-                                            <button type="button" style="margin:auto; width: 100px;" class="btn btn-danger d-none d-lg-block m-l-12 reject_iden_btn" value="0">ปฏิเสธ</button>
+                                            <button type="button" style="margin:auto; width: 100px;" class="btn btn-danger d-none d-lg-block m-l-12 reject_iden_btn" value="0" <?php echo $val->transaction_status == 5 ? 'disabled' : '' ; ?>>ปฏิเสธ</button>
                                         </div>
                                         <div class="col-6 text-center">
-                                            <button type="button" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12 reject_iden_btn" value="1">ยอมรับ</button>
+                                            <button type="button" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12 reject_iden_btn" value="1" <?php echo $val->transaction_status == 5 ? 'disabled' : '' ; ?>>ยอมรับ</button>
                                         </div>
                                     </div>
                                 </div>
@@ -287,17 +291,17 @@
                                 </div>
                                 <div class="col-6 text-center">
                                     <h4>ปฏิเสธเอกสาร <br><br> </h4>
-                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="transaction_reject_transfer" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ"><?php echo isset($val->transaction_reject_transfer) ? $val->transaction_reject_transfer : ''; ?></textarea>
+                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="transaction_reject_transfer" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" <?php echo $val->transaction_status == 5 ? 'readonly' : '' ; ?>><?php echo isset($val->transaction_reject_transfer) ? $val->transaction_reject_transfer : ''; ?></textarea>
                                     <br>
                                         <h2 class="text-danger" id="reject_tran_1" style="user-select: auto; display: <?php echo isset($val->transaction_transfer_approve) && $val->transaction_transfer_approve == 0 ? 'display' : 'none'; ?>"><b>ปฏิเสธเอกสาร</b></h2>
                                         <h2 class="text-success" id="reject_tran_2" style="user-select: auto; display: <?php echo isset($val->transaction_transfer_approve) && $val->transaction_transfer_approve == 1 ? 'display' : 'none'; ?>"><b>ยอมรับเอกสาร</b></h2>
                                         <input type="hidden" name="inputData[]" id="reject_tran" value="<?php echo isset($val->transaction_transfer_approve) ? $val->transaction_transfer_approve : ''; ?>">
                                     <div class="row">
                                         <div class="col-6 text-center">
-                                            <button type="button" style="margin:auto; width: 100px;" class="btn btn-danger d-none d-lg-block m-l-12 reject_tran_btn" value="0">ปฏิเสธ</button>
+                                            <button type="button" style="margin:auto; width: 100px;" class="btn btn-danger d-none d-lg-block m-l-12 reject_tran_btn" value="0" <?php echo $val->transaction_status == 5 ? 'disabled' : '' ; ?>>ปฏิเสธ</button>
                                         </div>
                                         <div class="col-6 text-center">
-                                            <button type="button" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12 reject_tran_btn" value="1">ยอมรับ</button>
+                                            <button type="button" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12 reject_tran_btn" value="1" <?php echo $val->transaction_status == 5 ? 'disabled' : '' ; ?>>ยอมรับ</button>
                                         </div>
                                     </div>
                                 </div>
@@ -309,7 +313,7 @@
                                 </div>
                                 <div class="col-6 text-center">
                                     <input type="hidden" name="inputData[]" id="transaction_id" value="<?php echo $val->transaction_id; ?>">
-                                    <button type="submit" style="margin:auto; width: 160px;" class="btn btn-success d-none d-lg-block m-l-12" >ยืนยันการตรวจสอบ</button>
+                                    <button type="submit" style="margin:auto; width: 160px;" class="btn btn-success d-none d-lg-block m-l-12" <?php echo $val->transaction_status == 5 ? 'disabled' : '' ; ?>>ยืนยันการตรวจสอบ</button>
                                 </div>
                             </div>
                             <br>
@@ -354,7 +358,9 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-12 text-center">
-                                        <button type="button" style="margin:auto;" class="btn btn-info d-none d-lg-block m-l-12">ดูประวัติการจอง</button>
+                                        <a href="<?= base_url() ?>Transaction/transactionUser?userId=<?php echo $val->user_id; ?>">
+                                            <button type="button" style="margin:auto;" class="btn btn-info d-none d-lg-block m-l-12">ดูประวัติการจอง</button>
+                                        </a>
                                     </div>
                                 </div>
                                 
@@ -362,7 +368,7 @@
                             <div class="col-6">
                                 <br><div class="row">
                                     <div class="col-12 text-center"></div>
-                                    <img class="doc_image" id="transaction_image" src="<?php echo base_url('img/user_img'); ?>/<?php echo $val->user_image; ?>" onerror="this.style.display='none'" />
+                                    <img id="user_image" src="<?php echo isset($val->user_image) ? base_url('img/user_img').'/'. $val->user_image : base_url('img/user_img').'/'. 'profile.png'; ?>">
                                 </div>
                             </div>
                         </div>
@@ -404,30 +410,52 @@ $('#datetimes').trigger("change"); //trigger on open
 
 
 $('.reject_iden_btn').click(function() {
-
-    //swal fire
-
     if(this.value == 0){
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Reject Document',
+            showConfirmButton: false,
+            timer: 1000
+        })
         $('#reject_iden_1').show();
         $('#reject_iden_2').hide();
         $('#reject_iden').val(0);
     }
     if(this.value == 1){
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Approve Document',
+            showConfirmButton: false,
+            timer: 1000
+        })
         $('#reject_iden_1').hide();
         $('#reject_iden_2').show();
         $('#reject_iden').val(1);
     }
 })
 $('.reject_tran_btn').click(function() {
-
-    //swal fire
-
     if(this.value == 0){
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Reject Document',
+            showConfirmButton: false,
+            timer: 1000
+        })
         $('#reject_tran_1').show();
         $('#reject_tran_2').hide();
         $('#reject_tran').val(0);
     }
     if(this.value == 1){
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Approve Document',
+            showConfirmButton: false,
+            timer: 1000
+        })
         $('#reject_tran_1').hide();
         $('#reject_tran_2').show();
         $('#reject_tran').val(1);
@@ -437,21 +465,37 @@ $('.reject_tran_btn').click(function() {
 $('#addConfirmRentForm').on('submit', function(event) {
     event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
 
-    //swal fire
-
-    var formData = {};
-    $("[name^='inputData']").each(function() {
-        formData[this.id] = this.value;
-    });
-
-    $.ajax({  
-        url:"editTransactionDetail",
-        method:"POST",  
-        data:formData
-    }).done(function(returnData) {
-        alert("ยืนยันการตรวจสอบ");
-        // $('#addConfirmRentForm form')[0].reset();
-    }); 
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You Confirm the document",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonColor: '#dc3545',
+        confirmButtonColor: '#28a745',
+        confirmButtonText: 'Yes, Confirm it!'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            var formData = {};
+            $("[name^='inputData']").each(function() {
+                formData[this.id] = this.value;
+            });
+            $.ajax({  
+                url:"editTransactionDetail",
+                method:"POST",  
+                data:formData
+            }).done(function(returnData) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Save Complete',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+                window.location = "<?php echo base_url().'/Transaction/transaction'; ?>";
+                // $('#addConfirmRentForm form')[0].reset();
+            });
+        }
+    })
 })
 
 function addCommas(x) {
