@@ -58,15 +58,30 @@
         var button = $(event.relatedTarget)
         var data = {};
         data['id'] = $(this).attr("id");
-        if (confirm('ยืนยันการลบรายการนี้หรือไม่')) {
-            $.ajax({
-                url: "deleteCarBrand",
-                method: "POST",
-                data: data,
-            }).done(function(returnData) {
-                getList();
-            });
-        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "deleteCarBrand",
+                    method: "POST",
+                    data: data,
+                }).done(function(returnData) {
+                    getList();
+                    Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                    )
+                }); 
+            }
+        })
     })
     //delete row
 </script>

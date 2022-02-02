@@ -109,15 +109,30 @@
         var data = {};
         data['id'] = $(this).attr("id");
         data['old_image'] = $(this).attr("data-upload");
-        if (confirm('ยืนยันการลบรายการนี้หรือไม่')) {
-            $.ajax({
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
                 url: "deleteCar",
                 method: "POST",
                 data: data,
-            }).done(function(returnData) {
-                getList();
-            });
-        }
+                }).done(function(returnData) {
+                    getList();
+                    Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                    )
+                });  
+            }
+        })
     })
     //delete row
 </script>
