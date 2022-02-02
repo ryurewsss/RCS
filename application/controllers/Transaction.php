@@ -324,4 +324,55 @@ class Transaction extends Main
 		$this->output->set_content_type('application/json')->set_output(json_encode($editedId));
 	}
 	// ___________________ End changeTransactionStatus ____________________
+
+	// __________________ Start checkTransactionDate __________________
+	public function checkTransactionDate()
+	{
+		$getData = $this->input->post();
+
+		$arrayData = array(
+			'tableName' => 'crs_transaction',
+			'colName' => '
+			transaction_id,
+			transaction_receive_date,
+			transaction_return_date,
+			transaction_status,
+			car_id',
+			'where' => "transaction_status != 5 AND car_id = ".$getData['car_id'],
+			'order' => '',
+			'arrayJoinTable' => '',
+			'groupBy' => ''
+		);
+
+		$result = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		// print_r($result);
+		// print_r($getData);
+		// print_r($result);
+		// $getData['dateRange'] = date("Y-m-d", strtotime(str_replace('/', '-', $getData['dateRange'])));
+		$date['startDate'] = substr($getData['dateRange'],0,10); //substr
+		$date['startTime'] = substr($getData['dateRange'],11,5);
+		$date['endDate'] = substr($getData['dateRange'],19,10);
+		$date['endTime'] = substr($getData['dateRange'],30,5);
+		$date['startDate'] = date("Y-m-d", strtotime(str_replace('/', '-', $date['startDate']))); // change 31/12/2000 to 2000-12-31
+		$date['endDate'] = date("Y-m-d", strtotime(str_replace('/', '-', $date['endDate'])));
+		$pass = true;
+		if($result){
+			foreach($result as $key => $val){
+				$startDate = substr($val->transaction_receive_date,0,10);
+				$endDate = substr($val->transaction_return_date,0,10);
+				if ((
+						($date['startDate'] >= $startDate) && ($date['startDate'] <= $endDate)) //if start between 
+					|| (($date['endDate'] >= $startDate) && ($date['endDate'] <= $endDate)) //if start between 
+					|| (($date['startDate'] <= $startDate) && ($date['endDate'] >= $endDate))){ //if range between 
+					// echo "is between";
+					$pass = false;
+					break;
+				}
+			}
+			//if have 
+		}
+		$this->output->set_content_type('application/json')->set_output(json_encode($pass));
+	}
+	// ___________________ End checkTransactionDate ____________________
+
 }

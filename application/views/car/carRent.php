@@ -183,7 +183,7 @@
                             <br>
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <button type="button" style="margin:auto;" class="btn btn-info d-none d-lg-block m-l-12">ตรวจสอบการจอง</button>
+                                    <button type="button" style="margin:auto;" class="btn btn-info d-none d-lg-block m-l-12" id="checkDate">ตรวจสอบการจอง</button>
                                 </div>
                             </div>
 
@@ -358,38 +358,71 @@ $('input[name="datetimes"]').on('change', function(event) {
 $('input[name="datetimes"]').trigger("change"); //trigger on open
 
 $('#addCarRentForm').on('submit', function(event) {
-        event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
+    event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
 
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You Confirm Rent a Car",
-            icon: 'warning',
-            showCancelButton: true,
-            cancelButtonColor: '#dc3545',
-            confirmButtonColor: '#28a745',
-            confirmButtonText: 'Yes, Confirm it!'
-            }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({  
-                    url:"addCarRent",
-                    method:"POST",  
-                    data:new FormData(this),  
-                    contentType: false,  
-                    cache: false,  
-                    processData:false,  
-                }).done(function(returnData) {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Save Complete',
-                        showConfirmButton: false,
-                        timer: 1000
-                    })
-                    window.location = "<?php echo base_url(); ?>";
-                }); 
-            }
-        })
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You Confirm Rent a Car",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonColor: '#dc3545',
+        confirmButtonColor: '#28a745',
+        confirmButtonText: 'Yes, Confirm it!'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({  
+                url:"addCarRent",
+                method:"POST",  
+                data:new FormData(this),  
+                contentType: false,  
+                cache: false,  
+                processData:false,  
+            }).done(function(returnData) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Save Complete',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+                window.location = "<?php echo base_url(); ?>";
+            }); 
+        }
     })
+})
+
+$('#checkDate').click(function() {
+    var data = {};
+    data['car_id'] = $('#car_id').val();
+    data['dateRange'] = $('input[name="datetimes"]').val();
+
+    $.ajax({
+        method: "POST",
+        url: "../Transaction/checkTransactionDate",
+        data: data,  
+    }).done(function(returnedData) {
+        console.log(returnedData);
+        if(!returnedData){
+            Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title:'วันที่ดังกล่าวไม่ว่าง',
+            text: 'กรุณาเลือกวันอื่น',
+            showConfirmButton: false,
+            timer: 1500
+            })
+        }else{
+            Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title:'วันที่ดังกล่าวว่าง',
+            text: 'สามารถเลือกวันดังกล่าวได้',
+            showConfirmButton: false,
+            timer: 1500
+            })
+        }
+    });
+})
 
 function addCommas(x) {
     var parts = x.toString().split(".");
