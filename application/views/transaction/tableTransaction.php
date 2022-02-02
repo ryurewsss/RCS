@@ -36,7 +36,7 @@
                         <!-- <td class="text-left"><?= date("d/m/Y", strtotime(str_replace('-', '/', substr($val->transaction_return_date,0,10)))) ?></td> -->
                         <!-- <td class="text-left"><?= substr($val->transaction_return_date,11,5) ?></td> -->
                         <td class="text-center"><?= date("d/m/Y", strtotime(str_replace('-', '/', substr($val->transaction_return_date,0,10)))) ?> <br> <?= substr($val->transaction_return_date,11,5) ?></td>
-                        <td class="text-left <?= $tranStatusColor[$val->transaction_status] ?>"><?= $tranStatus[$val->transaction_status] ?></td>
+                        <td class="text-center <?= $tranStatusColor[$val->transaction_status] ?>"><?= $tranStatus[$val->transaction_status] ?></td>
                         <td>
                             <a href="<?= base_url() ?>Transaction/transactionDetail?tranId=<?php echo $val->transaction_id; ?>">
                                 <button type="button" class="btn waves-effect waves-light btn-info btn-sm" id="<?= $val->transaction_id ?>" ><i class="fas fa-search"></i></button>
