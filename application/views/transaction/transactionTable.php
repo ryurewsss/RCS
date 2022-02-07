@@ -29,6 +29,7 @@
             <a class="m-b-0 text-white" style="font-size: 23px; margin-left: 10px;">ตรวจสอบการเช่า</a>
         </div>
     </div>
+    <button id="test"> API </button>
     <div class="card-body">
         <div id="transactionTable"></div>
     </div>
@@ -37,6 +38,16 @@
 
 <script>
     getList();
+
+    $('#test').click(function(e){
+        console.log('TEST');
+        $.ajax({
+            method: "POST",
+            url: "callAPI",
+        }).done(function(returnedData) {
+            console.log(returnedData)
+        })
+    })
 
     function getList() {
         $.ajax({
