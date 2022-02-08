@@ -381,7 +381,8 @@ class Transaction extends Main
 	{
 		// $link = "http://127.0.0.1:5000";
 		// $link = "http://127.0.0.1:5000/mining";
-		$link = "http://127.0.0.1:5000/mining?tran=1";
+		$link = "http://127.0.0.1:5000/mining?
+		transaction_id=1";
 		// $link = "http://127.0.0.1:5000/get_chain";
 		// $link = "http://127.0.0.1:5000/is_valid";
 		echo $data = file_get_contents($link);

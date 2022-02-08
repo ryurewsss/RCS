@@ -555,8 +555,25 @@ class Car extends Main
 				'user_create_id' => $_SESSION['id'],
 				'user_update_id' => $_SESSION['id']
 			);
-			$addedId = $this->crsModel->add('crs_transaction', $arrayData);
-			$this->output->set_content_type('application/json')->set_output(json_encode($addedId));
+			// $addedId = $this->crsModel->add('crs_transaction', $arrayData);
+				//start blockchain
+			$link = "http://127.0.0.1:5000/mining?"
+				."car_id=".$this->input->post('car_id')
+				.'&user_rental_id='.$_SESSION['id']
+				.'&user_doc_id='.$addedId
+				.'&place_id='.$this->input->post('place_id')
+				.'&transaction_receive_date='.$date['startDate'].'_'.$date['startTime']
+				.'&transaction_return_date='.$date['endDate'].'_'.$date['endTime']
+				.'&transaction_status='.'1'
+				.'&transaction_price='.(int)str_replace(',', '', $this->input->post('rentTotal'))
+				.'&transaction_rental_approve='.'1'
+				.'&transaction_image='.$filename['transaction_upload']
+				.'&user_create_id='.$_SESSION['id']
+				.'&user_update_id='.$_SESSION['id']
+			;
+			echo $data = file_get_contents($link);
+				//end blockchain
+			// $this->output->set_content_type('application/json')->set_output(json_encode($addedId));
 		}
 	}
 
