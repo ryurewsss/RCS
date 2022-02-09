@@ -226,6 +226,22 @@ class Transaction extends Main
 			$arrayData['transaction_status'] = 2;//เอกสารถูกปฏิเสธ
 			$arrayData['transaction_lessor_approve'] = 0;
 		}
+
+			// start blockchain
+			$link = "http://127.0.0.1:5000/mining_transaction?"
+			."transaction_id=".$getData['transaction_id']
+			.'&transaction_reject_iden='.$getData['transaction_reject_iden']
+			.'&transaction_iden_approve='.$getData['reject_iden']
+			.'&transaction_reject_transfer='.$getData['transaction_reject_transfer']
+			.'&transaction_transfer_approve='.$getData['reject_tran']
+			.'&transaction_status='.$arrayData['transaction_status']
+			.'&transaction_lessor_approve='.$arrayData['transaction_lessor_approve']
+			.'&user_lessor_id='.$_SESSION['id']
+			.'&user_update_id='.$_SESSION['id']
+			;
+			echo $data = file_get_contents($link);
+			//end blockchain
+
 		$arrayWhere = array('transaction_id' => $getData['transaction_id']);
 		$editedId = $this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
 		$this->output->set_content_type('application/json')->set_output(json_encode($editedId));
@@ -304,6 +320,18 @@ class Transaction extends Main
 			'transaction_image' => $filename['transaction_upload'],
 			'user_update_id' => $_SESSION['id']
 		);
+
+		// start blockchain
+		$link = "http://127.0.0.1:5000/mining_transaction?"
+		."transaction_id=".$getData['transaction_id']
+		.'&transaction_status='.$arrayData['transaction_status']
+		.'&transaction_lessor_approve='.$arrayData['transaction_lessor_approve']
+		.'&user_lessor_id='.$_SESSION['id']
+		.'&user_update_id='.$_SESSION['id']
+		;
+		echo $data = file_get_contents($link);
+		//end blockchain
+
 		$arrayWhere = array('transaction_id' => $getData['transaction_id']);
 		$editedId = $this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
 		// $this->output->set_content_type('application/json')->set_output(json_encode($editedId));

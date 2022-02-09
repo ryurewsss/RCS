@@ -517,7 +517,7 @@ class Car extends Main
 			'user_create_id' => $_SESSION['id'],
 			'user_update_id' => $_SESSION['id']
 		);
-		$addedId = $this->crsModel->add('crs_user_doc', $arrayData);
+		$docId = $this->crsModel->add('crs_user_doc', $arrayData);
 		//END UPLOAD DOC
 
 		$config['upload_path'] = './img/transaction_img/';
@@ -544,7 +544,7 @@ class Car extends Main
 			$arrayData = array(
 				'car_id' => $this->input->post('car_id'),
 				'user_rental_id' => $_SESSION['id'],
-				'user_doc_id' => $addedId,
+				'user_doc_id' => $docId,
 				'place_id' => $this->input->post('place_id'),
 				'transaction_receive_date' => $date['startDate'].' '.$date['startTime'],
 				'transaction_return_date' => $date['endDate'].' '.$date['endTime'],
@@ -555,12 +555,13 @@ class Car extends Main
 				'user_create_id' => $_SESSION['id'],
 				'user_update_id' => $_SESSION['id']
 			);
-			// $addedId = $this->crsModel->add('crs_transaction', $arrayData);
+			$addedId = $this->crsModel->add('crs_transaction', $arrayData);
 				//start blockchain
 			$link = "http://127.0.0.1:5000/mining?"
 				."car_id=".$this->input->post('car_id')
+				.'&transaction_id='.$addedId
 				.'&user_rental_id='.$_SESSION['id']
-				.'&user_doc_id='.$addedId
+				.'&user_doc_id='.$docId
 				.'&place_id='.$this->input->post('place_id')
 				.'&transaction_receive_date='.$date['startDate'].'_'.$date['startTime']
 				.'&transaction_return_date='.$date['endDate'].'_'.$date['endTime']
@@ -573,7 +574,7 @@ class Car extends Main
 			;
 			echo $data = file_get_contents($link);
 				//end blockchain
-			// $this->output->set_content_type('application/json')->set_output(json_encode($addedId));
+			$this->output->set_content_type('application/json')->set_output(json_encode($addedId));
 		}
 	}
 

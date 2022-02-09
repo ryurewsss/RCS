@@ -104,6 +104,14 @@ class Blockchain:
             block_index+=1
         return True
 
+    #เอา block ล่าสุดของ Transaction
+    def get_last_transaction(self, transaction_id=0):
+        
+        #แปลงเป็นเชนของ transaction
+        last_transaction = list(filter(lambda x:x["data"]["transaction_id"]==transaction_id,self.chain[::-1]))
+        #เอา transaction อันล่าสุด
+        return last_transaction[0]
+
 #web server
 app = Flask(__name__)
 #ใช้งาน Blockchain
@@ -112,7 +120,7 @@ blockchain = Blockchain()
 #routing
 @app.route('/')
 def hello():
-    return "<h1>Hello Blockchain1234</h1>"
+    return "<h1>Hello Blockchain CRS</h1>"
 
 @app.route('/get_chain',methods=["GET"])
 def get_chain():
@@ -122,12 +130,19 @@ def get_chain():
     }
     return jsonify(response),200
 
+@app.route('/get_reverse_chain',methods=["GET"])
+def get_reverse_chain():
+    response={
+        "chain":blockchain.chain[::-1],
+        "length":len(blockchain.chain)
+    }
+    return jsonify(response),200
+
 @app.route('/mining',methods=["GET"])
 def mining_block():
     # username = request.args.get('tran')
     blockchain.transaction_id = request.args.get('transaction_id') 
     blockchain.car_id = request.args.get('car_id')
-    blockchain.user_lessor_id = request.args.get('user_lessor_id')
     blockchain.user_rental_id = request.args.get('user_rental_id')
     blockchain.user_doc_id = request.args.get('user_doc_id')
     blockchain.place_id = request.args.get('place_id')
@@ -135,13 +150,10 @@ def mining_block():
     blockchain.transaction_return_date = request.args.get('transaction_return_date')
     blockchain.transaction_status = request.args.get('transaction_status')
     blockchain.transaction_price = request.args.get('transaction_price')
-    blockchain.transaction_lessor_approve = request.args.get('transaction_lessor_approve')
     blockchain.transaction_rental_approve = request.args.get('transaction_rental_approve')
     blockchain.transaction_image = request.args.get('transaction_image')
-    blockchain.transaction_iden_approve = request.args.get('transaction_iden_approve')
-    blockchain.transaction_transfer_approve = request.args.get('transaction_transfer_approve')
-    blockchain.transaction_reject_iden = request.args.get('transaction_reject_iden')
-    blockchain.transaction_reject_transfer = request.args.get('transaction_reject_transfer')
+    blockchain.user_create_id = request.args.get('user_create_id')
+    blockchain.user_update_id = request.args.get('user_update_id')
     #pow
     previous_block = blockchain.get_previous_block()
     previous_nonce = previous_block["nonce"]
@@ -152,7 +164,7 @@ def mining_block():
     #update block ใหม่
     block=blockchain.create_block(nonce,previous_hash)
     response={
-        "message":"Mining Block Complete",
+        # "message":"Mining Block Complete",
         "index":block["index"],
         "timestamp":block["timestamp"],
         "data":block["data"],
@@ -160,6 +172,83 @@ def mining_block():
         "previous_hash":block["previous_hash"]
     }
     return jsonify(response),200
+
+@app.route('/mining_transaction',methods=["GET"])
+def mining_transaction():
+
+    blockchain.transaction_id = request.args.get('transaction_id')
+
+    tranBlock = blockchain.get_last_transaction(request.args.get('transaction_id'))
+
+    if request.args.get('user_lessor_id') is None:
+        blockchain.user_lessor_id = tranBlock['data']['user_lessor_id']
+    else:
+        blockchain.user_lessor_id = request.args.get('user_lessor_id')
+
+    if request.args.get('user_doc_id') is None:
+        blockchain.user_doc_id = tranBlock['data']['user_doc_id']
+    else:
+        blockchain.user_doc_id = request.args.get('user_doc_id')
+
+    if request.args.get('transaction_status') is None:
+        blockchain.transaction_status = tranBlock['data']['transaction_status']
+    else:
+        blockchain.transaction_status = request.args.get('transaction_status')
+
+    if request.args.get('transaction_lessor_approve') is None:
+        blockchain.transaction_lessor_approve = tranBlock['data']['transaction_lessor_approve']
+    else:
+        blockchain.transaction_lessor_approve = request.args.get('transaction_lessor_approve')
+    
+    if request.args.get('transaction_image') is None:
+        blockchain.transaction_image = tranBlock['data']['transaction_image']
+    else:
+        blockchain.transaction_image = request.args.get('transaction_image')
+
+    if request.args.get('transaction_iden_approve') is None:
+        blockchain.transaction_iden_approve = tranBlock['data']['transaction_iden_approve']
+    else:
+        blockchain.transaction_iden_approve = request.args.get('transaction_iden_approve')
+        
+    if request.args.get('transaction_transfer_approve') is None:
+        blockchain.transaction_transfer_approve = tranBlock['data']['transaction_transfer_approve']
+    else:
+        blockchain.transaction_transfer_approve = request.args.get('transaction_transfer_approve')
+
+    if request.args.get('transaction_reject_iden') is None:
+        blockchain.transaction_reject_iden = tranBlock['data']['transaction_reject_iden']
+    else:
+        blockchain.transaction_reject_iden = request.args.get('transaction_reject_iden')
+
+    if request.args.get('transaction_reject_transfer') is None:
+        blockchain.transaction_reject_transfer = tranBlock['data']['transaction_reject_transfer']
+    else:
+        blockchain.transaction_reject_transfer = request.args.get('transaction_reject_transfer')
+
+    if request.args.get('user_update_id') is None:
+        blockchain.user_update_id = tranBlock['data']['user_update_id']
+    else:
+        blockchain.user_update_id = request.args.get('user_update_id')
+
+    #pow
+    previous_block = blockchain.get_previous_block()
+    previous_nonce = previous_block["nonce"]
+    #nonce
+    nonce = blockchain.proof_of_work(previous_nonce)
+    #hash block ก่อนหน้า
+    previous_hash = blockchain.hash(previous_block)
+    #update block ใหม่
+    block=blockchain.create_block(nonce,previous_hash)
+    response={
+        # "message":"Mining Block Complete",
+        "index":block["index"],
+        "timestamp":block["timestamp"],
+        "data":block["data"],
+        "nonce":block["nonce"],
+        "previous_hash":block["previous_hash"]
+    }
+    return jsonify(response),200
+
 
 @app.route('/is_valid',methods=["GET"])
 def is_valid():
@@ -169,6 +258,17 @@ def is_valid():
     else :
         response={"message":"Have Problem , Blockchain Is Not Valid"}
     return jsonify(response),200
+
+@app.route('/get_last_transaction',methods=["GET"])
+def get_transaction():
+
+    previous_block = blockchain.get_last_transaction(request.args.get('transaction_id'))
+    # response={
+    #     "chain":previous_block.chain,
+    #     "length":len(previous_block.chain)
+    # }
+    return jsonify(previous_block),200
+
 #run server
 if __name__ =="__main__":
     app.run()
