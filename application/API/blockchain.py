@@ -6,23 +6,25 @@ class Blockchain:
     def __init__(self):
         #เก็บกลุ่มของ Block
         self.chain = [] #list ที่เก็บ block
-        self.transaction_id = 0 
-        self.car_id = 0
-        self.user_lessor_id = 0
-        self.user_rental_id = 0
-        self.user_doc_id = 0
-        self.place_id = 0
-        self.transaction_receive_date = 0
-        self.transaction_return_date = 0
-        self.transaction_status = 0
-        self.transaction_price = 0
-        self.transaction_lessor_approve = 0
-        self.transaction_rental_approve = 0
-        self.transaction_image = 0
-        self.transaction_iden_approve = 0
-        self.transaction_transfer_approve = 0
-        self.transaction_reject_iden = 0
-        self.transaction_reject_transfer = 0
+        self.transaction_id = None 
+        self.car_id = None
+        self.user_lessor_id = None
+        self.user_rental_id = None
+        self.user_doc_id = None
+        self.place_id = None
+        self.transaction_receive_date = None
+        self.transaction_return_date = None
+        self.transaction_status = None
+        self.transaction_price = None
+        self.transaction_lessor_approve = None
+        self.transaction_rental_approve = None
+        self.transaction_image = None
+        self.transaction_iden_approve = None
+        self.transaction_transfer_approve = None
+        self.transaction_reject_iden = None
+        self.transaction_reject_transfer = None
+        self.user_create_id = None
+        self.user_update_id = None
         #genesis block
         self.create_block(nonce=1,previous_hash="0")
     
