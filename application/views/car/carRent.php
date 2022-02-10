@@ -93,6 +93,7 @@
                             <div class="row">
                                 <div class="col-12 text-center">
                                     <h4 class="text-blue" style="user-select: auto;"><b><?php echo $val->car_registration; ?></b></h4>
+
                                 </div>
                             </div>
                             <div class="carImg row">
@@ -304,10 +305,14 @@
                                     <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab('uploadDoc')">&laquo; ย้อนกลับ</button>
                                 </div>
                                 <div class="col-6 text-center">
-                                    <input type="hidden" name="car_id" id="car_id" value="<?php echo $val->car_id; ?>">
                                     <button type="submit" style="margin:auto; width: 130px;" class="btn btn-success d-none d-lg-block m-l-12" >ยืนยันการจอง &raquo;</button>
                                 </div>
                             </div>
+                                <div class="row">
+                                    <input type="hidden" name="car_id" id="car_id" value="<?php echo $val->car_id; ?>">
+                                    <input type="hidden" name="car_registration" id="car_registration" value="<?php echo $val->car_registration; ?>">
+                                    <input type="hidden" name="place_name" id="place_name" value="">
+                                </div>
                             <br>
                         </div>
                     </div>
@@ -423,6 +428,10 @@ $('#checkDate').click(function() {
         }
     });
 })
+$('#place_id').on('change', function(event) {
+    $('#place_name').val($('#place_id option:selected').text())
+})
+
 
 function addCommas(x) {
     var parts = x.toString().split(".");

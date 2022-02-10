@@ -558,11 +558,13 @@ class Car extends Main
 			$addedId = $this->crsModel->add('crs_transaction', $arrayData);
 				//start blockchain
 			$link = "http://127.0.0.1:5000/mining?"
-				."car_id=".$this->input->post('car_id')
+				.'car_id='.$this->input->post('car_id')
+				.'&car_registration='.urlencode($this->input->post('car_registration'))
 				.'&transaction_id='.$addedId
 				.'&user_rental_id='.$_SESSION['id']
 				.'&user_doc_id='.$docId
 				.'&place_id='.$this->input->post('place_id')
+				.'&place_name='.urlencode($this->input->post('place_name'))
 				.'&transaction_receive_date='.$date['startDate'].'_'.$date['startTime']
 				.'&transaction_return_date='.$date['endDate'].'_'.$date['endTime']
 				.'&transaction_status='.'1'

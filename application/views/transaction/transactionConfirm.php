@@ -69,8 +69,9 @@
 
 </style>
 <?php 
-    // print_r($select); 
-    $val = $select[0];
+    $val_car = $car[0];
+    $val_user = $user[0];
+    $val_block = $block;
 ?>
 <div class="card">
     <div class="card-header bg-dark">
@@ -92,22 +93,22 @@
                         <div class="col-xs-12 col-sm-5 carBlock" style="user-select: auto;">
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <h2 class="text-blue" style="user-select: auto;"><b><?php echo $val->car_brand_name_en.' '.$val->car_model_name; ?></b></h2>
+                                    <h2 class="text-blue" style="user-select: auto;"><b><?php echo $val_car->car_brand_name_en.' '.$val_car->car_model_name; ?></b></h2>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <h4 class="text-blue" style="user-select: auto;"><b><?php echo $val->car_registration; ?></b></h4>
+                                    <h4 class="text-blue" style="user-select: auto;"><b><?php echo $val_car->car_registration; ?></b></h4>
                                 </div>
                             </div>
                             <div class="carImg row">
                                 <div class="col-12">
-                                    <img src="<?php echo base_url('img/car_img'); ?>/<?php echo $val->car_image; ?>" alt="<?php echo $val->car_image; ?>">
+                                    <img src="<?php echo base_url('img/car_img'); ?>/<?php echo $val_car->car_image; ?>" alt="<?php echo $val_car->car_image; ?>">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <h4 class="text-blue" style="user-select: auto;">ราคา <b><?php echo number_format($val->car_price); ?></b> บาท/วัน</h4>
+                                    <h4 class="text-blue" style="user-select: auto;">ราคา <b><?php echo number_format($val_car->car_price); ?></b> บาท/วัน</h4>
                                 </div>
                             </div>
                             <div class="row">
@@ -140,7 +141,7 @@
                                 </div>  : &ensp;
                                 <select style="width: 350px;" class="form-control form-control-line" name="place_id" id="place_id" disabled>
                                     <?php
-                                        echo "<option selected value=" . $val->place_id . ">" . $val->place_name . "</option>";
+                                        echo "<option selected value=" . $val_block->data->place_id . ">" . $val_block->data->place_name . "</option>";
                                     ?>
                                 </select>
                             </div>
@@ -151,8 +152,8 @@
                                     <h4 >ช่วงวันและเวลา</h4>
                                 </div>  : &ensp;
                                 <input type="text" style="width: 350px;" class="form-control" id="datetimes"                             
-                                value="<?php echo date("d/m/Y", strtotime(str_replace('-', '/', substr($val->transaction_receive_date,0,10)))).' '.substr($val->transaction_receive_date,11,5)
-                                .' - '.date("d/m/Y", strtotime(str_replace('-', '/', substr($val->transaction_return_date,0,10)))).' '.substr($val->transaction_return_date,11,5)
+                                value="<?php echo date("d/m/Y", strtotime(str_replace('-', '/', substr($val_block->data->transaction_receive_date,0,10)))).' '.substr($val_block->data->transaction_receive_date,11,5)
+                                .' - '.date("d/m/Y", strtotime(str_replace('-', '/', substr($val_block->data->transaction_return_date,0,10)))).' '.substr($val_block->data->transaction_return_date,11,5)
                                  ?>" readonly>
                             </div>
 
@@ -170,7 +171,7 @@
                                 <div class="col-4">
                                     <h4 >ราคา</h4>
                                 </div>  : &ensp;
-                                <input type="text" style="width: 200px; text-align: right;" class="form-control" name="rentPrice" id="rentPrice" value="<?php echo number_format($val->car_price); ?>" readonly/>
+                                <input type="text" style="width: 200px; text-align: right;" class="form-control" name="rentPrice" id="rentPrice" value="<?php echo number_format($val_car->car_price); ?>" readonly/>
                                 <h5 style="margin-top:10px;">&ensp; บาท/วัน</h5>
                             </div>
 
@@ -213,24 +214,24 @@
                             <br><div class="row">
                                 <div class="col-6 text-center">
                                     <h4 >เอกสารระบุตัวตน <br>(หนังสือเดินทางหรือบัตรประชาชน) </h4>
-                                    <img class="doc_image" id="iden_image" src="<?php echo base_url('img/user_doc_img'); ?>/<?php echo $val->user_doc_iden_image; ?>"/>
+                                    <img class="doc_image" id="iden_image" src="<?php echo base_url('img/user_doc_img'); ?>/<?php echo $val_user->user_doc_iden_image; ?>"/>
                                     <br><br><br>
                                     <h4 >ใบอนุญาตขับขี่ </a></h4>
-                                    <img class="doc_image" id="license_image" src="<?php echo base_url('img/user_doc_img'); ?>/<?php echo $val->user_doc_license_image; ?>"/>
+                                    <img class="doc_image" id="license_image" src="<?php echo base_url('img/user_doc_img'); ?>/<?php echo $val_user->user_doc_license_image; ?>"/>
                                 </div>
                                 <div class="col-6 text-center">
                                     <h4>ปฏิเสธเอกสาร <br><br> </h4>
-                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="transaction_reject_iden" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" <?php echo $val->transaction_status == 5 ? 'readonly' : '' ; ?>><?php echo isset($val->transaction_reject_iden) ? $val->transaction_reject_iden : ''; ?></textarea>
+                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="transaction_reject_iden" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" <?php echo $val_block->data->transaction_status == 5 ? 'readonly' : '' ; ?>><?php echo isset($val_block->data->transaction_reject_iden) ? $val_block->data->transaction_reject_iden : ''; ?></textarea>
                                     <br>
-                                        <h2 class="text-danger" id="reject_iden_1" style="user-select: auto; display: <?php echo isset($val->transaction_iden_approve) && $val->transaction_iden_approve == 0 ? 'display' : 'none'; ?>"><b>ปฏิเสธเอกสาร</b></h2>
-                                        <h2 class="text-success" id="reject_iden_2" style="user-select: auto; display: <?php echo isset($val->transaction_iden_approve) && $val->transaction_iden_approve == 1 ? 'display' : 'none'; ?>"><b>ยอมรับเอกสาร</b></h2>
-                                        <input type="hidden" name="inputData[]" id="reject_iden" value="<?php echo isset($val->transaction_iden_approve) ? $val->transaction_iden_approve : ''; ?>">
+                                        <h2 class="text-danger" id="reject_iden_1" style="user-select: auto; display: <?php echo isset($val_block->data->transaction_iden_approve) && $val_block->data->transaction_iden_approve == 0 ? 'display' : 'none'; ?>"><b>ปฏิเสธเอกสาร</b></h2>
+                                        <h2 class="text-success" id="reject_iden_2" style="user-select: auto; display: <?php echo isset($val_block->data->transaction_iden_approve) && $val_block->data->transaction_iden_approve == 1 ? 'display' : 'none'; ?>"><b>ยอมรับเอกสาร</b></h2>
+                                        <input type="hidden" name="inputData[]" id="reject_iden" value="<?php echo isset($val_block->data->transaction_iden_approve) ? $val_block->data->transaction_iden_approve : ''; ?>">
                                     <div class="row">
                                         <div class="col-6 text-center">
-                                            <button type="button" style="margin:auto; width: 100px;" class="btn btn-danger d-none d-lg-block m-l-12 reject_iden_btn" value="0" <?php echo $val->transaction_status == 5 ? 'disabled' : '' ; ?>>ปฏิเสธ</button>
+                                            <button type="button" style="margin:auto; width: 100px;" class="btn btn-danger d-none d-lg-block m-l-12 reject_iden_btn" value="0" <?php echo $val_block->data->transaction_status == 5 ? 'disabled' : '' ; ?>>ปฏิเสธ</button>
                                         </div>
                                         <div class="col-6 text-center">
-                                            <button type="button" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12 reject_iden_btn" value="1" <?php echo $val->transaction_status == 5 ? 'disabled' : '' ; ?>>ยอมรับ</button>
+                                            <button type="button" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12 reject_iden_btn" value="1" <?php echo $val_block->data->transaction_status == 5 ? 'disabled' : '' ; ?>>ยอมรับ</button>
                                         </div>
                                     </div>
                                 </div>
@@ -270,7 +271,7 @@
                                     </div>
                                     <br><div class="row">
                                         <div class="col-12 text-center"></div>
-                                        <img class="doc_image" id="transaction_image" src="<?php echo base_url('img/transaction_img'); ?>/<?php echo $val->transaction_image; ?>"/>
+                                        <img class="doc_image" id="transaction_image" src="<?php echo base_url('img/transaction_img'); ?>/<?php echo $val_block->data->transaction_image; ?>"/>
                                     </div>
                                     <br><h4>ข้อมูลการเช่า</h4>
                                     <br><div class="row">
@@ -291,17 +292,17 @@
                                 </div>
                                 <div class="col-6 text-center">
                                     <h4>ปฏิเสธเอกสาร <br><br> </h4>
-                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="transaction_reject_transfer" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" <?php echo $val->transaction_status == 5 ? 'readonly' : '' ; ?>><?php echo isset($val->transaction_reject_transfer) ? $val->transaction_reject_transfer : ''; ?></textarea>
+                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="transaction_reject_transfer" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" <?php echo $val_block->data->transaction_status == 5 ? 'readonly' : '' ; ?>><?php echo isset($val_block->data->transaction_reject_transfer) ? $val_block->data->transaction_reject_transfer : ''; ?></textarea>
                                     <br>
-                                        <h2 class="text-danger" id="reject_tran_1" style="user-select: auto; display: <?php echo isset($val->transaction_transfer_approve) && $val->transaction_transfer_approve == 0 ? 'display' : 'none'; ?>"><b>ปฏิเสธเอกสาร</b></h2>
-                                        <h2 class="text-success" id="reject_tran_2" style="user-select: auto; display: <?php echo isset($val->transaction_transfer_approve) && $val->transaction_transfer_approve == 1 ? 'display' : 'none'; ?>"><b>ยอมรับเอกสาร</b></h2>
-                                        <input type="hidden" name="inputData[]" id="reject_tran" value="<?php echo isset($val->transaction_transfer_approve) ? $val->transaction_transfer_approve : ''; ?>">
+                                        <h2 class="text-danger" id="reject_tran_1" style="user-select: auto; display: <?php echo isset($val_block->data->transaction_transfer_approve) && $val_block->data->transaction_transfer_approve == 0 ? 'display' : 'none'; ?>"><b>ปฏิเสธเอกสาร</b></h2>
+                                        <h2 class="text-success" id="reject_tran_2" style="user-select: auto; display: <?php echo isset($val_block->data->transaction_transfer_approve) && $val_block->data->transaction_transfer_approve == 1 ? 'display' : 'none'; ?>"><b>ยอมรับเอกสาร</b></h2>
+                                        <input type="hidden" name="inputData[]" id="reject_tran" value="<?php echo isset($val_block->data->transaction_transfer_approve) ? $val_block->data->transaction_transfer_approve : ''; ?>">
                                     <div class="row">
                                         <div class="col-6 text-center">
-                                            <button type="button" style="margin:auto; width: 100px;" class="btn btn-danger d-none d-lg-block m-l-12 reject_tran_btn" value="0" <?php echo $val->transaction_status == 5 ? 'disabled' : '' ; ?>>ปฏิเสธ</button>
+                                            <button type="button" style="margin:auto; width: 100px;" class="btn btn-danger d-none d-lg-block m-l-12 reject_tran_btn" value="0" <?php echo $val_block->data->transaction_status == 5 ? 'disabled' : '' ; ?>>ปฏิเสธ</button>
                                         </div>
                                         <div class="col-6 text-center">
-                                            <button type="button" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12 reject_tran_btn" value="1" <?php echo $val->transaction_status == 5 ? 'disabled' : '' ; ?>>ยอมรับ</button>
+                                            <button type="button" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12 reject_tran_btn" value="1" <?php echo $val_block->data->transaction_status == 5 ? 'disabled' : '' ; ?>>ยอมรับ</button>
                                         </div>
                                     </div>
                                 </div>
@@ -312,8 +313,8 @@
                                     <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab('setDate')">&laquo; ย้อนกลับ</button>
                                 </div>
                                 <div class="col-6 text-center">
-                                    <input type="hidden" name="inputData[]" id="transaction_id" value="<?php echo $val->transaction_id; ?>">
-                                    <button type="submit" style="margin:auto; width: 160px;" class="btn btn-success d-none d-lg-block m-l-12" <?php echo $val->transaction_status == 5 ? 'disabled' : '' ; ?>>ยืนยันการตรวจสอบ</button>
+                                    <input type="hidden" name="inputData[]" id="transaction_id" value="<?php echo $val_block->data->transaction_id; ?>">
+                                    <button type="submit" style="margin:auto; width: 160px;" class="btn btn-success d-none d-lg-block m-l-12" <?php echo $val_block->data->transaction_status == 5 ? 'disabled' : '' ; ?>>ยืนยันการตรวจสอบ</button>
                                 </div>
                             </div>
                             <br>
@@ -338,27 +339,27 @@
                                     <div class="col-4">
                                         <h4 >อีเมล</h4>
                                     </div>  : &ensp;
-                                    <input type="text" style="width: 300px;" class="form-control" value="<?php echo $val->user_email; ?>" disabled/>
+                                    <input type="text" style="width: 300px;" class="form-control" value="<?php echo $val_user->user_email; ?>" disabled/>
                                 </div>
 
                                 <br><div class="row">
                                     <div class="col-4">
                                         <h4 >ชื่อ - นามสกุล</h4>
                                     </div>  : &ensp;
-                                    <input type="text" style="width: 300px;" class="form-control" value="<?php echo $val->user_fname.' '.$val->user_lname; ?>" disabled/>
+                                    <input type="text" style="width: 300px;" class="form-control" value="<?php echo $val_user->user_fname.' '.$val_user->user_lname; ?>" disabled/>
                                 </div>
 
                                 <br><div class="row">
                                     <div class="col-4">
                                         <h4 >เบอร์โทรศัพท์</h4>
                                     </div>  : &ensp;
-                                    <input type="text" style="width: 300px;" class="form-control" value="<?php echo $val->user_phone; ?>" disabled/>
+                                    <input type="text" style="width: 300px;" class="form-control" value="<?php echo $val_user->user_phone; ?>" disabled/>
                                 </div>
 
                                 <br>
                                 <div class="row">
                                     <div class="col-12 text-center">
-                                        <a href="<?= base_url() ?>Transaction/transactionUser?userId=<?php echo $val->user_id; ?>">
+                                        <a href="<?= base_url() ?>Transaction/transactionUser?userId=<?php echo $val_user->user_id; ?>">
                                             <button type="button" style="margin:auto;" class="btn btn-info d-none d-lg-block m-l-12">ดูประวัติการจอง</button>
                                         </a>
                                     </div>
@@ -368,7 +369,7 @@
                             <div class="col-6">
                                 <br><div class="row">
                                     <div class="col-12 text-center"></div>
-                                    <img id="user_image" src="<?php echo isset($val->user_image) ? base_url('img/user_img').'/'. $val->user_image : base_url('img/user_img').'/'. 'profile.png'; ?>">
+                                    <img id="user_image" src="<?php echo isset($val_user->user_image) ? base_url('img/user_img').'/'. $val_user->user_image : base_url('img/user_img').'/'. 'profile.png'; ?>">
                                 </div>
                             </div>
                         </div>

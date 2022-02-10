@@ -8,10 +8,12 @@ class Blockchain:
         self.chain = [] #list ที่เก็บ block
         self.transaction_id = None 
         self.car_id = None
+        self.car_registration = None
         self.user_lessor_id = None
         self.user_rental_id = None
         self.user_doc_id = None
         self.place_id = None
+        self.place_name = None
         self.transaction_receive_date = None
         self.transaction_return_date = None
         self.transaction_status = None
@@ -38,10 +40,12 @@ class Blockchain:
             "data":{
                 "transaction_id":self.transaction_id,
                 "car_id":self.car_id,
+                "car_registration":self.car_registration,
                 "user_lessor_id":self.user_lessor_id,
                 "user_rental_id":self.user_rental_id,
                 "user_doc_id":self.user_doc_id,
                 "place_id":self.place_id,
+                "place_name":self.place_name,
                 "transaction_receive_date":self.transaction_receive_date,
                 "transaction_return_date":self.transaction_return_date,
                 "transaction_status":self.transaction_status,
@@ -106,13 +110,38 @@ class Blockchain:
             block_index+=1
         return True
 
-    #เอา block ล่าสุดของ Transaction
+    #เอา block ล่าสุดของ Transaction 1 อัน
     def get_last_transaction(self, transaction_id=0):
         
         #แปลงเป็นเชนของ transaction
         last_transaction = list(filter(lambda x:x["data"]["transaction_id"]==transaction_id,self.chain[::-1]))
         #เอา transaction อันล่าสุด
         return last_transaction[0]
+        
+        #เอา Transaction หลายๆ แบบ
+    def get_transaction(self, type="some", user_id="0"):
+
+        block = self.chain[::-1]
+        block = block[:-1]
+        returnValue = []
+        size=len(block)
+        uniqueNames = []
+        #เอาเฉพาะ Block สุดท้ายของแต่ละ Transaction
+        for i in range(0,size,1):
+            if(block[i]["data"]["transaction_id"] not in uniqueNames):
+                uniqueNames.append(block[i]["data"]["transaction_id"]) 
+                returnValue.append(block[i])
+
+        #แปลงเป็นเชนของ transaction ที่ยังไม่เสร็จสิ้น
+        if(type!="all"):
+            returnValue = list(filter(lambda x:x["data"]["transaction_status"]!="5",returnValue))
+        #เอาของเฉพาะผู้ใช้
+        elif(user_id!="0"):
+            print(user_id)
+            returnValue = list(filter(lambda x:x["data"]["user_rental_id"]==str(user_id),returnValue))
+
+        return returnValue
+        
 
 #web server
 app = Flask(__name__)
@@ -145,9 +174,11 @@ def mining_block():
     # username = request.args.get('tran')
     blockchain.transaction_id = request.args.get('transaction_id') 
     blockchain.car_id = request.args.get('car_id')
+    blockchain.car_registration = request.args.get('car_registration')
     blockchain.user_rental_id = request.args.get('user_rental_id')
     blockchain.user_doc_id = request.args.get('user_doc_id')
     blockchain.place_id = request.args.get('place_id')
+    blockchain.place_name = request.args.get('place_name')
     blockchain.transaction_receive_date = request.args.get('transaction_receive_date')
     blockchain.transaction_return_date = request.args.get('transaction_return_date')
     blockchain.transaction_status = request.args.get('transaction_status')
@@ -251,7 +282,6 @@ def mining_transaction():
     }
     return jsonify(response),200
 
-
 @app.route('/is_valid',methods=["GET"])
 def is_valid():
     is_valid = blockchain.is_chain_valid(blockchain.chain)
@@ -262,7 +292,7 @@ def is_valid():
     return jsonify(response),200
 
 @app.route('/get_last_transaction',methods=["GET"])
-def get_transaction():
+def get_transaction_last():
 
     previous_block = blockchain.get_last_transaction(request.args.get('transaction_id'))
     # response={
@@ -271,6 +301,20 @@ def get_transaction():
     # }
     return jsonify(previous_block),200
 
+@app.route('/get_chain_lessor',methods=["GET"])
+def get_chain_lessor():
+    block = blockchain.get_transaction()
+    return jsonify(block),200
+
+@app.route('/get_all_tran',methods=["GET"])
+def get_all_tran():
+    block = blockchain.get_transaction("all")
+    return jsonify(block),200
+
+@app.route('/get_user_tran',methods=["GET"])
+def get_user_tran():
+    block = blockchain.get_transaction("all",request.args.get('user_rental_id'))
+    return jsonify(block),200
 #run server
 if __name__ =="__main__":
     app.run()
