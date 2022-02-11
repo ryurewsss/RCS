@@ -22,7 +22,6 @@
             <?php
             // var_dump($test);
             // var_dump($table);
-            // print_r($table);
             if (isset($table) && $table) {
                 $i = 1 //กำหนดลำดับ 
             ?>

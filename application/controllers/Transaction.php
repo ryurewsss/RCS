@@ -377,8 +377,7 @@ class Transaction extends Main
 		$link = "http://127.0.0.1:5000/mining_transaction?"
 		."transaction_id=".$getData['transaction_id']
 		.'&transaction_status='.$arrayData['transaction_status']
-		.'&transaction_lessor_approve='.$arrayData['transaction_lessor_approve']
-		.'&user_lessor_id='.$_SESSION['id']
+		.'&transaction_image='.$arrayData['transaction_image']
 		.'&user_update_id='.$_SESSION['id']
 		;
 		echo $data = file_get_contents($link);

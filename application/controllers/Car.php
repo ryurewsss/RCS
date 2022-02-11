@@ -459,6 +459,19 @@ class Car extends Main
 		);
 		$data['placeSelect'] = $this->crsModel->getAll($arrayPlace['tableName'], $arrayPlace['colName'], $arrayPlace['where'], $arrayPlace['order'], $arrayPlace['arrayJoinTable'], $arrayPlace['groupBy']);
 		
+		$arrayPlace = array(
+			'tableName' => 'crs_user_doc',
+			'colName' => '
+				user_doc_id,
+				user_doc_iden_image,
+				user_doc_license_image',
+			'where' => 'user_id = '. $_SESSION['id'],
+			'order' => '',
+			'arrayJoinTable' => '',
+			'groupBy' => ''
+		);
+		$data['user'] = $this->crsModel->getAll($arrayPlace['tableName'], $arrayPlace['colName'], $arrayPlace['where'], $arrayPlace['order'], $arrayPlace['arrayJoinTable'], $arrayPlace['groupBy']);
+		
 
 		if ($_GET['type'] == 'detail') {
 			$data['page_content'] = $this->load->view('car/carDetail', $data, TRUE);
@@ -494,31 +507,78 @@ class Car extends Main
 		$pass = TRUE;
 
 		// UPLOAD DOC
-		$this->load->library('upload', $config, 'docUpload');
-		if(!$this->docUpload->do_upload('iden_upload') ){
-			echo $this->docUpload->display_errors();
-			$pass = FALSE;
-		}else{
-			$data = $this->docUpload->data();
-			$filename['iden_upload'] = $data['file_name'];
-		}
-		if(!$this->docUpload->do_upload('license_upload') ){
-			echo $this->docUpload->display_errors();
-			$pass = FALSE;
-		}else{
-			$data = $this->docUpload->data();
-			$filename['license_upload'] = $data['file_name'];
-		}
 
-		$arrayData = array(
-			'user_id' => $_SESSION['id'],
-			'user_doc_iden_image' => $filename['iden_upload'],
-			'user_doc_license_image' => $filename['license_upload'],
-			'user_create_id' => $_SESSION['id'],
-			'user_update_id' => $_SESSION['id']
-		);
-		$docId = $this->crsModel->add('crs_user_doc', $arrayData);
-		//END UPLOAD DOC
+		$getData = $this->input->post();
+		$this->load->library('upload', $config, 'docUpload');
+		var_dump($getData);
+		echo $this->input->post('user_doc_id');
+		if($this->input->post('user_doc_id') == 0){
+			echo 'ASDF';
+			//add doc
+			if(!$this->docUpload->do_upload('iden_upload') ){
+				echo $this->docUpload->display_errors();
+				$pass = FALSE;
+			}else{
+				$data = $this->docUpload->data();
+				$filename['iden_upload'] = $data['file_name'];
+			}
+			if(!$this->docUpload->do_upload('license_upload') ){
+				echo $this->docUpload->display_errors();
+				$pass = FALSE;
+			}else{
+				$data = $this->docUpload->data();
+				$filename['license_upload'] = $data['file_name'];
+			}
+	
+			$arrayData = array(
+				'user_id' => $_SESSION['id'],
+				'user_doc_iden_image' => $filename['iden_upload'],
+				'user_doc_license_image' => $filename['license_upload'],
+				'user_create_id' => $_SESSION['id'],
+				'user_update_id' => $_SESSION['id']
+			);
+			$docId = $this->crsModel->add('crs_user_doc', $arrayData);
+		}else{
+			var_dump($this->input->post('iden_upload'));
+			var_dump($this->input->post('license_upload'));
+			// update doc
+			if(!$this->docUpload->do_upload('iden_upload') ){
+				echo $this->docUpload->display_errors();
+				$filename['iden_upload'] = $getData['old_iden_upload'];
+			}else{
+				$data = $this->docUpload->data();
+				$filename['iden_upload'] = $data['file_name'];
+				$file_pointer = './img/user_doc_img/' . $getData['old_iden_upload'];
+				if (!unlink($file_pointer)) { 
+					echo ("$file_pointer cannot be deleted due to an error"); 
+				} 
+				else { 
+					echo ("$file_pointer has been deleted"); 
+				}//delete file
+			}
+			if(!$this->docUpload->do_upload('license_upload') ){
+				echo $this->docUpload->display_errors();
+				$filename['license_upload'] = $getData['old_license_upload'];
+			}else{
+				$data = $this->docUpload->data();
+				$filename['license_upload'] = $data['file_name'];
+				$file_pointer = './img/user_doc_img/' . $getData['old_license_upload'];
+				if (!unlink($file_pointer)) { 
+					echo ("$file_pointer cannot be deleted due to an error"); 
+				} 
+				else { 
+					echo ("$file_pointer has been deleted"); 
+				}//delete file
+			}
+			$arrayData = array(
+				'user_doc_iden_image' => $filename['iden_upload'],
+				'user_doc_license_image' => $filename['license_upload'],
+				'user_update_id' => $_SESSION['id']
+			);
+			$arrayWhere = array('user_doc_id' => $getData['user_doc_id']);
+			$docId = $getData['user_doc_id'];
+			$this->crsModel->update('crs_user_doc',$arrayWhere, $arrayData);
+		}
 
 		$config['upload_path'] = './img/transaction_img/';
 		$config['allowed_types'] = 'gif|jpg|png';

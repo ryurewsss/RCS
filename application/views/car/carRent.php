@@ -67,6 +67,13 @@
 <?php 
     // print_r($select); 
     $val = $select[0];
+    // var_dump($user);
+    if($user){
+        $val_user = $user[0];
+    }else{
+        $val_user = $user;//false
+    }
+
 ?>
 <div class="card">
     <div class="card-header bg-dark">
@@ -224,7 +231,12 @@
                             </div>
                             <br><div class="row">
                                 <div class="col-12 text-center"></div>
-                                <img class="doc_image" id="iden_image" src="#" alt="your image" hidden/>
+                                <!-- <img class="doc_image" id="iden_image" src="#" alt="your image" hidden/> -->
+                                <?php if ($val_user){?>
+                                    <img class="doc_image" id="iden_image" src="<?php echo base_url('img/user_doc_img'); ?>/<?php echo $val_user->user_doc_iden_image; ?>"/>
+                                <?php }else{ ?>
+                                    <img class="doc_image" id="iden_image" src="#" alt="your image" hidden/>
+                                <?php } ?>
                             </div>
 
                             <br><div class="row">
@@ -237,7 +249,13 @@
                             </div>
                             <br><div class="row">
                                 <div class="col-12 text-center"></div>
-                                <img class="doc_image" id="license_image" src="#" alt="your image" hidden/>
+                                <!-- <img class="doc_image" id="license_image" src="#" alt="your image" hidden/> -->
+                                <!-- <img class="doc_image" id="license_image" src="<?php echo base_url('img/user_doc_img'); ?>/<?php echo $val_user->user_doc_license_image; ?>"/> -->
+                                <?php if ($val_user){?>
+                                    <img class="doc_image" id="license_image" src="<?php echo base_url('img/user_doc_img'); ?>/<?php echo $val_user->user_doc_license_image; ?>"/>
+                                <?php }else{ ?>
+                                    <img class="doc_image" id="license_image" src="#" alt="your image" hidden/>
+                                <?php } ?>
                             </div>
                             
                             <br><br><br>
@@ -311,6 +329,9 @@
                                 <div class="row">
                                     <input type="hidden" name="car_id" id="car_id" value="<?php echo $val->car_id; ?>">
                                     <input type="hidden" name="car_registration" id="car_registration" value="<?php echo $val->car_registration; ?>">
+                                    <input type="hidden" name="user_doc_id" id="user_doc_id" value="<?php echo $val_user?$val_user->user_doc_id :0; ?>" />
+                                    <input type="hidden" name="old_iden_upload" id="old_iden_upload" value="<?php echo $val_user?$val_user->user_doc_iden_image:""; ?>">
+                                    <input type="hidden" name="old_license_upload" id="old_license_upload" value="<?php echo $val_user?$val_user->user_doc_license_image:""; ?>">
                                     <input type="hidden" name="place_name" id="place_name" value="">
                                 </div>
                             <br>
@@ -390,7 +411,7 @@ $('#addCarRentForm').on('submit', function(event) {
                     showConfirmButton: false,
                     timer: 1000
                 })
-                window.location = "<?php echo base_url(); ?>";
+                // window.location = "<?php echo base_url(); ?>";
             }); 
         }
     })
