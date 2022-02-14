@@ -471,7 +471,6 @@ class Car extends Main
 			'groupBy' => ''
 		);
 		$data['user'] = $this->crsModel->getAll($arrayPlace['tableName'], $arrayPlace['colName'], $arrayPlace['where'], $arrayPlace['order'], $arrayPlace['arrayJoinTable'], $arrayPlace['groupBy']);
-		
 
 		if ($_GET['type'] == 'detail') {
 			$data['page_content'] = $this->load->view('car/carDetail', $data, TRUE);
@@ -483,6 +482,25 @@ class Car extends Main
 		$this->load->view('main', $data);
 	}
 	// ___________________ End carDetail ____________________
+
+	// __________________ Start carDetail __________________
+	public function check_date()
+	{
+
+		$data['check_date'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_car_tran?car_id=".$this->input->get('car_id')));
+		$date_array = [];
+		if($data['check_date']){
+			foreach ($data['check_date'] as $key => $val) {
+				$startDate = date("m-d-Y", strtotime(substr($val->data->transaction_receive_date,0,10)));
+				$endDate = date("m-d-Y", strtotime(substr($val->data->transaction_return_date,0,10)));
+				array_push($date_array,array($startDate,$endDate));
+			}
+		}
+		$date['date_array'] = $date_array;
+		$this->output->set_content_type('application/json')->set_output(json_encode($date));
+		
+	}
+	// ___________________ End getQRcode ____________________
 
 	// __________________ Start getQRcode __________________
 	public function getQRcode()
@@ -513,7 +531,6 @@ class Car extends Main
 		var_dump($getData);
 		echo $this->input->post('user_doc_id');
 		if($this->input->post('user_doc_id') == 0){
-			echo 'ASDF';
 			//add doc
 			if(!$this->docUpload->do_upload('iden_upload') ){
 				echo $this->docUpload->display_errors();
@@ -594,11 +611,17 @@ class Car extends Main
 			$filename['transaction_upload'] = $data['file_name'];
 		}
 		if($pass){
-			$datetimes = $this->input->post('datetimes');
-			$date['startDate'] = substr($datetimes,0,10); //substr
-			$date['startTime'] = substr($datetimes,11,5);
-			$date['endDate'] = substr($datetimes,19,10);
-			$date['endTime'] = substr($datetimes,30,5);
+			// $datetimes = $this->input->post('datetimes');
+			// datepicker
+			// datetimepicker
+			// $date['startDate'] = substr($datetimes,0,10); //substr
+			// $date['startTime'] = substr($datetimes,11,5);
+			// $date['endDate'] = substr($datetimes,19,10);
+			// $date['endTime'] = substr($datetimes,30,5);
+			$date['startDate'] = $this->input->post('datepicker'); //substr
+			$date['startTime'] = $this->input->post('datetimepicker');
+			$date['endDate'] = $this->input->post('datepicker2');
+			$date['endTime'] = $this->input->post('datetimepicker2');
 			$date['startDate'] = date("Y-m-d", strtotime(str_replace('/', '-', $date['startDate']))); // change 31/12/2000 to 2000-12-31
 			$date['endDate'] = date("Y-m-d", strtotime(str_replace('/', '-', $date['endDate'])));
 			$arrayData = array(
@@ -634,14 +657,9 @@ class Car extends Main
 				.'&user_create_id='.$_SESSION['id']
 				.'&user_update_id='.$_SESSION['id']
 			;
-			echo $data = file_get_contents($link);
+			$data = file_get_contents($link);
 				//end blockchain
-			$this->output->set_content_type('application/json')->set_output(json_encode($addedId));
+			// $this->output->set_content_type('application/json')->set_output(json_encode($data));
 		}
 	}
-
-	public function addCarRent2(){
-		echo (int)str_replace(',', '', $this->input->post('rentTotal'));
-	}// for test
-
 }

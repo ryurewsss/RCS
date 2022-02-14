@@ -73,6 +73,12 @@
     }else{
         $val_user = $user;//false
     }
+    // if($check_date){
+    //     $val_check_date = $check_date[0];
+    // }else{
+    //     $val_check_date = $check_date;//false
+    // }
+    // var_dump($val_check_date);
 
 ?>
 <div class="card">
@@ -156,9 +162,29 @@
                             <br>
                             <div class="row">
                                 <div class="col-4">
-                                    <h4 >ช่วงวันและเวลา <a style="color: red;"> *</a></h4>
+                                    <h4 >วันและเวลาที่รับ <a style="color: red;"> *</a></h4>
                                 </div>  : &ensp;
-                                <input type="text" style="width: 350px;" class="form-control" name="datetimes" id="datetimes" />
+                                <!-- <input type="text" style="width: 350px;" class="form-control" name="datetimes" id="datetimes" /> -->
+                                <input type="text" style="width: 170px;" class="form-control" name="datepicker" id="datepicker">
+                                &ensp; : &ensp;
+                                <input type="text" style="width: 150px; text-align: center;" class="form-control" name="datetimepicker" id="datetimepicker">
+                            </div>
+
+                            <br>
+                            <div class="row">
+                                <div class="col-4">
+                                    <h4 >วันและเวลาที่คืน <a style="color: red;"> *</a></h4>
+                                </div>  : &ensp;
+                                <input type="text" style="width: 170px;" class="form-control" name="datepicker2" id="datepicker2">
+                                &ensp; : &ensp;
+                                <input type="text" style="width: 150px; text-align: center;" class="form-control" name="datetimepicker2" id="datetimepicker2">
+                            </div>
+
+                            <br>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <button type="button" style="margin:auto;" class="btn btn-info d-none d-lg-block m-l-12" id="checkDate">ตรวจสอบวันที่จอง</button>
+                                </div>
                             </div>
 
                             <br>
@@ -186,13 +212,6 @@
                                 </div>  : &ensp;
                                 <input type="text" style="width: 200px; text-align: right;" class="form-control rentTotal" name="rentTotal" readonly/>
                                 <h5 style="margin-top:10px">&ensp; บาท</h5>
-                            </div>
-
-                            <br>
-                            <div class="row">
-                                <div class="col-12 text-center">
-                                    <button type="button" style="margin:auto;" class="btn btn-info d-none d-lg-block m-l-12" id="checkDate">ตรวจสอบการจอง</button>
-                                </div>
                             </div>
 
                             <br><br><br>
@@ -342,46 +361,75 @@
         </form>
     </div>
 </div>
-
 <script>
+    get_date()
 
-$('input[name="datetimes"]').daterangepicker({
-    timePicker: true,
-    timePicker24Hour: true,
-    startDate: moment().startOf('hour'),
-    endDate: moment().startOf('hour').add(24, 'hour'),
-    locale: {
-      format: 'DD/MM/YYYY HH:mm'
-    }
+
+// $('input[name="datetimes"]').daterangepicker({
+//     timePicker: true,
+//     timePicker24Hour: true,
+//     startDate: moment().startOf('hour'),
+//     endDate: moment().startOf('hour').add(24, 'hour'),
+//     locale: {
+//       format: 'DD/MM/YYYY HH:mm'
+//     },
+// });
+
+$('#datetimepicker, #datetimepicker2').timepicker({
+    timeFormat: 'HH:mm',
+    interval: 15,
+    minTime: '06',
+    maxTime: '20',
+    defaultTime: '06',
+    startTime: '06:00',
+    dynamic: false,
+    dropdown: true,
+    scrollbar: true,
+    change: onDateChange
 });
 
-$('input[name="datetimes"]').on('change', function(event) {
-    var startDate = this.value.substring(10, 0);
-    var startTime = this.value.substring(16, 11);
-    var endDate = this.value.substring(29, 19);
-    var endTime = this.value.substring(35, 30);
-    var start = new Date(ConvertDateFormat(startDate,startTime));
-    var end = new Date(ConvertDateFormat(endDate,endTime));
-    var diff = new Date(end - start);
-
-    var days = Math.floor(diff / 1000 / 60 / 60 / 24);
-    var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / 1000 / 60 / 60);
-    var totalHours = Math.floor(diff / 1000 / 60 / 60 );
-    $('#rentHours').val(totalHours);
-    var price = parseInt($('#rentPrice').val().replace(/,/g, ''));
-    if(days == 0){
-        days++;
-        $('.rentTotal').val(parseInt(days) * price); //rent less than 1 day
-    }else if(hours > 5){
-        days++;
-        $('.rentTotal').val(parseInt(days) * price); //rent more 1 day and 5 hours+
-    }else{
-        $('.rentTotal').val((parseInt(days) * price) + (parseInt(hours) * parseInt(price / 10))); //rent more 1 day and 5 hours-
-    }
-    $('.rentTotal').val(addCommas($('.rentTotal').val()));
-    getQRcode();
+$("#datepicker").on('change', function(event) {
+    $('#datepicker2').datepicker('option', 'minDate', new Date(moment(moment($("#datepicker").val(), 'DD/MM/YYYY')).format("MM/DD/YYYY")));
+});
+$("#datepicker2").on('change', function(event) {
+    $('#datepicker').datepicker('option', 'maxDate', new Date(moment(moment($("#datepicker2").val(), 'DD/MM/YYYY')).format("MM/DD/YYYY")));
+});
+$("#datepicker, #datepicker2").on('change', function(event) {
+    onDateChange()
+});
+$('#checkDate').click(function() {
+    onDateChange()
 })
-$('input[name="datetimes"]').trigger("change"); //trigger on open
+
+
+// $('input[name="datetimes"]').on('change', function(event) {
+//     var startDate = this.value.substring(10, 0);
+//     var startTime = this.value.substring(16, 11);
+//     var endDate = this.value.substring(29, 19);
+//     var endTime = this.value.substring(35, 30);
+//     var start = new Date(ConvertDateFormat(startDate,startTime));
+//     var end = new Date(ConvertDateFormat(endDate,endTime));
+//     var diff = new Date(end - start);
+
+//     var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+//     var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / 1000 / 60 / 60);
+//     var totalHours = Math.floor(diff / 1000 / 60 / 60 );
+//     $('#rentHours').val(totalHours);
+//     var price = parseInt($('#rentPrice').val().replace(/,/g, ''));
+//     if(days == 0){
+//         days++;
+//         $('.rentTotal').val(parseInt(days) * price); //rent less than 1 day
+//     }else if(hours > 5){
+//         days++;
+//         $('.rentTotal').val(parseInt(days) * price); //rent more 1 day and 5 hours+
+//     }else{
+//         $('.rentTotal').val((parseInt(days) * price) + (parseInt(hours) * parseInt(price / 10))); //rent more 1 day and 5 hours-
+//     }
+//     $('.rentTotal').val(addCommas($('.rentTotal').val()));
+//     getQRcode();
+// })
+
+// $('input[name="datetimes"]').trigger("change"); //trigger on open
 
 $('#addCarRentForm').on('submit', function(event) {
     event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
@@ -404,6 +452,7 @@ $('#addCarRentForm').on('submit', function(event) {
                 cache: false,  
                 processData:false,  
             }).done(function(returnData) {
+                console.log(returnData)
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
@@ -411,48 +460,113 @@ $('#addCarRentForm').on('submit', function(event) {
                     showConfirmButton: false,
                     timer: 1000
                 })
-                // window.location = "<?php echo base_url(); ?>";
+                window.location = "<?php echo base_url(); ?>";
             }); 
         }
     })
 })
 
-$('#checkDate').click(function() {
-    var data = {};
-    data['car_id'] = $('#car_id').val();
-    data['dateRange'] = $('input[name="datetimes"]').val();
+// $('#checkDate').click(function() {
+//     var data = {};
+//     data['car_id'] = $('#car_id').val();
+//     data['dateRange'] = $('input[name="datetimes"]').val();
 
-    $.ajax({
-        method: "POST",
-        url: "../Transaction/checkTransactionDate",
-        data: data,  
-    }).done(function(returnedData) {
-        console.log(returnedData);
-        if(!returnedData){
-            Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title:'วันที่ดังกล่าวไม่ว่าง',
-            text: 'กรุณาเลือกวันอื่น',
-            showConfirmButton: false,
-            timer: 1500
-            })
-        }else{
-            Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title:'วันที่ดังกล่าวว่าง',
-            text: 'สามารถเลือกวันดังกล่าวได้',
-            showConfirmButton: false,
-            timer: 1500
-            })
-        }
-    });
-})
+//     $.ajax({
+//         method: "POST",
+//         url: "../Transaction/checkTransactionDate",
+//         data: data,  
+//     }).done(function(returnedData) {
+//         console.log(returnedData);
+//         if(!returnedData){
+//             Swal.fire({
+//             position: 'top-end',
+//             icon: 'error',
+//             title:'วันที่ดังกล่าวไม่ว่าง',
+//             text: 'กรุณาเลือกวันอื่น',
+//             showConfirmButton: false,
+//             timer: 1500
+//             })
+//         }else{
+//             Swal.fire({
+//             position: 'top-end',
+//             icon: 'success',
+//             title:'วันที่ดังกล่าวว่าง',
+//             text: 'สามารถเลือกวันดังกล่าวได้',
+//             showConfirmButton: false,
+//             timer: 1500
+//             })
+//         }
+//     });
+// })
 $('#place_id').on('change', function(event) {
     $('#place_name').val($('#place_id option:selected').text())
 })
 
+function onDateChange() {
+    if($("#datepicker").val()!='' && $("#datepicker2").val()!=''){
+        var startDate = $("#datepicker").val().substring(10, 0);
+        var startTime = $("#datetimepicker").val().substring(5, 0);
+        var endDate = $("#datepicker2").val().substring(10, 0);
+        var endTime = $("#datetimepicker2").val().substring(5, 0);
+        // console.log(startDate)
+        // console.log(startTime)
+        // console.log(endDate)
+        // console.log(endTime)
+        var start = new Date(ConvertDateFormat(startDate,startTime));
+        var end = new Date(ConvertDateFormat(endDate,endTime));
+        var diff = new Date(end - start);
+
+        var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+        var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / 1000 / 60 / 60);
+        var totalHours = Math.floor(diff / 1000 / 60 / 60 );
+        $('#rentHours').val(totalHours);
+        var price = parseInt($('#rentPrice').val().replace(/,/g, ''));
+        if(days == 0){
+            days++;
+            $('.rentTotal').val(parseInt(days) * price); //rent less than 1 day
+        }else if(hours > 5){
+            days++;
+            $('.rentTotal').val(parseInt(days) * price); //rent more 1 day and 5 hours+
+        }else{
+            $('.rentTotal').val((parseInt(days) * price) + (parseInt(hours) * parseInt(price / 10))); //rent more 1 day and 5 hours-
+        }
+        $('.rentTotal').val(addCommas($('.rentTotal').val()));
+        getQRcode();
+    }
+}
+
+function get_date() {
+    var formData = {"car_id" : $("#car_id").val()};
+    $.ajax({  
+        url:"check_date",
+        method:"GET",
+        data: formData,
+    }).done(function(returnData) {
+        var date_range = [];
+        date_range = [ ["02-04-2022", "02-08-2022"], ["02-25-2022", "02-27-2022"], ["02-21-2022", "02-23-2022"] ];
+        console.log(date_range)
+        date_range = returnData['date_array'];
+        console.log(date_range)
+        $("#datepicker, #datepicker2").datepicker({
+            dateFormat: 'dd/mm/yy',
+            minDate: 0,
+            beforeShowDay: function(date) {
+                var string = $.datepicker.formatDate('mm-dd-yy', date);
+                for (var i = 0; i < date_range.length; i++) {
+                    if (Array.isArray(date_range[i])) {
+                        var from = new Date(date_range[i][0]);
+                        var to = new Date(date_range[i][1]);
+                        var current = new Date(string);
+                        
+                        if (current >= from && current <= to) return false;
+                    }
+                }
+                return [date_range.indexOf(string) == -1]
+            }
+        });
+
+    });
+}
 
 function addCommas(x) {
     var parts = x.toString().split(".");

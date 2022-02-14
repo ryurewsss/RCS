@@ -23,11 +23,17 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-  <!-- Date Picker -->
+  <!-- Date Range Picker -->
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
+  <!-- Date Range Picker -->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <!-- Time Picker -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+
   <!-- Page level plugins -->
-  <script src="<?= base_url() ?>assets/vendor/chart.js/Chart.min.js"></script>
+  <!-- <script src="<?= base_url() ?>assets/vendor/chart.js/Chart.min.js"></script> -->
 
   <!-- Bootstrap core JavaScript-->
   <script src="<?= base_url() ?>assets/vendor/jquery/jquery.min.js"></script>
@@ -44,7 +50,7 @@
 
   <!-- Page level custom scripts -->
   <!-- <script src="<?= base_url() ?>assets/js/demo/chart-area-demo.js"></script> -->
-  <script src="<?= base_url() ?>assets/js/demo/chart-pie-demo.js"></script>
+  <!-- <script src="<?= base_url() ?>assets/js/demo/chart-pie-demo.js"></script> -->
 
   <!-- Page level plugins -->
   <script src="<?= base_url() ?>assets/vendor/datatables/jquery.dataTables.min.js"></script>
@@ -53,9 +59,17 @@
   <!-- Page level custom scripts -->
   <script src="<?= base_url() ?>assets/js/demo/datatables-demo.js"></script>
   
-  <!-- Date Picker -->
+  <!-- Date Range Picker -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  
+  <!-- Date Picker -->
+  <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <!-- Time Picker -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
   <!-- sweetalert2 -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

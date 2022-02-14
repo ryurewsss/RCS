@@ -119,7 +119,7 @@ class Blockchain:
         return last_transaction[0]
         
         #เอา Transaction หลายๆ แบบ
-    def get_transaction(self, type="some", user_id="0"):
+    def get_transaction(self, type="some", user_id="0", car_id="0"):
 
         block = self.chain[::-1]
         block = block[:-1]
@@ -135,10 +135,14 @@ class Blockchain:
         #แปลงเป็นเชนของ transaction ที่ยังไม่เสร็จสิ้น
         if(type!="all"):
             returnValue = list(filter(lambda x:x["data"]["transaction_status"]!="5",returnValue))
+
         #เอาของเฉพาะผู้ใช้
-        elif(user_id!="0"):
-            print(user_id)
+        if(user_id!="0"):
             returnValue = list(filter(lambda x:x["data"]["user_rental_id"]==str(user_id),returnValue))
+
+        #เอาเฉพาะรถ
+        if(car_id!="0"):
+            returnValue = list(filter(lambda x:x["data"]["car_id"]==str(car_id),returnValue))
 
         return returnValue
         
@@ -315,6 +319,12 @@ def get_all_tran():
 def get_user_tran():
     block = blockchain.get_transaction("all",request.args.get('user_rental_id'))
     return jsonify(block),200
+
+@app.route('/get_car_tran',methods=["GET"])
+def get_car_tran():
+    block = blockchain.get_transaction("some","0",request.args.get('car_id'))
+    return jsonify(block),200
+
 #run server
 if __name__ =="__main__":
     app.run()
