@@ -38,6 +38,59 @@ class Car extends Main
 	}
 	// ___________________ End Car ____________________
 
+	// __________________ Start carSearch __________________
+	public function carSearch()
+	{
+		// $arrayData = array(
+		// 	'tableName' => 'crs_car_model',
+		// 	'colName' => '
+		// 		crs_car_model.car_model_id, 
+		// 		crs_car_model.car_model_name,
+		// 		crs_car_model.car_brand_id,
+		// 		crs_car_brand.car_brand_name_en',
+		// 	'where' => '',
+		// 	'order' => '',
+		// 	'arrayJoinTable' => array('crs_car_brand' => 'crs_car_model.car_brand_id = crs_car_brand.car_brand_id'),
+		// 	'groupBy' => ''
+		// );
+
+		$arrayData = array(
+			'tableName' => 'crs_car_brand',
+			'colName' => 'car_brand_id, car_brand_name_en',
+			'where' => '',
+			'order' => '',
+			'arrayJoinTable' => '',
+			'groupBy' => ''
+		);
+		$select['car_brand'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		
+
+		$data['page_content'] = $this->load->view('car/carSearch', $select, TRUE);
+		$this->load->view('main', $data);
+	}
+	// ___________________ End carSearch ____________________
+
+	// __________________ Start getModel __________________
+	public function getModel()
+	{
+		$arrayData = array(
+			'tableName' => 'crs_car_model',
+			'colName' => 'car_model_id, car_model_name',
+			'where' => '',
+			'order' => '',
+			'arrayJoinTable' => '',
+			'groupBy' => ''
+		);
+		if($this->input->post('car_brand_id')!='*'){
+			$arrayData['where'] = 'car_brand_id = ' . $this->input->post('car_brand_id');
+		}
+		$data['car_model'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$data['sql'] = $this->db->last_query(); //for dev
+		$this->output->set_content_type('application/json')->set_output(json_encode($data));
+	}
+	// ___________________ End getModel ____________________
+
+
 	// __________________ Start carBrand __________________
 	public function carBrand()
 	{

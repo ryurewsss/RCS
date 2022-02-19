@@ -183,6 +183,12 @@
           <i class="fas fa-scroll" style='font-size:20px'></i>
           <span>ดูประวัติการเช่า</span></a>
       </li>
+
+      <li class="nav-item active">
+        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/carSearch" aria-expanded="false">
+          <i class="fa fa-search" style='font-size:20px'></i>
+          <span>ค้นหารถเช่า</span></a>
+      </li>
       
       <li class="nav-item active">
         <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>User/profile" aria-expanded="false">
