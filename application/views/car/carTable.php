@@ -62,19 +62,29 @@
                         </div>  : &ensp;
                         <input style="width: 250px;" type="text" class="form-control" name="car_registration" id="car_registration" autocomplete="off" placeholder="เลขทะเบียนรถยนต์">
                     </div>
+
+                    <div class="row">
+                        <div class="col-3">
+                            <label>ยี่ห้อรถยนต์ <a style="color: red;"> *</a></label>
+                        </div>  : &ensp;
+                        <select style="width: 250px;" id="car_brand_id" class="form-control form-control-line" name="car_brand_id">
+                            <option disabled selected>เลือกยี่ห้อรถยนต์</option>
+                            <?php
+                            if (isset($select)) {
+                                foreach ($select as $key => $val) {
+                                    echo "<option value=" . $val->car_brand_id . ">" . $val->car_brand_name_en . "</option>";
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+
                     <div class="row">
                         <div class="col-3">
                             <label >รุ่นรถยนต์ <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
                         <select style="width: 250px;" id="car_model_id" class="form-control form-control-line" name="car_model_id">
                             <option disabled selected>เลือกรุ่นรถยนต์</option>
-                            <?php
-                            if (isset($select)) {
-                                foreach ($select as $key => $val) {
-                                    echo "<option value=" . $val->car_model_id . ">" . $val->car_brand_name_en." ".$val->car_model_name . "</option>";
-                                }
-                            }
-                            ?>
                         </select>
                     </div>
 
@@ -142,19 +152,29 @@
                         </div>  : &ensp;
                         <input style="width: 250px;" type="text" class="form-control" name="car_registration" id="e_car_registration" autocomplete="off" placeholder="เลขทะเบียนรถยนต์">
                     </div>
+
+                    <div class="row">
+                        <div class="col-3">
+                            <label>ยี่ห้อรถยนต์ <a style="color: red;"> *</a></label>
+                        </div>  : &ensp;
+                        <select style="width: 250px;" id="e_car_brand_id" class="form-control form-control-line" name="car_brand_id">
+                            <option disabled selected>เลือกยี่ห้อรถยนต์</option>
+                            <?php
+                            if (isset($select)) {
+                                foreach ($select as $key => $val) {
+                                    echo "<option value=" . $val->car_brand_id . ">" . $val->car_brand_name_en . "</option>";
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+
                     <div class="row">
                         <div class="col-3">
                             <label >รุ่นรถยนต์<a style="color: red;"> *</a></label>
                         </div>  : &ensp;
                         <select style="width: 250px;" id="e_car_model_id" class="form-control form-control-line" name="car_model_id">
                             <option disabled selected>เลือกรุ่นรถยนต์</option>
-                            <?php
-                            if (isset($select)) {
-                                foreach ($select as $key => $val) {
-                                    echo "<option value=" . $val->car_model_id . ">" . $val->car_brand_name_en." ".$val->car_model_name . "</option>";
-                                }
-                            }
-                            ?>
                         </select>
                     </div>
 
@@ -207,7 +227,6 @@
 <!-- End EditData -->
 <script>
     getList();
-    
 
     var wrapper = $('.field_wrapper');
     var fieldHTML = '<div class="row"><div class="col-3"></div>&ensp;&ensp;<div class="form-inline"><input style="width: 250px;" type="text" class="form-control" name="feature[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์"/> &ensp;<button type="button" class="remove_button btn waves-effect waves-light btn-danger" title="Remove field">-</button></div></div>'; //New input field html 
@@ -346,6 +365,33 @@
             });
         }//submit with file
     })
+
+    $("#car_brand_id").on('change', function(event) {
+        getModel()
+    })
+
+    function removeOptions(selectElement) {
+        var i, L = selectElement.options.length - 1;
+        for(i = L; i >= 0; i--) {
+            selectElement.remove(i);
+        }
+    }
+
+    function getModel() {
+        var data = {};
+        data['car_brand_id'] = $('#car_brand_id').val();
+        $.ajax({
+            method: "POST",
+            url: "getModel",
+            data: data,  
+        }).done(function(returnedData) {
+            removeOptions(document.getElementById('car_model_id'));
+            $("#car_model_id").append('<option disabled selected>เลือกรุ่นรถยนต์</option>');
+            for(var i = 0; i < returnedData.car_model.length; i++) {
+                $("#car_model_id").append('<option value=' + returnedData.car_model[i].car_model_id + '>' + returnedData.car_model[i].car_model_name + '</option>');
+            }
+        });
+    } //show auto
 
     function removeField() {
         $('.remove_button').each(function() {

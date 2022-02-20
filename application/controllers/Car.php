@@ -18,29 +18,6 @@ class Car extends Main
 	public function car()
 	{
 
-		$arrayData = array(
-			'tableName' => 'crs_car_model',
-			'colName' => '
-				crs_car_model.car_model_id, 
-				crs_car_model.car_model_name,
-				crs_car_model.car_brand_id,
-				crs_car_brand.car_brand_name_en',
-			'where' => '',
-			'order' => '',
-			'arrayJoinTable' => array('crs_car_brand' => 'crs_car_model.car_brand_id = crs_car_brand.car_brand_id'),
-			'groupBy' => ''
-		);
-
-		$modelCar['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
-
-		$data['page_content'] = $this->load->view('car/carTable', $modelCar, TRUE);
-		$this->load->view('main', $data);
-	}
-	// ___________________ End Car ____________________
-
-	// __________________ Start carSearch __________________
-	public function carSearch()
-	{
 		// $arrayData = array(
 		// 	'tableName' => 'crs_car_model',
 		// 	'colName' => '
@@ -56,6 +33,29 @@ class Car extends Main
 
 		$arrayData = array(
 			'tableName' => 'crs_car_brand',
+			'colName' => '
+				car_brand_id,
+				car_brand_name_en
+				',
+			'where' => '',
+			'order' => 'car_brand_id ASC',
+			'arrayJoinTable' => '',
+			'groupBy' => ''
+		);
+
+		$modelCar['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+
+		$data['page_content'] = $this->load->view('car/carTable', $modelCar, TRUE);
+		$this->load->view('main', $data);
+	}
+	// ___________________ End Car ____________________
+
+	// __________________ Start carSearch __________________
+	public function carSearch()
+	{
+
+		$arrayData = array(
+			'tableName' => 'crs_car_brand',
 			'colName' => 'car_brand_id, car_brand_name_en',
 			'where' => '',
 			'order' => '',
@@ -63,12 +63,64 @@ class Car extends Main
 			'groupBy' => ''
 		);
 		$select['car_brand'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
-		
 
 		$data['page_content'] = $this->load->view('car/carSearch', $select, TRUE);
 		$this->load->view('main', $data);
 	}
 	// ___________________ End carSearch ____________________
+
+	// __________________ Start getCarSearchTable __________________
+	public function getCarSearchTable()
+	{
+		
+		$arrayData = array(
+			'tableName' => 'crs_car',
+			'colName' => '
+				crs_car.car_id,
+				crs_car.car_registration,
+				crs_car.car_price,
+				crs_car.car_image,
+				crs_car_model.car_model_id, 
+				crs_car_model.car_model_name, 
+				crs_car_model.car_model_feature, 
+				crs_car_model.car_model_description, 
+				crs_car_model.car_brand_id, 
+				crs_car_brand.car_brand_name_en',
+			'where' => '',
+			'order' => 'crs_car.create_date DESC',
+			'arrayJoinTable' => array(
+				'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
+				'crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id'
+			),
+			'groupBy' => ''
+		);
+
+		$getData = $this->input->post();
+		if($getData['car_brand_id'] != '*'){
+			$arrayData['where'] = $arrayData['where']." AND crs_car_brand.car_brand_id = ".$getData['car_brand_id'];
+		}
+		if($getData['car_model_id'] != '*'){
+			$arrayData['where'] = $arrayData['where']." AND crs_car_model.car_model_id = ".$getData['car_model_id'];
+		}
+		// if($getData['car_type']!='*'){
+		// 	$arrayData['where'] = $arrayData['where']." AND  = ".$getData['car_type'];
+		// }
+		if($getData['price_range']!='*'){
+			$price = explode("-",$getData['price_range']);
+			$arrayData['where'] = $arrayData['where']." AND crs_car.car_price >= ".$price[0]." AND crs_car.car_price <= ".$price[1];
+		}
+		if($arrayData['where'] != ''){
+			$arrayData['where'] = substr($arrayData['where'],5);
+		}// delete first AND
+		
+		$arrayData['pathView'] = 'car/tableCarSearch';
+
+		$data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$json['table'] = $data['table'];
+		$json['html'] = $this->load->view($arrayData['pathView'], $data, TRUE);
+		$this->output->set_content_type('application/json')->set_output(json_encode($json));
+	}
+	// ___________________ End getCarSearchTable ____________________
 
 	// __________________ Start getModel __________________
 	public function getModel()
@@ -244,17 +296,19 @@ class Car extends Main
 				'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
 				'crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id'
 			),
-			'groupBy' => ''
+			'groupBy' => '',
+			'limit' => '',
 		);
 
 		if($this->input->post('type') == 'manage'){
 			$arrayData['pathView'] = 'car/tableCar';
 		}
 		if($this->input->post('type') == 'show'){
+			$arrayData['limit'] = 6;
 			$arrayData['pathView'] = 'car/tableCarMain';
 		}
 
-		$data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy'],$arrayData['limit']);
 		$json['table'] = $data['table'];
 		$json['sql'] = $this->db->last_query(); //for dev
 		if ($arrayData['pathView'] != "getData") {

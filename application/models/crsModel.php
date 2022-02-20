@@ -2,7 +2,7 @@
 
 class crsModel extends CI_Model
 {
-    public function getAll($tableName, $getColName = '*', $arrayWhere = '', $order = '', $arrayJoinTable = array(), $groupby = '')
+    public function getAll($tableName, $getColName = '*', $arrayWhere = '', $order = '', $arrayJoinTable = array(), $groupby = '', $limit = '')
     {
         if ($getColName) {
             $this->db->select($getColName);
@@ -15,6 +15,9 @@ class crsModel extends CI_Model
         }
         if ($groupby) {
             $this->db->group_by($groupby);
+        }
+        if ($limit) {
+            $this->db->limit($limit);
         }
         if ($arrayJoinTable) {
             foreach ($arrayJoinTable as $key => $value) {

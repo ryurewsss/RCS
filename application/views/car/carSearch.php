@@ -67,34 +67,40 @@
             <div class="col-3">
                 <label>ประเภท <a style="color: red;"> *</a></label>
             </div>  : &ensp;
-            <select style="width: 250px;" id="car_brand_id" class="form-control form-control-line" name="inputData[]">
+            <select style="width: 250px;" id="car_type" class="form-control form-control-line" name="inputData[]">
                 <option selected value="*">เลือกทั้งหมด</option>
-                <?php
-                if (isset($select)) {
-                    foreach ($select as $key => $val) {
-                        echo "<option value=" . $val->car_brand_id . ">" . $val->car_brand_name_en . "</option>";
-                    }
-                }
-                ?>
+                <option value="1">รถของบริษัท RCS</option>
+                <option value="2">รถฝากเช่า</option>
             </select>
         </div>
         <br>
+<?php 
+    $price_array =  array(
+        "0-1000",
+        "1001-2000",
+        "2001-3000",
+        "3001-4000",
+        "4001-5000",
+        "5000-10000",
+    );
+?>
         <div class="row">
             <div class="col-3">
                 <label>ช่วงราคา <a style="color: red;"> *</a></label>
             </div>  : &ensp;
-            <select style="width: 250px;" id="car_brand_id" class="form-control form-control-line" name="inputData[]">
+            <select style="width: 250px;" id="price_range" class="form-control form-control-line" name="inputData[]">
                 <option selected value="*">เลือกทั้งหมด</option>
                 <?php
-                if (isset($select)) {
-                    foreach ($select as $key => $val) {
-                        echo "<option value=" . $val->car_brand_id . ">" . $val->car_brand_name_en . "</option>";
-                    }
+                foreach ($price_array as $key => $val) {
+                    echo "<option value=" . $val . ">" . $val . "</option>";
                 }
                 ?>
             </select>
         </div>
 
+        <button type="button" class="btn btn-primary" id="search_btn">ค้นหารถเช่า</button> &ensp;
+        <button type="button" class="btn btn-success" id="reset_btn">รีเซท</button> &ensp;
+        <br><br>
         <div id="carTable"></div>
     </div>
 </div>
@@ -107,6 +113,18 @@
     $("#car_brand_id").on('change', function(event) {
         getModel()
     })
+
+    $("#reset_btn").on('click', function(event) {
+        $('#car_brand_id').prop('selectedIndex',0);
+        $('#car_model_id').prop('selectedIndex',0);
+        $('#car_type').prop('selectedIndex',0);
+        $('#price_range').prop('selectedIndex',0);
+    })
+
+    $("#search_btn").on('click', function(event) {
+        getList()
+    })
+    
 
     function removeOptions(selectElement) {
         var i, L = selectElement.options.length - 1;
@@ -123,9 +141,7 @@
             url: "getModel",
             data: data,  
         }).done(function(returnedData) {
-
             removeOptions(document.getElementById('car_model_id'));
-
             $("#car_model_id").append('<option value=*>เลือกทั้งหมด</option>');
             for(var i = 0; i < returnedData.car_model.length; i++) {
                 $("#car_model_id").append('<option value=' + returnedData.car_model[i].car_model_id + '>' + returnedData.car_model[i].car_model_name + '</option>');
@@ -135,11 +151,15 @@
 
     function getList() {
         var data = {};
-        data['type'] = 'show';
+
+        $("[name^='inputData']").each(function() {
+            data[this.id] = this.value;
+        });
+
         $.ajax({
             method: "POST",
-            url: "getCarTable",
-            data: data,  
+            url: "getCarSearchTable",
+            data: data,
         }).done(function(returnedData) {
             $('#carTable').html(returnedData.html);
             $('.mytb').dataTable({
