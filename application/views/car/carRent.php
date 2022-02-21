@@ -180,12 +180,12 @@
                                 <input type="text" style="width: 150px; text-align: center;" class="form-control" name="datetimepicker2" id="datetimepicker2">
                             </div>
 
-                            <br>
+                            <!-- <br>
                             <div class="row">
                                 <div class="col-12 text-center">
                                     <button type="button" style="margin:auto;" class="btn btn-info d-none d-lg-block m-l-12" id="checkDate">ตรวจสอบวันที่จอง</button>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <br>
                             <div class="row">
