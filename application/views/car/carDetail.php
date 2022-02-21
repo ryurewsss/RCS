@@ -41,11 +41,12 @@
     <div class="col-xs-12 col-md-12 showCarTable" style="user-select: auto;">
         <div class="row flex-row" style="user-select: auto;">
             <div class="col-xs-12 col-sm-5 carBlock" style="user-select: auto;">
-                <div class="carImg row">
+                <div class="text-center carImg row">
                     <div class="col-12">
                         <img src="<?php echo base_url('img/car_img'); ?>/<?php echo $val->car_image; ?>" alt="<?php echo $val->car_image; ?>">
                     </div>
                 </div>
+                <br>
                 <div class="row">
                     <div class="col-12 text-center">
                         <h4 class="text-blue" style="user-select: auto;">ราคา <b><?php echo number_format($val->car_price); ?></b> บาท/วัน</h4>

@@ -552,38 +552,55 @@ class Car extends Main
 			'groupBy' => ''
 		);
 		$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
-		
-		$arrayPlace = array(
-			'tableName' => 'crs_place',
-			'colName' => '
-				crs_place.place_id,
-				crs_place.place_name,
-				crs_place.place_address',
-			'where' => '',
-			'order' => 'crs_place.place_id DESC',
-			'arrayJoinTable' => '',
-			'groupBy' => ''
-		);
-		$data['placeSelect'] = $this->crsModel->getAll($arrayPlace['tableName'], $arrayPlace['colName'], $arrayPlace['where'], $arrayPlace['order'], $arrayPlace['arrayJoinTable'], $arrayPlace['groupBy']);
-		
-		$arrayPlace = array(
-			'tableName' => 'crs_user_doc',
-			'colName' => '
-				user_doc_id,
-				user_doc_iden_image,
-				user_doc_license_image',
-			'where' => 'user_id = '. $_SESSION['id'],
-			'order' => '',
-			'arrayJoinTable' => '',
-			'groupBy' => ''
-		);
-		$data['user'] = $this->crsModel->getAll($arrayPlace['tableName'], $arrayPlace['colName'], $arrayPlace['where'], $arrayPlace['order'], $arrayPlace['arrayJoinTable'], $arrayPlace['groupBy']);
 
 		if ($_GET['type'] == 'detail') {
 			$data['page_content'] = $this->load->view('car/carDetail', $data, TRUE);
 		}
 		if ($_GET['type'] == 'rent') {
+
+			if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')   
+				$url = "https://";   
+			else  
+				$url = "http://";   
+			// Append the host(domain name, ip) to the URL.   
+			$url.= $_SERVER['HTTP_HOST'];   
+			
+			// Append the requested resource location to the URL   
+			$url.= $_SERVER['REQUEST_URI'];    
+			$_SESSION['url'] = $url;
+			
+			if($_SESSION['type'] != 0){
+
+			$arrayPlace = array(
+				'tableName' => 'crs_place',
+				'colName' => '
+					crs_place.place_id,
+					crs_place.place_name,
+					crs_place.place_address',
+				'where' => '',
+				'order' => 'crs_place.place_id DESC',
+				'arrayJoinTable' => '',
+				'groupBy' => ''
+			);
+			$data['placeSelect'] = $this->crsModel->getAll($arrayPlace['tableName'], $arrayPlace['colName'], $arrayPlace['where'], $arrayPlace['order'], $arrayPlace['arrayJoinTable'], $arrayPlace['groupBy']);
+			
+			$arrayPlace = array(
+				'tableName' => 'crs_user_doc',
+				'colName' => '
+					user_doc_id,
+					user_doc_iden_image,
+					user_doc_license_image',
+				'where' => 'user_id = '. $_SESSION['id'],
+				'order' => '',
+				'arrayJoinTable' => '',
+				'groupBy' => ''
+			);
+			$data['user'] = $this->crsModel->getAll($arrayPlace['tableName'], $arrayPlace['colName'], $arrayPlace['where'], $arrayPlace['order'], $arrayPlace['arrayJoinTable'], $arrayPlace['groupBy']);
+
 			$data['page_content'] = $this->load->view('car/carRent', $data, TRUE);
+			}else{
+				redirect('../Login', 'refresh');
+			}
 		}
 
 		$this->load->view('main', $data);

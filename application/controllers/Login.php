@@ -71,8 +71,7 @@ class Login extends Main
 
 	public function logout()
 	{
-		// unset($_SESSION['role']);
 		session_destroy();
-		redirect(base_url('Login'));
+		redirect(base_url());
 	}
 }

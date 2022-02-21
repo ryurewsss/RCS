@@ -68,7 +68,6 @@ img{
                             </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
-                                    <p hidden id="base_url"><?php echo base_url(); ?></p>
 
                                     <form id="login-form" method="post" role="form" style="display: block;">
                                         <div class="form-group">
@@ -273,8 +272,9 @@ img{
                 data: formData,
             }).done(function(returnData) {
                 if (returnData.login == 'True') {
-                    // console.log("ASD")
-                    window.location.replace($('#base_url').html());
+                    
+                    var new_url = "<?php echo isset($_SESSION['url'])?$_SESSION['url']:base_url(); ?>"
+                    window.location.replace(new_url);
                     $('#loginError').html('');
                 } else {
                     // $.toast({

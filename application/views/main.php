@@ -98,12 +98,26 @@
       <!-- Divider -->
       <hr class="sidebar-divider">
 
+      <?php
+        if($_SESSION['type'] != 0){
+      ?>
       <li class="nav-item active">
         <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>User/profile" aria-expanded="false">
           <img class="img-profile rounded-circle" src="<?php echo isset( $_SESSION['user_img']) ? base_url('img/user_img').'/'. $_SESSION['user_img'] : base_url('img/user_img').'/'. 'profile.png'; ?>">
           <span class="mr-2 d-none d-lg-inline text-center"><?php echo $_SESSION['name'];?></span>
         </a>
       </li>
+      <?php
+        }else{
+      ?>
+      <li class="nav-item active">
+        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Login" aria-expanded="false">
+        <i class="fas fa-sign-in-alt" style='font-size:20px'></i>
+          <span>เข้าสู่ระบบ</span></a>
+      </li>
+      <?php
+        }
+      ?>
 
       <hr class="sidebar-divider">
 
@@ -179,15 +193,19 @@
       ?>
 
       <li class="nav-item active">
-        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Transaction/transactionRecord" aria-expanded="false">
-          <i class="fas fa-scroll" style='font-size:20px'></i>
-          <span>ดูประวัติการเช่า</span></a>
-      </li>
-
-      <li class="nav-item active">
         <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/carSearch" aria-expanded="false">
           <i class="fa fa-search" style='font-size:20px'></i>
           <span>ค้นหารถเช่า</span></a>
+      </li>
+
+      <?php
+        if($_SESSION['type'] != 0){
+      ?>
+
+      <li class="nav-item active">
+        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Transaction/transactionRecord" aria-expanded="false">
+          <i class="fas fa-scroll" style='font-size:20px'></i>
+          <span>ดูประวัติการเช่า</span></a>
       </li>
       
       <li class="nav-item active">
@@ -201,6 +219,10 @@
           <i class="fas fa-sign-out-alt" style='font-size:20px'></i>
           <span>ออกจากระบบ</span></a>
       </li>
+
+      <?php
+        }
+      ?>
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -249,7 +271,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2020</span>
+            <span>Copyright &copy; Your Website 2022</span>
           </div>
         </div>
       </footer>
@@ -269,3 +291,13 @@
 </body>
 
 </html>
+
+<script>
+  $("#sidebarToggle").on('click', function(e) {
+    $("body").toggleClass("sidebar-toggled");
+    $(".sidebar").toggleClass("toggled");
+    if ($(".sidebar").hasClass("toggled")) {
+      $('.sidebar .collapse').collapse('hide');
+    };
+  });
+</script>

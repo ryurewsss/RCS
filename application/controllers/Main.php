@@ -5,16 +5,27 @@ class Main extends CI_Controller
 {
         public function index()
         {
-                if (!isset($_SESSION['id'])) { //if have seesion goto login page
-                        redirect('../Login', 'refresh');
-                } else {
-                        $data = array(
-                                'page_content' => $this->load->view('car/carMain', '', TRUE),
-                                'title_name' => "CRS"
-                        );
-                        $this->load->view('main', $data);
+                if (!isset($_SESSION['id'])) {
+                        $_SESSION['type'] = 0;
                 }
+                $data = array(
+                        'page_content' => $this->load->view('car/carMain', '', TRUE),
+                        'title_name' => "CRS"
+                );
+                $this->load->view('main', $data);
         }
+        // public function index()
+        // {
+        //         if (!isset($_SESSION['id'])) { //if have seesion goto login page
+        //                 redirect('../Login', 'refresh');
+        //         } else {
+        //                 $data = array(
+        //                         'page_content' => $this->load->view('car/carMain', '', TRUE),
+        //                         'title_name' => "CRS"
+        //                 );
+        //                 $this->load->view('main', $data);
+        //         }
+        // }
 
         public function getTable()
         {
