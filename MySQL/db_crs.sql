@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2022 at 08:08 AM
+-- Generation Time: Feb 22, 2022 at 05:42 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -49,7 +49,12 @@ CREATE TABLE `crs_car` (
 INSERT INTO `crs_car` (`car_id`, `car_registration`, `car_model_id`, `car_owner_id`, `car_price`, `car_promotion`, `car_image`, `car_proof_image`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
 (1, 'ฎง 9999 กรุงเทพมหานคร', 1, 1, 2200, 0, 'hondabrio.jpg', 'hondabrio.jpg', '2022-01-06 11:35:00', '2022-01-06 11:35:00', 1, 1),
 (2, 'กก 1150 ชลบุรี', 3, 1, 2600, 0, 'MITSUBISHI_PAJERO.jpg', 'MITSUBISHI_PAJERO.jpg', '2022-01-06 21:26:00', '2022-01-06 21:33:02', 1, 1),
-(28, '45', 18, 1, 4, 0, '2peaceHam.jpg', '2peaceHam.jpg', '2022-01-06 22:18:01', '2022-01-13 17:34:16', 1, 1);
+(28, 'สส 5510 เชียงใหม่', 18, 1, 3000, 0, 'brioamaze2.jpg', 'brioamaze2.jpg', '2022-01-06 22:18:01', '2022-01-14 14:44:45', 1, 1),
+(31, 'พก 7412 ชลบุรี', 20, 1, 2100, 0, 'fortuner_11.jpg', 'fortuner_11.jpg', '2022-02-20 16:05:46', '2022-02-20 16:05:46', 1, 1),
+(32, 'รด 9412 สมุทรปราการ', 21, 1, 2000, 0, 'vios20191.jpg', 'vios20191.jpg', '2022-02-20 16:06:57', '2022-02-20 16:06:57', 1, 1),
+(33, 'คฟ 7456 ชลบุรี', 22, 1, 1800, 0, 'TOYOTA_SIENTA_2020.jpg', 'TOYOTA_SIENTA_2020.jpg', '2022-02-20 16:11:05', '2022-02-20 16:11:05', 1, 1),
+(34, 'กอ 1254 กรุงเทพมหานคร', 23, 1, 2800, 0, 'HONDA_MOBILIO_2019_RS.jpg', 'HONDA_MOBILIO_2019_RS.jpg', '2022-02-20 16:12:25', '2022-02-20 16:12:25', 1, 1),
+(35, 'รย 5412 ชลบุรี', 24, 1, 2500, 0, 'mazda31.jpg', 'mazda31.jpg', '2022-02-20 16:16:29', '2022-02-20 16:46:12', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -105,7 +110,12 @@ CREATE TABLE `crs_car_model` (
 INSERT INTO `crs_car_model` (`car_model_id`, `car_brand_id`, `car_model_name`, `car_model_feature`, `car_model_description`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
 (1, 7, 'Brio', '[\"5 ที่นั่ง\",\"ฟรีเงินมัดจำ\"]', 'Honda Brio รถยนต์อีโคคาร์จากค่ายฮอนด้าที่มาพร้อมรูปลักษณ์รูปทรงภายนอกที่เป็นเอกลักษณ์ของฮอนด้า โดยมีให้เลือกทั้ง 4 ประตูภายใต้ชื่อ Honda Brio Amaze และแบบ 5 ประตู Honda Brio V ภายในดีไซน์ได้อย่างลงตัว มาพร้อมเครื่องยนต์ 1.2 ลิตร 4 สูบ 90 แรงม้า', '2022-01-06 16:51:57', '2022-01-13 15:23:20', 1, 1),
 (3, 8, 'Pajero 2019', '[\"4 ที่นั่ง\",\"ฟรีเงินมัดจำ\"]', 'NEW MITSUBISHI PAJERO SPORT รุ่นล่าสุดที่บุกตลาดรถอเนกประสงค์ในเวลานี้ ได้รับการปรับปรุง และพัฒนาให้ดีขึ้นมากกว่ารุ่นเดิมหลายด้าน ทั้งการดีไซน์รูปลักษณ์ภายนอกใหม่เพิ่มความล้ำสมัย และภายในห้องโดยสารตกแต่งใหม่ เพิ่มเติมออฟชั่นจำเป็นในการใช้งานที่น่าสนใจหลายด้าน รวมถึงการปรับเซ็ทช่วงล่างใหม่ให้นุ่มนวล', '2022-01-06 20:09:09', '2022-01-13 15:23:26', 1, 1),
-(18, 2, '4', '[\"1\",\"2\",\"3\",\"4\"]', '4', '2022-01-13 14:16:06', '2022-01-13 16:49:04', 1, 1);
+(18, 7, 'Amaze', '[\"5 \\u0e17\\u0e35\\u0e48\\u0e19\\u0e31\\u0e48\\u0e07\"]', 'ระบบกุญแจอัจฉริยะ และกล้องมองภาพรอบคัน พร้อมเส้นกะระยะถูกใส่มาให้เพิ่มเติมในการปรับโฉมใหม่ครั้งนี้เพื่อความสะดวกสบายของผู้ใช้งาน  ส่วนความปลอดภัยที่มีอยู่เดิมคือถุงลมนิรภัยคู่หน้า ระบบเบรก ABS และ EBD รวมถึงโครงสร้างตัวถังนิรภัยขุมพลังขับเคลื่อนของ Amaze ยังคงเป็นเครื่องยนต์เบนซิน 4 สูบ ขนาด', '2022-01-13 14:16:06', '2022-01-14 16:23:12', 1, 1),
+(20, 1, 'Fortuner', '[\"7 \\u0e17\\u0e35\\u0e48\\u0e19\\u0e31\\u0e48\\u0e07\"]', 'อนิว โตโยต้า ฟอร์จูนเนอร์ 2016 ใหม่ (All New Toyota Fortuner 2016) เป็นรถยนต์อเนกประสงค์ MPV โดยพัฒนามาจากพื้นฐานรถกระบะ โตโยต้า ไฮลักซ์ รีโว สามารถใช้งานได้เหมาะสมทั้งเขตพื้นที่ในชุมชนเมืองและต่างจังหวัด', '2022-02-20 16:05:02', '2022-02-20 16:05:02', 1, 1),
+(21, 1, 'Vios 2019', '[\"5 \\u0e17\\u0e35\\u0e48\\u0e19\\u0e31\\u0e48\\u0e07\"]', 'TOYOTA VIOS MY2019 มากับการใส่ความโดดเด่นของกระจังหน้าตัววีพร้อมความดุดันของกันชนหน้าที่ทำให้ดูมีความเป็นสปอร์ตมากขึ้นกว่ารุ่นก่อนๆ TOYOTA VIOS MY2019 ถือว่าทำได้ดีกับการออกแบบสัดส่วนด้านหน้าด้วยการใส่องค์ประกอบที่โดดเด่นอย่างไฟหน้า LED แบบเส้นพร้อมไฟหน้าที่ดูลำยุคด้วยหลอดไฟโปรเจคเตอร์', '2022-02-20 16:06:27', '2022-02-20 16:06:27', 1, 1),
+(22, 1, 'Sienta 2020', '[\"5 \\u0e17\\u0e35\\u0e48\\u0e19\\u0e31\\u0e48\\u0e07\"]', 'โตโยต้า เซียนต้า รูปลักษณ์ภายนอกออกแบบภายใต้แรงบันดาลใจจากรองเท้าเดินป่าสมัยใหม่ สะท้อนให้เห็นถึงคนรุ่นใหม่ที่รักการท่องเที่ยว มีไลฟ์สไตล์ที่หลากหลาย ภายในออกแบบให้มี 3 แถว 7 ที่นั่ง รองรับห้องโดยสารที่กว้างขวาง เน้นประโยชน์ใช้สอยและความสะดวกสบายในการใช้งานเป็นหลัก', '2022-02-20 16:10:31', '2022-02-20 16:10:31', 1, 1),
+(23, 7, 'Mobilio 2019 RS', '[\"5 \\u0e17\\u0e35\\u0e48\\u0e19\\u0e31\\u0e48\\u0e07\"]', 'ฮอนด้า โมบิลิโอ ใหม่ มีระบบแบบยนตรกรรมอเนกประสงค์ขนาดซับคอมแพคท์ ที่มาพร้อมความหรูหราที่มากยิ่งขึ้นด้วยดีไซน์ใหม่ทั้งภายนอกและภายใน รวมถึงอุปกรณ์อำนวยความสะดวกสบาย และมาตรฐานความปลอดภัยที่ครบครันยิ่งขึ้น ห้องโดยสารที่กว้างขวาง และพื้นที่ใช้สอยที่รองรับทุกการใช้งาน เพื่อช่วยยกระดับไลฟ์สไตล์คนเมืองยุค', '2022-02-20 16:11:46', '2022-02-20 16:11:46', 1, 1),
+(24, 10, 'NEW MAZDA3 SEDAN', '[\"5 \\u0e17\\u0e35\\u0e48\\u0e19\\u0e31\\u0e07\"]', 'New Mazda3 ยนตรกรรมสปอร์ตพรีเมี่ยมใหม่ ที่ปลุกจิตวิญญาณความสปอร์ตในตัวคุณให้มีชีวิต เติมเต็มเอกลักษณ์ที่โดดเด่นในแบบที่ไม่ซ้ำทางใคร ด้วยดีไซน์ที่สะกดสายตาทุกมุมมอง กับสีใหม่ Platinum Quartz ไฟหน้าและไฟท้ายแบบ LED Signature เพิ่มความสปอร์ตหรูที่เหนือกว่า กับหลังคาซันรูฟแบบไฟฟ้า ภายในห้องโดยสารพรีเมี่', '2022-02-20 16:15:57', '2022-02-20 16:15:57', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -144,6 +154,8 @@ CREATE TABLE `crs_transaction` (
   `user_rental_id` int(10) NOT NULL,
   `user_doc_id` int(10) NOT NULL,
   `place_id` int(10) NOT NULL,
+  `transaction_receive_date` datetime NOT NULL,
+  `transaction_return_date` datetime NOT NULL,
   `transaction_status` varchar(30) NOT NULL,
   `transaction_price` int(10) NOT NULL,
   `transaction_lessor_approve` varchar(10) NOT NULL,
@@ -158,6 +170,26 @@ CREATE TABLE `crs_transaction` (
   `user_create_id` int(10) NOT NULL,
   `user_update_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `crs_transaction`
+--
+
+INSERT INTO `crs_transaction` (`transaction_id`, `car_id`, `user_lessor_id`, `user_rental_id`, `user_doc_id`, `place_id`, `transaction_receive_date`, `transaction_return_date`, `transaction_status`, `transaction_price`, `transaction_lessor_approve`, `transaction_rental_approve`, `transaction_image`, `transaction_iden_approve`, `transaction_transfer_approve`, `transaction_reject_iden`, `transaction_reject_transfer`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
+(11, 28, 0, 3, 14, 2, '2022-02-14 11:00:00', '2022-02-15 11:00:00', '1', 3000, '', '1', '300px-Scared_Hamster2.jpg', '', '', '', '', '2022-02-14 11:51:39', '2022-02-14 11:51:39', 3, 3),
+(12, 2, 0, 3, 14, 2, '2022-02-14 11:00:00', '2022-02-15 11:00:00', '1', 2600, '', '1', 'tran_img3.PNG', '', '', '', '', '2022-02-14 11:52:47', '2022-02-14 11:52:47', 3, 3),
+(13, 2, 0, 3, 14, 2, '2022-02-14 11:00:00', '2022-02-15 11:00:00', '1', 2600, '', '1', 'tran_img4.PNG', '', '', '', '', '2022-02-14 11:53:09', '2022-02-14 11:53:09', 3, 3),
+(14, 2, 0, 3, 14, 2, '2022-02-14 11:00:00', '2022-02-15 11:00:00', '1', 2600, '', '1', 'tran_img5.PNG', '', '', '', '', '2022-02-14 11:53:31', '2022-02-14 11:53:31', 3, 3),
+(15, 2, 0, 3, 14, 1, '2022-02-14 11:00:00', '2022-02-15 11:00:00', '1', 2600, '', '1', '300px-Scared_Hamster3.jpg', '', '', '', '', '2022-02-14 11:54:24', '2022-02-14 11:54:24', 3, 3),
+(16, 2, 0, 3, 14, 2, '2022-02-14 11:00:00', '2022-02-15 11:00:00', '1', 2600, '', '1', 'tran_img6.PNG', '', '', '', '', '2022-02-14 11:55:02', '2022-02-14 11:55:02', 3, 3),
+(17, 28, 0, 3, 14, 2, '2022-02-15 06:00:00', '2022-02-16 06:00:00', '1', 3000, '', '1', 'tran_img8.PNG', '', '', '', '', '2022-02-14 20:18:09', '2022-02-14 20:18:09', 3, 3),
+(18, 28, 0, 3, 14, 2, '2022-02-14 06:00:00', '2022-02-15 06:00:00', '1', 3000, '', '1', 'tran_img9.PNG', '', '', '', '', '2022-02-14 20:24:17', '2022-02-14 20:24:17', 3, 3),
+(19, 28, 0, 3, 14, 2, '2022-02-14 06:00:00', '2022-02-15 06:00:00', '1', 3000, '', '1', 'tran_img10.PNG', '', '', '', '', '2022-02-14 20:25:20', '2022-02-14 20:25:20', 3, 3),
+(20, 28, 0, 3, 14, 2, '2022-02-14 06:00:00', '2022-02-15 06:00:00', '1', 3000, '', '1', '300px-Scared_Hamster4.jpg', '', '', '', '', '2022-02-14 20:25:42', '2022-02-14 20:25:42', 3, 3),
+(21, 28, 0, 3, 14, 2, '2022-02-23 06:00:00', '2022-02-23 06:00:00', '1', 3000, '', '1', '300px-Scared_Hamster5.jpg', '', '', '', '', '2022-02-14 20:27:47', '2022-02-14 20:27:47', 3, 3),
+(22, 28, 0, 3, 14, 2, '2022-02-23 06:00:00', '2022-02-23 06:00:00', '1', 3000, '', '1', '300px-Scared_Hamster6.jpg', '', '', '', '', '2022-02-14 20:27:55', '2022-02-14 20:27:55', 3, 3),
+(23, 28, 0, 3, 14, 2, '2022-02-16 06:00:00', '2022-02-17 06:00:00', '1', 3000, '', '1', '300px-Scared_Hamster8.jpg', '', '', '', '', '2022-02-14 20:29:40', '2022-02-14 20:29:40', 3, 3),
+(24, 28, 0, 3, 14, 2, '2022-03-07 06:00:00', '2022-03-09 06:00:00', '1', 6000, '', '1', '300px-Scared_Hamster10.jpg', '', '', '', '', '2022-02-14 21:41:52', '2022-02-14 21:41:52', 3, 3);
 
 -- --------------------------------------------------------
 
@@ -196,7 +228,9 @@ CREATE TABLE `crs_user` (
 --
 
 INSERT INTO `crs_user` (`user_id`, `user_type_id`, `user_email`, `user_password`, `user_fname`, `user_lname`, `user_phone`, `user_image`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
-(1, 1, 'admin@gmail.com', '$2y$10$Rl73nMUKaOFGoE9k7vpEtOYL21FJpMmeLUsWT49eciWDzy99rFrUe', 'Sirapop', 'Koonsinchai', '0809425365', NULL, '2022-01-06 11:23:14', '2022-01-06 11:23:14', 1, 1);
+(1, 1, 'admin@gmail.com', '$2y$10$Rl73nMUKaOFGoE9k7vpEtOYL21FJpMmeLUsWT49eciWDzy99rFrUe', 'Sirapop', 'Koonsinchai', '0809425365', '5ebbaa1dedc5d_thumb900.jpg', '2022-01-06 11:23:14', '2022-01-24 15:37:04', 1, 1),
+(2, 2, 'member@gmail.com', '$2y$10$A1F5iYn39ogCH/Kyi3oTjOYbMpTggw5X1ETsz8joyOwHG.wXGAw7O', 'Tiwa', 'Singsong', '0817711410', NULL, '2022-01-26 14:31:17', '2022-01-26 15:43:39', 0, 0),
+(3, 2, 'member2@gmail.com', '$2y$10$HIQDSNUqsB/IazU0rPITieDkhJsOaIgcVM3FTzECTN.FwN1qPwWHG', 'Sirapop', 'Koonsin', '0809425365', '300px-Scared_Hamster.jpg', '2022-01-31 16:26:40', '2022-02-11 11:44:38', 0, 3);
 
 -- --------------------------------------------------------
 
@@ -214,6 +248,13 @@ CREATE TABLE `crs_user_doc` (
   `user_create_id` int(10) NOT NULL,
   `user_update_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `crs_user_doc`
+--
+
+INSERT INTO `crs_user_doc` (`user_doc_id`, `user_id`, `user_doc_iden_image`, `user_doc_license_image`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
+(14, 3, '1gz2q21.jpg', '2peaceHam2.jpg', '2022-02-14 11:51:39', '2022-02-14 20:18:08', 3, 3);
 
 -- --------------------------------------------------------
 
@@ -236,8 +277,8 @@ CREATE TABLE `crs_user_type` (
 
 INSERT INTO `crs_user_type` (`user_type_id`, `user_type_name`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
 (1, 'ผู้ให้เช่า', '2022-01-06 11:29:08', '2022-01-06 11:29:08', 1, 1),
-(3, 'ผู้เช่า', '2022-01-06 11:29:52', '2022-01-06 11:29:52', 1, 1),
-(4, 'ผู้ฝากเช่า', '2022-01-06 11:30:03', '2022-01-06 11:30:03', 1, 1);
+(2, 'ผู้เช่า', '2022-01-06 11:29:52', '2022-01-21 17:43:50', 1, 1),
+(3, 'ผู้ฝากเช่า', '2022-01-06 11:30:03', '2022-01-21 17:43:52', 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -306,7 +347,7 @@ ALTER TABLE `crs_user_type`
 -- AUTO_INCREMENT for table `crs_car`
 --
 ALTER TABLE `crs_car`
-  MODIFY `car_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `car_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `crs_car_brand`
@@ -318,7 +359,7 @@ ALTER TABLE `crs_car_brand`
 -- AUTO_INCREMENT for table `crs_car_model`
 --
 ALTER TABLE `crs_car_model`
-  MODIFY `car_model_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `car_model_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `crs_place`
@@ -330,19 +371,19 @@ ALTER TABLE `crs_place`
 -- AUTO_INCREMENT for table `crs_transaction`
 --
 ALTER TABLE `crs_transaction`
-  MODIFY `transaction_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `transaction_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `crs_user`
 --
 ALTER TABLE `crs_user`
-  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `crs_user_doc`
 --
 ALTER TABLE `crs_user_doc`
-  MODIFY `user_doc_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_doc_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `crs_user_type`
