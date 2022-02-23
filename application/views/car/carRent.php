@@ -180,12 +180,12 @@
                                 <input type="text" style="width: 150px; text-align: center;" class="form-control" name="datetimepicker2" id="datetimepicker2">
                             </div>
 
-                            <!-- <br>
+                            <br>
                             <div class="row">
                                 <div class="col-12 text-center">
                                     <button type="button" style="margin:auto;" class="btn btn-info d-none d-lg-block m-l-12" id="checkDate">ตรวจสอบวันที่จอง</button>
                                 </div>
-                            </div> -->
+                            </div>
 
                             <br>
                             <div class="row">
@@ -362,18 +362,8 @@
     </div>
 </div>
 <script>
+    var date_range = [];
     get_date()
-
-
-// $('input[name="datetimes"]').daterangepicker({
-//     timePicker: true,
-//     timePicker24Hour: true,
-//     startDate: moment().startOf('hour'),
-//     endDate: moment().startOf('hour').add(24, 'hour'),
-//     locale: {
-//       format: 'DD/MM/YYYY HH:mm'
-//     },
-// });
 
 $('#datetimepicker, #datetimepicker2').timepicker({
     timeFormat: 'HH:mm',
@@ -399,37 +389,31 @@ $("#datepicker, #datepicker2").on('change', function(event) {
 });
 $('#checkDate').click(function() {
     onDateChange()
+    let pass = true;
+    for (var i = 0; i < date_range.length; i++) {
+        if(dateCheck(date_range[i][0])){
+            pass = false;
+            break;
+        }
+    }
+    if(pass){
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'During that time, can reserved',
+            showConfirmButton: false,
+            timer: 1000
+        })
+    }else{
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'During that time, people have already reserved.',
+            showConfirmButton: false,
+            timer: 1000
+        })
+    }
 })
-
-
-// $('input[name="datetimes"]').on('change', function(event) {
-//     var startDate = this.value.substring(10, 0);
-//     var startTime = this.value.substring(16, 11);
-//     var endDate = this.value.substring(29, 19);
-//     var endTime = this.value.substring(35, 30);
-//     var start = new Date(ConvertDateFormat(startDate,startTime));
-//     var end = new Date(ConvertDateFormat(endDate,endTime));
-//     var diff = new Date(end - start);
-
-//     var days = Math.floor(diff / 1000 / 60 / 60 / 24);
-//     var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / 1000 / 60 / 60);
-//     var totalHours = Math.floor(diff / 1000 / 60 / 60 );
-//     $('#rentHours').val(totalHours);
-//     var price = parseInt($('#rentPrice').val().replace(/,/g, ''));
-//     if(days == 0){
-//         days++;
-//         $('.rentTotal').val(parseInt(days) * price); //rent less than 1 day
-//     }else if(hours > 5){
-//         days++;
-//         $('.rentTotal').val(parseInt(days) * price); //rent more 1 day and 5 hours+
-//     }else{
-//         $('.rentTotal').val((parseInt(days) * price) + (parseInt(hours) * parseInt(price / 10))); //rent more 1 day and 5 hours-
-//     }
-//     $('.rentTotal').val(addCommas($('.rentTotal').val()));
-//     getQRcode();
-// })
-
-// $('input[name="datetimes"]').trigger("change"); //trigger on open
 
 $('#addCarRentForm').on('submit', function(event) {
     event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
@@ -466,41 +450,30 @@ $('#addCarRentForm').on('submit', function(event) {
     })
 })
 
-// $('#checkDate').click(function() {
-//     var data = {};
-//     data['car_id'] = $('#car_id').val();
-//     data['dateRange'] = $('input[name="datetimes"]').val();
-
-//     $.ajax({
-//         method: "POST",
-//         url: "../Transaction/checkTransactionDate",
-//         data: data,  
-//     }).done(function(returnedData) {
-//         console.log(returnedData);
-//         if(!returnedData){
-//             Swal.fire({
-//             position: 'top-end',
-//             icon: 'error',
-//             title:'วันที่ดังกล่าวไม่ว่าง',
-//             text: 'กรุณาเลือกวันอื่น',
-//             showConfirmButton: false,
-//             timer: 1500
-//             })
-//         }else{
-//             Swal.fire({
-//             position: 'top-end',
-//             icon: 'success',
-//             title:'วันที่ดังกล่าวว่าง',
-//             text: 'สามารถเลือกวันดังกล่าวได้',
-//             showConfirmButton: false,
-//             timer: 1500
-//             })
-//         }
-//     });
-// })
 $('#place_id').on('change', function(event) {
     $('#place_name').val($('#place_id option:selected').text())
 })
+
+function dateCheck(get_date) {
+    let fDate,lDate,cDate;
+    let dateArray = $('#datepicker').val().split('/')
+    let dateArray2 = $('#datepicker2').val().split('/')
+    fDate = dateArray[1] + '/' + dateArray[0] + '/' + dateArray[2];
+    lDate = dateArray2[1] + '/' + dateArray2[0] + '/' + dateArray2[2];
+
+    fDate = new Date(fDate); // firstdate
+    cDate = new Date(get_date); // date from form
+    lDate = new Date(lDate);
+    // console.log(fDate)
+    // console.log(cDate)
+    // console.log(lDate)
+    
+    if(Date.parse(cDate) <= Date.parse(lDate) && Date.parse(cDate) >= Date.parse(fDate)){
+        return true;
+    }
+
+    return false;
+}
 
 function onDateChange() {
     if($("#datepicker").val()!='' && $("#datepicker2").val()!=''){
@@ -542,14 +515,12 @@ function get_date() {
         method:"GET",
         data: formData,
     }).done(function(returnData) {
-        var date_range = [];
-        date_range = [ ["02-04-2022", "02-08-2022"], ["02-25-2022", "02-27-2022"], ["02-21-2022", "02-23-2022"] ];
-        console.log(date_range)
+        // date_range = [ ["02-04-2022", "02-08-2022"], ["02-25-2022", "02-27-2022"], ["02-21-2022", "02-23-2022"] ];
         date_range = returnData['date_array'];
         console.log(date_range)
         $("#datepicker, #datepicker2").datepicker({
             dateFormat: 'dd/mm/yy',
-            minDate: 0,
+            minDate: +2,
             beforeShowDay: function(date) {
                 var string = $.datepicker.formatDate('mm-dd-yy', date);
                 for (var i = 0; i < date_range.length; i++) {
@@ -564,7 +535,6 @@ function get_date() {
                 return [date_range.indexOf(string) == -1]
             }
         });
-
     });
 }
 

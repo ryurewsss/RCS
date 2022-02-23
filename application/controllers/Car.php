@@ -613,6 +613,7 @@ class Car extends Main
 
 		$data['check_date'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_car_tran?car_id=".$this->input->get('car_id')));
 		$date_array = [];
+		// print_r($data['check_date']);
 		if($data['check_date']){
 			foreach ($data['check_date'] as $key => $val) {
 				$startDate = date("m-d-Y", strtotime(substr($val->data->transaction_receive_date,0,10)));
