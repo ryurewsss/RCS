@@ -80,8 +80,8 @@ class Transaction extends Main
 			$arrayData['where'] = 'crs_transaction.user_rental_id = '.$_SESSION['id'];
 		}
 		
-		$data['test'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
-		$data['table'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_chain_lessor"));
+		$data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		// $data['table'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_chain_lessor"));
 		$json['table'] = $data['table'];
 		$json['sql'] = $this->db->last_query(); //for dev
 		$json['html'] = $this->load->view($arrayData['pathView'], $data, TRUE);
@@ -111,12 +111,12 @@ class Transaction extends Main
 		
 		if ($_SESSION['type'] == '2') {
 			$arrayData['where'] = "crs_transaction.user_rental_id = ".$_SESSION['id'];
-			$data['table'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_user_tran?user_rental_id=".$_SESSION['id']));
+			// $data['table'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_user_tran?user_rental_id=".$_SESSION['id']));
 		}else{
-			$data['table'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_chain_lessor"));
+			// $data['table'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_chain_lessor"));
 		}
 
-		$data['test'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
 		$json['table'] = $data['table'];
 		$json['sql'] = $this->db->last_query(); //for dev
 		$json['html'] = $this->load->view($arrayData['pathView'], $data, TRUE);
@@ -144,9 +144,9 @@ class Transaction extends Main
 			'pathView' => 'transaction/tableTransaction'
 		);
 
-		// $data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
 		
-		$data['table'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_user_tran?user_rental_id=".$_SESSION['id']));
+		// $data['table'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_user_tran?user_rental_id=".$_SESSION['id']));
 
 		$json['table'] = $data['table'];
 		$json['sql'] = $this->db->last_query(); //for dev
@@ -159,94 +159,93 @@ class Transaction extends Main
 	public function transactionDetail()
 	{
 		
-		$data['block'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_last_transaction?transaction_id=".$_GET['tranId']));
+		// $data['block'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_last_transaction?transaction_id=".$_GET['tranId']));
 
 		$arrayData = array(
-			'tableName' => 'crs_car',
+			'tableName' => 'crs_transaction',
 			'colName' => '
-					crs_car.car_registration,
-					crs_car.car_price,
-					crs_car.car_image,
-					crs_car_brand.car_brand_name_en,
-					crs_car_model.car_model_name
-			',
-			'where' => 'crs_car.car_id = '. $data['block']->data->car_id,
+				crs_transaction.transaction_id ,
+				crs_transaction.transaction_receive_date,
+				crs_transaction.transaction_return_date,
+				crs_transaction.transaction_price,
+				crs_transaction.transaction_image,
+				crs_transaction.transaction_iden_approve,
+				crs_transaction.transaction_transfer_approve,
+				crs_transaction.transaction_reject_iden,
+				crs_transaction.transaction_reject_transfer,
+				crs_transaction.transaction_status,
+				crs_car.car_registration,
+				crs_car.car_price,
+				crs_car.car_image,
+				crs_car_brand.car_brand_name_en,
+				crs_car_model.car_model_name,
+				crs_user_doc.user_doc_id,
+				crs_user_doc.user_doc_iden_image,
+				crs_user_doc.user_doc_license_image,
+				crs_user.user_id,
+				crs_user.user_email,
+				crs_user.user_fname,
+				crs_user.user_lname,
+				crs_user.user_phone,
+				crs_user.user_image,
+				crs_place.place_id,
+				crs_place.place_name',
+			'where' => 'crs_transaction.transaction_id = '. $_GET['tranId'],
 			'order' => '',
 			'arrayJoinTable' => array(
+				'crs_car' => 'crs_car.car_id = crs_transaction.car_id',
 				'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
 				'crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id',
+				'crs_user_doc' => 'crs_user_doc.user_doc_id = crs_transaction.user_doc_id',
+				'crs_user' => 'crs_user.user_id = crs_transaction.user_rental_id',
+				'crs_place' => 'crs_place.place_id = crs_transaction.place_id'
 			),
 			'groupBy' => ''
 		);
-		$data['car'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
 
-		$arrayData = array(
-			'tableName' => 'crs_user',
-			'colName' => '
-					crs_user.user_id,
-					crs_user.user_email,
-					crs_user.user_fname,
-					crs_user.user_lname,
-					crs_user.user_phone,
-					crs_user.user_image,
-					crs_user_doc.user_doc_id,
-					crs_user_doc.user_doc_iden_image,
-					crs_user_doc.user_doc_license_image
-			',
-			'where' => 'crs_user.user_id = '. $data['block']->data->user_rental_id,
-			'order' => '',
-			'arrayJoinTable' => array(
-				'crs_user_doc' => 'crs_user_doc.user_id = crs_user.user_id',
-			),
-			'groupBy' => ''
-		);
-		$data['user'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
-		
-		// var_dump($data['select']);
-		// var_dump($data['block']->data);
+
 		// $arrayData = array(
-		// 	'tableName' => 'crs_transaction',
+		// 	'tableName' => 'crs_car',
 		// 	'colName' => '
-		// 		crs_transaction.transaction_id ,
-		// 		crs_transaction.transaction_receive_date,
-		// 		crs_transaction.transaction_return_date,
-		// 		crs_transaction.transaction_price,
-		// 		crs_transaction.transaction_image,
-		// 		crs_transaction.transaction_iden_approve,
-		// 		crs_transaction.transaction_transfer_approve,
-		// 		crs_transaction.transaction_reject_iden,
-		// 		crs_transaction.transaction_reject_transfer,
-		// 		crs_transaction.transaction_status,
-		// 		crs_car.car_registration,
-		// 		crs_car.car_price,
-		// 		crs_car.car_image,
-		// 		crs_car_brand.car_brand_name_en,
-		// 		crs_car_model.car_model_name,
-		// 		crs_user_doc.user_doc_id,
-		// 		crs_user_doc.user_doc_iden_image,
-		// 		crs_user_doc.user_doc_license_image,
-		// 		crs_user.user_id,
-		// 		crs_user.user_email,
-		// 		crs_user.user_fname,
-		// 		crs_user.user_lname,
-		// 		crs_user.user_phone,
-		// 		crs_user.user_image,
-		// 		crs_place.place_id,
-		// 		crs_place.place_name',
-		// 	'where' => 'crs_transaction.transaction_id = '. $_GET['tranId'],
+		// 			crs_car.car_registration,
+		// 			crs_car.car_price,
+		// 			crs_car.car_image,
+		// 			crs_car_brand.car_brand_name_en,
+		// 			crs_car_model.car_model_name
+		// 	',
+		// 	'where' => 'crs_car.car_id = '. $data['block']->data->car_id,
 		// 	'order' => '',
 		// 	'arrayJoinTable' => array(
-		// 		'crs_car' => 'crs_car.car_id = crs_transaction.car_id',
 		// 		'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
 		// 		'crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id',
-		// 		'crs_user_doc' => 'crs_user_doc.user_doc_id = crs_transaction.user_doc_id',
-		// 		'crs_user' => 'crs_user.user_id = crs_transaction.user_rental_id',
-		// 		'crs_place' => 'crs_place.place_id = crs_transaction.place_id'
 		// 	),
 		// 	'groupBy' => ''
 		// );
-		// $data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		// $data['car'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
 
+		// $arrayData = array(
+		// 	'tableName' => 'crs_user',
+		// 	'colName' => '
+		// 			crs_user.user_id,
+		// 			crs_user.user_email,
+		// 			crs_user.user_fname,
+		// 			crs_user.user_lname,
+		// 			crs_user.user_phone,
+		// 			crs_user.user_image,
+		// 			crs_user_doc.user_doc_id,
+		// 			crs_user_doc.user_doc_iden_image,
+		// 			crs_user_doc.user_doc_license_image
+		// 	',
+		// 	'where' => 'crs_user.user_id = '. $data['block']->data->user_rental_id,
+		// 	'order' => '',
+		// 	'arrayJoinTable' => array(
+		// 		'crs_user_doc' => 'crs_user_doc.user_id = crs_user.user_id',
+		// 	),
+		// 	'groupBy' => ''
+		// );
+		// $data['user'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		
 		if ($_SESSION['type'] == '1') {
 			$data['page_content'] = $this->load->view('transaction/transactionConfirm', $data, TRUE);
 		}
@@ -296,7 +295,7 @@ class Transaction extends Main
 
 		$arrayWhere = array('transaction_id' => $getData['transaction_id']);
 		$editedId = $this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
-		$this->output->set_content_type('application/json')->set_output(json_encode($editedId));
+		// $this->output->set_content_type('application/json')->set_output(json_encode($editedId));
 	}
 	// ___________________ End editTransactionDetail ____________________
 
@@ -410,7 +409,7 @@ class Transaction extends Main
 		//end blockchain
 
 		$editedId = $this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
-		$this->output->set_content_type('application/json')->set_output(json_encode($editedId));
+		// $this->output->set_content_type('application/json')->set_output(json_encode($editedId));
 	}
 	// ___________________ End changeTransactionStatus ____________________
 

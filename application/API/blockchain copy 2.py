@@ -8,19 +8,25 @@ class Blockchain:
         self.chain = [] #list ที่เก็บ block
         self.transaction_id = None 
         self.car_id = None
+        self.car_registration = None
         self.user_lessor_id = None
         self.user_rental_id = None
         self.user_doc_id = None
         self.place_id = None
+        self.place_name = None
         self.transaction_receive_date = None
         self.transaction_return_date = None
         self.transaction_status = None
         self.transaction_price = None
         self.transaction_lessor_approve = None
+        self.transaction_rental_approve = None
         self.transaction_image = None
         self.transaction_iden_approve = None
         self.transaction_transfer_approve = None
-
+        self.transaction_reject_iden = None
+        self.transaction_reject_transfer = None
+        self.user_create_id = None
+        self.user_update_id = None
         #genesis block
         self.create_block(nonce=1,previous_hash="0")
     
@@ -45,8 +51,13 @@ class Blockchain:
                 "transaction_image":self.transaction_image,
                 "transaction_iden_approve":self.transaction_iden_approve,
                 "transaction_transfer_approve":self.transaction_transfer_approve,
+                #comment
+                "car_registration":self.car_registration,
+                "place_name":self.place_name,
                 "transaction_price":self.transaction_price,
-                
+                "transaction_rental_approve":self.transaction_rental_approve,
+                "transaction_reject_iden":self.transaction_reject_iden,
+                "transaction_reject_transfer":self.transaction_reject_transfer
                 },
             "previous_hash":previous_hash
         }
@@ -168,15 +179,19 @@ def mining_block():
     # username = request.args.get('tran')
     blockchain.transaction_id = request.args.get('transaction_id') 
     blockchain.car_id = request.args.get('car_id')
+    blockchain.car_registration = request.args.get('car_registration')
     blockchain.user_rental_id = request.args.get('user_rental_id')
     blockchain.user_doc_id = request.args.get('user_doc_id')
     blockchain.place_id = request.args.get('place_id')
+    blockchain.place_name = request.args.get('place_name')
     blockchain.transaction_receive_date = request.args.get('transaction_receive_date')
     blockchain.transaction_return_date = request.args.get('transaction_return_date')
     blockchain.transaction_status = request.args.get('transaction_status')
     blockchain.transaction_price = request.args.get('transaction_price')
+    blockchain.transaction_rental_approve = request.args.get('transaction_rental_approve')
     blockchain.transaction_image = request.args.get('transaction_image')
-
+    blockchain.user_create_id = request.args.get('user_create_id')
+    blockchain.user_update_id = request.args.get('user_update_id')
     #pow
     previous_block = blockchain.get_previous_block()
     previous_nonce = previous_block["nonce"]
@@ -237,6 +252,21 @@ def mining_transaction():
         blockchain.transaction_transfer_approve = tranBlock['data']['transaction_transfer_approve']
     else:
         blockchain.transaction_transfer_approve = request.args.get('transaction_transfer_approve')
+
+    if request.args.get('transaction_reject_iden') is None:
+        blockchain.transaction_reject_iden = tranBlock['data']['transaction_reject_iden']
+    else:
+        blockchain.transaction_reject_iden = request.args.get('transaction_reject_iden')
+
+    if request.args.get('transaction_reject_transfer') is None:
+        blockchain.transaction_reject_transfer = tranBlock['data']['transaction_reject_transfer']
+    else:
+        blockchain.transaction_reject_transfer = request.args.get('transaction_reject_transfer')
+
+    if request.args.get('user_update_id') is None:
+        blockchain.user_update_id = tranBlock['data']['user_update_id']
+    else:
+        blockchain.user_update_id = request.args.get('user_update_id')
 
     #pow
     previous_block = blockchain.get_previous_block()

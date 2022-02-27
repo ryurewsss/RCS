@@ -182,13 +182,6 @@
 
                             <br>
                             <div class="row">
-                                <div class="col-12 text-center">
-                                    <button type="button" style="margin:auto;" class="btn btn-info d-none d-lg-block m-l-12" id="checkDate">ตรวจสอบวันที่จอง</button>
-                                </div>
-                            </div>
-
-                            <br>
-                            <div class="row">
                                 <div class="col-4">
                                     <h4 >ระยะเวลาที่เช่า</h4>
                                 </div>  : &ensp;
@@ -383,12 +376,7 @@ $("#datepicker").on('change', function(event) {
 });
 $("#datepicker2").on('change', function(event) {
     $('#datepicker').datepicker('option', 'maxDate', new Date(moment(moment($("#datepicker2").val(), 'DD/MM/YYYY')).format("MM/DD/YYYY")));
-});
-$("#datepicker, #datepicker2").on('change', function(event) {
-    onDateChange()
-});
-$('#checkDate').click(function() {
-    onDateChange()
+
     let pass = true;
     for (var i = 0; i < date_range.length; i++) {
         if(dateCheck(date_range[i][0])){
@@ -399,7 +387,7 @@ $('#checkDate').click(function() {
     if(pass){
         Swal.fire({
             position: 'top-end',
-            icon: 'error',
+            icon: 'success',
             title: 'During that time, can reserved',
             showConfirmButton: false,
             timer: 1000
@@ -413,7 +401,13 @@ $('#checkDate').click(function() {
             timer: 1000
         })
     }
-})
+});
+$("#datepicker, #datepicker2").on('change', function(event) {
+    onDateChange()
+    if($("#datepicker").val()!='' && $("#datepicker2").val()!=''){
+        checkDate()
+    }
+});
 
 $('#addCarRentForm').on('submit', function(event) {
     event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
@@ -454,6 +448,33 @@ $('#place_id').on('change', function(event) {
     $('#place_name').val($('#place_id option:selected').text())
 })
 
+function checkDate() {
+    let pass = true;
+    for (var i = 0; i < date_range.length; i++) {
+        if(dateCheck(date_range[i][0])){
+            pass = false;
+            break;
+        }
+    }
+    if(pass){
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'During that time, can reserved',
+            showConfirmButton: false,
+            timer: 1000
+        })
+    }else{
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'During that time, people have already reserved.',
+            showConfirmButton: false,
+            timer: 1000
+        })
+    }
+}
+
 function dateCheck(get_date) {
     let fDate,lDate,cDate;
     let dateArray = $('#datepicker').val().split('/')
@@ -464,9 +485,6 @@ function dateCheck(get_date) {
     fDate = new Date(fDate); // firstdate
     cDate = new Date(get_date); // date from form
     lDate = new Date(lDate);
-    // console.log(fDate)
-    // console.log(cDate)
-    // console.log(lDate)
     
     if(Date.parse(cDate) <= Date.parse(lDate) && Date.parse(cDate) >= Date.parse(fDate)){
         return true;

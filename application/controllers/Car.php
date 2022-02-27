@@ -611,13 +611,24 @@ class Car extends Main
 	public function check_date()
 	{
 
-		$data['check_date'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_car_tran?car_id=".$this->input->get('car_id')));
+		// $data['check_date'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_car_tran?car_id=".$this->input->get('car_id')));
+		$arrayPlace = array(
+			'tableName' => 'crs_transaction',
+			'colName' => '
+				transaction_receive_date,
+				transaction_return_date',
+			'where' => 'car_id = '. $this->input->get('car_id')." AND transaction_status != 5",
+			'order' => '',
+			'arrayJoinTable' => '',
+			'groupBy' => ''
+		);
+		$data['check_date'] = $this->crsModel->getAll($arrayPlace['tableName'], $arrayPlace['colName'], $arrayPlace['where'], $arrayPlace['order'], $arrayPlace['arrayJoinTable'], $arrayPlace['groupBy']);
+		
 		$date_array = [];
-		// print_r($data['check_date']);
 		if($data['check_date']){
 			foreach ($data['check_date'] as $key => $val) {
-				$startDate = date("m-d-Y", strtotime(substr($val->data->transaction_receive_date,0,10)));
-				$endDate = date("m-d-Y", strtotime(substr($val->data->transaction_return_date,0,10)));
+				$startDate = date("m-d-Y", strtotime(substr($val->transaction_receive_date,0,10)));
+				$endDate = date("m-d-Y", strtotime(substr($val->transaction_return_date,0,10)));
 				array_push($date_array,array($startDate,$endDate));
 			}
 		}
