@@ -463,22 +463,16 @@ class Transaction extends Main
 	}
 	// ___________________ End checkTransactionDate ____________________
 
-	
-	// __________________ Start callAPI __________________
-	public function callAPI()
+	// __________________ Start sendEmail __________________
+	public function sendEmail()
 	{
-		// $link = "http://127.0.0.1:5000";
-		// $link = "http://127.0.0.1:5000/mining";
-		// $link = "http://127.0.0.1:5000/get_chain";
-		// $link = "http://127.0.0.1:5000/is_valid";
-		// $link = "http://127.0.0.1:5000/mining";
-		$link = "http://127.0.0.1:5000/get_chain?a=";
-		
-		echo urlencode('ฟหกด');
-		echo "<br><br>";
-		echo urldecode(urlencode('ฟหกด'));
-		
-		// print_r($link);
-		// echo $data = file_get_contents($link);
+		$data['name'] = "Car Rental System";
+		$data['email'] = "rewsirapop@gmail.com";
+		$data['header'] = "HEAD";
+		$data['detail'] = "DETAIL";
+		$arrayData = array('pathView' => 'phpMailer/sendEmail');
+		$json['html'] = $this->load->view($arrayData['pathView'], $data, TRUE);
 	}
+	// ___________________ End sendEmail ____________________
+	
 }
