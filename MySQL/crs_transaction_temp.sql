@@ -24,10 +24,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `crs_transaction`
+-- Table structure for table `crs_transaction_temp`
 --
 
-CREATE TABLE `crs_transaction` (
+CREATE TABLE `crs_transaction_temp` (
   `transaction_id` int(10) NOT NULL,
   `car_id` int(10) NOT NULL,
   `user_lessor_id` int(10) NOT NULL,
@@ -52,10 +52,10 @@ CREATE TABLE `crs_transaction` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `crs_transaction`
+-- Dumping data for table `crs_transaction_temp`
 --
 
-INSERT INTO `crs_transaction` (`transaction_id`, `car_id`, `user_lessor_id`, `user_rental_id`, `user_doc_id`, `place_id`, `transaction_receive_date`, `transaction_return_date`, `transaction_status`, `transaction_price`, `transaction_lessor_approve`, `transaction_rental_approve`, `transaction_image`, `transaction_iden_approve`, `transaction_transfer_approve`, `transaction_reject_iden`, `transaction_reject_transfer`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
+INSERT INTO `crs_transaction_temp` (`transaction_id`, `car_id`, `user_lessor_id`, `user_rental_id`, `user_doc_id`, `place_id`, `transaction_receive_date`, `transaction_return_date`, `transaction_status`, `transaction_price`, `transaction_lessor_approve`, `transaction_rental_approve`, `transaction_image`, `transaction_iden_approve`, `transaction_transfer_approve`, `transaction_reject_iden`, `transaction_reject_transfer`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
 (1, 35, 1, 3, 14, 2, '2022-03-01 06:00:00', '2022-03-02 06:00:00', '5', 2500, '1', '1', 'tran_img.PNG', '1', '1', 'ไม่ให้', 'หมด', '2022-02-27 17:39:28', '2022-02-27 17:46:17', 3, 1);
 
 --
@@ -63,9 +63,9 @@ INSERT INTO `crs_transaction` (`transaction_id`, `car_id`, `user_lessor_id`, `us
 --
 
 --
--- Indexes for table `crs_transaction`
+-- Indexes for table `crs_transaction_temp`
 --
-ALTER TABLE `crs_transaction`
+ALTER TABLE `crs_transaction_temp`
   ADD PRIMARY KEY (`transaction_id`);
 
 --
@@ -73,9 +73,9 @@ ALTER TABLE `crs_transaction`
 --
 
 --
--- AUTO_INCREMENT for table `crs_transaction`
+-- AUTO_INCREMENT for table `crs_transaction_temp`
 --
-ALTER TABLE `crs_transaction`
+ALTER TABLE `crs_transaction_temp`
   MODIFY `transaction_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 

@@ -422,24 +422,37 @@ $('#addCarRentForm').on('submit', function(event) {
         confirmButtonText: 'Yes, Confirm it!'
         }).then((result) => {
         if (result.isConfirmed) {
-            $.ajax({  
+            $.ajax({
                 url:"addCarRent",
                 method:"POST",  
                 data:new FormData(this),  
                 contentType: false,  
                 cache: false,  
-                processData:false,  
+                processData:false,
             }).done(function(returnData) {
-                console.log(returnData)
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Save Complete',
-                    showConfirmButton: false,
-                    timer: 1000
-                })
-                window.location = "<?php echo base_url(); ?>";
-            }); 
+                for(var i=1; i<3; i++){//ยังไม่รวมฝากเช่า
+                    $.ajax({
+                    url: 'sendEmail',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        tran_id: returnData.transaction_temp_id,
+                        user_type: i
+                    }, success: function (returnData) {
+                        if(i==2){
+                            Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Save Complete',
+                            showConfirmButton: false,
+                            timer: 1000
+                        })
+                        window.location = "<?php echo base_url(); ?>";
+                        }
+                    }
+                    });
+                }
+            });
         }
     })
 })

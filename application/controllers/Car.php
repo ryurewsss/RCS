@@ -650,7 +650,7 @@ class Car extends Main
 	// ___________________ End getQRcode ____________________
 
 	// __________________ Start addCarRent __________________
-	public function addCarRent()
+	public function addCarRent2()
 	{
 		$config['upload_path'] = './img/user_doc_img/';
 		$config['allowed_types'] = 'gif|jpg|png';
@@ -798,4 +798,178 @@ class Car extends Main
 			// $this->output->set_content_type('application/json')->set_output(json_encode($data));
 		}
 	}
+	// __________________ End addCarRent __________________
+
+	// __________________ Start addCarRent __________________
+	public function addCarRent()
+	{
+		$config['upload_path'] = './img/user_doc_img/';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size'] = '2000';
+		$config['max_width'] = '3000';
+		$config['max_height'] = '3000';
+	
+		$pass = TRUE;
+
+		// UPLOAD DOC
+
+		$getData = $this->input->post();
+		$this->load->library('upload', $config, 'docUpload');
+		if($this->input->post('user_doc_id') == 0){
+			//add doc
+			if(!$this->docUpload->do_upload('iden_upload') ){
+				$pass = FALSE;
+			}else{
+				$data = $this->docUpload->data();
+				$filename['iden_upload'] = $data['file_name'];
+			}
+			if(!$this->docUpload->do_upload('license_upload') ){
+				$pass = FALSE;
+			}else{
+				$data = $this->docUpload->data();
+				$filename['license_upload'] = $data['file_name'];
+			}
+			$arrayData = array(
+				'user_id' => $_SESSION['id'],
+				'user_doc_iden_image' => $filename['iden_upload'],
+				'user_doc_license_image' => $filename['license_upload'],
+				'user_create_id' => $_SESSION['id'],
+				'user_update_id' => $_SESSION['id']
+			);
+			$docId = $this->crsModel->add('crs_user_doc', $arrayData);
+		}else{
+			// update doc
+			if(!$this->docUpload->do_upload('iden_upload') ){
+				$filename['iden_upload'] = $getData['old_iden_upload'];
+			}else{
+				$data = $this->docUpload->data();
+				$filename['iden_upload'] = $data['file_name'];
+				$file_pointer = './img/user_doc_img/' . $getData['old_iden_upload'];
+				unlink($file_pointer);
+			}
+			if(!$this->docUpload->do_upload('license_upload') ){
+				$filename['license_upload'] = $getData['old_license_upload'];
+			}else{
+				$data = $this->docUpload->data();
+				$filename['license_upload'] = $data['file_name'];
+				$file_pointer = './img/user_doc_img/' . $getData['old_license_upload'];
+				unlink($file_pointer);
+			}
+			$arrayData = array(
+				'user_doc_iden_image' => $filename['iden_upload'],
+				'user_doc_license_image' => $filename['license_upload'],
+				'user_update_id' => $_SESSION['id']
+			);
+			$arrayWhere = array('user_doc_id' => $getData['user_doc_id']);
+			$docId = $getData['user_doc_id'];
+			$this->crsModel->update('crs_user_doc',$arrayWhere, $arrayData);
+		}
+
+		$config['upload_path'] = './img/transaction_img/';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size'] = '2000';
+		$config['max_width'] = '3000';
+		$config['max_height'] = '3000';
+		$this->load->library('upload', $config, 'transactionUpload');
+		if(!$this->transactionUpload->do_upload('transaction_upload')){
+			$pass = FALSE;
+		}else{
+			$data = $this->transactionUpload->data();
+			$filename['transaction_upload'] = $data['file_name'];
+		}
+		if($pass){
+			$date['startDate'] = $this->input->post('datepicker'); //substr
+			$date['startTime'] = $this->input->post('datetimepicker');
+			$date['endDate'] = $this->input->post('datepicker2');
+			$date['endTime'] = $this->input->post('datetimepicker2');
+			$date['startDate'] = date("Y-m-d", strtotime(str_replace('/', '-', $date['startDate']))); // change 31/12/2000 to 2000-12-31
+			$date['endDate'] = date("Y-m-d", strtotime(str_replace('/', '-', $date['endDate'])));
+			$arrayData = array(
+				'transaction_lessor_token' => uniqid(),
+				'transaction_rental_token' => uniqid(),
+				'transaction_depositor_token' => uniqid(),
+				'car_id' => $this->input->post('car_id'),
+				'user_rental_id' => $_SESSION['id'],
+				'user_doc_id' => $docId,
+				'place_id' => $this->input->post('place_id'),
+				'transaction_receive_date' => $date['startDate'].' '.$date['startTime'],
+				'transaction_return_date' => $date['endDate'].' '.$date['endTime'],
+				'transaction_status' => '1',
+				'transaction_price' => (int)str_replace(',', '', $this->input->post('rentTotal')),
+				'transaction_image' => $filename['transaction_upload']
+			);
+			$returnData['transaction_temp_id'] = $this->crsModel->add('crs_transaction_temp', $arrayData);
+				//start blockchain
+			// $link = "http://127.0.0.1:5000/mining?"
+			// 	.'car_id='.$this->input->post('car_id')
+			// 	.'&car_registration='.urlencode($this->input->post('car_registration'))
+			// 	.'&transaction_id='.$returnData['addedId']
+			// 	.'&user_rental_id='.$_SESSION['id']
+			// 	.'&user_doc_id='.$docId
+			// 	.'&place_id='.$this->input->post('place_id')
+			// 	.'&place_name='.urlencode($this->input->post('place_name'))
+			// 	.'&transaction_receive_date='.$date['startDate'].'_'.$date['startTime']
+			// 	.'&transaction_return_date='.$date['endDate'].'_'.$date['endTime']
+			// 	.'&transaction_status='.'1'
+			// 	.'&transaction_price='.(int)str_replace(',', '', $this->input->post('rentTotal'))
+			// 	.'&transaction_rental_approve='.'1'
+			// 	.'&transaction_image='.$filename['transaction_upload']
+			// 	.'&user_create_id='.$_SESSION['id']
+			// 	.'&user_update_id='.$_SESSION['id']
+			// ;
+			// $data = file_get_contents($link);
+				//end blockchain
+			$this->output->set_content_type('application/json')->set_output(json_encode($returnData));
+		}
+	}
+	// __________________ End addCarRent __________________
+
+	// __________________ Start sendEmail __________________
+	public function sendEmail()
+	{
+
+		$arrayData = array(
+			'tableName' => 'crs_transaction_temp',
+			'colName' => '
+				crs_transaction_temp.transaction_temp_id,
+				crs_transaction_temp.transaction_lessor_token,
+				crs_transaction_temp.transaction_rental_token,
+				crs_transaction_temp.transaction_depositor_token,
+				crs_transaction_temp.transaction_receive_date,
+				crs_transaction_temp.transaction_return_date,
+				crs_transaction_temp.transaction_price,
+				crs_transaction_temp.transaction_image,
+				crs_transaction_temp.transaction_status,
+				crs_car.car_registration,
+				crs_car.car_price,
+				crs_car.car_image,
+				crs_car_brand.car_brand_name_en,
+				crs_car_model.car_model_name,
+				crs_user_doc.user_doc_id,
+				crs_user_doc.user_doc_iden_image,
+				crs_user_doc.user_doc_license_image,
+				crs_user.user_email,
+				crs_user.user_fname,
+				crs_user.user_lname,
+				crs_user.user_phone,
+				crs_place.place_name',
+			'where' => 'crs_transaction_temp.transaction_temp_id = '. $this->input->post("tran_id"),
+			'order' => '',
+			'arrayJoinTable' => array(
+				'crs_car' => 'crs_car.car_id = crs_transaction_temp.car_id',
+				'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
+				'crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id',
+				'crs_user_doc' => 'crs_user_doc.user_doc_id = crs_transaction_temp.user_doc_id',
+				'crs_user' => 'crs_user.user_id = crs_transaction_temp.user_rental_id',
+				'crs_place' => 'crs_place.place_id = crs_transaction_temp.place_id'
+			),
+			'groupBy' => ''
+		);
+		$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+
+		$data['user_type'] = $this->input->post("user_type");
+		$arrayData = array('pathView' => 'phpMailer/sendEmail');
+		$this->load->view($arrayData['pathView'], $data, TRUE);
+	}
+	// ___________________ End sendEmail ____________________
 }

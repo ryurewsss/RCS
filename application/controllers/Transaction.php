@@ -4,7 +4,6 @@ require_once('Main.php');
 
 class Transaction extends Main
 {
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -463,16 +462,86 @@ class Transaction extends Main
 	}
 	// ___________________ End checkTransactionDate ____________________
 
-	// __________________ Start sendEmail __________________
-	public function sendEmail()
+	// __________________ Start emailConfirm __________________
+	public function emailConfirm()
 	{
-		$data['name'] = "Car Rental System";
-		$data['email'] = "rewsirapop@gmail.com";
-		$data['header'] = "HEAD";
-		$data['detail'] = "DETAIL";
-		$arrayData = array('pathView' => 'phpMailer/sendEmail');
-		$json['html'] = $this->load->view($arrayData['pathView'], $data, TRUE);
+		$this->crsModel->deleteOldEmail();
+		$arrayData = array(
+			'tableName' => 'crs_transaction_temp',
+			'colName' => '',
+			'where' => 
+				array(
+					'transaction_temp_id' => $_GET['temp']
+				),
+			'order' => '',
+			'arrayJoinTable' => '',
+			'groupBy' => ''
+		);
+		if($_GET['usertype']==1){
+			$arrayData['where']['transaction_lessor_token'] = $_GET['token'];
+		}else if($_GET['usertype']==2){
+			$arrayData['where']['transaction_rental_token'] = $_GET['token'];
+		}else if($_GET['usertype']==3){
+			$arrayData['where']['transaction_depositor_token'] = $_GET['token'];
+
+		}
+		
+		$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+
+		if($data['select']){
+			$val = $data['select'][0];
+
+			$arrayData = array(
+				'tableName' => 'crs_transaction_temp',
+				'columnIdName' => 'transaction_temp_id',
+				'id' => $_GET['temp']
+			);
+			$this->crsModel->delete($arrayData['tableName'], $arrayData['columnIdName'], $arrayData['id']);
+			
+			$arrayData = array(
+				'tableName' => 'crs_transaction',
+				'colName' => 'MAX(transaction_id) AS transaction_id',
+				'where' =>'',
+				'order' => '',
+				'arrayJoinTable' => '',
+				'groupBy' => ''
+			);
+			$data['max_tran'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+			$data['max_tran'][0]->transaction_id+1;
+
+			$link = "http://127.0.0.1:5000/mining?"
+				.'car_id='.$val->car_id
+				.'&transaction_id='.$data['max_tran'][0]->transaction_id+1
+				.'&user_rental_id='.$val->user_rental_id
+				.'&user_doc_id='.$val->user_doc_id
+				.'&place_id='.$val->place_id
+				.'&transaction_receive_date='.$val->transaction_receive_date
+				.'&transaction_return_date='.$val->transaction_return_date
+				.'&transaction_status='.$val->transaction_status
+				.'&transaction_price='.$val->transaction_price
+				.'&transaction_image='.$val->transaction_image
+			;
+
+			$arrayData = array(
+				'car_id' => $val->car_id,
+				'user_rental_id' => $val->user_rental_id,
+				'user_doc_id' => $val->user_doc_id,
+				'place_id' => $val->place_id,
+				'transaction_receive_date' => $val->transaction_receive_date,
+				'transaction_return_date' => $val->transaction_return_date,
+				'transaction_status' => $val->transaction_status,
+				'transaction_price' => $val->transaction_price,
+				'transaction_rental_approve' => $val->transaction_rental_approve,
+				'transaction_image' => $val->transaction_image,
+				'user_create_id' => $val->user_rental_id,
+				'user_update_id' => $val->user_rental_id
+			);
+			$addedId = $this->crsModel->add('crs_transaction', $arrayData);
+		}
+
+		$data['page_content'] = $this->load->view('phpMailer/emailConfirm', $data, TRUE);
+		$this->load->view('main', $data);
 	}
-	// ___________________ End sendEmail ____________________
+	// ___________________ End emailConfirm ____________________
 	
 }
