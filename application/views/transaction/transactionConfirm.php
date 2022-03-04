@@ -471,7 +471,7 @@ $('#addConfirmRentForm').on('submit', function(event) {
             }).done(function(returnData) {
                 for(var i=1; $("#user_type_id").val()==3 ? i<4:i<3; i++){//ยังไม่รวมฝากเช่า
                     $.ajax({
-                    url: 'sendEmailEdit',
+                    url: 'sendEmail',
                     method: 'POST',
                     dataType: 'json',
                     data: {
@@ -488,7 +488,7 @@ $('#addConfirmRentForm').on('submit', function(event) {
                     showConfirmButton: false,
                     timer: 1000
                 })
-                window.location = "<?php echo base_url().'/Transaction/transaction'; ?>";
+                // window.location = "<?php echo base_url().'/Transaction/transaction'; ?>";
             });
         }
     })

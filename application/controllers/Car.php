@@ -917,7 +917,7 @@ class Car extends Main
 			// 	.'&user_doc_id='.$docId
 			// 	.'&place_id='.$this->input->post('place_id')
 			// 	.'&place_name='.urlencode($this->input->post('place_name'))
-			// 	.'&transaction_receive_date='.$date['startDate'].'_'.$date['startTime']
+				// .'&transaction_receive_date='.$date['startDate'].'_'.$date['startTime']
 			// 	.'&transaction_return_date='.$date['endDate'].'_'.$date['endTime']
 			// 	.'&transaction_status='.'1'
 			// 	.'&transaction_price='.(int)str_replace(',', '', $this->input->post('rentTotal'))

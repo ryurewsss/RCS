@@ -232,13 +232,53 @@ class Transaction extends Main
 		$getData = $this->input->post();
 
 		$arrayData = array(
+			'tableName' => 'crs_transaction',
+			'colName' => '
+				car_id,
+				user_doc_id,
+				user_rental_id,
+				place_id,
+				transaction_id,
+				transaction_receive_date,
+				transaction_return_date,
+				transaction_price,
+				transaction_image',
+			'where' => 
+				array(
+					'transaction_id' => $getData['transaction_id']
+				),
+			'order' => '',
+			'arrayJoinTable' => '',
+			'groupBy' => ''
+		);
+		$result = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+
+		
+		$arrayData = array(
+			'transaction_lessor_token' => uniqid(),
+			'transaction_rental_token' => uniqid(),
+			'transaction_depositor_token' => uniqid(),
 			'transaction_reject_iden' => $getData['transaction_reject_iden'],
 			'transaction_iden_approve' => $getData['reject_iden'],
 			'transaction_reject_transfer' => $getData['transaction_reject_transfer'],
 			'transaction_transfer_approve' => $getData['reject_tran'],
 			'user_lessor_id' => $_SESSION['id'],
-			'user_update_id' => $_SESSION['id']
+			'transaction_lessor_approve' => 0,
+			'transaction_rental_approve' => 0,
+			'transaction_id' => $result[0]->transaction_id,
+			'car_id' => $result[0]->car_id,
+			'user_doc_id' => $result[0]->user_doc_id,
+			'user_rental_id' => $result[0]->user_rental_id,
+			'place_id' => $result[0]->place_id,
+			'transaction_receive_date' => $result[0]->transaction_return_date,
+			'transaction_return_date' => $result[0]->transaction_return_date,
+			'transaction_price' => $result[0]->transaction_price,
+			'transaction_image' => $result[0]->transaction_image
 		);
+		if($getData['user_type_id'] == 3){
+			$arrayData['transaction_depositor_approve'] = 0;
+		}//ถ้าเป็นรถฝากเช่า
+
 		if($getData['reject_iden'] == 1 && $getData['reject_tran'] == 1 ){
 			$arrayData['transaction_status'] = 3;//รอรับรถเช่า
 			$arrayData['transaction_lessor_approve'] = 1;
@@ -246,25 +286,28 @@ class Transaction extends Main
 			$arrayData['transaction_status'] = 2;//เอกสารถูกปฏิเสธ
 			$arrayData['transaction_lessor_approve'] = 0;
 		}
-		$arrayWhere = array('transaction_id' => $getData['transaction_id']);
+
+		$returnData['transaction_temp_id'] = $this->crsModel->add('crs_transaction_temp', $arrayData);
+		
+		// $arrayWhere = array('transaction_id' => $getData['transaction_id']);
 
 			// start blockchain
-			$link = "http://127.0.0.1:5000/mining_transaction?"
-			."transaction_id=".$getData['transaction_id']
-			.'&transaction_reject_iden='.$getData['transaction_reject_iden']
-			.'&transaction_iden_approve='.$getData['reject_iden']
-			.'&transaction_reject_transfer='.$getData['transaction_reject_transfer']
-			.'&transaction_transfer_approve='.$getData['reject_tran']
-			.'&transaction_status='.$arrayData['transaction_status']
-			.'&transaction_lessor_approve='.$arrayData['transaction_lessor_approve']
-			.'&user_lessor_id='.$_SESSION['id']
-			.'&user_update_id='.$_SESSION['id']
-			;
-			$data = file_get_contents($link);
+			// $link = "http://127.0.0.1:5000/mining_transaction?"
+			// ."transaction_id=".$getData['transaction_id']
+			// .'&transaction_reject_iden='.$getData['transaction_reject_iden']
+			// .'&transaction_iden_approve='.$getData['reject_iden']
+			// .'&transaction_reject_transfer='.$getData['transaction_reject_transfer']
+			// .'&transaction_transfer_approve='.$getData['reject_tran']
+			// .'&transaction_status='.$arrayData['transaction_status']
+			// .'&transaction_lessor_approve='.$arrayData['transaction_lessor_approve']
+			// .'&user_lessor_id='.$_SESSION['id']
+			// .'&user_update_id='.$_SESSION['id']
+			// ;
+			// $data = file_get_contents($link);
 			//end blockchain
 
-		$editedId = $this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
-		// $this->output->set_content_type('application/json')->set_output(json_encode($editedId));
+		// $editedId = $this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
+		$this->output->set_content_type('application/json')->set_output(json_encode($returnData));
 	}
 	// ___________________ End editTransactionDetail ____________________
 
@@ -478,55 +521,91 @@ class Transaction extends Main
 				'groupBy' => ''
 			);
 			$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
-			$val = $data['select'][0];
+			if($data['select']){
+				$val = $data['select'][0];
+			}
+
+			$arrayDelete = array(
+				'tableName' => 'crs_transaction_temp',
+				'columnIdName' => 'transaction_temp_id',
+				'id' => $_GET['temp']
+			);
+
 			if($val->transaction_lessor_approve == 1 && $val->transaction_rental_approve == 1 && ($val->transaction_depositor_approve == 1 || $val->transaction_depositor_approve == NULL )){
-			
-				$arrayData = array(
-					'tableName' => 'crs_transaction_temp',
-					'columnIdName' => 'transaction_temp_id',
-					'id' => $_GET['temp']
-				);
-				$this->crsModel->delete($arrayData['tableName'], $arrayData['columnIdName'], $arrayData['id']);
 				
-				$arrayData = array(
-					'tableName' => 'crs_transaction',
-					'colName' => 'MAX(transaction_id) AS transaction_id',
-					'where' =>'',
-					'order' => '',
-					'arrayJoinTable' => '',
-					'groupBy' => ''
-				);
-				$data['max_tran'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
-				$data['max_tran'][0]->transaction_id+1;
+				
+				if($_GET['type'] == 'rent' && $val->transaction_status == 1){//ยืนยันการจอง
+					
+					$this->crsModel->delete($arrayDelete['tableName'], $arrayDelete['columnIdName'], $arrayDelete['id']);
+		
+					$arrayData = array(
+						'tableName' => 'crs_transaction',
+						'colName' => 'MAX(transaction_id) AS transaction_id',
+						'where' =>'',
+						'order' => '',
+						'arrayJoinTable' => '',
+						'groupBy' => ''
+					);
+					$data['max_tran'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
 	
-				$link = "http://127.0.0.1:5000/mining?"
-					.'car_id='.$val->car_id
-					.'&transaction_id='.$data['max_tran'][0]->transaction_id+1
-					.'&user_rental_id='.$val->user_rental_id
-					.'&user_doc_id='.$val->user_doc_id
-					.'&place_id='.$val->place_id
-					.'&transaction_receive_date='.$val->transaction_receive_date
-					.'&transaction_return_date='.$val->transaction_return_date
+
+					$link = "http://127.0.0.1:5000/mining?"
+						.'car_id='.$val->car_id
+						.'&transaction_id='.$data['max_tran'][0]->transaction_id+1
+						.'&user_rental_id='.$val->user_rental_id
+						.'&user_doc_id='.$val->user_doc_id
+						.'&place_id='.$val->place_id
+						.'&transaction_receive_date='.substr($val->transaction_receive_date,0,10).'_'.substr($val->transaction_receive_date,11,5)
+						.'&transaction_return_date='.substr($val->transaction_return_date,0,10).'_'.substr($val->transaction_return_date,11,5)
+						.'&transaction_status='.$val->transaction_status
+						.'&transaction_price='.$val->transaction_price
+						.'&transaction_image='.$val->transaction_image
+					;
+					file_get_contents($link);
+		
+					$arrayData = array(
+						'car_id' => $val->car_id,
+						'user_rental_id' => $val->user_rental_id,
+						'user_doc_id' => $val->user_doc_id,
+						'place_id' => $val->place_id,
+						'transaction_receive_date' => $val->transaction_receive_date,
+						'transaction_return_date' => $val->transaction_return_date,
+						'transaction_status' => $val->transaction_status,
+						'transaction_price' => $val->transaction_price,
+						'transaction_rental_approve' => $val->transaction_rental_approve,
+						'transaction_image' => $val->transaction_image,
+						'user_create_id' => $val->user_rental_id,
+						'user_update_id' => $val->user_rental_id
+					);
+					$this->crsModel->add('crs_transaction', $arrayData);
+				}else if(($_GET['type'] == 'reject' && $val->transaction_status == 2)||($_GET['type'] == 'confirm' && $val->transaction_status == 3)){
+					
+					$this->crsModel->delete($arrayDelete['tableName'], $arrayDelete['columnIdName'], $arrayDelete['id']);
+
+					// start blockchain
+					$link = "http://127.0.0.1:5000/mining_transaction?"
+					."transaction_id=".$val->transaction_id
+					.'&transaction_iden_approve='.$val->transaction_iden_approve
+					.'&transaction_transfer_approve='.$val->transaction_transfer_approve
 					.'&transaction_status='.$val->transaction_status
-					.'&transaction_price='.$val->transaction_price
-					.'&transaction_image='.$val->transaction_image
-				;
-	
-				$arrayData = array(
-					'car_id' => $val->car_id,
-					'user_rental_id' => $val->user_rental_id,
-					'user_doc_id' => $val->user_doc_id,
-					'place_id' => $val->place_id,
-					'transaction_receive_date' => $val->transaction_receive_date,
-					'transaction_return_date' => $val->transaction_return_date,
-					'transaction_status' => $val->transaction_status,
-					'transaction_price' => $val->transaction_price,
-					'transaction_rental_approve' => $val->transaction_rental_approve,
-					'transaction_image' => $val->transaction_image,
-					'user_create_id' => $val->user_rental_id,
-					'user_update_id' => $val->user_rental_id
-				);
-				$addedId = $this->crsModel->add('crs_transaction', $arrayData);
+					.'&transaction_lessor_approve='.$val->transaction_lessor_approve
+					.'&user_lessor_id='.$val->user_lessor_id
+					;
+					file_get_contents($link);
+					// end blockchain
+		
+					$arrayData = array(
+						'transaction_iden_approve' => $val->transaction_iden_approve,
+						'transaction_transfer_approve' => $val->transaction_transfer_approve,
+						'transaction_reject_iden' => $val->transaction_reject_iden,
+						'transaction_reject_transfer' => $val->transaction_reject_transfer,
+						'transaction_status' => $val->transaction_status,
+						'transaction_lessor_approve' => $val->transaction_lessor_approve,
+						'user_lessor_id' => $val->user_lessor_id
+					);
+					$arrayWhere = array('transaction_id' => $val->transaction_id);
+					$this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
+				}
 			}
 		}
 
@@ -534,5 +613,53 @@ class Transaction extends Main
 		$this->load->view('main', $data);
 	}
 	// ___________________ End emailConfirm ____________________
+
+	// __________________ Start sendEmail __________________
+	public function sendEmail()
+	{
+		$arrayData = array(
+			'tableName' => 'crs_transaction_temp',
+			'colName' => '
+				crs_transaction_temp.transaction_temp_id,
+				crs_transaction_temp.transaction_lessor_token,
+				crs_transaction_temp.transaction_rental_token,
+				crs_transaction_temp.transaction_depositor_token,
+				crs_transaction_temp.transaction_receive_date,
+				crs_transaction_temp.transaction_return_date,
+				crs_transaction_temp.transaction_price,
+				crs_transaction_temp.transaction_image,
+				crs_transaction_temp.transaction_status,
+				crs_car.car_registration,
+				crs_car.car_price,
+				crs_car.car_image,
+				crs_car_brand.car_brand_name_en,
+				crs_car_model.car_model_name,
+				crs_user_doc.user_doc_id,
+				crs_user_doc.user_doc_iden_image,
+				crs_user_doc.user_doc_license_image,
+				crs_user.user_email,
+				crs_user.user_fname,
+				crs_user.user_lname,
+				crs_user.user_phone,
+				crs_place.place_name',
+			'where' => 'crs_transaction_temp.transaction_temp_id = '. $this->input->post("tran_id"),
+			'order' => '',
+			'arrayJoinTable' => array(
+				'crs_car' => 'crs_car.car_id = crs_transaction_temp.car_id',
+				'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
+				'crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id',
+				'crs_user_doc' => 'crs_user_doc.user_doc_id = crs_transaction_temp.user_doc_id',
+				'crs_user' => 'crs_user.user_id = crs_transaction_temp.user_rental_id',
+				'crs_place' => 'crs_place.place_id = crs_transaction_temp.place_id'
+			),
+			'groupBy' => ''
+		);
+		$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+
+		$data['user_type'] = $this->input->post("user_type");
+		$arrayData = array('pathView' => 'phpMailer/sendEmail');
+		$this->load->view($arrayData['pathView'], $data, TRUE);
+	}
+	// ___________________ End sendEmail ____________________
 	
 }

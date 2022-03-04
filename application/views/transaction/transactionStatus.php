@@ -19,9 +19,17 @@ $emailStatus = array(
     'ผิดพลาด',
     'กรุณายืนยันการจอง',
     'เอกสารถูกปฏิเสธกรุณายืนยัน',
-    'เอกสารถูกผ่านกรุณายืนยัน',
+    'เอกสารผ่านกรุณายืนยัน',
     'ยืนยันการรับรถเช่า',
     'ยืนยันการคืนรถเช่า',
+);
+$type = array(
+    'error',
+    'rent',
+    'reject',
+    'confirm',
+    'receive',
+    'return',
 );
 $contact = array(
     'email' => 'carrentsystemSE8@gmail.com',
