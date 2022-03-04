@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 22, 2022 at 05:42 PM
+-- Generation Time: Mar 04, 2022 at 02:38 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -33,7 +33,7 @@ CREATE TABLE `crs_car` (
   `car_model_id` int(10) NOT NULL,
   `car_owner_id` int(10) NOT NULL,
   `car_price` int(10) NOT NULL,
-  `car_promotion` int(10) NOT NULL,
+  `car_status` varchar(10) NOT NULL,
   `car_image` varchar(100) NOT NULL,
   `car_proof_image` varchar(100) NOT NULL,
   `create_date` datetime NOT NULL DEFAULT current_timestamp(),
@@ -46,15 +46,15 @@ CREATE TABLE `crs_car` (
 -- Dumping data for table `crs_car`
 --
 
-INSERT INTO `crs_car` (`car_id`, `car_registration`, `car_model_id`, `car_owner_id`, `car_price`, `car_promotion`, `car_image`, `car_proof_image`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
-(1, 'ฎง 9999 กรุงเทพมหานคร', 1, 1, 2200, 0, 'hondabrio.jpg', 'hondabrio.jpg', '2022-01-06 11:35:00', '2022-01-06 11:35:00', 1, 1),
-(2, 'กก 1150 ชลบุรี', 3, 1, 2600, 0, 'MITSUBISHI_PAJERO.jpg', 'MITSUBISHI_PAJERO.jpg', '2022-01-06 21:26:00', '2022-01-06 21:33:02', 1, 1),
-(28, 'สส 5510 เชียงใหม่', 18, 1, 3000, 0, 'brioamaze2.jpg', 'brioamaze2.jpg', '2022-01-06 22:18:01', '2022-01-14 14:44:45', 1, 1),
-(31, 'พก 7412 ชลบุรี', 20, 1, 2100, 0, 'fortuner_11.jpg', 'fortuner_11.jpg', '2022-02-20 16:05:46', '2022-02-20 16:05:46', 1, 1),
-(32, 'รด 9412 สมุทรปราการ', 21, 1, 2000, 0, 'vios20191.jpg', 'vios20191.jpg', '2022-02-20 16:06:57', '2022-02-20 16:06:57', 1, 1),
-(33, 'คฟ 7456 ชลบุรี', 22, 1, 1800, 0, 'TOYOTA_SIENTA_2020.jpg', 'TOYOTA_SIENTA_2020.jpg', '2022-02-20 16:11:05', '2022-02-20 16:11:05', 1, 1),
-(34, 'กอ 1254 กรุงเทพมหานคร', 23, 1, 2800, 0, 'HONDA_MOBILIO_2019_RS.jpg', 'HONDA_MOBILIO_2019_RS.jpg', '2022-02-20 16:12:25', '2022-02-20 16:12:25', 1, 1),
-(35, 'รย 5412 ชลบุรี', 24, 1, 2500, 0, 'mazda31.jpg', 'mazda31.jpg', '2022-02-20 16:16:29', '2022-02-20 16:46:12', 1, 1);
+INSERT INTO `crs_car` (`car_id`, `car_registration`, `car_model_id`, `car_owner_id`, `car_price`, `car_status`, `car_image`, `car_proof_image`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
+(1, 'ฎง 9999 กรุงเทพมหานคร', 1, 1, 2200, '1', 'hondabrio.jpg', 'hondabrio.jpg', '2022-01-06 11:35:00', '2022-03-04 20:37:10', 1, 1),
+(2, 'กก 1150 ชลบุรี', 3, 1, 2600, '1', 'MITSUBISHI_PAJERO.jpg', 'MITSUBISHI_PAJERO.jpg', '2022-01-06 21:26:00', '2022-03-04 20:37:13', 1, 1),
+(28, 'สส 5510 เชียงใหม่', 18, 1, 3000, '1', 'brioamaze2.jpg', 'brioamaze2.jpg', '2022-01-06 22:18:01', '2022-03-04 20:37:14', 1, 1),
+(31, 'พก 7412 ชลบุรี', 20, 1, 2100, '1', 'fortuner_11.jpg', 'fortuner_11.jpg', '2022-02-20 16:05:46', '2022-03-04 20:37:15', 1, 1),
+(32, 'รด 9412 สมุทรปราการ', 21, 1, 2000, '1', 'vios20191.jpg', 'vios20191.jpg', '2022-02-20 16:06:57', '2022-03-04 20:37:17', 1, 1),
+(33, 'คฟ 7456 ชลบุรี', 22, 1, 1800, '1', 'TOYOTA_SIENTA_2020.jpg', 'TOYOTA_SIENTA_2020.jpg', '2022-02-20 16:11:05', '2022-03-04 20:37:18', 1, 1),
+(34, 'กอ 1254 กรุงเทพมหานคร', 23, 1, 2800, '1', 'HONDA_MOBILIO_2019_RS.jpg', 'HONDA_MOBILIO_2019_RS.jpg', '2022-02-20 16:12:25', '2022-03-04 20:37:23', 1, 1),
+(35, 'รย 5412 ชลบุรี', 24, 1, 2500, '1', 'mazda31.jpg', 'mazda31.jpg', '2022-02-20 16:16:29', '2022-03-04 20:37:26', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -158,11 +158,12 @@ CREATE TABLE `crs_transaction` (
   `transaction_return_date` datetime NOT NULL,
   `transaction_status` varchar(30) NOT NULL,
   `transaction_price` int(10) NOT NULL,
-  `transaction_lessor_approve` varchar(10) NOT NULL,
-  `transaction_rental_approve` varchar(10) NOT NULL,
+  `transaction_lessor_approve` varchar(1) NOT NULL,
+  `transaction_rental_approve` varchar(1) NOT NULL,
+  `transaction_depositor_approve` varchar(1) NOT NULL,
   `transaction_image` varchar(100) NOT NULL,
-  `transaction_iden_approve` varchar(10) NOT NULL,
-  `transaction_transfer_approve` varchar(10) NOT NULL,
+  `transaction_iden_approve` varchar(1) NOT NULL,
+  `transaction_transfer_approve` varchar(1) NOT NULL,
   `transaction_reject_iden` varchar(100) NOT NULL,
   `transaction_reject_transfer` varchar(100) NOT NULL,
   `create_date` datetime NOT NULL DEFAULT current_timestamp(),
@@ -175,21 +176,34 @@ CREATE TABLE `crs_transaction` (
 -- Dumping data for table `crs_transaction`
 --
 
-INSERT INTO `crs_transaction` (`transaction_id`, `car_id`, `user_lessor_id`, `user_rental_id`, `user_doc_id`, `place_id`, `transaction_receive_date`, `transaction_return_date`, `transaction_status`, `transaction_price`, `transaction_lessor_approve`, `transaction_rental_approve`, `transaction_image`, `transaction_iden_approve`, `transaction_transfer_approve`, `transaction_reject_iden`, `transaction_reject_transfer`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
-(11, 28, 0, 3, 14, 2, '2022-02-14 11:00:00', '2022-02-15 11:00:00', '1', 3000, '', '1', '300px-Scared_Hamster2.jpg', '', '', '', '', '2022-02-14 11:51:39', '2022-02-14 11:51:39', 3, 3),
-(12, 2, 0, 3, 14, 2, '2022-02-14 11:00:00', '2022-02-15 11:00:00', '1', 2600, '', '1', 'tran_img3.PNG', '', '', '', '', '2022-02-14 11:52:47', '2022-02-14 11:52:47', 3, 3),
-(13, 2, 0, 3, 14, 2, '2022-02-14 11:00:00', '2022-02-15 11:00:00', '1', 2600, '', '1', 'tran_img4.PNG', '', '', '', '', '2022-02-14 11:53:09', '2022-02-14 11:53:09', 3, 3),
-(14, 2, 0, 3, 14, 2, '2022-02-14 11:00:00', '2022-02-15 11:00:00', '1', 2600, '', '1', 'tran_img5.PNG', '', '', '', '', '2022-02-14 11:53:31', '2022-02-14 11:53:31', 3, 3),
-(15, 2, 0, 3, 14, 1, '2022-02-14 11:00:00', '2022-02-15 11:00:00', '1', 2600, '', '1', '300px-Scared_Hamster3.jpg', '', '', '', '', '2022-02-14 11:54:24', '2022-02-14 11:54:24', 3, 3),
-(16, 2, 0, 3, 14, 2, '2022-02-14 11:00:00', '2022-02-15 11:00:00', '1', 2600, '', '1', 'tran_img6.PNG', '', '', '', '', '2022-02-14 11:55:02', '2022-02-14 11:55:02', 3, 3),
-(17, 28, 0, 3, 14, 2, '2022-02-15 06:00:00', '2022-02-16 06:00:00', '1', 3000, '', '1', 'tran_img8.PNG', '', '', '', '', '2022-02-14 20:18:09', '2022-02-14 20:18:09', 3, 3),
-(18, 28, 0, 3, 14, 2, '2022-02-14 06:00:00', '2022-02-15 06:00:00', '1', 3000, '', '1', 'tran_img9.PNG', '', '', '', '', '2022-02-14 20:24:17', '2022-02-14 20:24:17', 3, 3),
-(19, 28, 0, 3, 14, 2, '2022-02-14 06:00:00', '2022-02-15 06:00:00', '1', 3000, '', '1', 'tran_img10.PNG', '', '', '', '', '2022-02-14 20:25:20', '2022-02-14 20:25:20', 3, 3),
-(20, 28, 0, 3, 14, 2, '2022-02-14 06:00:00', '2022-02-15 06:00:00', '1', 3000, '', '1', '300px-Scared_Hamster4.jpg', '', '', '', '', '2022-02-14 20:25:42', '2022-02-14 20:25:42', 3, 3),
-(21, 28, 0, 3, 14, 2, '2022-02-23 06:00:00', '2022-02-23 06:00:00', '1', 3000, '', '1', '300px-Scared_Hamster5.jpg', '', '', '', '', '2022-02-14 20:27:47', '2022-02-14 20:27:47', 3, 3),
-(22, 28, 0, 3, 14, 2, '2022-02-23 06:00:00', '2022-02-23 06:00:00', '1', 3000, '', '1', '300px-Scared_Hamster6.jpg', '', '', '', '', '2022-02-14 20:27:55', '2022-02-14 20:27:55', 3, 3),
-(23, 28, 0, 3, 14, 2, '2022-02-16 06:00:00', '2022-02-17 06:00:00', '1', 3000, '', '1', '300px-Scared_Hamster8.jpg', '', '', '', '', '2022-02-14 20:29:40', '2022-02-14 20:29:40', 3, 3),
-(24, 28, 0, 3, 14, 2, '2022-03-07 06:00:00', '2022-03-09 06:00:00', '1', 6000, '', '1', '300px-Scared_Hamster10.jpg', '', '', '', '', '2022-02-14 21:41:52', '2022-02-14 21:41:52', 3, 3);
+INSERT INTO `crs_transaction` (`transaction_id`, `car_id`, `user_lessor_id`, `user_rental_id`, `user_doc_id`, `place_id`, `transaction_receive_date`, `transaction_return_date`, `transaction_status`, `transaction_price`, `transaction_lessor_approve`, `transaction_rental_approve`, `transaction_depositor_approve`, `transaction_image`, `transaction_iden_approve`, `transaction_transfer_approve`, `transaction_reject_iden`, `transaction_reject_transfer`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
+(1, 35, 0, 1, 15, 2, '2022-03-06 06:00:00', '2022-03-07 06:00:00', '1', 2500, '', '1', '', 'tran_img2.PNG', '', '', '', '', '2022-03-04 17:07:14', '2022-03-04 17:07:14', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `crs_transaction_temp`
+--
+
+CREATE TABLE `crs_transaction_temp` (
+  `transaction_temp_id` int(10) NOT NULL,
+  `transaction_depositor_token` varchar(30) NOT NULL,
+  `transaction_lessor_token` varchar(30) NOT NULL,
+  `transaction_rental_token` varchar(30) NOT NULL,
+  `transaction_depositor_approve` varchar(1) DEFAULT NULL,
+  `transaction_rental_approve` varchar(1) DEFAULT NULL,
+  `transaction_lessor_approve` varchar(1) DEFAULT NULL,
+  `car_id` int(10) NOT NULL,
+  `user_rental_id` int(10) NOT NULL,
+  `user_doc_id` int(10) NOT NULL,
+  `place_id` int(10) NOT NULL,
+  `transaction_receive_date` datetime NOT NULL,
+  `transaction_return_date` datetime NOT NULL,
+  `transaction_status` varchar(30) NOT NULL,
+  `transaction_price` int(10) NOT NULL,
+  `transaction_image` varchar(100) NOT NULL,
+  `create_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -228,8 +242,8 @@ CREATE TABLE `crs_user` (
 --
 
 INSERT INTO `crs_user` (`user_id`, `user_type_id`, `user_email`, `user_password`, `user_fname`, `user_lname`, `user_phone`, `user_image`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
-(1, 1, 'admin@gmail.com', '$2y$10$Rl73nMUKaOFGoE9k7vpEtOYL21FJpMmeLUsWT49eciWDzy99rFrUe', 'Sirapop', 'Koonsinchai', '0809425365', '5ebbaa1dedc5d_thumb900.jpg', '2022-01-06 11:23:14', '2022-01-24 15:37:04', 1, 1),
-(2, 2, 'member@gmail.com', '$2y$10$A1F5iYn39ogCH/Kyi3oTjOYbMpTggw5X1ETsz8joyOwHG.wXGAw7O', 'Tiwa', 'Singsong', '0817711410', NULL, '2022-01-26 14:31:17', '2022-01-26 15:43:39', 0, 0),
+(1, 1, 'rewsirapop@gmail.com', '$2y$10$Rl73nMUKaOFGoE9k7vpEtOYL21FJpMmeLUsWT49eciWDzy99rFrUe', 'Sirapop', 'Koonsinchai', '0809425365', '5ebbaa1dedc5d_thumb900.jpg', '2022-01-06 11:23:14', '2022-02-28 14:56:47', 1, 1),
+(2, 2, 'tiwaza13@gmail.com', '$2y$10$A1F5iYn39ogCH/Kyi3oTjOYbMpTggw5X1ETsz8joyOwHG.wXGAw7O', 'Tiwa', 'Singsong', '0817711410', NULL, '2022-01-26 14:31:17', '2022-02-28 15:08:33', 0, 0),
 (3, 2, 'member2@gmail.com', '$2y$10$HIQDSNUqsB/IazU0rPITieDkhJsOaIgcVM3FTzECTN.FwN1qPwWHG', 'Sirapop', 'Koonsin', '0809425365', '300px-Scared_Hamster.jpg', '2022-01-31 16:26:40', '2022-02-11 11:44:38', 0, 3);
 
 -- --------------------------------------------------------
@@ -254,7 +268,8 @@ CREATE TABLE `crs_user_doc` (
 --
 
 INSERT INTO `crs_user_doc` (`user_doc_id`, `user_id`, `user_doc_iden_image`, `user_doc_license_image`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
-(14, 3, '1gz2q21.jpg', '2peaceHam2.jpg', '2022-02-14 11:51:39', '2022-02-14 20:18:08', 3, 3);
+(14, 3, 'id_card.PNG', 'driving_img.PNG', '2022-02-14 11:51:39', '2022-02-25 17:30:11', 3, 3),
+(15, 1, 'id_card1.PNG', 'driving_img1.PNG', '2022-02-25 17:39:56', '2022-03-04 00:47:41', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -315,6 +330,12 @@ ALTER TABLE `crs_transaction`
   ADD PRIMARY KEY (`transaction_id`);
 
 --
+-- Indexes for table `crs_transaction_temp`
+--
+ALTER TABLE `crs_transaction_temp`
+  ADD PRIMARY KEY (`transaction_temp_id`);
+
+--
 -- Indexes for table `crs_transaction_user`
 --
 ALTER TABLE `crs_transaction_user`
@@ -371,7 +392,13 @@ ALTER TABLE `crs_place`
 -- AUTO_INCREMENT for table `crs_transaction`
 --
 ALTER TABLE `crs_transaction`
-  MODIFY `transaction_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `transaction_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `crs_transaction_temp`
+--
+ALTER TABLE `crs_transaction_temp`
+  MODIFY `transaction_temp_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `crs_user`
@@ -383,7 +410,7 @@ ALTER TABLE `crs_user`
 -- AUTO_INCREMENT for table `crs_user_doc`
 --
 ALTER TABLE `crs_user_doc`
-  MODIFY `user_doc_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `user_doc_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `crs_user_type`
