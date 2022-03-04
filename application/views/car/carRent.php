@@ -339,6 +339,7 @@
                                 </div>
                             </div>
                                 <div class="row">
+                                    <input type="hidden" name="user_type_id" id="user_type_id" value="<?php echo $val->user_type_id; ?>">
                                     <input type="hidden" name="car_id" id="car_id" value="<?php echo $val->car_id; ?>">
                                     <input type="hidden" name="car_registration" id="car_registration" value="<?php echo $val->car_registration; ?>">
                                     <input type="hidden" name="user_doc_id" id="user_doc_id" value="<?php echo $val_user?$val_user->user_doc_id :0; ?>" />
@@ -430,7 +431,7 @@ $('#addCarRentForm').on('submit', function(event) {
                 cache: false,  
                 processData:false,
             }).done(function(returnData) {
-                for(var i=1; i<3; i++){//ยังไม่รวมฝากเช่า
+                for(var i=1; $("#user_type_id").val()==3 ? i<4:i<3; i++){//ยังไม่รวมฝากเช่า
                     $.ajax({
                     url: 'sendEmail',
                     method: 'POST',
@@ -439,19 +440,17 @@ $('#addCarRentForm').on('submit', function(event) {
                         tran_id: returnData.transaction_temp_id,
                         user_type: i
                     }, success: function (returnData) {
-                        if(i==2){
-                            Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Save Complete',
-                            showConfirmButton: false,
-                            timer: 1000
-                        })
-                        window.location = "<?php echo base_url(); ?>";
-                        }
                     }
                     });
                 }
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Save Complete',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+                window.location = "<?php echo base_url(); ?>";
             });
         }
     })

@@ -535,9 +535,11 @@ class Car extends Main
 			'colName' => '
 				crs_car.car_id,
 				crs_car.car_registration,
+				crs_car.car_owner_id,
 				crs_car.car_price,
 				crs_car.car_image,
-				crs_car_model.car_model_id, 
+				crs_user.user_type_id,
+				crs_car_model.car_model_id,
 				crs_car_model.car_model_name, 
 				crs_car_model.car_model_feature, 
 				crs_car_model.car_model_description, 
@@ -547,6 +549,7 @@ class Car extends Main
 			'order' => '',
 			'arrayJoinTable' => array(
 				'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
+				'crs_user' => 'crs_user.user_id = crs_car.car_owner_id',
 				'crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id'
 			),
 			'groupBy' => ''
@@ -888,6 +891,8 @@ class Car extends Main
 				'transaction_lessor_token' => uniqid(),
 				'transaction_rental_token' => uniqid(),
 				'transaction_depositor_token' => uniqid(),
+				'transaction_lessor_approve' => 0,
+				'transaction_rental_approve' => 0,
 				'car_id' => $this->input->post('car_id'),
 				'user_rental_id' => $_SESSION['id'],
 				'user_doc_id' => $docId,
@@ -898,6 +903,10 @@ class Car extends Main
 				'transaction_price' => (int)str_replace(',', '', $this->input->post('rentTotal')),
 				'transaction_image' => $filename['transaction_upload']
 			);
+			if($this->input->post('user_type_id') == 3){
+				$arrayData['transaction_depositor_approve'] = 0;
+			}//ถ้าเป็นรถฝากเช่า
+
 			$returnData['transaction_temp_id'] = $this->crsModel->add('crs_transaction_temp', $arrayData);
 				//start blockchain
 			// $link = "http://127.0.0.1:5000/mining?"
@@ -927,7 +936,6 @@ class Car extends Main
 	// __________________ Start sendEmail __________________
 	public function sendEmail()
 	{
-
 		$arrayData = array(
 			'tableName' => 'crs_transaction_temp',
 			'colName' => '

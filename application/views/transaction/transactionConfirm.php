@@ -321,6 +321,7 @@
                                     <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab('setDate')">&laquo; ย้อนกลับ</button>
                                 </div>
                                 <div class="col-6 text-center">
+                                    <input type="hidden" name="inputData[]" id="user_type_id" value="<?php echo $user_type[0]->user_type_id; ?>">
                                     <input type="hidden" name="inputData[]" id="transaction_id" value="<?php echo $val->transaction_id; ?>">
                                     <button type="submit" style="margin:auto; width: 160px;" class="btn btn-success d-none d-lg-block m-l-12" <?php echo $val->transaction_status == 5 ? 'disabled' : '' ; ?>>ยืนยันการตรวจสอบ</button>
                                 </div>
@@ -468,6 +469,18 @@ $('#addConfirmRentForm').on('submit', function(event) {
                 method:"POST",  
                 data:formData
             }).done(function(returnData) {
+                for(var i=1; $("#user_type_id").val()==3 ? i<4:i<3; i++){//ยังไม่รวมฝากเช่า
+                    $.ajax({
+                    url: 'sendEmailEdit',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        tran_id: returnData.transaction_temp_id,
+                        user_type: i
+                    }, success: function (returnData) {
+                    }
+                    });
+                }
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
@@ -476,7 +489,6 @@ $('#addConfirmRentForm').on('submit', function(event) {
                     timer: 1000
                 })
                 window.location = "<?php echo base_url().'/Transaction/transaction'; ?>";
-                // $('#addConfirmRentForm form')[0].reset();
             });
         }
     })

@@ -327,6 +327,7 @@
                                     <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab('uploadDoc')">&laquo; ย้อนกลับ</button>
                                 </div>
                                 <div class="col-6 text-center">
+                                    <input type="hidden" name="user_type_id" id="user_type_id" value="<?php echo $user_type[0]->user_type_id; ?>">
                                     <input type="hidden" name="transaction_id" id="transaction_id" value="<?php echo $val->transaction_id; ?>">
                                     <input type="hidden" name="user_doc_id" id="user_doc_id" value="<?php echo $val->user_doc_id; ?>">
                                     <input type="hidden" name="old_iden_upload" id="old_iden_upload" value="<?php echo $val->user_doc_iden_image; ?>">
@@ -369,6 +370,18 @@ $('#addConfirmRentForm').on('submit', function(event) {
                 cache: false,  
                 processData:false,  
             }).done(function(returnData) {
+                for(var i=1; $("#user_type_id").val()==3 ? i<4:i<3; i++){//ยังไม่รวมฝากเช่า
+                    $.ajax({
+                    url: 'sendEmailEdit',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        tran_id: returnData.transaction_temp_id,
+                        user_type: i
+                    }, success: function (returnData) {
+                    }
+                    });
+                }
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
