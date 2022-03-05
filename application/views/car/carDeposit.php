@@ -1,0 +1,592 @@
+<style>
+.showCarTable img{
+    max-width: 400px;
+    max-height: 400px;
+
+    width: auto;
+    height: auto;
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.carBlock{
+    height: auto;
+    width: auto;
+    position: relative;
+    margin-bottom: 20px;
+}
+.text-blue{
+    color:blue;
+}
+.doc_image{
+    max-width: 400px;
+    max-height: 400px;
+}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+.car_image{
+    width: 50%;
+    max-width: 250px;
+    max-height: 250px;
+    height: auto;
+}
+</style>
+<?php 
+    // print_r($select); 
+    $val = $select[0];
+    // var_dump($user);
+    if($user){
+        $val_user = $user[0];
+    }else{
+        $val_user = $user;//false
+    }
+    // if($check_date){
+    //     $val_check_date = $check_date[0];
+    // }else{
+    //     $val_check_date = $check_date;//false
+    // }
+    // var_dump($val_check_date);
+
+?>
+<div class="card">
+    <div class="card-header bg-dark">
+        <div class="row">
+            <a class="m-b-0 text-white" style="font-size: 23px; margin-left: 10px;">ข้อมูลรถฝากเช่า</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="tab">
+            <button class="tablinks active" id="setDate2" onclick="openTab('setDate')">กำหนดวันเวลา</button>
+            <button class="tablinks" id="uploadDoc2" onclick="openTab('uploadDoc')">อัปโหลดเอกสาร</button>
+            <button class="tablinks" id="uploadPay2" onclick="openTab('uploadPay')">อัปโหลดหลักฐานการโอนเงิน</button>
+        </div>
+        <form id="addCarDepositForm" method="post" enctype="multipart/form-data">
+            <div id="setDate" class="tabcontent" style="display: block;">
+                <div class="col-xs-12 col-md-12 showCarTable" style="user-select: auto;">
+                    <div class="row flex-row" style="user-select: auto;">
+                        <div class="col-xs-12 col-sm-7" style="user-select: auto;"><br>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h2 class="text-black" style="user-select: auto;"><b>ข้อมูลรถฝากเช่า</b></h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h3 class="text-black" style="user-select: auto;"><b>วันเวลาและสถานที่</b></h3>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="row">
+                                <div class="col-4">
+                                    <h4 >ทะเบียนรถยนต์ <a style="color: red;"> *</a></h4>
+                                </div>  : &ensp;
+                                <input type="text" style="width: 250px; text-align: center;" class="form-control" name="car_registration" id="car_registration">
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-4">
+                                    <h4 >ยี่ห้อรถยนต์ <a style="color: red;"> *</a></h4>
+                                </div>  : &ensp;
+                                <select style="width: 250px;" id="car_brand_id" class="form-control form-control-line" name="car_brand_id">
+                                    <option disabled selected>เลือกยี่ห้อรถยนต์</option>
+                                    <?php
+                                    if (isset($select)) {
+                                        foreach ($select as $key => $val) {
+                                            echo "<option value=" . $val->car_brand_id . ">" . $val->car_brand_name_en . "</option>";
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-4">
+                                    <h4 >รุ่นรถยนต์ <a style="color: red;"> *</a></h4>
+                                </div>  : &ensp;
+                                <select style="width: 250px;" id="car_model_id" class="form-control form-control-line" name="car_model_id">
+                                    <option disabled selected>เลือกรุ่นรถยนต์</option>
+                                </select>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-4">
+                                    <h4 >ราคาต่อวัน <a style="color: red;"> *</a></h4>
+                                </div>  : &ensp;
+                                <input type="text" style="width: 250px; text-align: center;" class="form-control" name="car_price" id="car_price" value="" />
+                                <h5 style="margin-top:10px;">&ensp; บาท/วัน</h5>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-4">
+                                    <h4 >รูปรถยนต์ <a style="color: red;"> *</a></h4>
+                                </div>  : &ensp;
+                                <input type="file" style="width: 250px;" class="form-control" name="car_deposit_upload" id="car_deposit_upload" onchange="readURL(this,'deposit'); src='' ">
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-1"></div>
+                                    <img class="doc_image" id="car_deposit_image" src="#" alt="your image" hidden/>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <button type="button" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12" onclick="openTab('uploadDoc')">ยืนยันการฝากเข่า &raquo;</button>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="uploadDoc" class="tabcontent">
+                <div class="col-xs-12 col-md-12 showCarTable" style="user-select: auto;">
+                    <div class="row flex-row" style="user-select: auto;">
+                        <div class="col-xs-12 col-sm-12" style="user-select: auto;">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h2 class="text-black" style="user-select: auto;"><b>อัปโหลดเอกสาร</b></h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h3 class="text-black" style="user-select: auto;"><b>สำเนาเอกสารของรถยนต์</b></h3>
+                                </div>
+                            </div>
+                            
+                            <!-- <br><div class="row">
+                                <div class="col-5 text-center">
+                                    <h4 >เอกสารระบุความเป็นเจ้าของ <br>(ทะเบียนรถ) </h4>
+                                </div>
+                                <div class="col-5 text-center">
+                                    <input type="file" class="form-control" name="iden_upload" id="iden_upload" onchange="readURL(this,'iden'); src='' ">
+                                </div>
+                            </div>
+                            <br><div class="row">
+                                <div class="col-12 text-center"></div>
+                                <?php if ($val_user){?>
+                                    <img class="doc_image" id="iden_image" src="<?php echo base_url('img/user_doc_img'); ?>/<?php echo $val_user->user_doc_iden_image; ?>"/>
+                                <?php }else{ ?>
+                                    <img class="doc_image" id="iden_image" src="#" alt="your image" hidden/>
+                                <?php } ?>
+                            </div> -->
+
+                            <br><div class="row">
+                                <div class="col-5 text-center">
+                                    <h4 >เอกสารระบุความเป็นเจ้าของ <br>(เล่มรถยนต์) </h4>
+                                </div>
+                                <div class="col-5 text-center">
+                                    <input type="file" class="form-control" name="license_upload" id="license_upload" onchange="readURL(this,'license'); src='' ">
+                                </div>
+                            </div>
+                            <br><div class="row">
+                                <div class="col-12 text-center"></div>
+                                <!-- <img class="doc_image" id="license_image" src="#" alt="your image" hidden/> -->
+                                <!-- <img class="doc_image" id="license_image" src="<?php echo base_url('img/user_doc_img'); ?>/<?php echo $val_user->user_doc_license_image; ?>"/> -->
+                                <!-- <?php if ($val_user){?>
+                                    <img class="doc_image" id="license_image" src="<?php echo base_url('img/user_doc_img'); ?>/<?php echo $val_user->user_doc_license_image; ?>"/>
+                                <?php }else{ ?> -->
+                                    <img class="doc_image" id="license_image" src="#" alt="your image" hidden/>
+                                <!-- <?php } ?> -->
+                            </div>
+                            <br><br><br>
+                            <div class="row">
+                                <div class="col-6 text-center">
+                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab('setDate')">&laquo; ย้อนกลับ</button>
+                                </div>
+                                <div class="col-6 text-center">
+                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-success d-none d-lg-block m-l-12" onclick="openTab('uploadPay')">ถัดไป &raquo;</button>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="uploadPay" class="tabcontent">
+                <div class="col-xs-12 col-md-12 showCarTable" style="user-select: auto;">
+                    <div class="row flex-row" style="user-select: auto;">
+                        <div class="col-xs-12 col-sm-12" style="user-select: auto;">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h2 class="text-black" style="user-select: auto;"><b>ยืนยันข้อตกลง</b></h2>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <h2 class="text-black" style="user-select: auto;"><b>เงื่อนไขการฝากเช่า</b></h2>
+                                </div>
+                            </div>
+                            <br><div class="row">
+                                <div class="col-12">
+                                    <h6>1.เงื่อนไขการใช้บริการของบริษัท ชิปป๊อป จำกัด ฉบับนี้มีวัตถุประสงค์เพื่อแจ้งให้ทราบถึงสิทธิและหน้าที่ตามกฎหมายอันพึ่งต้องปฎิบัติตาม</h6>
+                                    <h6>2.การสมัครเข้าใช้บริการ การยอมรับข้อตกลง เงื่อนไขการใช้บริการ และนโยบายความเป็นส่วนตัวต่างๆ ถือว่าผู้ใช้บริการยอมรับได้ว่า อ่านและเข้าใจพร้อมทั้งตกลงยินยอมตามข้อตกลง เงื่อนไขการใช้บริการ นโยบายความเป็นส่วนตัวและหรือข้อบังคับอื่นใดแล้วแต่กรณี</h6>
+                                    <h6>3.ผู้ใช้บริการต้องให้ข้อมูลที่ถูกต้องและเป็นจริงทุกประการแก่ผู้ให้บริการ เพื่อประโยชน์ในการให้บริการขนส่งในบางกรณีผู้ให้บริการ อาจร้องขอเอกสารเพิ่มเติมเพื่อยืนยันข้อมูลต่างๆและผู้ใช้บริการยอมรับที่ต้องปฎิบัติตามคำร้องขอ</h6>
+                                    <h6>4.ผู้ให้บริการไม่อนุญาติให้นำเข้าและหรือส่งออกซึ่งข้อมูลใดๆ และ หรือเอกสารใดๆเข้ามาในเวบไซด์โดยประการที่อาจทำให้เกิดความเสียหายแก่อุปกรณ์ ฮาร์ดแวร์ หรือ ซอฟท์แวร์ อันเป็นความผิดตามกฎหมาย</h6>
+                                    <h6>5.ผู้ใช้บริการต้องไม่พยายามหรือกระทำการใดๆที่เป็นอันตรายต่อความปลอดภัยของระบบคอมพิวเตอร์หรือระบบเน็ตเวิร์ค ซึ่งหมายรวมถึงการกระทำผิดใดๆตามที่กฎหมายกำหนด</h6>
+                                    <h6>6.หากผู้ใช้บริการกำหนดให้บุคคลภายนอกซึ่งไม่ได้มีส่วนร่วมในการดูแลจัดการบัญชีของท่าน ผู้ให้บริการจะถือว่าการปฏิบัติของบุคคลภายนอกดังกล่าวคือการปฏิบัติของผู้ใช้บริการ หากการปฏิบัติของบุคคลดังกล่าวก่อให้เกิดความเสียหายหรือการเสียผลประโยชน์แก่ท่าน ผู้ให้บริการจะไม่รับผิดชอบใดๆทั้งสิ้น</h6>
+                                    <h6>7.ผู้ให้บริการไม่อนุญาติให้ผู้ใช้บริการโอนสิทธิและหน้าที่ภายใต้ข้อตกลง เงื่อนไขการใช้บริการ และนโยบายความเป็นส่วนตัวแก่บุคคลและหรือนิติบุคคลอื่น โดยเด็ดขาด</h6>
+                                    <h6>8.ข้อมูลส่วนบุคคลของผู้ใช้บริการ จะไม่เปิดเผยความลับหรือข้อมูลส่วนบุคคลของท่านให้แก่บุคคลภายนอกหรือองค์กรอื่นใดไม่ว่าเพื่อวัตถุประสงค์ใดๆ เว้นแต่
+                                            1.ได้รับความยินยอมจากผู้ใช้บริการ
+                                            2.กระทำการตามที่กฎหมายบังคับ และหรือตามคำสั่งหรือหมายของศาล เป็นต้น
+                                            3.เป็นไปตาม นโยบายความเป็นส่วนตัว</h6>
+                                    <h6>9.ผู้ให้บริการ มีซึ่งสิทธิ ลิขสิทธิ์ และ ทรัพย์สินทางปัญญาในข้อมูลที่แสดง รูปภาพ และ รูปแบบการแสดงผล ตามที่ปรากฏในเว็บไซต์ทั้งหมด ยกเว้นจะมีการระบุอย่างชัดเจนเป็นอื่น ห้ามมิให้ผู้ใดทำการคัดลอก ทำซ้ำ มีสำเนา สำรองไว้ ทำเลียนแบบ ทำเหมือน ดัดแปลง ทำเพิ่ม เพื่อนำไปเผยแพร่ด้วยวัตถุประสงค์อื่นใด โดยปราศจากความยินยอมเป็นหนังสือจากผู้ให้บริการ ทั้งนี้เว้นแต่จะได้มีการระบุกำหนดไว้ในข้อตกลง เงื่อนไขการใช้บริการ และนโยบายความเป็นส่วนตัว</h6>
+                                    <h6>10.ผู้ให้บริการ สามารถนำข้อมูลใดๆก็ตามที่ผู้ใช้บริการให้กับผู้ให้บริการ โดยผ่าน SHIPPOP ไปใช้ในการวิจัย วิเคราะห์ แยกแยะ และหรืออื่นใด ตามที่เห็นสมควร โดยมิต้องแจ้งให้ทราบล่วงหน้า ต้องเป็นข้อมูลที่ผู้ใช้บริการยินยอมให้ใช้ตามข้อตกลง เงื่อนไขการใช้บริการ และนโยบายความเป็นส่วนตัว</h6>
+                                </div>
+                            </div>
+                            <div class ="row">
+                                <div class ="col-12 text-center">
+                                    <input type="checkbox" name="tos" value="1">
+                                    <label for="vehicle1"><h6>ข้าพเจ้ายอมรับเงื่อนไขการฝากเช่า</h6></label><br>
+                                </div>
+                            </div>  
+                            <br><div class="row">
+                                <div class="col-6 text-center">
+                                    <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab('uploadDoc')">&laquo; ย้อนกลับ</button>
+                                </div>
+                                <div class="col-6 text-center">
+                                    <button type="submit" style="margin:auto; width: 130px;" class="btn btn-success d-none d-lg-block m-l-12" >ยืนยันการจอง &raquo;</button>
+                                </div>
+                            </div>
+                                <!-- <div class="row">
+                                    <input type="hidden" name="car_id" id="car_id" value="<?php echo $val->car_id; ?>">
+                                    <input type="hidden" name="car_registration" id="car_registration" value="<?php echo $val->car_registration; ?>">
+                                    <input type="hidden" name="user_doc_id" id="user_doc_id" value="<?php echo $val_user?$val_user->user_doc_id :0; ?>" />
+                                    <input type="hidden" name="old_iden_upload" id="old_iden_upload" value="<?php echo $val_user?$val_user->user_doc_iden_image:""; ?>">
+                                    <input type="hidden" name="old_license_upload" id="old_license_upload" value="<?php echo $val_user?$val_user->user_doc_license_image:""; ?>">
+                                    <input type="hidden" name="place_name" id="place_name" value="">
+                                </div> -->
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    var date_range = [];
+    get_date()
+
+    $("#car_brand_id").on('change', function(event) {
+        getModel()
+    })
+
+$('#datetimepicker, #datetimepicker2').timepicker({
+    timeFormat: 'HH:mm',
+    interval: 15,
+    minTime: '06',
+    maxTime: '20',
+    defaultTime: '06',
+    startTime: '06:00',
+    dynamic: false,
+    dropdown: true,
+    scrollbar: true,
+    change: onDateChange
+});
+
+$("#datepicker").on('change', function(event) {
+    $('#datepicker2').datepicker('option', 'minDate', new Date(moment(moment($("#datepicker").val(), 'DD/MM/YYYY')).format("MM/DD/YYYY")));
+});
+$("#datepicker2").on('change', function(event) {
+    $('#datepicker').datepicker('option', 'maxDate', new Date(moment(moment($("#datepicker2").val(), 'DD/MM/YYYY')).format("MM/DD/YYYY")));
+
+    let pass = true;
+    for (var i = 0; i < date_range.length; i++) {
+        if(dateCheck(date_range[i][0])){
+            pass = false;
+            break;
+        }
+    }
+    if(pass){
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'During that time, can reserved',
+            showConfirmButton: false,
+            timer: 1000
+        })
+    }else{
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'During that time, people have already reserved.',
+            showConfirmButton: false,
+            timer: 1000
+        })
+    }
+});
+$("#datepicker, #datepicker2").on('change', function(event) {
+    onDateChange()
+    if($("#datepicker").val()!='' && $("#datepicker2").val()!=''){
+        checkDate()
+    }
+});
+
+$('#addCarDepositForm').on('submit', function(event) {
+    event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You Confirm Rent a Car",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonColor: '#dc3545',
+        confirmButtonColor: '#28a745',
+        confirmButtonText: 'Yes, Confirm it!'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({  
+                url:"addCarDeposit",
+                method:"POST",  
+                data:new FormData(this),  
+                contentType: false,  
+                cache: false,  
+                processData:false,  
+            }).done(function(returnData) {
+                console.log(returnData)
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Save Complete',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+                window.location = "<?php echo base_url(); ?>";
+            }); 
+        }
+    })
+})
+
+$('#place_id').on('change', function(event) {
+    $('#place_name').val($('#place_id option:selected').text())
+})
+
+function checkDate() {
+    let pass = true;
+    for (var i = 0; i < date_range.length; i++) {
+        if(dateCheck(date_range[i][0])){
+            pass = false;
+            break;
+        }
+    }
+    if(pass){
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'During that time, can reserved',
+            showConfirmButton: false,
+            timer: 1000
+        })
+    }else{
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'During that time, people have already reserved.',
+            showConfirmButton: false,
+            timer: 1000
+        })
+    }
+}
+
+function dateCheck(get_date) {
+    let fDate,lDate,cDate;
+    let dateArray = $('#datepicker').val().split('/')
+    let dateArray2 = $('#datepicker2').val().split('/')
+    fDate = dateArray[1] + '/' + dateArray[0] + '/' + dateArray[2];
+    lDate = dateArray2[1] + '/' + dateArray2[0] + '/' + dateArray2[2];
+
+    fDate = new Date(fDate); // firstdate
+    cDate = new Date(get_date); // date from form
+    lDate = new Date(lDate);
+    
+    if(Date.parse(cDate) <= Date.parse(lDate) && Date.parse(cDate) >= Date.parse(fDate)){
+        return true;
+    }
+
+    return false;
+}
+
+function onDateChange() {
+    if($("#datepicker").val()!='' && $("#datepicker2").val()!=''){
+        var startDate = $("#datepicker").val().substring(10, 0);
+        var startTime = $("#datetimepicker").val().substring(5, 0);
+        var endDate = $("#datepicker2").val().substring(10, 0);
+        var endTime = $("#datetimepicker2").val().substring(5, 0);
+        // console.log(startDate)
+        // console.log(startTime)
+        // console.log(endDate)
+        // console.log(endTime)
+        var start = new Date(ConvertDateFormat(startDate,startTime));
+        var end = new Date(ConvertDateFormat(endDate,endTime));
+        var diff = new Date(end - start);
+
+        var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+        var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / 1000 / 60 / 60);
+        var totalHours = Math.floor(diff / 1000 / 60 / 60 );
+        $('#rentHours').val(totalHours);
+        var price = parseInt($('#rentPrice').val().replace(/,/g, ''));
+        if(days == 0){
+            days++;
+            $('.rentTotal').val(parseInt(days) * price); //rent less than 1 day
+        }else if(hours > 5){
+            days++;
+            $('.rentTotal').val(parseInt(days) * price); //rent more 1 day and 5 hours+
+        }else{
+            $('.rentTotal').val((parseInt(days) * price) + (parseInt(hours) * parseInt(price / 10))); //rent more 1 day and 5 hours-
+        }
+        $('.rentTotal').val(addCommas($('.rentTotal').val()));
+        getQRcode();
+    }
+}
+
+function get_date() {
+    var formData = {"car_id" : $("#car_id").val()};
+    $.ajax({  
+        url:"check_date",
+        method:"GET",
+        data: formData,
+    }).done(function(returnData) {
+        // date_range = [ ["02-04-2022", "02-08-2022"], ["02-25-2022", "02-27-2022"], ["02-21-2022", "02-23-2022"] ];
+        date_range = returnData['date_array'];
+        console.log(date_range)
+        $("#datepicker, #datepicker2").datepicker({
+            dateFormat: 'dd/mm/yy',
+            minDate: +2,
+            beforeShowDay: function(date) {
+                var string = $.datepicker.formatDate('mm-dd-yy', date);
+                for (var i = 0; i < date_range.length; i++) {
+                    if (Array.isArray(date_range[i])) {
+                        var from = new Date(date_range[i][0]);
+                        var to = new Date(date_range[i][1]);
+                        var current = new Date(string);
+                        
+                        if (current >= from && current <= to) return false;
+                    }
+                }
+                return [date_range.indexOf(string) == -1]
+            }
+        });
+    });
+}
+
+function addCommas(x) {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+}
+
+function ConvertDateFormat(d, t) {
+    var dt = d.split('/'); //split date
+    return dt[1] + '/' + dt[0] + '/' + dt[2] + ' ' + t; //convert date to mm/dd/yy hh:mm format for date creation.
+}
+
+function openTab(tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+
+  var elem = document.getElementById(tabName+"2");
+  elem.classList.add("active");
+}
+
+function readURL(input,type) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            if(type == 'deposit'){
+                $('#car_deposit_image').attr('src', e.target.result);
+                $('#car_deposit_image').attr('hidden',false);
+            }else if(type == 'license'){
+                $('#license_image').attr('src', e.target.result);
+                $('#license_image').attr('hidden',false);
+            }else if(type == 'transaction'){
+                $('#transaction_image').attr('src', e.target.result);
+                $('#transaction_image').attr('hidden',false);
+            }
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}//show image when choose
+function removeOptions(selectElement) {
+    var i, L = selectElement.options.length - 1;
+    for(i = L; i >= 0; i--) {
+        selectElement.remove(i);
+    }
+}
+function getModel() {
+        var data = {};
+        data['car_brand_id'] = $('#car_brand_id').val();
+        $.ajax({
+            method: "POST",
+            url: "getModel",
+            data: data,  
+        }).done(function(returnedData) {
+            removeOptions(document.getElementById('car_model_id'));
+            $("#car_model_id").append('<option disabled selected>เลือกรุ่นรถยนต์</option>');
+            for(var i = 0; i < returnedData.car_model.length; i++) {
+                $("#car_model_id").append('<option value=' + returnedData.car_model[i].car_model_id + '>' + returnedData.car_model[i].car_model_name + '</option>');
+            }
+        });
+    } //show auto
+
+function getQRcode() {
+        var data = {};
+        data['price'] = $('.rentTotal').val().replace(/,/g, '');
+        data['tel'] = '0809425365';
+        $.ajax({
+            method: "POST",
+            url: "getQRcode",
+            data: data,  
+        }).done(function(returnedData) {
+            $('#qrImage').html(returnedData.html);
+        });
+    }
+    
+</script>

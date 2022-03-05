@@ -201,13 +201,24 @@
       <?php
         if($_SESSION['type'] != 0){
       ?>
+      <li class="nav-item active">
+        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/carDeposit" aria-expanded="false">
+          <i class="fas fa-car-alt" style='font-size:20px'></i>
+          <span>ฝากเช่า</span></a>
+      </li>
 
       <li class="nav-item active">
         <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Transaction/transactionRecord" aria-expanded="false">
           <i class="fas fa-scroll" style='font-size:20px'></i>
           <span>ดูประวัติการเช่า</span></a>
       </li>
-      
+
+      <li class="nav-item active">
+        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/carDepositReport" aria-expanded="false">
+          <i class="fas fa-scroll" style='font-size:20px'></i>
+          <span>ดูประวัติการฝากเช่า</span></a>
+      </li>
+
       <li class="nav-item active">
         <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>User/profile" aria-expanded="false">
           <i class="far fa-address-card" style='font-size:20px'></i>

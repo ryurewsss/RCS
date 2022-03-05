@@ -974,10 +974,142 @@ class Car extends Main
 			'groupBy' => ''
 		);
 		$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
-
-		$data['user_type'] = $this->input->post("user_type");
-		$arrayData = array('pathView' => 'phpMailer/sendEmail');
-		$this->load->view($arrayData['pathView'], $data, TRUE);
+			$data['user_type'] = $this->input->post("user_type");
+			$arrayData = array('pathView' => 'phpMailer/sendEmail');
+			$this->load->view($arrayData['pathView'], $data, TRUE);
 	}
 	// ___________________ End sendEmail ____________________
+	//------- carDeposit --------//
+	public function carDeposit()
+	{
+		$arrayData = array(
+			'tableName' => 'crs_car_brand',
+			'colName' => '
+				car_brand_id,
+				car_brand_name_en
+				',
+			'where' => '',
+			'order' => 'car_brand_id ASC',
+			'arrayJoinTable' => '',
+			'groupBy' => ''
+		);
+		$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+
+		
+			$arrayPlace = array(
+				'tableName' => 'crs_place',
+				'colName' => '
+					crs_place.place_id,
+					crs_place.place_name,
+					crs_place.place_address',
+				'where' => '',
+				'order' => 'crs_place.place_id DESC',
+				'arrayJoinTable' => '',
+				'groupBy' => ''
+			);
+			$data['placeSelect'] = $this->crsModel->getAll($arrayPlace['tableName'], $arrayPlace['colName'], $arrayPlace['where'], $arrayPlace['order'], $arrayPlace['arrayJoinTable'], $arrayPlace['groupBy']);
+			
+			$arrayPlace = array(
+				'tableName' => 'crs_user_doc',
+				'colName' => '
+					user_doc_id,
+					user_doc_iden_image,
+					user_doc_license_image',
+				'where' => 'user_id = '. $_SESSION['id'],
+				'order' => '',
+				'arrayJoinTable' => '',
+				'groupBy' => ''
+			);
+			$data['user'] = $this->crsModel->getAll($arrayPlace['tableName'], $arrayPlace['colName'], $arrayPlace['where'], $arrayPlace['order'], $arrayPlace['arrayJoinTable'], $arrayPlace['groupBy']);
+
+			$data['page_content'] = $this->load->view('car/carDeposit', $data, TRUE);
+
+		$this->load->view('main', $data);
+	}
+	//----------- end carDeposit ------------//
+
+	//----------- start addCarDeposit --------//
+	public function addCarDeposit(){
+
+		$config['upload_path'] = './img/car_deposit_img/';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size'] = '2000';
+		$config['max_width'] = '3000';
+		$config['max_height'] = '3000';
+	
+		$this->load->library('upload', $config, 'depositImg');
+
+		if(!$this->depositImg->do_upload('license_upload')){
+			echo $this->depositImg->display_errors();
+		}else{
+			$data = $this->depositImg->data();
+			$filenamelicense = $data['file_name'];
+		}
+
+		$config['upload_path'] = './img/car_img/';
+		$this->load->library('upload', $config, 'carImg');
+
+		if(!$this->carImg->do_upload('car_deposit_upload')){
+			echo $this->carImg->display_errors();
+		}else{
+			$data = $this->carImg->data();
+			$filenameCar = $data['file_name'];
+		}
+		$arrayData = array(
+			'car_registration' => $this->input->post('car_registration'),
+			'car_model_id' => $this->input->post('car_model_id'),
+			'car_owner_id' => $_SESSION['id'],
+			'car_price' => $this->input->post('car_price'),
+			'car_status' => 2,
+			'car_image' => $filenameCar,
+			'car_proof_image' => $filenamelicense,
+			'user_create_id' => $_SESSION['id'],
+			'user_update_id' => $_SESSION['id']
+		);
+		print_r($arrayData);
+		$addedId = $this->crsModel->add('crs_car', $arrayData);
+	}
+	//----------- end addCarDeposit ----------//
+
+	//------- carDepositReport --------//
+	public function carDepositReport()
+	{
+		$data['page_content'] = $this->load->view('car/carDepositReport', '', TRUE);
+		$this->load->view('main', $data);
+	}
+	//----------- end carDepositReport ------------//
+
+	// __________________ Start getCarDepositRecordTable __________________
+	public function getCarDepositRecordTable()
+	{
+		$arrayData = array(
+			'tableName' => 'crs_car',
+			'colName' => '
+							crs_car.car_registration,
+							crs_car_brand.car_brand_name_en AS car_brand_name_en,
+							crs_car.car_price,
+							crs_car.car_status',
+			'where' => '',
+			'order' => '',
+			'arrayJoinTable' => array('crs_user' => 'crs_car.car_owner_id = crs_user.user_id',
+									'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
+									'crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id'),
+			'groupBy' => '',
+			'pathView' => 'car/tableCarDeposit'
+		);
+		
+		// if ($_SESSION['type'] == '2') {
+		// 	$arrayData['where'] = "crs_transaction.user_rental_id = ".$_SESSION['id'];
+		// 	// $data['table'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_user_tran?user_rental_id=".$_SESSION['id']));
+		// }else{
+		// 	// $data['table'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_chain_lessor"));
+		// }
+
+		$data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$json['table'] = $data['table'];
+		$json['sql'] = $this->db->last_query(); //for dev
+		$json['html'] = $this->load->view($arrayData['pathView'], $data, TRUE);
+		$this->output->set_content_type('application/json')->set_output(json_encode($json));
+	}
+	// ___________________ End getCarDepositRecordTable ____________________
 }
