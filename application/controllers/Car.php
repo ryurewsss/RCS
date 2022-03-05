@@ -1087,9 +1087,9 @@ class Car extends Main
 							crs_car_brand.car_brand_name_en AS car_brand_name_en,
 							crs_car.car_price,
 							crs_car.car_status',
-			'where' => '',
+			'where' => 'crs_car.car_owner_id = '. $_SESSION['id'],
 			'order' => '',
-			'arrayJoinTable' => array('crs_user' => 'crs_car.car_owner_id = crs_user.user_id',
+			'arrayJoinTable' => array(
 									'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
 									'crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id'),
 			'groupBy' => '',

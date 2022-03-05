@@ -365,7 +365,7 @@ $('#addCarDepositForm').on('submit', function(event) {
 
     Swal.fire({
         title: 'Are you sure?',
-        text: "You Confirm Rent a Car",
+        text: "You Confirm Deposit a Car",
         icon: 'warning',
         showCancelButton: true,
         cancelButtonColor: '#dc3545',
@@ -389,7 +389,9 @@ $('#addCarDepositForm').on('submit', function(event) {
                     showConfirmButton: false,
                     timer: 1000
                 })
-                window.location = "<?php echo base_url(); ?>";
+                // window.location = "<?php echo base_url(); ?>";
+                // location.reload()
+                setTimeout(location.reload.bind(location), 1200);
             }); 
         }
     })
