@@ -977,7 +977,8 @@ class Car extends Main
 		$this->load->view($arrayData['pathView'], $data, TRUE);
 	}
 	// ___________________ End sendEmail ____________________
-	//------- carDeposit --------//
+
+	// __________________ Start carDeposit __________________
 	public function carDeposit()
 	{
 		$arrayData = array(
@@ -1024,9 +1025,9 @@ class Car extends Main
 
 		$this->load->view('main', $data);
 	}
-	//----------- end carDeposit ------------//
+	// ___________________ End carDeposit ____________________
 
-	//----------- start addCarDeposit --------//
+	// __________________ Start addCarDeposit __________________
 	public function addCarDeposit(){
 
 		$config['upload_path'] = './img/car_deposit_img/';
@@ -1067,15 +1068,15 @@ class Car extends Main
 		print_r($arrayData);
 		$addedId = $this->crsModel->add('crs_car', $arrayData);
 	}
-	//----------- end addCarDeposit ----------//
+	// ___________________ End addCarDeposit ____________________
 
-	//------- carDepositReport --------//
+	// __________________ Start carDepositReport __________________
 	public function carDepositReport()
 	{
 		$data['page_content'] = $this->load->view('car/carDepositReport', '', TRUE);
 		$this->load->view('main', $data);
 	}
-	//----------- end carDepositReport ------------//
+	// ___________________ End carDepositReport ____________________
 
 	// __________________ Start getCarDepositRecordTable __________________
 	public function getCarDepositRecordTable()

@@ -165,7 +165,7 @@
                                     <h4 >วันและเวลาที่รับ <a style="color: red;"> *</a></h4>
                                 </div>  : &ensp;
                                 <!-- <input type="text" style="width: 350px;" class="form-control" name="datetimes" id="datetimes" /> -->
-                                <input type="text" style="width: 170px;" class="form-control" name="datepicker" id="datepicker">
+                                <input type="text" style="width: 170px;" class="form-control" name="datepicker" id="datepicker" autocomplete="off">
                                 &ensp; : &ensp;
                                 <input type="text" style="width: 150px; text-align: center;" class="form-control" name="datetimepicker" id="datetimepicker">
                             </div>
@@ -175,7 +175,7 @@
                                 <div class="col-4">
                                     <h4 >วันและเวลาที่คืน <a style="color: red;"> *</a></h4>
                                 </div>  : &ensp;
-                                <input type="text" style="width: 170px;" class="form-control" name="datepicker2" id="datepicker2">
+                                <input type="text" style="width: 170px;" class="form-control" name="datepicker2" id="datepicker2" autocomplete="off">
                                 &ensp; : &ensp;
                                 <input type="text" style="width: 150px; text-align: center;" class="form-control" name="datetimepicker2" id="datetimepicker2">
                             </div>

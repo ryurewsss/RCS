@@ -488,7 +488,7 @@ $('#addConfirmRentForm').on('submit', function(event) {
                     showConfirmButton: false,
                     timer: 1000
                 })
-                // window.location = "<?php echo base_url().'/Transaction/transaction'; ?>";
+                window.location = "<?php echo base_url().'/Transaction/transaction'; ?>";
             });
         }
     })
