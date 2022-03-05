@@ -6,6 +6,7 @@ $tranStatus = array(
     'เอกสารผ่าน <br> รอรับรถเช่า',
     'อยู่ระหว่างการเช่า',
     'เสร็จสิ้นการเช่า',
+    'เอกสารถูกแก้ไข',
 );
 $tranStatusColor = array(
     'text-secondary',
@@ -14,6 +15,7 @@ $tranStatusColor = array(
     'text-primary',
     'text-warning',
     'text-success',
+    'text-primary',
 );
 $emailStatus = array(
     'ผิดพลาด',
@@ -22,6 +24,7 @@ $emailStatus = array(
     'เอกสารผ่านกรุณายืนยัน',
     'ยืนยันการรับรถเช่า',
     'ยืนยันการคืนรถเช่า',
+    'ยืนยันการแก้ไขเอกสาร',
 );
 $type = array(
     'error',
@@ -30,6 +33,7 @@ $type = array(
     'confirm',
     'receive',
     'return',
+    'edit',
 );
 $contact = array(
     'email' => 'carrentsystemSE8@gmail.com',

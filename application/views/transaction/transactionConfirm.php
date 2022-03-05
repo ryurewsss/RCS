@@ -100,7 +100,7 @@
                                 </div>
                             </div>
                             <div class="carImg row">
-                                <div class="col-12">
+                                <div class="col-12 text-center">
                                     <img src="<?php echo base_url('img/car_img'); ?>/<?php echo $val->car_image; ?>" alt="<?php echo $val->car_image; ?>">
                                 </div>
                             </div>

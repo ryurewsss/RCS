@@ -36,10 +36,10 @@
                                 <button type="button" class="btn waves-effect waves-light btn-info btn-sm" id="<?= $val->transaction_id ?>" ><i class="fas fa-search"></i></button>
                             </a>
                             <?php if($val->transaction_status == 3){?> 
-                                <button type="button" id="receive_check" class="btn waves-effect waves-light btn-warning btn-sm" value="<?= $val->transaction_id ?>" ><i class="fas fa-user-check"></i></button>
+                                <button type="button" id="receive_check" class="btn waves-effect waves-light btn-warning btn-sm" data-type="<?= $val->user_type_id ?>" value="<?= $val->transaction_id ?>" ><i class="fas fa-user-check"></i></button>
                             <?php } ?>
                             <?php if($val->transaction_status == 4){?> 
-                                <button type="button" id="return_check" class="btn waves-effect waves-light btn-success btn-sm" value="<?= $val->transaction_id ?>" ><i class="fas fa-calendar-check"></i></button>
+                                <button type="button" id="return_check" class="btn waves-effect waves-light btn-success btn-sm" data-type="<?= $val->user_type_id ?>" value="<?= $val->transaction_id ?>" ><i class="fas fa-calendar-check"></i></button>
                             <?php } ?>
                         </td>
                     </tr>
@@ -66,12 +66,25 @@
         if (result.isConfirmed) {
             var formData = {};
             formData['transaction_id'] = this.value;
+            formData['user_type_id'] = this.getAttribute("data-type");
             formData['transaction_status'] = 4;
             $.ajax({  
                 url:"changeTransactionStatus",
                 method:"POST",  
                 data:formData
             }).done(function(returnData) {
+                for(var i=1; formData['user_type_id']==3 ? i<4:i<3; i++){//ยังไม่รวมฝากเช่า
+                    $.ajax({
+                    url: 'sendEmail',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        tran_id: returnData.transaction_temp_id,
+                        user_type: i
+                    }, success: function (returnData) {
+                    }
+                    });
+                }
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
@@ -99,11 +112,24 @@
             var formData = {};
             formData['transaction_id'] = this.value;
             formData['transaction_status'] = 5;
+            formData['user_type_id'] = this.getAttribute("data-type");
             $.ajax({  
                 url:"changeTransactionStatus",
                 method:"POST",  
                 data:formData
             }).done(function(returnData) {
+                for(var i=1; formData['user_type_id']==3 ? i<4:i<3; i++){//ยังไม่รวมฝากเช่า
+                    $.ajax({
+                    url: 'sendEmail',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        tran_id: returnData.transaction_temp_id,
+                        user_type: i
+                    }, success: function (returnData) {
+                    }
+                    });
+                }
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',

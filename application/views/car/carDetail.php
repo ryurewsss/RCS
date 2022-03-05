@@ -42,7 +42,7 @@
         <div class="row flex-row" style="user-select: auto;">
             <div class="col-xs-12 col-sm-5 carBlock" style="user-select: auto;">
                 <div class="text-center carImg row">
-                    <div class="col-12">
+                    <div class="col-12 text-center">
                         <img src="<?php echo base_url('img/car_img'); ?>/<?php echo $val->car_image; ?>" alt="<?php echo $val->car_image; ?>">
                     </div>
                 </div>
