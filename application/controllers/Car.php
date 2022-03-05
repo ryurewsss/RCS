@@ -191,7 +191,7 @@ class Car extends Main
 				'car_model_id' => $this->input->post('car_model_id'),
 				'car_owner_id' => $_SESSION['id'],
 				'car_price' => $this->input->post('car_price'),
-				'car_promotion' => 0,
+				'car_status' => 1,
 				'car_image' => $filename,
 				'car_proof_image' => $filename,
 				'user_create_id' => $_SESSION['id'],
@@ -236,7 +236,6 @@ class Car extends Main
 				'car_model_id' => $this->input->post('car_model_id'),
 				'car_owner_id' => $_SESSION['id'],
 				'car_price' => $this->input->post('car_price'),
-				'car_promotion' => 0,
 				'car_image' => $filename,
 				'car_proof_image' => $filename,
 				'user_update_id' => $_SESSION['id']
@@ -264,7 +263,6 @@ class Car extends Main
 			'car_model_id' => $this->input->post('car_model_id'),
 			'car_owner_id' => $_SESSION['id'],
 			'car_price' => $this->input->post('car_price'),
-			'car_promotion' => 0,
 			'user_update_id' => $_SESSION['id']
 		);
 		$arrayWhere = array('car_id' => $this->input->post('car_id'));
@@ -974,9 +972,9 @@ class Car extends Main
 			'groupBy' => ''
 		);
 		$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
-			$data['user_type'] = $this->input->post("user_type");
-			$arrayData = array('pathView' => 'phpMailer/sendEmail');
-			$this->load->view($arrayData['pathView'], $data, TRUE);
+		$data['user_type'] = $this->input->post("user_type");
+		$arrayData = array('pathView' => 'phpMailer/sendEmail');
+		$this->load->view($arrayData['pathView'], $data, TRUE);
 	}
 	// ___________________ End sendEmail ____________________
 	//------- carDeposit --------//

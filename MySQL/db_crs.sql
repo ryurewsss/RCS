@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 04, 2022 at 02:38 PM
+-- Generation Time: Mar 05, 2022 at 07:55 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -177,7 +177,9 @@ CREATE TABLE `crs_transaction` (
 --
 
 INSERT INTO `crs_transaction` (`transaction_id`, `car_id`, `user_lessor_id`, `user_rental_id`, `user_doc_id`, `place_id`, `transaction_receive_date`, `transaction_return_date`, `transaction_status`, `transaction_price`, `transaction_lessor_approve`, `transaction_rental_approve`, `transaction_depositor_approve`, `transaction_image`, `transaction_iden_approve`, `transaction_transfer_approve`, `transaction_reject_iden`, `transaction_reject_transfer`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
-(1, 35, 0, 1, 15, 2, '2022-03-06 06:00:00', '2022-03-07 06:00:00', '1', 2500, '', '1', '', 'tran_img2.PNG', '', '', '', '', '2022-03-04 17:07:14', '2022-03-04 17:07:14', 1, 1);
+(2, 35, 0, 1, 15, 2, '2022-03-07 06:00:00', '2022-03-07 06:00:00', '2', 2500, '', '1', '', 'tran_img4.PNG', '', '', '', '', '2022-03-04 23:30:23', '2022-03-04 23:33:54', 1, 1),
+(3, 33, 0, 1, 15, 2, '2022-03-07 06:00:00', '2022-03-07 06:00:00', '2', 1800, '', '1', '', 'tran_img5.PNG', '', '', '', '', '2022-03-04 23:39:12', '2022-03-04 23:40:22', 1, 1),
+(4, 32, 1, 1, 15, 2, '2022-03-06 06:00:00', '2022-03-07 06:00:00', '3', 2000, '1', '1', '', 'tran_img6.PNG', '1', '1', '', '', '2022-03-04 23:42:19', '2022-03-04 23:48:20', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -187,6 +189,7 @@ INSERT INTO `crs_transaction` (`transaction_id`, `car_id`, `user_lessor_id`, `us
 
 CREATE TABLE `crs_transaction_temp` (
   `transaction_temp_id` int(10) NOT NULL,
+  `transaction_id` int(10) NOT NULL,
   `transaction_depositor_token` varchar(30) NOT NULL,
   `transaction_lessor_token` varchar(30) NOT NULL,
   `transaction_rental_token` varchar(30) NOT NULL,
@@ -195,8 +198,13 @@ CREATE TABLE `crs_transaction_temp` (
   `transaction_lessor_approve` varchar(1) DEFAULT NULL,
   `car_id` int(10) NOT NULL,
   `user_rental_id` int(10) NOT NULL,
+  `user_lessor_id` int(10) NOT NULL,
   `user_doc_id` int(10) NOT NULL,
   `place_id` int(10) NOT NULL,
+  `transaction_iden_approve` varchar(1) NOT NULL,
+  `transaction_transfer_approve` varchar(10) NOT NULL,
+  `transaction_reject_iden` varchar(100) NOT NULL,
+  `transaction_reject_transfer` varchar(100) NOT NULL,
   `transaction_receive_date` datetime NOT NULL,
   `transaction_return_date` datetime NOT NULL,
   `transaction_status` varchar(30) NOT NULL,
@@ -328,6 +336,8 @@ ALTER TABLE `crs_place`
 --
 ALTER TABLE `crs_transaction`
   ADD PRIMARY KEY (`transaction_id`);
+ALTER TABLE `crs_transaction` ADD FULLTEXT KEY `transaction_iden_approve` (`transaction_iden_approve`,`transaction_transfer_approve`,`transaction_reject_iden`,`transaction_reject_transfer`);
+ALTER TABLE `crs_transaction` ADD FULLTEXT KEY `transaction_iden_approve_2` (`transaction_iden_approve`,`transaction_transfer_approve`,`transaction_reject_iden`,`transaction_reject_transfer`);
 
 --
 -- Indexes for table `crs_transaction_temp`
@@ -392,13 +402,13 @@ ALTER TABLE `crs_place`
 -- AUTO_INCREMENT for table `crs_transaction`
 --
 ALTER TABLE `crs_transaction`
-  MODIFY `transaction_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `transaction_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `crs_transaction_temp`
 --
 ALTER TABLE `crs_transaction_temp`
-  MODIFY `transaction_temp_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `transaction_temp_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `crs_user`
