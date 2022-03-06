@@ -994,34 +994,7 @@ class Car extends Main
 		);
 		$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
 
-		
-			$arrayPlace = array(
-				'tableName' => 'crs_place',
-				'colName' => '
-					crs_place.place_id,
-					crs_place.place_name,
-					crs_place.place_address',
-				'where' => '',
-				'order' => 'crs_place.place_id DESC',
-				'arrayJoinTable' => '',
-				'groupBy' => ''
-			);
-			$data['placeSelect'] = $this->crsModel->getAll($arrayPlace['tableName'], $arrayPlace['colName'], $arrayPlace['where'], $arrayPlace['order'], $arrayPlace['arrayJoinTable'], $arrayPlace['groupBy']);
-			
-			$arrayPlace = array(
-				'tableName' => 'crs_user_doc',
-				'colName' => '
-					user_doc_id,
-					user_doc_iden_image,
-					user_doc_license_image',
-				'where' => 'user_id = '. $_SESSION['id'],
-				'order' => '',
-				'arrayJoinTable' => '',
-				'groupBy' => ''
-			);
-			$data['user'] = $this->crsModel->getAll($arrayPlace['tableName'], $arrayPlace['colName'], $arrayPlace['where'], $arrayPlace['order'], $arrayPlace['arrayJoinTable'], $arrayPlace['groupBy']);
-
-			$data['page_content'] = $this->load->view('car/carDeposit', $data, TRUE);
+		$data['page_content'] = $this->load->view('car/carDeposit', $data, TRUE);
 
 		$this->load->view('main', $data);
 	}
