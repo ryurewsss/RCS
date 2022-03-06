@@ -96,7 +96,7 @@
         <div class="tab">
             <button class="tablinks active" id="setDate2" onclick="openTab('setDate')">กำหนดวันเวลา</button>
             <button class="tablinks" id="uploadDoc2" onclick="openTab('uploadDoc')">อัปโหลดเอกสาร</button>
-            <button class="tablinks" id="uploadPay2" onclick="openTab('uploadPay')">อัปโหลดหลักฐานการโอนเงิน</button>
+            <button class="tablinks" id="uploadPay2" onclick="openTab('uploadPay')">เงื่อนไขการฝากเช่า</button>
         </div>
         <form id="addCarDepositForm" method="post" enctype="multipart/form-data">
             <div id="setDate" class="tabcontent" style="display: block;">
