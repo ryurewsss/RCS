@@ -151,7 +151,7 @@
                                 <div class="col-4">
                                     <h4 >ราคาต่อวัน <a style="color: red;"> *</a></h4>
                                 </div>  : &ensp;
-                                <input type="text" style="width: 250px; text-align: center;" class="form-control" name="car_price" id="car_price" value="" />
+                                <input type="text" style="width: 250px; text-align: right;" class="form-control" name="car_price" id="car_price" value="" />
                                 <h5 style="margin-top:10px;">&ensp; บาท/วัน</h5>
                             </div>
                             <br>
@@ -224,8 +224,8 @@
                                 <!-- <?php if ($val_user){?>
                                     <img class="doc_image" id="license_image" src="<?php echo base_url('img/user_doc_img'); ?>/<?php echo $val_user->user_doc_license_image; ?>"/>
                                 <?php }else{ ?> -->
-                                    <img class="doc_image" id="license_image" src="#" alt="your image" hidden/>
                                 <!-- <?php } ?> -->
+                                <img class="doc_image" id="license_image" src="#" alt="your image" hidden/>
                             </div>
                             <br><br><br>
                             <div class="row">
@@ -273,7 +273,7 @@
                             </div>
                             <div class ="row">
                                 <div class ="col-12 text-center">
-                                    <input type="checkbox" name="tos" value="1">
+                                    <input type="checkbox" name="tos" id="tos" value="1"  onClick="toggleSelect()">
                                     <label for="vehicle1"><h6>ข้าพเจ้ายอมรับเงื่อนไขการฝากเช่า</h6></label><br>
                                 </div>
                             </div>  
@@ -282,9 +282,10 @@
                                     <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab('uploadDoc')">&laquo; ย้อนกลับ</button>
                                 </div>
                                 <div class="col-6 text-center">
-                                    <button type="submit" style="margin:auto; width: 130px;" class="btn btn-success d-none d-lg-block m-l-12" >ยืนยันการจอง &raquo;</button>
+                                    <button type="submit" style="margin:auto; width: 130px;" class="btn btn-success d-none d-lg-block m-l-12" disabled>ยืนยันการจอง &raquo;</button>
                                 </div>
                             </div>
+                                <input type="hidden" name="tos_dis" id="tos_dis" value="">
                                 <!-- <div class="row">
                                     <input type="hidden" name="car_id" id="car_id" value="<?php echo $val->car_id; ?>">
                                     <input type="hidden" name="car_registration" id="car_registration" value="<?php echo $val->car_registration; ?>">
@@ -302,8 +303,7 @@
     </div>
 </div>
 <script>
-    var date_range = [];
-    get_date()
+    
 
     $("#car_brand_id").on('change', function(event) {
         getModel()
@@ -400,6 +400,16 @@ $('#addCarDepositForm').on('submit', function(event) {
 $('#place_id').on('change', function(event) {
     $('#place_name').val($('#place_id option:selected').text())
 })
+
+// $('#tos').on('change', function(event) {
+//     $('#tos_dis').val($('#tos option:selected').text())
+// })
+
+function toggleSelect()
+{
+  var isChecked = document.getElementById("tos").checked;
+  document.getElementById("selectOne").disabled = !isChecked;
+}
 
 function checkDate() {
     let pass = true;

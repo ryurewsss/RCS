@@ -19,6 +19,10 @@
         max-width: 500px;
         max-height: auto;
     }
+
+    .border {
+        border: 1px solid #5a5c69!important;
+    }
 </style>
 </head>
 
@@ -100,8 +104,9 @@
 
         <button type="button" class="btn btn-primary" id="search_btn">ค้นหารถเช่า</button> &ensp;
         <button type="button" class="btn btn-success" id="reset_btn">รีเซท</button> &ensp;
-        <br><br>
+        <br><br><hr class="border">
         <div id="carTable"></div>
+        
     </div>
 </div>
 <!-- End Table -->
