@@ -23,12 +23,21 @@
     .border {
         border: 1px solid #5a5c69!important;
     }
+
+    hr.rounded {
+        border-top: 4px solid #48AAAD;
+        border-radius: 5px;
+    }
+
+    .bg-silver{
+        background-color: #707178;
+    }
 </style>
 </head>
 
 <!-- Open Table -->
 <div class="card">
-    <div class="card-header bg-dark">
+    <div class="card-header bg-silver">
         <div class="row">
             <a class="m-b-0 text-white" style="font-size: 23px; margin-left: 10px;">ค้นหารถเช่า</a>
         </div>
@@ -36,7 +45,7 @@
     <!-- <button id="test"> API </button> -->
     <div class="card-body">
         <div class="row">
-            <div class="col-3">
+            <div class="col-1">
                 <label>ยี่ห้อรถยนต์ <a style="color: red;"> *</a></label>
             </div>  : &ensp;
             <select style="width: 250px;" id="car_brand_id" class="form-control form-control-line" name="inputData[]">
@@ -52,7 +61,7 @@
         </div>
         <br>
         <div class="row">
-            <div class="col-3">
+            <div class="col-1">
                 <label>รุ่นรถยนต์<a style="color: red;"> *</a></label>
             </div>  : &ensp;
             <select style="width: 250px;" id="car_model_id" class="form-control form-control-line" name="inputData[]">
@@ -68,7 +77,7 @@
         </div>
         <br>
         <div class="row">
-            <div class="col-3">
+            <div class="col-1">
                 <label>ประเภท <a style="color: red;"> *</a></label>
             </div>  : &ensp;
             <select style="width: 250px;" id="car_type" class="form-control form-control-line" name="inputData[]">
@@ -89,7 +98,7 @@
     );
 ?>
         <div class="row">
-            <div class="col-3">
+            <div class="col-1">
                 <label>ช่วงราคา <a style="color: red;"> *</a></label>
             </div>  : &ensp;
             <select style="width: 250px;" id="price_range" class="form-control form-control-line" name="inputData[]">
@@ -101,10 +110,10 @@
                 ?>
             </select>
         </div>
-
+        <br>
         <button type="button" class="btn btn-primary" id="search_btn">ค้นหารถเช่า</button> &ensp;
         <button type="button" class="btn btn-success" id="reset_btn">รีเซท</button> &ensp;
-        <br><br><hr class="border">
+        <br><hr class="rounded">
         <div id="carTable"></div>
         
     </div>

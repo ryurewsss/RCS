@@ -37,7 +37,7 @@
                         <td>
                             <div class="row">
                                 <div class="col-xs-3 col-sm-3 carBlock" style="user-select: auto;">
-                                    <div class="carImg">
+                                    <div class="carImg text-center">
                                         <img src="<?php echo base_url('img/car_img'); ?>/<?php echo $val->car_image; ?>" alt="<?php echo $val->car_image; ?>">
                                     </div>
                                 </div>
