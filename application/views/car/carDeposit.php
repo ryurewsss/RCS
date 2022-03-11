@@ -251,7 +251,7 @@
                                     <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab('uploadDoc')">&laquo; ย้อนกลับ</button>
                                 </div>
                                 <div class="col-6 text-center">
-                                    <button type="submit" style="margin:auto; width: 130px;" class="btn btn-success d-none d-lg-block m-l-12" disabled>ยืนยันการจอง &raquo;</button>
+                                    <button type="submit" id="selectDeposit" style="margin:auto; width: 130px;" class="btn btn-success d-none d-lg-block m-l-12" disabled>ยืนยันการจอง &raquo;</button>
                                 </div>
                             </div>
                                 <input type="hidden" name="tos_dis" id="tos_dis" value="">
@@ -313,7 +313,7 @@ $('#addCarDepositForm').on('submit', function(event) {
 function toggleSelect()
 {
   var isChecked = document.getElementById("tos").checked;
-  document.getElementById("selectOne").disabled = !isChecked;
+  document.getElementById("selectDeposit").disabled = !isChecked;
 }
 
 function openTab(tabName) {
