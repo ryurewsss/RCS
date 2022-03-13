@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+date_default_timezone_set('Asia/Bangkok');
 
 /*
 |--------------------------------------------------------------------------
@@ -488,8 +489,8 @@ $config['compress_output'] = FALSE;
 | helper' page of the user guide for information regarding date handling.
 |
 */
-$config['time_reference'] = 'local';
-
+// $config['time_reference'] = 'local';
+$config['time_reference'] = 'Asia/Bankok';
 /*
 |--------------------------------------------------------------------------
 | Rewrite PHP Short Tags

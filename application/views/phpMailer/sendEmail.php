@@ -46,7 +46,7 @@
         <h4>Email  : '.$contact['email'].'</h4>
         <h4>Tel  : '.$contact['tel'].'</h4>
         <h4>Line  : '.$contact['line'].'</h4>
-        <a href="http://localhost/CRS/Transaction/emailConfirm?usertype='.$user_type.'&type='.$type[$val->transaction_status].'&temp='.$val->transaction_temp_id.'&token=';
+        <a href="'.base_url().'CRS/Transaction/emailConfirm?usertype='.$user_type.'&type='.$type[$val->transaction_status].'&temp='.$val->transaction_temp_id.'&token=';
         if($user_type==1){
             $mail->Body = $mail->Body.$val->transaction_lessor_token;
         }
