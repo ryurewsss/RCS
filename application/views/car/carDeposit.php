@@ -80,7 +80,7 @@
     </div>
     <div class="card-body">
         <div class="tab">
-            <button class="tablinks active" id="setDate2" onclick="openTab('setDate')">กำหนดวันเวลา</button>
+            <button class="tablinks active" id="setDate2" onclick="openTab('setDate')">กำหนดข้อมูลรถยนต์</button>
             <button class="tablinks" id="uploadDoc2" onclick="openTab('uploadDoc')">อัปโหลดเอกสาร</button>
             <button class="tablinks" id="uploadPay2" onclick="openTab('uploadPay')">เงื่อนไขการฝากเช่า</button>
         </div>
@@ -96,7 +96,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <h3 class="text-black" style="user-select: auto;"><b>วันเวลาและสถานที่</b></h3>
+                                    <h3 class="text-black" style="user-select: auto;"><b>ข้อมูลรถยนต์และราคา</b></h3>
                                 </div>
                             </div>
 
@@ -154,7 +154,7 @@
                             </div><br>
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <button type="button" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12" onclick="openTab('uploadDoc')">ยืนยันการฝากเข่า &raquo;</button>
+                                    <button type="button" style="margin:auto; width: 130px;" class="btn btn-success d-none d-lg-block m-l-12" onclick="openTab('uploadDoc')">ถัดไป &raquo;</button>
                                 </div>
                             </div>
                             <br>
@@ -251,7 +251,7 @@
                                     <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab('uploadDoc')">&laquo; ย้อนกลับ</button>
                                 </div>
                                 <div class="col-6 text-center">
-                                    <button type="submit" id="selectDeposit" style="margin:auto; width: 130px;" class="btn btn-success d-none d-lg-block m-l-12" disabled>ยืนยันการจอง &raquo;</button>
+                                    <button type="submit" id="selectDeposit" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12" disabled>ยืนยันการฝากเช่า </button>
                                 </div>
                             </div>
                                 <input type="hidden" name="tos_dis" id="tos_dis" value="">

@@ -1032,7 +1032,7 @@ class Car extends Main
 			'car_model_id' => $this->input->post('car_model_id'),
 			'car_owner_id' => $_SESSION['id'],
 			'car_price' => $this->input->post('car_price'),
-			'car_status' => 2,
+			'car_status' => 7,
 			'car_image' => $filenameCar,
 			'car_proof_image' => $filenamelicense,
 			'user_create_id' => $_SESSION['id'],
@@ -1057,6 +1057,7 @@ class Car extends Main
 		$arrayData = array(
 			'tableName' => 'crs_car',
 			'colName' => '
+							crs_car.car_id,
 							crs_car.car_registration,
 							crs_car_brand.car_brand_name_en AS car_brand_name_en,
 							crs_car.car_price,
@@ -1084,4 +1085,45 @@ class Car extends Main
 		$this->output->set_content_type('application/json')->set_output(json_encode($json));
 	}
 	// ___________________ End getCarDepositRecordTable ____________________
+
+	// __________________ Start carDetail2 __________________
+	public function carDetail2()
+	{
+		$arrayData = array(
+			'tableName' => 'crs_car',
+			'colName' => '
+							crs_car.car_id,
+							crs_car.car_registration,
+							crs_car_brand.car_brand_name_en AS car_brand_name_en,
+							crs_car.car_price,
+							crs_car.car_status,
+							crs_car.car_image,
+							crs_car.car_proof_image,
+							crs_user.user_id,
+							crs_user.user_email,
+							crs_user.user_fname,
+							crs_user.user_lname,
+							crs_user.user_phone,
+							crs_user.user_image,
+							crs_car_model.car_model_name AS car_model_name',
+			'where' => 'crs_car.car_id = '. $_GET['carId'],
+			'order' => '',
+			'arrayJoinTable' => array(
+									'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
+									'crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id',
+									'crs_user' => 'crs_user.user_id = crs_car.car_owner_id'),
+			'groupBy' => '',
+		);
+		$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		if ($_SESSION['type'] == '1') {
+			$data['page_content'] = $this->load->view('car/carDepositConfirm', $data, TRUE);
+		}
+		if ($_SESSION['type'] == '2') {
+			$data['page_content'] = $this->load->view('car/carDepositEdit', $data, TRUE);
+		}
+		
+
+		$this->load->view('main', $data);
+	}
+	// ___________________ End carDetail2 ____________________
 }

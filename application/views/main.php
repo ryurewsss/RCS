@@ -183,7 +183,7 @@
         </li>
         
         <li class="nav-item active">
-          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>" aria-expanded="false">
+          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/carDepositReport" aria-expanded="false">
             <i class="fa fa-search" style='font-size:20px'></i>
             <span>ตรวจสอบการฝากเช่า</span></a>
         </li>
