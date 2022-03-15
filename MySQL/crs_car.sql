@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 06, 2022 at 05:05 AM
+-- Generation Time: Mar 15, 2022 at 09:37 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -30,26 +30,34 @@ SET time_zone = "+00:00";
 CREATE TABLE `crs_car` (
   `car_id` int(10) NOT NULL,
   `car_registration` varchar(30) NOT NULL,
-  `car_brand` varchar(50) NOT NULL,
-  `car_model` varchar(50) NOT NULL,
-  `car_feature` varchar(100) NOT NULL,
-  `car_description` varchar(300) NOT NULL,
+  `car_model_id` int(10) NOT NULL,
+  `car_owner_id` int(10) NOT NULL,
   `car_price` int(10) NOT NULL,
-  `car_upload` varchar(50) NOT NULL
+  `car_status` varchar(10) NOT NULL,
+  `car_image` varchar(100) NOT NULL,
+  `car_proof_image` varchar(100) NOT NULL,
+  `car_reject_deposit` varchar(100) DEFAULT NULL,
+  `create_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `update_date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `user_create_id` int(10) NOT NULL,
+  `user_update_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `crs_car`
 --
 
-INSERT INTO `crs_car` (`car_id`, `car_registration`, `car_brand`, `car_model`, `car_feature`, `car_description`, `car_price`, `car_upload`) VALUES
-(10, 'ฎง 9999 กรุงเทพมหานคร', 'Honda', 'Brio', '5 ที่นั่ง', 'Honda Brio รถยนต์อีโคคาร์จากค่ายฮอนด้าที่มาพร้อมรูปลักษณ์รูปทรงภายนอกที่เป็นเอกลักษณ์ของฮอนด้า โดยมีให้เลือกทั้ง 4 ประตูภายใต้ชื่อ Honda Brio Amaze และแบบ 5 ประตู Honda Brio V ภายในดีไซน์ได้อย่างลงตัว มาพร้อมเครื่องยนต์ 1.2 ลิตร 4 สูบ 90 แรงม้า', 2200, 'hondabrio.jpg'),
-(11, 'กก 1150 ชลบุรี', 'Mitsubishi', 'Pajero 2019', '7 ที่นั่ง', 'NEW MITSUBISHI PAJERO SPORT รุ่นล่าสุดที่บุกตลาดรถอเนกประสงค์ในเวลานี้ ได้รับการปรับปรุง และพัฒนาให้ดีขึ้นมากกว่ารุ่นเดิมหลายด้าน ทั้งการดีไซน์รูปลักษณ์ภายนอกใหม่เพิ่มความล้ำสมัย และภายในห้องโดยสารตกแต่งใหม่ เพิ่มเติมออฟชั่นจำเป็นในการใช้งานที่น่าสนใจหลายด้าน รวมถึงการปรับเซ็ทช่วงล่างใหม่ให้นุ่มนวล', 2600, 'MITSUBISHI_PAJERO.jpg'),
-(12, 'สส 5510 เชียงใหม่', 'Honda', 'Amaze', '5 ที่นั่ง', 'ระบบกุญแจอัจฉริยะ และกล้องมองภาพรอบคัน พร้อมเส้นกะระยะถูกใส่มาให้เพิ่มเติมในการปรับโฉมใหม่ครั้งนี้เพื่อความสะดวกสบายของผู้ใช้งาน  ส่วนความปลอดภัยที่มีอยู่เดิมคือถุงลมนิรภัยคู่หน้า ระบบเบรก ABS และ EBD รวมถึงโครงสร้างตัวถังนิรภัย\r\n\r\nขุมพลังขับเคลื่อนของ Amaze ยังคงเป็นเครื่องยนต์เบนซิน 4 สูบ ขนาด 1.2', 3000, 'brioamaze.jpg'),
-(13, 'พก 7412 ชลบุรี', 'Toyota', 'Fortuner', '7 ที่นั่ง', 'อนิว โตโยต้า ฟอร์จูนเนอร์ 2016 ใหม่ (All New Toyota Fortuner 2016) เป็นรถยนต์อเนกประสงค์ MPV โดยพัฒนามาจากพื้นฐานรถกระบะ โตโยต้า ไฮลักซ์ รีโว สามารถใช้งานได้เหมาะสมทั้งเขตพื้นที่ในชุมชนเมืองและต่างจังหวัด', 2100, 'fortuner_1.jpg'),
-(14, 'รด 9412 สมุทรปราการ', 'Toyota', 'Vios 2019', '5 ที่นั่ง', 'TOYOTA VIOS MY2019 มากับการใส่ความโดดเด่นของกระจังหน้าตัววีพร้อมความดุดันของกันชนหน้าที่ทำให้ดูมีความเป็นสปอร์ตมากขึ้นกว่ารุ่นก่อนๆ TOYOTA VIOS MY2019 ถือว่าทำได้ดีกับการออกแบบสัดส่วนด้านหน้าด้วยการใส่องค์ประกอบที่โดดเด่นอย่างไฟหน้า LED แบบเส้นพร้อมไฟหน้าที่ดูลำยุคด้วยหลอดไฟโปรเจคเตอร์', 2000, 'vios2019.jpg'),
-(15, 'คฟ 7456 ชลบุรี', 'Toyota ', 'Sienta 2020', '5 ที่นั่ง', 'โตโยต้า เซียนต้า รูปลักษณ์ภายนอกออกแบบภายใต้แรงบันดาลใจจากรองเท้าเดินป่าสมัยใหม่ สะท้อนให้เห็นถึงคนรุ่นใหม่ที่รักการท่องเที่ยว มีไลฟ์สไตล์ที่หลากหลาย ภายในออกแบบให้มี 3 แถว 7 ที่นั่ง รองรับห้องโดยสารที่กว้างขวาง เน้นประโยชน์ใช้สอยและความสะดวกสบายในการใช้งานเป็นหลัก', 1800, 'TOYOTA SIENTA 2020.jpg'),
-(16, 'กอ 1254 กรุงเทพมหานคร', 'Honda', 'Mobilio 2019 RS', '5 ที่นั่ง', 'ฮอนด้า โมบิลิโอ ใหม่ มีระบบแบบยนตรกรรมอเนกประสงค์ขนาดซับคอมแพคท์ ที่มาพร้อมความหรูหราที่มากยิ่งขึ้นด้วยดีไซน์ใหม่ทั้งภายนอกและภายใน รวมถึงอุปกรณ์อำนวยความสะดวกสบาย และมาตรฐานความปลอดภัยที่ครบครันยิ่งขึ้น ห้องโดยสารที่กว้างขวาง และพื้นที่ใช้สอยที่รองรับทุกการใช้งาน เพื่อช่วยยกระดับไลฟ์สไตล์คนเมืองยุค', 2800, 'HONDA MOBILIO 2019 RS.jpg');
+INSERT INTO `crs_car` (`car_id`, `car_registration`, `car_model_id`, `car_owner_id`, `car_price`, `car_status`, `car_image`, `car_proof_image`, `car_reject_deposit`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
+(1, 'ฎง 9999 กรุงเทพมหานคร', 1, 1, 2200, '1', 'hondabrio.jpg', 'hondabrio.jpg', NULL, '2022-01-06 11:35:00', '2022-03-04 20:37:10', 1, 1),
+(2, 'กก 1150 ชลบุรี', 3, 1, 2600, '1', 'MITSUBISHI_PAJERO.jpg', 'MITSUBISHI_PAJERO.jpg', NULL, '2022-01-06 21:26:00', '2022-03-04 20:37:13', 1, 1),
+(28, 'สส 5510 เชียงใหม่', 18, 1, 3000, '1', 'brioamaze2.jpg', 'brioamaze2.jpg', NULL, '2022-01-06 22:18:01', '2022-03-04 20:37:14', 1, 1),
+(31, 'พก 7412 ชลบุรี', 20, 1, 2100, '1', 'fortuner_11.jpg', 'fortuner_11.jpg', NULL, '2022-02-20 16:05:46', '2022-03-04 20:37:15', 1, 1),
+(32, 'รด 9412 สมุทรปราการ', 21, 1, 2000, '1', 'vios20191.jpg', 'vios20191.jpg', NULL, '2022-02-20 16:06:57', '2022-03-04 20:37:17', 1, 1),
+(33, 'คฟ 7456 ชลบุรี', 22, 1, 1800, '1', 'TOYOTA_SIENTA_2020.jpg', 'TOYOTA_SIENTA_2020.jpg', NULL, '2022-02-20 16:11:05', '2022-03-04 20:37:18', 1, 1),
+(34, 'กอ 1254 กรุงเทพมหานคร', 23, 1, 2800, '1', 'HONDA_MOBILIO_2019_RS.jpg', 'HONDA_MOBILIO_2019_RS.jpg', NULL, '2022-02-20 16:12:25', '2022-03-04 20:37:23', 1, 1),
+(35, 'รย 5412 ชลบุรี', 24, 1, 2500, '1', 'mazda31.jpg', 'mazda31.jpg', NULL, '2022-02-20 16:16:29', '2022-03-04 20:37:26', 1, 1),
+(36, '12 กกยน ชลบุรี', 20, 3, 1500, '2', 'mazinthai3.jpg', 'tran_img.PNG', NULL, '2022-03-06 10:52:17', '2022-03-06 10:52:17', 3, 3),
+(37, '12 กกยน ชลบุรี', 20, 1, 1500, '2', 'vios201911.jpg', 'driving_img.PNG', NULL, '2022-03-11 10:19:03', '2022-03-11 10:19:03', 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -69,7 +77,7 @@ ALTER TABLE `crs_car`
 -- AUTO_INCREMENT for table `crs_car`
 --
 ALTER TABLE `crs_car`
-  MODIFY `car_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `car_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
