@@ -1105,7 +1105,9 @@ class Car extends Main
 							crs_user.user_lname,
 							crs_user.user_phone,
 							crs_user.user_image,
-							crs_car_model.car_model_name AS car_model_name',
+							crs_car_model.car_model_name AS car_model_name,
+							crs_car_model.car_model_id,
+							crs_car.car_reject_deposit',
 			'where' => 'crs_car.car_id = '. $_GET['carId'],
 			'order' => '',
 			'arrayJoinTable' => array(
@@ -1115,6 +1117,21 @@ class Car extends Main
 			'groupBy' => '',
 		);
 		$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		
+		$arrayData = array(
+			'tableName' => 'crs_car_brand',
+			'colName' => '
+				car_brand_id,
+				car_brand_name_en
+				',
+			'where' => '',
+			'order' => 'car_brand_id ASC',
+			'arrayJoinTable' => '',
+			'groupBy' => ''
+		);
+
+		$data['brand'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		
 		if ($_SESSION['type'] == '1') {
 			$data['page_content'] = $this->load->view('car/carDepositConfirm', $data, TRUE);
 		}
@@ -1126,4 +1143,52 @@ class Car extends Main
 		$this->load->view('main', $data);
 	}
 	// ___________________ End carDetail2 ____________________
+
+	// __________________ Start editCarDeposit __________________
+	public function editCarDeposit(){
+
+		$config['upload_path'] = './img/car_img/';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size'] = '2000';
+		$config['max_width'] = '3000';
+		$config['max_height'] = '3000';
+		
+
+		$getData = $this->input->post();
+
+		$this->load->library('upload', $config, 'carImg');
+		if(!$this->carImg->do_upload('car_deposit_upload') ){
+			$filename['car_deposit_upload'] = $getData['old_car_deposit_upload'];
+		}else{
+			$data = $this->carImg->data();
+			$filename['car_deposit_upload'] = $data['file_name'];
+			$file_pointer = './img/car_img/' . $getData['old_car_deposit_upload'];
+			unlink($file_pointer);
+		}
+		$config['upload_path'] = './img/car_deposit_img/';
+		$this->load->library('upload', $config, 'depositImg');
+		if(!$this->depositImg->do_upload('license_upload') ){
+			$filename['license_upload'] = $getData['old_license_upload'];
+		}else{
+			$data = $this->depositImg->data();
+			$filename['license_upload'] = $data['file_name'];
+			$file_pointer = './img/car_deposit_img/' . $getData['old_license_upload'];
+			unlink($file_pointer);
+		}
+
+
+		$arrayData = array(
+			'car_registration' => $this->input->post('car_registration'),
+			'car_model_id' => $this->input->post('car_model_id'),
+			'car_price' => $this->input->post('car_price'),
+			'car_status' => 12,
+			'car_image' => $filename['car_deposit_upload'],
+			'car_proof_image' =>$filename['license_upload'],
+			'user_update_id' => $_SESSION['id']
+		);
+		// print_r($arrayData);
+		$arrayWhere = array('car_id' => $this->input->post('car_id'));
+		$addedId = $this->crsModel->update('crs_car',$arrayWhere , $arrayData);
+	}
+	// ___________________ End editCarDeposit ____________________
 }
