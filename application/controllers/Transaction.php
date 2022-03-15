@@ -65,7 +65,7 @@ class Transaction extends Main
 			crs_place.place_name,
 			crs_car.car_registration,
 			crs_user.user_type_id',
-			'where' => 'crs_transaction.transaction_status != 5',
+			'where' => 'crs_transaction.transaction_status < 5',
 			'order' => 'crs_transaction.update_date DESC',
 			'arrayJoinTable' => array('crs_car' => 'crs_car.car_id = crs_transaction.car_id',
 								'crs_place' => 'crs_place.place_id = crs_transaction.place_id',
@@ -103,7 +103,7 @@ class Transaction extends Main
 			crs_place.place_name,
 			crs_car.car_registration,
 			crs_user.user_type_id',
-			'where' => '',
+			'where' => 'crs_transaction.transaction_status <= 5',
 			'order' => 'crs_transaction.update_date DESC',
 			'arrayJoinTable' => array('crs_car' => 'crs_car.car_id = crs_transaction.car_id',
 								'crs_place' => 'crs_place.place_id = crs_transaction.place_id',
@@ -140,7 +140,7 @@ class Transaction extends Main
 			crs_place.place_name,
 			crs_car.car_registration,
 			crs_user.user_type_id',
-			'where' => 'crs_transaction.user_rental_id = '.$this->input->post('user_id'),
+			'where' => 'crs_transaction.transaction_status <= 5 AND crs_transaction.user_rental_id = '.$this->input->post('user_id'),
 			'order' => 'crs_transaction.update_date DESC',
 			'arrayJoinTable' => array('crs_car' => 'crs_car.car_id = crs_transaction.car_id',
 								'crs_place' => 'crs_place.place_id = crs_transaction.place_id',
@@ -293,24 +293,6 @@ class Transaction extends Main
 
 		$returnData['transaction_temp_id'] = $this->crsModel->add('crs_transaction_temp', $arrayData);
 		
-		// $arrayWhere = array('transaction_id' => $getData['transaction_id']);
-
-			// start blockchain
-			// $link = "http://127.0.0.1:5000/mining_transaction?"
-			// ."transaction_id=".$getData['transaction_id']
-			// .'&transaction_reject_iden='.$getData['transaction_reject_iden']
-			// .'&transaction_iden_approve='.$getData['reject_iden']
-			// .'&transaction_reject_transfer='.$getData['transaction_reject_transfer']
-			// .'&transaction_transfer_approve='.$getData['reject_tran']
-			// .'&transaction_status='.$arrayData['transaction_status']
-			// .'&transaction_lessor_approve='.$arrayData['transaction_lessor_approve']
-			// .'&user_lessor_id='.$_SESSION['id']
-			// .'&user_update_id='.$_SESSION['id']
-			// ;
-			// $data = file_get_contents($link);
-			//end blockchain
-
-		// $editedId = $this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
 		$this->output->set_content_type('application/json')->set_output(json_encode($returnData));
 	}
 	// ___________________ End editTransactionDetail ____________________
@@ -490,23 +472,6 @@ class Transaction extends Main
 
 		$returnData['transaction_temp_id'] = $this->crsModel->add('crs_transaction_temp', $arrayData);
 		$this->output->set_content_type('application/json')->set_output(json_encode($returnData));
-		
-		// start blockchain
-		// $link = "http://127.0.0.1:5000/mining_transaction?"
-		// ."transaction_id=".$getData['transaction_id']
-		// .'&transaction_status='.$getData['transaction_status']
-		// .'&user_update_id='.$_SESSION['id']
-		// ;
-		// echo $data = file_get_contents($link);
-		//end blockchain
-
-		// $arrayData = array(
-		// 	'transaction_status' => $getData['transaction_status'],
-		// 	'user_update_id' => $_SESSION['id']
-		// );
-		// $arrayWhere = array('transaction_id' => $getData['transaction_id']);
-
-		// $editedId = $this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
 	}
 	// ___________________ End changeTransactionStatus ____________________
 
@@ -523,7 +488,7 @@ class Transaction extends Main
 			transaction_return_date,
 			transaction_status,
 			car_id',
-			'where' => "transaction_status != 5 AND car_id = ".$getData['car_id'],
+			'where' => "transaction_status < 5 AND car_id = ".$getData['car_id'],
 			'order' => '',
 			'arrayJoinTable' => '',
 			'groupBy' => ''
@@ -727,52 +692,4 @@ class Transaction extends Main
 	}
 	// ___________________ End emailConfirm ____________________
 
-	// __________________ Start sendEmail __________________
-	public function sendEmail()
-	{
-		$arrayData = array(
-			'tableName' => 'crs_transaction_temp',
-			'colName' => '
-				crs_transaction_temp.transaction_temp_id,
-				crs_transaction_temp.transaction_lessor_token,
-				crs_transaction_temp.transaction_rental_token,
-				crs_transaction_temp.transaction_depositor_token,
-				crs_transaction_temp.transaction_receive_date,
-				crs_transaction_temp.transaction_return_date,
-				crs_transaction_temp.transaction_price,
-				crs_transaction_temp.transaction_image,
-				crs_transaction_temp.transaction_status,
-				crs_car.car_registration,
-				crs_car.car_price,
-				crs_car.car_image,
-				crs_car_brand.car_brand_name_en,
-				crs_car_model.car_model_name,
-				crs_user_doc.user_doc_id,
-				crs_user_doc.user_doc_iden_image,
-				crs_user_doc.user_doc_license_image,
-				crs_user.user_email,
-				crs_user.user_fname,
-				crs_user.user_lname,
-				crs_user.user_phone,
-				crs_place.place_name',
-			'where' => 'crs_transaction_temp.transaction_temp_id = '. $this->input->post("tran_id"),
-			'order' => '',
-			'arrayJoinTable' => array(
-				'crs_car' => 'crs_car.car_id = crs_transaction_temp.car_id',
-				'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
-				'crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id',
-				'crs_user_doc' => 'crs_user_doc.user_doc_id = crs_transaction_temp.user_doc_id',
-				'crs_user' => 'crs_user.user_id = crs_transaction_temp.user_rental_id',
-				'crs_place' => 'crs_place.place_id = crs_transaction_temp.place_id'
-			),
-			'groupBy' => ''
-		);
-		$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
-
-		$data['user_type'] = $this->input->post("user_type");
-		$arrayData = array('pathView' => 'phpMailer/sendEmail');
-		$this->load->view($arrayData['pathView'], $data, TRUE);
-	}
-	// ___________________ End sendEmail ____________________
-	
 }

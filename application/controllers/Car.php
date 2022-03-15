@@ -618,7 +618,7 @@ class Car extends Main
 			'colName' => '
 				transaction_receive_date,
 				transaction_return_date',
-			'where' => 'car_id = '. $this->input->get('car_id')." AND transaction_status != 5",
+			'where' => 'car_id = '. $this->input->get('car_id')." AND transaction_status < 5",
 			'order' => '',
 			'arrayJoinTable' => '',
 			'groupBy' => ''
@@ -978,6 +978,45 @@ class Car extends Main
 	}
 	// ___________________ End sendEmail ____________________
 
+	// __________________ Start sendEmailDeposit __________________
+	public function sendEmailDeposit()
+	{
+		$arrayData = array(
+			'tableName' => 'crs_transaction_temp',
+			'colName' => '
+				crs_transaction_temp.transaction_temp_id,
+				crs_transaction_temp.transaction_lessor_token,
+				crs_transaction_temp.transaction_rental_token,
+				crs_transaction_temp.transaction_depositor_token,
+				crs_transaction_temp.transaction_status,
+				crs_car.car_registration,
+				crs_car.car_price,
+				crs_car.car_image,
+				crs_car.car_status,
+				crs_car_brand.car_brand_name_en,
+				crs_car_model.car_model_name,
+				crs_user.user_email,
+				crs_user.user_fname,
+				crs_user.user_lname,
+				crs_user.user_phone',
+			'where' => 'crs_transaction_temp.transaction_temp_id = '. $this->input->post("tran_id"),
+			'order' => '',
+			'arrayJoinTable' => array(
+				'crs_car' => 'crs_car.car_id = crs_transaction_temp.car_id',
+				'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
+				'crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id',
+				'crs_user' => 'crs_user.user_id = crs_transaction_temp.user_depositor_id',
+				'crs_place' => 'crs_place.place_id = crs_transaction_temp.place_id'
+			),
+			'groupBy' => ''
+		);
+		$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$data['user_type'] = $this->input->post("user_type");
+		$arrayData = array('pathView' => 'phpMailer/sendEmailDeposit');
+		$this->load->view($arrayData['pathView'], $data, TRUE);
+	}
+	// ___________________ End sendEmailDeposit ____________________
+
 	// __________________ Start carDeposit __________________
 	public function carDeposit()
 	{
@@ -1012,7 +1051,7 @@ class Car extends Main
 		$this->load->library('upload', $config, 'depositImg');
 
 		if(!$this->depositImg->do_upload('license_upload')){
-			echo $this->depositImg->display_errors();
+			// echo $this->depositImg->display_errors();
 		}else{
 			$data = $this->depositImg->data();
 			$filenamelicense = $data['file_name'];
@@ -1022,11 +1061,19 @@ class Car extends Main
 		$this->load->library('upload', $config, 'carImg');
 
 		if(!$this->carImg->do_upload('car_deposit_upload')){
-			echo $this->carImg->display_errors();
+			// echo $this->carImg->display_errors();
 		}else{
 			$data = $this->carImg->data();
 			$filenameCar = $data['file_name'];
 		}
+
+		$arrayData = array(
+			'user_type_id' => 3,
+			'user_update_id' => $_SESSION['id']
+		);// update ผู้เช่าเป็นฝากเช่า
+		$arrayWhere = array('user_id ' => $_SESSION['id']);
+		$this->crsModel->update('crs_user',$arrayWhere, $arrayData);
+
 		$arrayData = array(
 			'car_registration' => $this->input->post('car_registration'),
 			'car_model_id' => $this->input->post('car_model_id'),
@@ -1038,10 +1085,68 @@ class Car extends Main
 			'user_create_id' => $_SESSION['id'],
 			'user_update_id' => $_SESSION['id']
 		);
-		print_r($arrayData);
 		$addedId = $this->crsModel->add('crs_car', $arrayData);
+		
+		$arrayData = array(
+			'transaction_lessor_token' => uniqid(),
+			'transaction_rental_token' => uniqid(),
+			'transaction_depositor_token' => uniqid(),
+			'transaction_lessor_approve' => 0,
+			'transaction_depositor_approve' => 0,
+			'user_depositor_id' => $_SESSION['id'],
+			'car_id' => $addedId,
+			'transaction_status' => '7'
+		);
+		$returnData['transaction_temp_id'] = $this->crsModel->add('crs_transaction_temp', $arrayData);
+		$this->output->set_content_type('application/json')->set_output(json_encode($returnData));
 	}
 	// ___________________ End addCarDeposit ____________________
+
+	// __________________ Start editTransactionDetail __________________
+	public function editTransactionDetail()
+	{
+		$getData = $this->input->post();
+
+		$arrayData = array(
+			'tableName' => 'crs_transaction',
+			'colName' => '
+				car_id,
+				user_depositor_id,
+				transaction_id',
+			'where' => 
+				array(
+					'transaction_id' => $getData['transaction_id']
+				),
+			'order' => '',
+			'arrayJoinTable' => '',
+			'groupBy' => ''
+		);
+		$result = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		
+		$arrayData = array(
+			'transaction_lessor_token' => uniqid(),
+			'transaction_rental_token' => uniqid(),
+			'transaction_depositor_token' => uniqid(),
+			'user_lessor_id' => $_SESSION['id'],
+			'user_depositor_id	' => $result[0]->user_depositor_id,
+			'transaction_lessor_approve' => 0,
+			'transaction_depositor_approve' => 0,
+			'transaction_id' => $result[0]->transaction_id,
+			'car_id' => $result[0]->car_id,
+			'transaction_status' => $getData['car_status']
+		);//8 reject; 9 pass
+		$returnData['transaction_temp_id'] = $this->crsModel->add('crs_transaction_temp', $arrayData);
+
+		$arrayData = array(
+			'car_status' => $getData['car_status'],
+			'car_reject_deposit' => $getData['car_reject_deposit']
+		);
+		$arrayWhere = array('car_id' => $this->input->post('car_id'));
+		$this->crsModel->update('crs_car',$arrayWhere, $arrayData);
+
+		$this->output->set_content_type('application/json')->set_output(json_encode($returnData));
+	}
+	// ___________________ End editTransactionDetail ____________________
 
 	// __________________ Start carDepositReport __________________
 	public function carDepositReport()
@@ -1071,13 +1176,6 @@ class Car extends Main
 			'pathView' => 'car/tableCarDeposit'
 		);
 		
-		// if ($_SESSION['type'] == '2') {
-		// 	$arrayData['where'] = "crs_transaction.user_rental_id = ".$_SESSION['id'];
-		// 	// $data['table'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_user_tran?user_rental_id=".$_SESSION['id']));
-		// }else{
-		// 	// $data['table'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_chain_lessor"));
-		// }
-
 		$data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
 		$json['table'] = $data['table'];
 		$json['sql'] = $this->db->last_query(); //for dev
@@ -1138,7 +1236,9 @@ class Car extends Main
 		if ($_SESSION['type'] == '2') {
 			$data['page_content'] = $this->load->view('car/carDepositEdit', $data, TRUE);
 		}
-		
+		if ($_SESSION['type'] == '3') {
+			$data['page_content'] = $this->load->view('car/carDepositEdit', $data, TRUE);
+		}
 
 		$this->load->view('main', $data);
 	}
@@ -1157,7 +1257,7 @@ class Car extends Main
 		$getData = $this->input->post();
 
 		$this->load->library('upload', $config, 'carImg');
-		if(!$this->carImg->do_upload('car_deposit_upload') ){
+		if(!$this->carImg->do_upload('car_deposit_upload')){
 			$filename['car_deposit_upload'] = $getData['old_car_deposit_upload'];
 		}else{
 			$data = $this->carImg->data();
@@ -1188,7 +1288,156 @@ class Car extends Main
 		);
 		// print_r($arrayData);
 		$arrayWhere = array('car_id' => $this->input->post('car_id'));
-		$addedId = $this->crsModel->update('crs_car',$arrayWhere , $arrayData);
+		echo $this->crsModel->update('crs_car',$arrayWhere , $arrayData);
 	}
 	// ___________________ End editCarDeposit ____________________
+
+	// __________________ Start emailConfirmDeposit __________________
+	public function emailConfirmDeposit()
+	{
+		
+		$this->crsModel->deleteOldEmail();
+		$arrayData = array(
+			'tableName' => 'crs_transaction_temp',
+			'colName' => '',
+			'where' => 
+				array(
+					'transaction_temp_id' => $_GET['temp']
+				),
+			'order' => '',
+			'arrayJoinTable' => '',
+			'groupBy' => ''
+		);
+		if($_GET['usertype']==1){
+			$arrayData['where']['transaction_lessor_token'] = $_GET['token'];
+			$updateData["transaction_lessor_approve"] = 1;
+		}else if($_GET['usertype']==3){
+			$arrayData['where']['transaction_depositor_token'] = $_GET['token'];
+			$updateData["transaction_depositor_approve"] = 1;
+		}
+		
+		$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+
+		if($data['select']){
+
+			$arrayWhere = array('transaction_temp_id' => $_GET['temp']);
+			$this->crsModel->update('crs_transaction_temp',$arrayWhere, $updateData);
+			
+			$arrayData = array(
+				'tableName' => 'crs_transaction_temp',
+				'colName' => '',
+				'where' => 
+					array(
+						'transaction_temp_id' => $_GET['temp']
+					),
+				'order' => '',
+				'arrayJoinTable' => '',
+				'groupBy' => ''
+			);
+			$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+			if($data['select']){
+				$val = $data['select'][0];
+			}
+
+			if($val->transaction_lessor_approve == 1 && $val->transaction_depositor_approve == 1 ){
+				
+				$arrayDelete = array(
+					'tableName' => 'crs_transaction_temp',
+					'columnIdName' => 'transaction_temp_id',
+					'id' => $_GET['temp']
+				);
+				
+				if($_GET['type'] == 'deposit' && $val->transaction_status == 7){//ยืนยันการจอง
+
+						$this->crsModel->delete($arrayDelete['tableName'], $arrayDelete['columnIdName'], $arrayDelete['id']);
+		
+						$arrayData = array(
+							'tableName' => 'crs_transaction',
+							'colName' => 'MAX(transaction_id) AS transaction_id',
+							'where' =>'',
+							'order' => '',
+							'arrayJoinTable' => '',
+							'groupBy' => ''
+						);
+						$data['max_tran'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+	
+						$link = "http://127.0.0.1:5000/mining?"
+							.'car_id='.$val->car_id
+							.'&transaction_id='.$data['max_tran'][0]->transaction_id+1
+							.'&user_depositor_id='.$val->user_depositor_id
+							.'&user_lessor_id='.$val->user_lessor_id
+							.'&transaction_status='.$val->transaction_status
+						;
+						file_get_contents($link);
+			
+						$arrayData = array(
+							'car_id' => $val->car_id,
+							'user_depositor_id' => $val->user_depositor_id,
+							'user_lessor_id' => $val->user_lessor_id,
+							'transaction_status' => $val->transaction_status,
+							'user_create_id' => $val->user_rental_id,
+							'user_update_id' => $val->user_rental_id
+						);
+						$this->crsModel->add('crs_transaction', $arrayData);
+				}else if(($_GET['type'] == 'deposit_reject' && $val->transaction_status == 8)||($_GET['type'] == 'deposit_confirm' && $val->transaction_status == 9)){
+					
+					$this->crsModel->delete($arrayDelete['tableName'], $arrayDelete['columnIdName'], $arrayDelete['id']);
+
+					// start blockchain
+					$link = "http://127.0.0.1:5000/mining_transaction?"
+					."transaction_id=".$val->transaction_id
+					.'&transaction_status='.$val->transaction_status
+					.'&user_lessor_id='.$val->user_lessor_id
+					;
+					file_get_contents($link);
+					// end blockchain
+		
+					$arrayData = array(
+						'transaction_status' => $val->transaction_status,
+						'user_lessor_id' => $val->user_lessor_id
+					);
+					$arrayWhere = array('transaction_id' => $val->transaction_id);
+					$this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
+				}else if($_GET['type'] == 'edit' && $val->transaction_status == 6){
+					$this->crsModel->delete($arrayDelete['tableName'], $arrayDelete['columnIdName'], $arrayDelete['id']);
+
+					// start blockchain
+					$link = "http://127.0.0.1:5000/mining_transaction?"
+					."transaction_id=".$val->transaction_id
+					.'&transaction_status='.$val->transaction_status
+					.'&transaction_image='.$val->transaction_image
+					;
+					file_get_contents($link);
+					// end blockchain
+		
+					$arrayData = array(
+						'transaction_status' => $val->transaction_status,
+						'transaction_image' => $val->transaction_image
+					);
+					$arrayWhere = array('transaction_id' => $val->transaction_id);
+					$this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
+				}else if(($_GET['type'] == 'receive' && $val->transaction_status == 4) || ($_GET['type'] == 'return' && $val->transaction_status == 5)){
+					$this->crsModel->delete($arrayDelete['tableName'], $arrayDelete['columnIdName'], $arrayDelete['id']);
+
+					// start blockchain
+					$link = "http://127.0.0.1:5000/mining_transaction?"
+					."transaction_id=".$val->transaction_id
+					.'&transaction_status='.$val->transaction_status
+					;
+					file_get_contents($link);
+					// end blockchain
+		
+					$arrayData = array(
+						'transaction_status' => $val->transaction_status
+					);
+					$arrayWhere = array('transaction_id' => $val->transaction_id);
+					$this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
+				}
+			}
+		}
+
+		$data['page_content'] = $this->load->view('phpMailer/emailConfirm', $data, TRUE);
+		$this->load->view('main', $data);
+	}
+	// ___________________ End emailConfirmDeposit ____________________
 }

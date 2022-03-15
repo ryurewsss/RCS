@@ -295,6 +295,19 @@ $('#addCarDepositForm').on('submit', function(event) {
                 cache: false,  
                 processData:false,  
             }).done(function(returnData) {
+
+                for(var i=1; i<4; i=i+2){//ยังไม่รวมฝากเช่า
+                    $.ajax({
+                    url: 'sendEmailDeposit',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        tran_id: returnData.transaction_temp_id,
+                        user_type: i
+                    }, success: function (returnData) {
+                    }
+                    });
+                }
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
@@ -302,8 +315,6 @@ $('#addCarDepositForm').on('submit', function(event) {
                     showConfirmButton: false,
                     timer: 1000
                 })
-                // window.location = "<?php echo base_url(); ?>";
-                // location.reload()
                 setTimeout(location.reload.bind(location), 1200);
             }); 
         }

@@ -65,7 +65,7 @@ class crsModel extends CI_Model
 
     public function deleteOldEmail()
     {
-        $sql="DELETE FROM crs_transaction_temp WHERE create_date < (NOW() - INTERVAL 60 MINUTE)";    
+        $sql="DELETE FROM crs_transaction_temp WHERE create_date < (NOW() - INTERVAL 5760 MINUTE)";    
         $this->db->query($sql);
     }
    

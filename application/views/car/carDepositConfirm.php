@@ -199,7 +199,7 @@
                                 </div>
                                 <div class="col-6 text-center">
                                     <h4>ปฏิเสธเอกสาร <br><br> </h4>
-                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="transaction_reject_iden" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" ></textarea>
+                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="car_reject_deposit" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" ></textarea>
                                     <br>
                                     <h2 class="text-danger" id="car_status_8" style="user-select: auto; display: <?php echo isset($val->car_status) && $val->car_status == 8 ? 'display' : 'none'; ?>"><b>ปฏิเสธเอกสาร</b></h2>
                                         <h2 class="text-success" id="car_status_9" style="user-select: auto; display: <?php echo isset($val->car_status) && $val->car_status == 9 ? 'display' : 'none'; ?>"><b>ยอมรับเอกสาร</b></h2>
@@ -343,9 +343,9 @@ $('#addConfirmRentForm').on('submit', function(event) {
                 method:"POST",  
                 data:formData
             }).done(function(returnData) {
-                for(var i=1; $("#user_type_id").val()==3 ? i<4:i<3; i++){//ยังไม่รวมฝากเช่า
+                for(var i=1; i<4; i=i+2){//ยังไม่รวมฝากเช่า
                     $.ajax({
-                    url: 'sendEmail',
+                    url: 'sendEmailDeposit',
                     method: 'POST',
                     dataType: 'json',
                     data: {

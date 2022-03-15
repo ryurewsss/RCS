@@ -171,11 +171,11 @@
                         <div class="col-xs-12 col-sm-5" style="user-select: auto;"><br>
                             <div class="text-center">
                                 <h4>เหตุผลปฏิเสธเอกสาร <br><br> </h4>
-                                <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="transaction_reject_iden" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" disabled><?php echo $val->car_reject_deposit; ?></textarea>
+                                <textarea style="height: 300px" class="form-control" rows="3" id="transaction_reject_iden" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" disabled><?php echo $val->car_reject_deposit; ?></textarea>
                                 <br>
                                 <h2 class="text-danger" id="car_status_8" style="user-select: auto; display: <?php echo isset($val->car_status) && $val->car_status == 8 ? 'display' : 'none'; ?>"><b>ปฏิเสธเอกสาร</b></h2>
                                     <h2 class="text-success" id="car_status_9" style="user-select: auto; display: <?php echo isset($val->car_status) && $val->car_status == 9 ? 'display' : 'none'; ?>"><b>ยอมรับเอกสาร</b></h2>
-                                    <input type="hidden" name="inputData[]" id="car_status" value="<?php echo isset($val->car_status) ? $val->car_status : ''; ?>">
+                                    <input type="hidden" name="car_status" id="car_status" value="<?php echo isset($val->car_status) ? $val->car_status : ''; ?>">
                             </div>
                         </div>
                     </div>
@@ -220,6 +220,7 @@
                                     <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab('setDate')">&laquo; ย้อนกลับ</button>
                                 </div>
                                 <div class="col-6 text-center">
+                                <input type="hidden" name="car_id" value="<?php echo $val->car_id; ?>"/>
                                 <button type="submit" id="selectDeposit" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12">ยืนยันการแก้ไข &raquo;</button>
                                 </div>
                             </div>

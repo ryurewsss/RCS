@@ -9,6 +9,7 @@ class Blockchain:
         self.transaction_id = None 
         self.car_id = None
         self.user_lessor_id = None
+        self.user_depositor_id = None
         self.user_rental_id = None
         self.user_doc_id = None
         self.place_id = None
@@ -36,6 +37,7 @@ class Blockchain:
                 "car_id":self.car_id,
                 "user_lessor_id":self.user_lessor_id,
                 "user_rental_id":self.user_rental_id,
+                "user_depositor_id":self.user_depositor_id,
                 "user_doc_id":self.user_doc_id,
                 "place_id":self.place_id,
                 "transaction_receive_date":self.transaction_receive_date,
@@ -168,7 +170,12 @@ def mining_block():
     # username = request.args.get('tran')
     blockchain.transaction_id = request.args.get('transaction_id') 
     blockchain.car_id = request.args.get('car_id')
-    blockchain.user_rental_id = request.args.get('user_rental_id')
+
+    if request.args.get('user_lessor_id'):
+        blockchain.user_lessor_id = request.args.get('user_lessor_id')
+    if request.args.get('user_depositor_id'):
+        blockchain.user_depositor_id = request.args.get('user_depositor_id')
+
     blockchain.user_doc_id = request.args.get('user_doc_id')
     blockchain.place_id = request.args.get('place_id')
     blockchain.transaction_receive_date = request.args.get('transaction_receive_date')
@@ -207,7 +214,10 @@ def mining_transaction():
         blockchain.user_lessor_id = tranBlock['data']['user_lessor_id']
     else:
         blockchain.user_lessor_id = request.args.get('user_lessor_id')
-
+    if request.args.get('user_depositor_id') is None:
+        blockchain.user_depositor_id = tranBlock['data']['user_depositor_id']
+    else:
+        blockchain.user_depositor_id = request.args.get('user_depositor_id')
     if request.args.get('user_doc_id') is None:
         blockchain.user_doc_id = tranBlock['data']['user_doc_id']
     else:
