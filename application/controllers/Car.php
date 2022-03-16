@@ -1409,6 +1409,13 @@ class Car extends Main
 					);
 					$arrayWhere = array('transaction_id' => $val->transaction_id);
 					$this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
+
+					$arrayData = array(
+						'car_status' => $val->transaction_status
+					);
+					$arrayWhere = array('car_id' => $val->car_id);
+					$this->crsModel->update('crs_car',$arrayWhere, $arrayData);
+
 				}else if($_GET['type'] == 'deposit_edit' && $val->transaction_status == 12){
 					$this->crsModel->delete($arrayDelete['tableName'], $arrayDelete['columnIdName'], $arrayDelete['id']);
 
@@ -1425,7 +1432,14 @@ class Car extends Main
 					);
 					$arrayWhere = array('transaction_id' => $val->transaction_id);
 					$this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
-				}else if(($_GET['type'] == 'receive' && $val->transaction_status == 4) || ($_GET['type'] == 'return' && $val->transaction_status == 5)){
+
+					$arrayData = array(
+						'car_status' => $val->transaction_status
+					);
+					$arrayWhere = array('car_id' => $val->car_id);
+					$this->crsModel->update('crs_car',$arrayWhere, $arrayData);
+					
+				}else if(($_GET['type'] == 'deposit_receive' && $val->transaction_status == 10) || ($_GET['type'] == 'deposit_return' && $val->transaction_status == 11)){
 					$this->crsModel->delete($arrayDelete['tableName'], $arrayDelete['columnIdName'], $arrayDelete['id']);
 
 					// start blockchain
@@ -1441,6 +1455,12 @@ class Car extends Main
 					);
 					$arrayWhere = array('transaction_id' => $val->transaction_id);
 					$this->crsModel->update('crs_transaction',$arrayWhere, $arrayData);
+
+					$arrayData = array(
+						'car_status' => $val->transaction_status
+					);
+					$arrayWhere = array('car_id' => $val->car_id);
+					$this->crsModel->update('crs_car',$arrayWhere, $arrayData);
 				}
 			}
 		}
@@ -1449,4 +1469,46 @@ class Car extends Main
 		$this->load->view('main', $data);
 	}
 	// ___________________ End emailConfirmDeposit ____________________
+
+	// __________________ Start changeCarStatus __________________
+public function changeCarStatus()
+{
+	$getData = $this->input->post();
+
+	$arrayData = array(
+		'tableName' => 'crs_transaction',
+		'colName' => '
+			car_id,
+			transaction_id,
+			user_lessor_id,
+			user_depositor_id',
+		'where' => 
+			array(
+				'transaction_id' => $getData['transaction_id']
+			),
+		'order' => '',
+		'arrayJoinTable' => '',
+		'groupBy' => ''
+	);
+	$result = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+	$arrayData = array(
+		'transaction_id' => $result[0]->transaction_id,
+		'transaction_lessor_token' => uniqid(),
+		'transaction_rental_token' => uniqid(),
+		'transaction_depositor_token' => uniqid(),
+		'transaction_lessor_approve' => 0,
+		'transaction_depositor_approve' => 0,
+		'car_id' => $result[0]->car_id,
+		'user_lessor_id' => $result[0]->user_lessor_id,
+		'user_depositor_id' => $result[0]->user_depositor_id,
+		'transaction_status' => $getData['car_status'],
+	);
+
+	$returnData['transaction_temp_id'] = $this->crsModel->add('crs_transaction_temp', $arrayData);
+	$this->output->set_content_type('application/json')->set_output(json_encode($returnData));
 }
+// ___________________ End changeCarStatus ____________________
+}
+
+
+
