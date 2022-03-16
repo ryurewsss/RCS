@@ -1058,12 +1058,14 @@ class Car extends Main
 			$filenameCar = $data['file_name'];
 		}
 
-		$arrayData = array(
-			'user_type_id' => 3,
-			'user_update_id' => $_SESSION['id']
-		);// update ผู้เช่าเป็นฝากเช่า
-		$arrayWhere = array('user_id ' => $_SESSION['id']);
-		$this->crsModel->update('crs_user',$arrayWhere, $arrayData);
+		if($_SESSION['type'] = 2){
+			$arrayData = array(
+				'user_type_id' => 3,
+				'user_update_id' => $_SESSION['id']
+			);// update ผู้เช่าเป็นฝากเช่า
+			$arrayWhere = array('user_id ' => $_SESSION['id']);
+			$this->crsModel->update('crs_user',$arrayWhere, $arrayData);
+		}
 
 		$arrayData = array(
 			'car_registration' => $this->input->post('car_registration'),

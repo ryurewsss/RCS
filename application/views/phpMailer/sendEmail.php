@@ -28,12 +28,14 @@
             $mail->addAddress($val->user_email); // Send to mail
         }
         
+        $mail->AddEmbeddedImage(dirname(__DIR__,3)."\img\car_img\\".$val->car_image, "car_img");
+
         $mail->CharSet = 'UTF-8';
         $mail->Subject = $emailStatus[$val->transaction_status];
-        // $mail->Body = $detail;
+        // $mail->Body = dirname(__DIR__,3)."\img\car_img\\".$val->car_image.'Embedded Image: <img alt="PHPMailer" src="cid:car"> Here is an image!';
         $mail->Body = '
         <br>
-        <img src="cid:car_img">
+        <img style="max-width: 400px; max-height: 400px" src="cid:car_img">
         <h4>รุ่นและยี่ห้อ : '.$val->car_brand_name_en.' '.$val->car_model_name.'</h4>
         <h4>ทะเบียน : '.$val->car_registration.'</h4>
         <h4>สถานที่รับส่งรถเช่า : '.$val->place_name.'</h4>
@@ -61,8 +63,6 @@
         '">
             <button type="button" style="user-select: auto;background-color: #1cc88a;color: #fff;border-color: #1cc88a;border: 1px solid transparent;padding: 0.375rem 0.75rem;border-radius: 0.35rem;">ยืนยัน</button>
         </a>';
-        $mail->AddEmbeddedImage(base_url('img/car_img').'/'.$val->car_image,'car_img');
-        $mail->IsHTML(true); 
 
         if($mail->send()) {
             $status = "success";
