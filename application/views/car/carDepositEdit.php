@@ -283,7 +283,7 @@ $('#editCarDepositForm').on('submit', function(event) {
                     showConfirmButton: false,
                     timer: 1000
                 })
-                setTimeout(location.reload.bind(location), 1200);
+                // setTimeout(location.reload.bind(location), 1200);
             }); 
         }
     })
