@@ -31,7 +31,9 @@
             if (isset($table) && $table) {
                 $i = 1 //กำหนดลำดับ 
             ?>
-                <?php foreach ($table as $key => $val) { ?>
+                <?php foreach ($table as $key => $val) { 
+                    if($val->car_status == 1 || $val->car_status == 10){
+                ?>
                     <tr>
                         <td hidden><?php echo $i++; ?></td>
                         <td>
@@ -62,7 +64,8 @@
                             </div>
                         </td>
                     </tr>
-                <?php } ?>
+                <?php }
+                    } ?>
             <?php } ?>
             <!-- End loop -->
         </tbody>

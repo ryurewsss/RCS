@@ -450,7 +450,7 @@ $('#addCarRentForm').on('submit', function(event) {
                     showConfirmButton: false,
                     timer: 1000
                 })
-                window.location = "<?php echo base_url(); ?>";
+                // window.location = "<?php echo base_url(); ?>";
             });
         }
     })

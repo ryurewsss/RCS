@@ -80,10 +80,10 @@
             <div class="col-1">
                 <label>ประเภท <a style="color: red;"> *</a></label>
             </div>  : &ensp;
-            <select style="width: 250px;" id="car_type" class="form-control form-control-line" name="inputData[]">
+            <select style="width: 250px;" id="car_status" class="form-control form-control-line" name="inputData[]">
                 <option selected value="*">เลือกทั้งหมด</option>
                 <option value="1">รถของบริษัท RCS</option>
-                <option value="2">รถฝากเช่า</option>
+                <option value="10">รถฝากเช่า</option>
             </select>
         </div>
         <br>

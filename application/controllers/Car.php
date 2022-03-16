@@ -18,19 +18,6 @@ class Car extends Main
 	public function car()
 	{
 
-		// $arrayData = array(
-		// 	'tableName' => 'crs_car_model',
-		// 	'colName' => '
-		// 		crs_car_model.car_model_id, 
-		// 		crs_car_model.car_model_name,
-		// 		crs_car_model.car_brand_id,
-		// 		crs_car_brand.car_brand_name_en',
-		// 	'where' => '',
-		// 	'order' => '',
-		// 	'arrayJoinTable' => array('crs_car_brand' => 'crs_car_model.car_brand_id = crs_car_brand.car_brand_id'),
-		// 	'groupBy' => ''
-		// );
-
 		$arrayData = array(
 			'tableName' => 'crs_car_brand',
 			'colName' => '
@@ -72,7 +59,6 @@ class Car extends Main
 	// __________________ Start getCarSearchTable __________________
 	public function getCarSearchTable()
 	{
-		
 		$arrayData = array(
 			'tableName' => 'crs_car',
 			'colName' => '
@@ -80,6 +66,7 @@ class Car extends Main
 				crs_car.car_registration,
 				crs_car.car_price,
 				crs_car.car_image,
+				crs_car.car_status,
 				crs_car_model.car_model_id, 
 				crs_car_model.car_model_name, 
 				crs_car_model.car_model_feature, 
@@ -96,15 +83,19 @@ class Car extends Main
 		);
 
 		$getData = $this->input->post();
+
+		// $arrayData['where'] = $arrayData['where']." AND crs_car.car_status = 1 OR crs_car.car_status = 10";
+		//get all car type
+
 		if($getData['car_brand_id'] != '*'){
 			$arrayData['where'] = $arrayData['where']." AND crs_car_brand.car_brand_id = ".$getData['car_brand_id'];
 		}
 		if($getData['car_model_id'] != '*'){
 			$arrayData['where'] = $arrayData['where']." AND crs_car_model.car_model_id = ".$getData['car_model_id'];
 		}
-		// if($getData['car_type']!='*'){
-		// 	$arrayData['where'] = $arrayData['where']." AND  = ".$getData['car_type'];
-		// }
+		if($getData['car_status']!='*'){
+			$arrayData['where'] = $arrayData['where']." AND crs_car.car_status = ".$getData['car_status'];
+		}
 		if($getData['price_range']!='*'){
 			$price = explode("-",$getData['price_range']);
 			$arrayData['where'] = $arrayData['where']." AND crs_car.car_price >= ".$price[0]." AND crs_car.car_price <= ".$price[1];
@@ -288,7 +279,7 @@ class Car extends Main
 				crs_car_model.car_model_description, 
 				crs_car_model.car_brand_id, 
 				crs_car_brand.car_brand_name_en',
-			'where' => '',
+			'where' => 'crs_car.car_status = 1 OR crs_car.car_status = 10 ',
 			'order' => 'crs_car.create_date DESC',
 			'arrayJoinTable' => array(
 				'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
