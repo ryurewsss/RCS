@@ -222,8 +222,7 @@
                                     <button type="button" style="margin:auto; width: 100px;" class="btn btn-secondary d-none d-lg-block m-l-12" onclick="openTab('setDate')">&laquo; ย้อนกลับ</button>
                                 </div>
                                 <div class="col-6 text-center">
-                                <!-- <input type="hidden" name="inputData[]" id="user_type_id" value="<?php echo $user_type[0]->user_type_id; ?>"> -->
-                                <!-- <input type="hidden" name="inputData[]" id="transaction_id" value="<?php echo $val->transaction_id; ?>"> -->
+                                <input type="hidden" name="inputData[]" id="transaction_id" value="<?php echo $val->transaction_id; ?>">
                                 <button type="submit" style="margin:auto; width: 160px;" class="btn btn-success d-none d-lg-block m-l-12" <?php echo $val->car_status == 11 ? 'disabled' : '' ; ?>>ยืนยันการตรวจสอบ</button>
                                 </div>
                             </div>
@@ -362,7 +361,7 @@ $('#addConfirmRentForm').on('submit', function(event) {
                     showConfirmButton: false,
                     timer: 1000
                 })
-                window.location = "<?php echo base_url().'/Transaction/transaction'; ?>";
+                // window.location = "<?php echo base_url().'/Car/carDepositReport'; ?>";
             });
         }
     })

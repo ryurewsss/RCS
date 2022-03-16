@@ -221,6 +221,7 @@
                                 </div>
                                 <div class="col-6 text-center">
                                 <input type="hidden" name="car_id" value="<?php echo $val->car_id; ?>"/>
+                                <input type="hidden" name="transaction_id" value="<?php echo $val->transaction_id; ?>"/>
                                 <button type="submit" id="selectDeposit" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12">ยืนยันการแก้ไข &raquo;</button>
                                 </div>
                             </div>
@@ -263,6 +264,18 @@ $('#editCarDepositForm').on('submit', function(event) {
                 cache: false,  
                 processData:false,  
             }).done(function(returnData) {
+                for(var i=1; i<4; i=i+2){//ยังไม่รวมฝากเช่า
+                    $.ajax({
+                    url: 'sendEmailDeposit',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        tran_id: returnData.transaction_temp_id,
+                        user_type: i
+                    }, success: function (returnData) {
+                    }
+                    });
+                }
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
@@ -270,9 +283,7 @@ $('#editCarDepositForm').on('submit', function(event) {
                     showConfirmButton: false,
                     timer: 1000
                 })
-                // window.location = "<?php echo base_url(); ?>";
-                // location.reload()
-                // setTimeout(location.reload.bind(location), 1200);
+                setTimeout(location.reload.bind(location), 1200);
             }); 
         }
     })
