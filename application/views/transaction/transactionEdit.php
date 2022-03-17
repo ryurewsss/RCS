@@ -389,11 +389,13 @@ $('#addConfirmRentForm').on('submit', function(event) {
                     showConfirmButton: false,
                     timer: 1000
                 })
-                // window.location = "<?php echo base_url().'/Transaction/transactionRecord'; ?>";
+                window.location = "<?php echo base_url().'/Transaction/transactionRecord'; ?>";
             }); 
         }
     })
 })
+
+getQRcode()
 
 function onDateChange() {
     if($("#datepicker").val()!='' && $("#datepicker2").val()!=''){

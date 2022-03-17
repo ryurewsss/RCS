@@ -283,6 +283,7 @@ $('#editCarDepositForm').on('submit', function(event) {
                     showConfirmButton: false,
                     timer: 1000
                 })
+                window.location = "<?php echo base_url().'/Car/carDepositRecord'; ?>";
                 // setTimeout(location.reload.bind(location), 1200);
             }); 
         }

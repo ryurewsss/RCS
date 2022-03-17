@@ -315,7 +315,8 @@ $('#addCarDepositForm').on('submit', function(event) {
                     showConfirmButton: false,
                     timer: 1000
                 })
-                setTimeout(location.reload.bind(location), 1200);
+                window.location = "<?php echo base_url(); ?>";
+                // setTimeout(location.reload.bind(location), 1200);
             }); 
         }
     })

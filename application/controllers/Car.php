@@ -45,7 +45,7 @@ class Car extends Main
 			'tableName' => 'crs_car_brand',
 			'colName' => 'car_brand_id, car_brand_name_en',
 			'where' => '',
-			'order' => '',
+			'order' => 'car_brand_id ASC',
 			'arrayJoinTable' => '',
 			'groupBy' => ''
 		);
@@ -74,7 +74,7 @@ class Car extends Main
 				crs_car_model.car_brand_id, 
 				crs_car_brand.car_brand_name_en',
 			'where' => '',
-			'order' => 'crs_car.create_date DESC',
+			'order' => 'crs_car.car_id DESC',
 			'arrayJoinTable' => array(
 				'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
 				'crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id'
@@ -120,7 +120,7 @@ class Car extends Main
 			'tableName' => 'crs_car_model',
 			'colName' => 'car_model_id, car_model_name',
 			'where' => '',
-			'order' => '',
+			'order' => 'car_model_id ASC',
 			'arrayJoinTable' => '',
 			'groupBy' => ''
 		);
@@ -280,7 +280,7 @@ class Car extends Main
 				crs_car_model.car_brand_id, 
 				crs_car_brand.car_brand_name_en',
 			'where' => 'crs_car.car_status = 1 OR crs_car.car_status = 10 ',
-			'order' => 'crs_car.create_date DESC',
+			'order' => 'crs_car.car_id DESC',
 			'arrayJoinTable' => array(
 				'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
 				'crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id'
@@ -937,6 +937,10 @@ class Car extends Main
 				crs_transaction_temp.transaction_price,
 				crs_transaction_temp.transaction_image,
 				crs_transaction_temp.transaction_status,
+				crs_transaction_temp.transaction_iden_approve,
+				crs_transaction_temp.transaction_transfer_approve,
+				crs_transaction_temp.transaction_reject_iden,
+				crs_transaction_temp.transaction_reject_transfer,
 				crs_car.car_registration,
 				crs_car.car_price,
 				crs_car.car_image,
@@ -983,7 +987,9 @@ class Car extends Main
 				crs_car.car_registration,
 				crs_car.car_price,
 				crs_car.car_image,
+				crs_car.car_proof_image,
 				crs_car.car_status,
+				crs_car.car_reject_deposit,
 				crs_car_brand.car_brand_name_en,
 				crs_car_model.car_model_name,
 				crs_user.user_email,
@@ -1130,24 +1136,67 @@ class Car extends Main
 		);//8 reject; 9 pass
 		$returnData['transaction_temp_id'] = $this->crsModel->add('crs_transaction_temp', $arrayData);
 
-		$arrayData = array(
-			'car_status' => $getData['car_status'],
-			'car_reject_deposit' => $getData['car_reject_deposit']
-		);
-		$arrayWhere = array('car_id' => $result[0]->car_id);
-		$this->crsModel->update('crs_car',$arrayWhere, $arrayData);
+		// $arrayData = array(
+		// 	'car_status' => $getData['car_status'],
+		// 	'car_reject_deposit' => $getData['car_reject_deposit']
+		// );
+		// $arrayWhere = array('car_id' => $result[0]->car_id);
+		// $this->crsModel->update('crs_car',$arrayWhere, $arrayData);
 
 		$this->output->set_content_type('application/json')->set_output(json_encode($returnData));
 	}
 	// ___________________ End editTransactionDetail ____________________
 
-	// __________________ Start carDepositReport __________________
-	public function carDepositReport()
+	// __________________ Start carDepositTable __________________
+	public function carDepositTable()
 	{
-		$data['page_content'] = $this->load->view('car/carDepositReport', '', TRUE);
+		$data['page_content'] = $this->load->view('car/carDepositTable', '', TRUE);
 		$this->load->view('main', $data);
 	}
-	// ___________________ End carDepositReport ____________________
+	// ___________________ End carDepositTable ____________________
+
+	// __________________ Start getCarDepositTable __________________
+	public function getCarDepositTable()
+	{
+		$arrayData = array(
+			'tableName' => 'crs_transaction',
+			'colName' => '
+							crs_transaction.transaction_id,
+							crs_car.car_id,
+							crs_car.car_registration,
+							crs_car_brand.car_brand_name_en AS car_brand_name_en,
+							crs_car.car_price,
+							crs_car.car_status',
+			'order' => 'crs_transaction.transaction_id DESC',
+			'arrayJoinTable' => array(
+									'crs_car' => 'crs_car.car_id = crs_transaction.car_id',
+									'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
+									'crs_car_brand' => 'crs_car_brand.car_brand_id = crs_car_model.car_brand_id'),
+			'groupBy' => '',
+			'pathView' => 'car/tableCarDeposit'
+		);
+
+		if($_SESSION['type']==1){
+			$arrayData['where'] = '(crs_transaction.transaction_status >= 7 AND crs_transaction.transaction_status < 11) OR crs_transaction.transaction_status = 12';
+		}else{
+			$arrayData['where'] = '(crs_transaction.transaction_status >= 7 AND crs_transaction.transaction_status <= 11) OR crs_transaction.transaction_status = 12 AND crs_car.car_owner_id = '. $_SESSION['id'];
+		}
+		
+		$data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$json['table'] = $data['table'];
+		$json['sql'] = $this->db->last_query(); //for dev
+		$json['html'] = $this->load->view($arrayData['pathView'], $data, TRUE);
+		$this->output->set_content_type('application/json')->set_output(json_encode($json));
+	}
+	// ___________________ End getCarDepositTable ____________________
+
+	// __________________ Start carDepositRecord __________________
+	public function carDepositRecord()
+	{
+		$data['page_content'] = $this->load->view('car/carDepositRecord', '', TRUE);
+		$this->load->view('main', $data);
+	}
+	// ___________________ End carDepositRecord ____________________
 
 	// __________________ Start getCarDepositRecordTable __________________
 	public function getCarDepositRecordTable()
@@ -1161,7 +1210,7 @@ class Car extends Main
 							crs_car_brand.car_brand_name_en AS car_brand_name_en,
 							crs_car.car_price,
 							crs_car.car_status',
-			'order' => '',
+			'order' => 'crs_transaction.transaction_id DESC',
 			'arrayJoinTable' => array(
 									'crs_car' => 'crs_car.car_id = crs_transaction.car_id',
 									'crs_car_model' => 'crs_car_model.car_model_id = crs_car.car_model_id',
@@ -1171,7 +1220,7 @@ class Car extends Main
 		);
 
 		if($_SESSION['type']==1){
-			$arrayData['where'] = '(crs_transaction.transaction_status >= 7 AND crs_transaction.transaction_status < 11) OR crs_transaction.transaction_status = 12';
+			$arrayData['where'] = '(crs_transaction.transaction_status >= 7 AND crs_transaction.transaction_status <= 11) OR crs_transaction.transaction_status = 12';
 		}else{
 			$arrayData['where'] = '(crs_transaction.transaction_status >= 7 AND crs_transaction.transaction_status <= 11) OR crs_transaction.transaction_status = 12 AND crs_car.car_owner_id = '. $_SESSION['id'];
 		}
@@ -1235,10 +1284,7 @@ class Car extends Main
 		if ($_SESSION['type'] == '1') {
 			$data['page_content'] = $this->load->view('car/carDepositConfirm', $data, TRUE);
 		}
-		if ($_SESSION['type'] == '2') {
-			$data['page_content'] = $this->load->view('car/carDepositEdit', $data, TRUE);
-		}
-		if ($_SESSION['type'] == '3') {
+		if ($_SESSION['type'] == '2' || $_SESSION['type'] == '3') {
 			$data['page_content'] = $this->load->view('car/carDepositEdit', $data, TRUE);
 		}
 
@@ -1473,43 +1519,43 @@ class Car extends Main
 	// ___________________ End emailConfirmDeposit ____________________
 
 	// __________________ Start changeCarStatus __________________
-public function changeCarStatus()
-{
-	$getData = $this->input->post();
+	public function changeCarStatus()
+	{
+		$getData = $this->input->post();
 
-	$arrayData = array(
-		'tableName' => 'crs_transaction',
-		'colName' => '
-			car_id,
-			transaction_id,
-			user_lessor_id,
-			user_depositor_id',
-		'where' => 
-			array(
-				'transaction_id' => $getData['transaction_id']
-			),
-		'order' => '',
-		'arrayJoinTable' => '',
-		'groupBy' => ''
-	);
-	$result = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
-	$arrayData = array(
-		'transaction_id' => $result[0]->transaction_id,
-		'transaction_lessor_token' => uniqid(),
-		'transaction_rental_token' => uniqid(),
-		'transaction_depositor_token' => uniqid(),
-		'transaction_lessor_approve' => 0,
-		'transaction_depositor_approve' => 0,
-		'car_id' => $result[0]->car_id,
-		'user_lessor_id' => $result[0]->user_lessor_id,
-		'user_depositor_id' => $result[0]->user_depositor_id,
-		'transaction_status' => $getData['car_status'],
-	);
+		$arrayData = array(
+			'tableName' => 'crs_transaction',
+			'colName' => '
+				car_id,
+				transaction_id,
+				user_lessor_id,
+				user_depositor_id',
+			'where' => 
+				array(
+					'transaction_id' => $getData['transaction_id']
+				),
+			'order' => '',
+			'arrayJoinTable' => '',
+			'groupBy' => ''
+		);
+		$result = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		$arrayData = array(
+			'transaction_id' => $result[0]->transaction_id,
+			'transaction_lessor_token' => uniqid(),
+			'transaction_rental_token' => uniqid(),
+			'transaction_depositor_token' => uniqid(),
+			'transaction_lessor_approve' => 0,
+			'transaction_depositor_approve' => 0,
+			'car_id' => $result[0]->car_id,
+			'user_lessor_id' => $result[0]->user_lessor_id,
+			'user_depositor_id' => $result[0]->user_depositor_id,
+			'transaction_status' => $getData['car_status'],
+		);
 
-	$returnData['transaction_temp_id'] = $this->crsModel->add('crs_transaction_temp', $arrayData);
-	$this->output->set_content_type('application/json')->set_output(json_encode($returnData));
-}
-// ___________________ End changeCarStatus ____________________
+		$returnData['transaction_temp_id'] = $this->crsModel->add('crs_transaction_temp', $arrayData);
+		$this->output->set_content_type('application/json')->set_output(json_encode($returnData));
+	}
+	// ___________________ End changeCarStatus ____________________
 }
 
 

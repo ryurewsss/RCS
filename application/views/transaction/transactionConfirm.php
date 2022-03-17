@@ -229,17 +229,17 @@
                                 </div>
                                 <div class="col-6 text-center">
                                     <h4>ปฏิเสธเอกสาร <br><br> </h4>
-                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="transaction_reject_iden" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" <?php echo $val->transaction_status == 5 ? 'readonly' : '' ; ?>><?php echo isset($val->transaction_reject_iden) ? $val->transaction_reject_iden : ''; ?></textarea>
+                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="transaction_reject_iden" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" <?php echo $val->transaction_status == 5 || $val->transaction_status == 4 ? 'readonly' : '' ; ?>><?php echo isset($val->transaction_reject_iden) ? $val->transaction_reject_iden : ''; ?></textarea>
                                     <br>
                                         <h2 class="text-danger" id="reject_iden_1" style="user-select: auto; display: <?php echo isset($val->transaction_iden_approve) && $val->transaction_iden_approve == 0 ? 'display' : 'none'; ?>"><b>ปฏิเสธเอกสาร</b></h2>
                                         <h2 class="text-success" id="reject_iden_2" style="user-select: auto; display: <?php echo isset($val->transaction_iden_approve) && $val->transaction_iden_approve == 1 ? 'display' : 'none'; ?>"><b>ยอมรับเอกสาร</b></h2>
                                         <input type="hidden" name="inputData[]" id="reject_iden" value="<?php echo isset($val->transaction_iden_approve) ? $val->transaction_iden_approve : ''; ?>">
                                     <div class="row">
                                         <div class="col-6 text-center">
-                                            <button type="button" style="margin:auto; width: 100px;" class="btn btn-danger d-none d-lg-block m-l-12 reject_iden_btn" value="0" <?php echo $val->transaction_status == 5 ? 'disabled' : '' ; ?>>ปฏิเสธ</button>
+                                            <button type="button" style="margin:auto; width: 100px;" class="btn btn-danger d-none d-lg-block m-l-12 reject_iden_btn" value="0" <?php echo $val->transaction_status == 5 || $val->transaction_status == 4 ? 'disabled' : '' ; ?>>ปฏิเสธ</button>
                                         </div>
                                         <div class="col-6 text-center">
-                                            <button type="button" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12 reject_iden_btn" value="1" <?php echo $val->transaction_status == 5 ? 'disabled' : '' ; ?>>ยอมรับ</button>
+                                            <button type="button" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12 reject_iden_btn" value="1" <?php echo $val->transaction_status == 5 || $val->transaction_status == 4 ? 'disabled' : '' ; ?>>ยอมรับ</button>
                                         </div>
                                     </div>
                                 </div>
@@ -300,17 +300,17 @@
                                 </div>
                                 <div class="col-6 text-center">
                                     <h4>ปฏิเสธเอกสาร <br><br> </h4>
-                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="transaction_reject_transfer" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" <?php echo $val->transaction_status == 5 ? 'readonly' : '' ; ?>><?php echo isset($val->transaction_reject_transfer) ? $val->transaction_reject_transfer : ''; ?></textarea>
+                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="transaction_reject_transfer" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" <?php echo $val->transaction_status == 5 || $val->transaction_status == 4 ? 'readonly' : '' ; ?>><?php echo isset($val->transaction_reject_transfer) ? $val->transaction_reject_transfer : ''; ?></textarea>
                                     <br>
                                         <h2 class="text-danger" id="reject_tran_1" style="user-select: auto; display: <?php echo isset($val->transaction_transfer_approve) && $val->transaction_transfer_approve == 0 ? 'display' : 'none'; ?>"><b>ปฏิเสธเอกสาร</b></h2>
                                         <h2 class="text-success" id="reject_tran_2" style="user-select: auto; display: <?php echo isset($val->transaction_transfer_approve) && $val->transaction_transfer_approve == 1 ? 'display' : 'none'; ?>"><b>ยอมรับเอกสาร</b></h2>
                                         <input type="hidden" name="inputData[]" id="reject_tran" value="<?php echo isset($val->transaction_transfer_approve) ? $val->transaction_transfer_approve : ''; ?>">
                                     <div class="row">
                                         <div class="col-6 text-center">
-                                            <button type="button" style="margin:auto; width: 100px;" class="btn btn-danger d-none d-lg-block m-l-12 reject_tran_btn" value="0" <?php echo $val->transaction_status == 5 ? 'disabled' : '' ; ?>>ปฏิเสธ</button>
+                                            <button type="button" style="margin:auto; width: 100px;" class="btn btn-danger d-none d-lg-block m-l-12 reject_tran_btn" value="0" <?php echo $val->transaction_status == 5 || $val->transaction_status == 4 ? 'disabled' : '' ; ?>>ปฏิเสธ</button>
                                         </div>
                                         <div class="col-6 text-center">
-                                            <button type="button" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12 reject_tran_btn" value="1" <?php echo $val->transaction_status == 5 ? 'disabled' : '' ; ?>>ยอมรับ</button>
+                                            <button type="button" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12 reject_tran_btn" value="1" <?php echo $val->transaction_status == 5 || $val->transaction_status == 4 ? 'disabled' : '' ; ?>>ยอมรับ</button>
                                         </div>
                                     </div>
                                 </div>
@@ -323,7 +323,7 @@
                                 <div class="col-6 text-center">
                                     <input type="hidden" name="inputData[]" id="user_type_id" value="<?php echo $user_type[0]->user_type_id; ?>">
                                     <input type="hidden" name="inputData[]" id="transaction_id" value="<?php echo $val->transaction_id; ?>">
-                                    <button type="submit" style="margin:auto; width: 160px;" class="btn btn-success d-none d-lg-block m-l-12" <?php echo $val->transaction_status == 5 ? 'disabled' : '' ; ?>>ยืนยันการตรวจสอบ</button>
+                                    <button type="submit" style="margin:auto; width: 160px;" class="btn btn-success d-none d-lg-block m-l-12" <?php echo $val->transaction_status == 5 || $val->transaction_status == 4 ? 'disabled' : '' ; ?>>ยืนยันการตรวจสอบ</button>
                                 </div>
                             </div>
                             <br>

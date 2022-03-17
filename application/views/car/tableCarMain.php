@@ -51,7 +51,7 @@
                     </div>
                     <br>
                     <div class="float-right padding-bottom-5" style="user-select: auto;">
-                        <strong style="user-select: auto;"><?php echo number_format($val->car_price); ?> บาท</strong>
+                        <strong style="user-select: auto;color:#FF8C00"><?php echo number_format($val->car_price); ?> บาท</strong>
                     </div>
                     <br>
                     <div class="float-left padding-bottom-5" style="user-select: auto;">

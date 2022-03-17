@@ -142,6 +142,12 @@
         </li>
 
         <li class="nav-item active">
+          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/carDepositTable" aria-expanded="false">
+            <i class="fa fa-search" style='font-size:20px'></i>
+            <span>ตรวจสอบการฝากเช่า</span></a>
+        </li>
+
+        <li class="nav-item active">
           <a class="nav-link collapsed waves-effect waves-dark" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder" style='font-size:20px'></i>
             <span>จัดการข้อมูล</span>
@@ -182,12 +188,6 @@
           </div>
         </li>
         
-        <li class="nav-item active">
-          <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/carDepositReport" aria-expanded="false">
-            <i class="fa fa-search" style='font-size:20px'></i>
-            <span>ตรวจสอบการฝากเช่า</span></a>
-        </li>
-
       <?php
         }
       ?>
@@ -214,7 +214,7 @@
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/carDepositReport" aria-expanded="false">
+        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/carDepositRecord" aria-expanded="false">
           <i class="fas fa-scroll" style='font-size:20px'></i>
           <span>ดูประวัติการฝากเช่า</span></a>
       </li>

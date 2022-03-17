@@ -199,17 +199,17 @@
                                 </div>
                                 <div class="col-6 text-center">
                                     <h4>ปฏิเสธเอกสาร <br><br> </h4>
-                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="car_reject_deposit" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" ></textarea>
+                                    <textarea style="height: 300px" class="form-control" rows="3" name="inputData[]" id="car_reject_deposit" autocomplete="off" placeholder="สาเหตุที่ปฏิเสธ" ><?php echo isset($val->car_reject_deposit) ? $val->car_reject_deposit : ''; ?></textarea>
                                     <br>
                                     <h2 class="text-danger" id="car_status_8" style="user-select: auto; display: <?php echo isset($val->car_status) && $val->car_status == 8 ? 'display' : 'none'; ?>"><b>ปฏิเสธเอกสาร</b></h2>
-                                        <h2 class="text-success" id="car_status_9" style="user-select: auto; display: <?php echo isset($val->car_status) && $val->car_status == 9 ? 'display' : 'none'; ?>"><b>ยอมรับเอกสาร</b></h2>
+                                        <h2 class="text-success" id="car_status_9" style="user-select: auto; display: <?php echo isset($val->car_status) && ($val->car_status == 9 || $val->car_status == 10 || $val->car_status == 11) ? 'display' : 'none'; ?>"><b>ยอมรับเอกสาร</b></h2>
                                         <input type="hidden" name="inputData[]" id="car_status" value="<?php echo isset($val->car_status) ? $val->car_status : ''; ?>">
                                     <div class="row">
                                         <div class="col-6 text-center">
-                                            <button type="button" style="margin:auto; width: 100px;" class="btn btn-danger d-none d-lg-block m-l-12 reject_iden_btn" value="0">ปฏิเสธ</button>
+                                            <button type="button" style="margin:auto; width: 100px;" class="btn btn-danger d-none d-lg-block m-l-12 reject_iden_btn" value="0" <?php echo isset($val->car_status) && ($val->car_status == 10 || $val->car_status == 11) ? 'disabled' : '' ; ?>>ปฏิเสธ</button>
                                         </div>
                                         <div class="col-6 text-center">
-                                            <button type="button" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12 reject_iden_btn" value="1">ยอมรับ</button>
+                                            <button type="button" style="margin:auto; width: 150px;" class="btn btn-success d-none d-lg-block m-l-12 reject_iden_btn" value="1" <?php echo isset($val->car_status) && ($val->car_status == 10 || $val->car_status == 11) ? 'disabled' : '' ; ?>>ยอมรับ</button>
                                         </div>
                                     </div>
                                 </div>
@@ -361,7 +361,7 @@ $('#addConfirmRentForm').on('submit', function(event) {
                     showConfirmButton: false,
                     timer: 1000
                 })
-                // window.location = "<?php echo base_url().'/Car/carDepositReport'; ?>";
+                window.location = "<?php echo base_url().'/Car/carDepositRecord'; ?>";
             });
         }
     })
