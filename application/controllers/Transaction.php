@@ -177,6 +177,7 @@ class Transaction extends Main
 				crs_transaction.transaction_reject_transfer,
 				crs_transaction.transaction_status,
 				crs_car.car_id,
+				crs_car.car_owner_id,
 				crs_car.car_registration,
 				crs_car.car_price,
 				crs_car.car_image,
@@ -243,6 +244,7 @@ class Transaction extends Main
 				car_id,
 				user_doc_id,
 				user_rental_id,
+				user_depositor_id,
 				place_id,
 				transaction_id,
 				transaction_receive_date,
@@ -283,6 +285,7 @@ class Transaction extends Main
 		);
 		if($getData['user_type_id'] == 3){
 			$arrayData['transaction_depositor_approve'] = 0;
+			$arrayData['user_depositor_id'] = $result[0]->user_depositor_id;
 		}//ถ้าเป็นรถฝากเช่า
 
 		if($getData['reject_iden'] == 1 && $getData['reject_tran'] == 1 ){
@@ -354,6 +357,7 @@ class Transaction extends Main
 				user_doc_id,
 				user_rental_id,
 				user_lessor_id,
+				user_depositor_id,
 				place_id,
 				transaction_id,
 				transaction_receive_date,
@@ -396,8 +400,9 @@ class Transaction extends Main
 		);
 		if($getData['user_type_id'] == 3){
 			$arrayData['transaction_depositor_approve'] = 0;
+			$arrayData['user_depositor_id'] = $result[0]->user_depositor_id;
 		}//ถ้าเป็นรถฝากเช่า
-
+		
 		$returnData['transaction_temp_id'] = $this->crsModel->add('crs_transaction_temp', $arrayData);
 
 		$arrayData = array(
@@ -423,6 +428,7 @@ class Transaction extends Main
 				user_doc_id,
 				user_rental_id,
 				user_lessor_id,
+				user_depositor_id,
 				place_id,
 				transaction_id,
 				transaction_receive_date,
@@ -466,58 +472,13 @@ class Transaction extends Main
 		);
 		if($getData['user_type_id'] == 3){
 			$arrayData['transaction_depositor_approve'] = 0;
+			$arrayData['user_depositor_id'] = $result[0]->user_depositor_id;
 		}//ถ้าเป็นรถฝากเช่า
 
 		$returnData['transaction_temp_id'] = $this->crsModel->add('crs_transaction_temp', $arrayData);
 		$this->output->set_content_type('application/json')->set_output(json_encode($returnData));
 	}
 	// ___________________ End changeTransactionStatus ____________________
-
-	// __________________ Start checkTransactionDate __________________
-	public function checkTransactionDate()
-	{
-		$getData = $this->input->post();
-
-		$arrayData = array(
-			'tableName' => 'crs_transaction',
-			'colName' => '
-			transaction_id,
-			transaction_receive_date,
-			transaction_return_date,
-			transaction_status,
-			car_id',
-			'where' => "transaction_status < 5 AND car_id = ".$getData['car_id'],
-			'order' => '',
-			'arrayJoinTable' => '',
-			'groupBy' => ''
-		);
-
-		$result = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
-		$date['startDate'] = substr($getData['dateRange'],0,10); //substr
-		$date['startTime'] = substr($getData['dateRange'],11,5);
-		$date['endDate'] = substr($getData['dateRange'],19,10);
-		$date['endTime'] = substr($getData['dateRange'],30,5);
-		$date['startDate'] = date("Y-m-d", strtotime(str_replace('/', '-', $date['startDate']))); // change 31/12/2000 to 2000-12-31
-		$date['endDate'] = date("Y-m-d", strtotime(str_replace('/', '-', $date['endDate'])));
-		$pass = true;
-		if($result){
-			foreach($result as $key => $val){
-				$startDate = substr($val->transaction_receive_date,0,10);
-				$endDate = substr($val->transaction_return_date,0,10);
-				if ((
-						($date['startDate'] >= $startDate) && ($date['startDate'] <= $endDate)) //if start between 
-					|| (($date['endDate'] >= $startDate) && ($date['endDate'] <= $endDate)) //if start between 
-					|| (($date['startDate'] <= $startDate) && ($date['endDate'] >= $endDate))){ //if range between 
-					// echo "is between";
-					$pass = false;
-					break;
-				}
-			}
-			//if have 
-		}
-		$this->output->set_content_type('application/json')->set_output(json_encode($pass));
-	}
-	// ___________________ End checkTransactionDate ____________________
 
 	// __________________ Start emailConfirm __________________
 	public function emailConfirm()
@@ -608,6 +569,7 @@ class Transaction extends Main
 						$arrayData = array(
 							'car_id' => $val->car_id,
 							'user_rental_id' => $val->user_rental_id,
+							'user_depositor_id' => $val->user_depositor_id,
 							'user_doc_id' => $val->user_doc_id,
 							'place_id' => $val->place_id,
 							'transaction_receive_date' => $val->transaction_receive_date,
@@ -712,6 +674,7 @@ class Transaction extends Main
 				crs_car.car_registration,
 				crs_car.car_price,
 				crs_car.car_image,
+				crs_car.car_status,
 				crs_car_brand.car_brand_name_en,
 				crs_car_model.car_model_name,
 				crs_user_doc.user_doc_id,
@@ -735,6 +698,23 @@ class Transaction extends Main
 			'groupBy' => ''
 		);
 		$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+
+		if($this->input->post("user_type") == 3){
+			$arrayData = array(
+				'tableName' => 'crs_transaction_temp',
+				'colName' => '
+					crs_transaction_temp.transaction_temp_id,
+					crs_user.user_email,
+					',
+				'where' => 'crs_transaction_temp.transaction_temp_id = '. $this->input->post("tran_id"),
+				'order' => '',
+				'arrayJoinTable' => array(
+					'crs_user' => 'crs_user.user_id = crs_transaction_temp.user_depositor_id'
+				),
+				'groupBy' => ''
+			);
+			$data['depositor_email'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		}
 
 		$data['user_type'] = $this->input->post("user_type");
 		$arrayData = array('pathView' => 'phpMailer/sendEmail');

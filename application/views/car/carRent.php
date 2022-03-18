@@ -340,6 +340,7 @@
                             </div>
                                 <div class="row">
                                     <input type="hidden" name="user_type_id" id="user_type_id" value="<?php echo $val->user_type_id; ?>">
+                                    <input type="hidden" name="car_owner_id" id="car_owner_id" value="<?php echo $val->car_owner_id; ?>">
                                     <input type="hidden" name="car_id" id="car_id" value="<?php echo $val->car_id; ?>">
                                     <input type="hidden" name="car_registration" id="car_registration" value="<?php echo $val->car_registration; ?>">
                                     <input type="hidden" name="user_doc_id" id="user_doc_id" value="<?php echo $val_user?$val_user->user_doc_id :0; ?>" />

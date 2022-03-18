@@ -328,6 +328,7 @@
                                 </div>
                                 <div class="col-6 text-center">
                                     <input type="hidden" name="user_type_id" id="user_type_id" value="<?php echo $user_type[0]->user_type_id; ?>">
+                                    <input type="hidden" name="car_owner_id" id="car_owner_id" value="<?php echo $val->car_owner_id; ?>">
                                     <input type="hidden" name="transaction_id" id="transaction_id" value="<?php echo $val->transaction_id; ?>">
                                     <input type="hidden" name="user_doc_id" id="user_doc_id" value="<?php echo $val->user_doc_id; ?>">
                                     <input type="hidden" name="old_iden_upload" id="old_iden_upload" value="<?php echo $val->user_doc_iden_image; ?>">

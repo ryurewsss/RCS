@@ -603,13 +603,12 @@ class Car extends Main
 	public function check_date()
 	{
 
-		// $data['check_date'] = json_decode(file_get_contents("http://127.0.0.1:5000/get_car_tran?car_id=".$this->input->get('car_id')));
 		$arrayPlace = array(
 			'tableName' => 'crs_transaction',
 			'colName' => '
 				transaction_receive_date,
 				transaction_return_date',
-			'where' => 'car_id = '. $this->input->get('car_id')." AND transaction_status < 5",
+			'where' => 'car_id = '. $this->input->get('car_id')." AND (transaction_status < 5 OR transaction_status = 6)",
 			'order' => '',
 			'arrayJoinTable' => '',
 			'groupBy' => ''
@@ -894,6 +893,7 @@ class Car extends Main
 			);
 			if($this->input->post('user_type_id') == 3){
 				$arrayData['transaction_depositor_approve'] = 0;
+				$arrayData['user_depositor_id'] = $this->input->post('car_owner_id');
 			}//ถ้าเป็นรถฝากเช่า
 
 			$returnData['transaction_temp_id'] = $this->crsModel->add('crs_transaction_temp', $arrayData);
@@ -944,6 +944,7 @@ class Car extends Main
 				crs_car.car_registration,
 				crs_car.car_price,
 				crs_car.car_image,
+				crs_car.car_status,
 				crs_car_brand.car_brand_name_en,
 				crs_car_model.car_model_name,
 				crs_user_doc.user_doc_id,
@@ -967,6 +968,24 @@ class Car extends Main
 			'groupBy' => ''
 		);
 		$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+
+		if($this->input->post("user_type") == 3){
+			$arrayData = array(
+				'tableName' => 'crs_transaction_temp',
+				'colName' => '
+					crs_transaction_temp.transaction_temp_id,
+					crs_user.user_email,
+					',
+				'where' => 'crs_transaction_temp.transaction_temp_id = '. $this->input->post("tran_id"),
+				'order' => '',
+				'arrayJoinTable' => array(
+					'crs_user' => 'crs_user.user_id = crs_transaction_temp.user_depositor_id'
+				),
+				'groupBy' => ''
+			);
+			$data['depositor_email'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
+		}
+
 		$data['user_type'] = $this->input->post("user_type");
 		$arrayData = array('pathView' => 'phpMailer/sendEmail');
 		$this->load->view($arrayData['pathView'], $data, TRUE);

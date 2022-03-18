@@ -322,6 +322,7 @@
                                 </div>
                                 <div class="col-6 text-center">
                                     <input type="hidden" name="inputData[]" id="user_type_id" value="<?php echo $user_type[0]->user_type_id; ?>">
+                                    <input type="hidden" name="inputData[]" id="car_owner_id" value="<?php echo $val->car_owner_id; ?>">
                                     <input type="hidden" name="inputData[]" id="transaction_id" value="<?php echo $val->transaction_id; ?>">
                                     <button type="submit" style="margin:auto; width: 160px;" class="btn btn-success d-none d-lg-block m-l-12" <?php echo $val->transaction_status == 5 || $val->transaction_status == 4 ? 'disabled' : '' ; ?>>ยืนยันการตรวจสอบ</button>
                                 </div>

@@ -22,12 +22,13 @@
         if($user_type==1){
             $mail->setFrom($contact['email'], "Car Rental System");
             $mail->addAddress($contact['email']); // Send to mail
-        }
-        if($user_type==2){
+        }else if($user_type==2){
             $mail->setFrom($val->user_email, "Car Rental System");
             $mail->addAddress($val->user_email); // Send to mail
+        }else if($user_type==3){
+            $mail->setFrom($depositor_email[0]->user_email, "Car Rental System");
+            $mail->addAddress($depositor_email[0]->user_email); // Send to mail
         }
-        
         $mail->AddEmbeddedImage(dirname(__DIR__,3)."\img\car_img\\".$val->car_image, "car_img");
         $mail->AddEmbeddedImage(dirname(__DIR__,3)."\img\user_doc_img\\".$val->user_doc_iden_image, "user_doc_iden_image");
         $mail->AddEmbeddedImage(dirname(__DIR__,3)."\img\user_doc_img\\".$val->user_doc_license_image, "user_doc_license_image");
