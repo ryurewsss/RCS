@@ -213,11 +213,17 @@
           <span>ดูประวัติการเช่า</span></a>
       </li>
 
-      <li class="nav-item active">
-        <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/carDepositRecord" aria-expanded="false">
-          <i class="fas fa-scroll" style='font-size:20px'></i>
-          <span>ดูประวัติการฝากเช่า</span></a>
-      </li>
+        <?php
+          if($_SESSION['type'] != 2){
+        ?>
+          <li class="nav-item active">
+            <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>Car/carDepositRecord" aria-expanded="false">
+              <i class="fas fa-scroll" style='font-size:20px'></i>
+              <span>ดูประวัติการฝากเช่า</span></a>
+          </li>
+        <?php
+          }
+        ?>
 
       <li class="nav-item active">
         <a class="nav-link collapsed waves-effect waves-dark" href="<?= base_url() ?>User/profile" aria-expanded="false">

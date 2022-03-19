@@ -19,17 +19,35 @@
             // var_dump($test);
             // var_dump($table);
             if (isset($table) && $table) {
-                $i = 1 //กำหนดลำดับ 
+                $i = 1; //กำหนดลำดับ 
+                $date_now = new DateTime();
+                //1 2 3 6
+                //4
             ?>
-                <?php foreach ($table as $key => $val) { ?>
+                <?php foreach ($table as $key => $val) { 
+                        $date2    = new DateTime($val->transaction_receive_date);
+                        $date3    = new DateTime($val->transaction_return_date);
+                    
+                    ?>
 
                     <tr class="text-center">
                         <td><?php echo $i++; ?></td>
                         <td class="text-left"><?= $val->transaction_id ?></td>
                         <td class="text-left"><?= $val->car_registration ?></td>
                         <td class="text-left"><?= $val->place_name ?></td>
-                        <td class="text-center"><?= date("d/m/Y", strtotime(str_replace('-', '/', substr($val->transaction_receive_date,0,10)))) ?> <br> <?= substr($val->transaction_receive_date,11,5)." น." ?></td>
-                        <td class="text-center"><?= date("d/m/Y", strtotime(str_replace('-', '/', substr($val->transaction_return_date,0,10)))) ?> <br> <?= substr($val->transaction_return_date,11,5)." น." ?></td>
+
+                        <?php if(($val->transaction_status == 1 || $val->transaction_status == 2 || $val->transaction_status == 3 || $val->transaction_status == 6) && $date_now > $date2){?>
+                            <td class="text-center text-danger"><?= date("d/m/Y", strtotime(str_replace('-', '/', substr($val->transaction_receive_date,0,10)))) ?> <br> <?= substr($val->transaction_receive_date,11,5)." น." ?></td>
+                        <?php }else{ ?>
+                            <td class="text-center"><?= date("d/m/Y", strtotime(str_replace('-', '/', substr($val->transaction_receive_date,0,10)))) ?> <br> <?= substr($val->transaction_receive_date,11,5)." น." ?></td>
+                        <?php } ?>
+
+                        <?php if($val->transaction_status == 4 && $date_now > $date3){?>
+                            <td class="text-center text-danger"><?= date("d/m/Y", strtotime(str_replace('-', '/', substr($val->transaction_return_date,0,10)))) ?> <br> <?= substr($val->transaction_return_date,11,5)." น." ?></td>
+                        <?php }else{ ?>
+                            <td class="text-center"><?= date("d/m/Y", strtotime(str_replace('-', '/', substr($val->transaction_return_date,0,10)))) ?> <br> <?= substr($val->transaction_return_date,11,5)." น." ?></td>
+                        <?php } ?>
+
                         <td class="text-center <?= $tranStatusColor[$val->transaction_status] ?>"><?= $tranStatus[$val->transaction_status] ?></td>
                         <td>
                             <a href="<?= base_url() ?>Transaction/transactionDetail?tranId=<?php echo $val->transaction_id; ?>">

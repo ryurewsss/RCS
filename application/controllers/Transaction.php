@@ -103,7 +103,7 @@ class Transaction extends Main
 			crs_place.place_name,
 			crs_car.car_registration,
 			crs_user.user_type_id',
-			'where' => 'crs_transaction.transaction_status <= 5',
+			'where' => 'crs_transaction.transaction_status <= 6',
 			'order' => 'crs_transaction.update_date DESC',
 			'arrayJoinTable' => array('crs_car' => 'crs_car.car_id = crs_transaction.car_id',
 								'crs_place' => 'crs_place.place_id = crs_transaction.place_id',
