@@ -28,38 +28,38 @@
                 <div class="modal-body">
                     <div class="row">
                         <label style="text-indent: 20px; margin-right: 98px;">อีเมล<a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
-                        <input style="width: 250px;" type="email" class="form-control" name="register[]" id="user_email" autocomplete="off" placeholder="อีเมล" value="">
+                        <input style="width: 250px;" type="email" class="form-control" name="register[]" id="user_email" autocomplete="off" placeholder="อีเมล" value="" required>
                         <br><br>
                     </div>
                     <div class="row">
                         <label style="text-indent: 20px; margin-right: 77px;">รหัสผ่าน<a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
-                        <input style="width: 250px;" type="password" class="form-control" name="register[]" id="user_password" autocomplete="off" placeholder="รหัสผ่าน" value="">
+                        <input style="width: 250px;" type="password" class="form-control" name="register[]" id="user_password" autocomplete="off" placeholder="รหัสผ่าน" value="" required>
                         <br><br>
                     </div>
                     <div class="row">
                         <label style="text-indent: 20px; margin-right: 40px;">ยืนยันรหัสผ่าน<a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
-                        <input style="width: 250px;" type="password" class="form-control" id="confirm-password" autocomplete="off" placeholder="ยืนยันรหัสผ่าน" value="">
+                        <input style="width: 250px;" type="password" class="form-control" id="confirm-password" autocomplete="off" placeholder="ยืนยันรหัสผ่าน" value="" required>
                         <br><br>
                     </div>
                     <div class="row">
                         <label style="text-indent: 20px; margin-right: 114px;">ชื่อ<a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="register[]" id="user_fname" autocomplete="off" placeholder="ชื่อ" value="">
+                        <input style="width: 250px;" type="text" class="form-control" name="register[]" id="user_fname" autocomplete="off" placeholder="ชื่อ" value="" required>
                         <br><br>
                     </div>
                     <div class="row">
                         <label style="text-indent: 20px; margin-right: 77px;">นามสกุล<a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="register[]" id="user_lname" autocomplete="off" placeholder="นามสกุล" value="">
+                        <input style="width: 250px;" type="text" class="form-control" name="register[]" id="user_lname" autocomplete="off" placeholder="นามสกุล" value="" required>
                         <br><br>
                     </div>
                     <div class="row">
                         <label style="text-indent: 20px; margin-right: 42px;">เบอร์โทรศัพท์<a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
-                        <input style="width: 250px;" type="tel" class="form-control" name="register[]" id="user_phone" autocomplete="off" placeholder="เบอร์โทรศัพท์" pattern="[0-9]{3}[0-9]{3}[0-9]{4}">
+                        <input style="width: 250px;" type="tel" class="form-control" name="register[]" id="user_phone" autocomplete="off" placeholder="เบอร์โทรศัพท์" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required>
                         <br><br>
                     </div>
                     <div class="row">
                         <label style="text-indent: 20px; margin-right: 80px;">ประเภท <a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
-                        <select style="width: 250px;" id="user_type_id" class="form-control form-control-line" name="register[]">
-                            <option disabled selected>เลือกประเภท</option>
+                        <select style="width: 250px;" id="user_type_id" class="form-control form-control-line" name="register[]" required>
+                            <option disabled selected value="">เลือกประเภท</option>
                             <?php
                             if (isset($select)) {
                                 foreach ($select as $key => $val) {
@@ -98,28 +98,28 @@
                 <div class="modal-body">
                 <div class="row">
                         <label style="text-indent: 20px; margin-right: 100px;">อีเมล<a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
-                        <input style="width: 250px;" type="email" class="form-control" name="editData[]" id="user_email" autocomplete="off" placeholder="อีเมล" value="">
+                        <input style="width: 250px;" type="email" class="form-control" name="editData[]" id="user_email" autocomplete="off" placeholder="อีเมล" value="" required>
                         <br><br>
                     </div>
                     <div class="row">
                         <label style="text-indent: 20px; margin-right: 114px;">ชื่อ<a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="editData[]" id="user_fname" autocomplete="off" placeholder="ชื่อ" value="">
+                        <input style="width: 250px;" type="text" class="form-control" name="editData[]" id="user_fname" autocomplete="off" placeholder="ชื่อ" value="" required>
                         <br><br>
                     </div>
                     <div class="row">
                         <label style="text-indent: 20px; margin-right: 77px;">นามสกุล<a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="editData[]" id="user_lname" autocomplete="off" placeholder="นามสกุล" value="">
+                        <input style="width: 250px;" type="text" class="form-control" name="editData[]" id="user_lname" autocomplete="off" placeholder="นามสกุล" value="" required>
                         <br><br>
                     </div>
                     <div class="row">
                         <label style="text-indent: 20px; margin-right: 42px;">เบอร์โทรศัพท์<a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
-                        <input style="width: 250px;" type="tel" class="form-control" name="editData[]" id="user_phone" autocomplete="off" placeholder="เบอร์โทรศัพท์" pattern="[0-9]{3}[0-9]{3}[0-9]{4}">
+                        <input style="width: 250px;" type="tel" class="form-control" name="editData[]" id="user_phone" autocomplete="off" placeholder="เบอร์โทรศัพท์" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required>
                         <br><br>
                     </div>
                     <div class="row">
                         <label style="text-indent: 20px; margin-right: 80px;">ประเภท <a style="color: red; margin-right: 26px;"> *</a></label> : &ensp;
-                        <select style="width: 250px;" id="user_type_id" class="form-control form-control-line" name="editData[]">
-                            <option disabled selected>เลือกประเภท</option>
+                        <select style="width: 250px;" id="user_type_id" class="form-control form-control-line" name="editData[]" required>
+                            <option disabled selected value="">เลือกประเภท</option>
                             <?php
                             if (isset($select)) {
                                 foreach ($select as $key => $val) {

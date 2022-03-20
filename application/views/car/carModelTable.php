@@ -52,8 +52,8 @@
                         <div class="col-3">
                             <label >ยี่ห้อรถยนต์ <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <select style="width: 250px;" id="car_brand_id" class="form-control form-control-line" name="inputData[]">
-                            <option disabled selected>เลือกยี่ห้อรถยนต์</option>
+                        <select style="width: 250px;" id="car_brand_id" class="form-control form-control-line" name="inputData[]" required>
+                            <option disabled selected value="">เลือกยี่ห้อรถยนต์</option>
                             <?php
                             if (isset($select)) {
                                 foreach ($select as $key => $val) {
@@ -70,13 +70,13 @@
                             <div class="col-3">
                                 <label >ยี่ห้อรถยนต์(ภาษาไทย) <a style="color: red;"> *</a></label>
                             </div>  : &ensp;
-                            <input style="width: 250px;" type="text" class="form-control" name="inputData[]" id="car_brand_name_th" autocomplete="off" placeholder="ยี่ห้อรถยนต์ภาษาไทย">
+                            <input style="width: 250px;" type="text" class="form-control" name="inputData[]" id="car_brand_name_th" autocomplete="off" placeholder="ยี่ห้อรถยนต์ภาษาไทย" required>
                         </div>
                         <div class="row">
                             <div class="col-3">
                                 <label >ยี่ห้อรถยนต์(ภาษาอังกฤษ) <a style="color: red;"> *</a></label>
                             </div>  : &ensp;
-                            <input style="width: 250px;" type="text" class="form-control" name="inputData[]" id="car_brand_name_en" autocomplete="off" placeholder="ยี่ห้อรถยนต์ภาษาอังกฤษ">
+                            <input style="width: 250px;" type="text" class="form-control" name="inputData[]" id="car_brand_name_en" autocomplete="off" placeholder="ยี่ห้อรถยนต์ภาษาอังกฤษ" required>
                         </div>
                     </div>
 
@@ -84,7 +84,7 @@
                         <div class="col-3">
                             <label >ชื่อรุ่นรถยนต์ <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="inputData[]" id="car_model_name" autocomplete="off" placeholder="รุ่นรถยนต์">
+                        <input style="width: 250px;" type="text" class="form-control" name="inputData[]" id="car_model_name" autocomplete="off" placeholder="รุ่นรถยนต์" required>
                     </div>
 
                     <div class="field_wrapper">
@@ -93,7 +93,7 @@
                                 <label >คุณสมบัติรถยนต์ <a style="color: red;"> *</a></label>
                             </div>  : &ensp;
                             <div class="form-inline">
-                                <input style="width: 250px;" type="text" class="form-control" name="feature[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์"> &ensp;               
+                                <input style="width: 250px;" type="text" class="form-control" name="feature[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์" required> &ensp;               
                                 <button type="button" class="add_button btn waves-effect waves-light btn-success" title="Add field">+</button>                                
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                         <div class="col-3">
                             <label >คำอธิบายรถยนต์ <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <textarea style="width: 400px; height: 100px" class="form-control" rows="3" name="inputData[]" id="car_model_description" autocomplete="off" placeholder="คำอธิบายรถยนต์"></textarea>
+                        <textarea style="width: 400px; height: 100px" class="form-control" rows="3" name="inputData[]" id="car_model_description" autocomplete="off" placeholder="คำอธิบายรถยนต์" required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -132,8 +132,8 @@
                         <div class="col-3">
                             <label >ยี่ห้อรถยนต์ <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <select style="width: 250px;" id="car_brand_id" class="form-control form-control-line" name="editData[]">
-                            <option disabled selected>เลือกยี่ห้อรถยนต์</option>
+                        <select style="width: 250px;" id="car_brand_id" class="form-control form-control-line" name="editData[]" required>
+                            <option disabled selected value="">เลือกยี่ห้อรถยนต์</option>
                             <?php
                             if (isset($select)) {
                                 foreach ($select as $key => $val) {
@@ -150,13 +150,13 @@
                             <div class="col-3">
                                 <label >ยี่ห้อรถยนต์(ภาษาไทย) <a style="color: red;"> *</a></label>
                             </div>  : &ensp;
-                            <input style="width: 250px;" type="text" class="form-control" name="editData[]" id="car_brand_name_th" autocomplete="off" placeholder="ยี่ห้อรถยนต์ภาษาไทย">
+                            <input style="width: 250px;" type="text" class="form-control" name="editData[]" id="car_brand_name_th" autocomplete="off" placeholder="ยี่ห้อรถยนต์ภาษาไทย" required>
                         </div>
                         <div class="row">
                             <div class="col-3">
                                 <label >ยี่ห้อรถยนต์(ภาษาอังกฤษ) <a style="color: red;"> *</a></label>
                             </div>  : &ensp;
-                            <input style="width: 250px;" type="text" class="form-control" name="editData[]" id="car_brand_name_en" autocomplete="off" placeholder="ยี่ห้อรถยนต์ภาษาอังกฤษ">
+                            <input style="width: 250px;" type="text" class="form-control" name="editData[]" id="car_brand_name_en" autocomplete="off" placeholder="ยี่ห้อรถยนต์ภาษาอังกฤษ" required>
                         </div>
                     </div>
 
@@ -164,7 +164,7 @@
                         <div class="col-3">
                             <label >ชื่อรุ่นรถยนต์ <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="editData[]" id="car_model_name" autocomplete="off" placeholder="รุ่นรถยนต์">
+                        <input style="width: 250px;" type="text" class="form-control" name="editData[]" id="car_model_name" autocomplete="off" placeholder="รุ่นรถยนต์" required>
                     </div>
 
                     <div class="field_wrapper">
@@ -173,7 +173,7 @@
                                 <label >คุณสมบัติรถยนต์ <a style="color: red;"> *</a></label>
                             </div>  : &ensp;
                             <div class="form-inline">
-                                <input style="width: 250px;" type="text" class="form-control" name="feature[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์"> &ensp;               
+                                <input style="width: 250px;" type="text" class="form-control" name="feature[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์" required> &ensp;               
                                 <button type="button" class="add_button btn waves-effect waves-light btn-success" title="Add field">+</button>                                
                             </div>
                         </div>
@@ -183,7 +183,7 @@
                         <div class="col-3">
                             <label >คำอธิบายรถยนต์ <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <textarea style="width: 400px; height: 100px" class="form-control" rows="3" name="editData[]" id="car_model_description" autocomplete="off" placeholder="คำอธิบายรถยนต์"></textarea>
+                        <textarea style="width: 400px; height: 100px" class="form-control" rows="3" name="editData[]" id="car_model_description" autocomplete="off" placeholder="คำอธิบายรถยนต์" required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -18,7 +18,8 @@
 
     <!-- Custom styles for this page -->
     <link href="assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+    <!-- sweetalert2 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <style>
 .card-body{
@@ -77,12 +78,12 @@ img{
                                         </div>
                                         
                                         <div class="row">
-                                            <label style="margin-right: 35px;">อีเมล :</label>  
-                                            <input type="email" style="width: 270px;" name="login[]" id="user_email" tabindex="1" class="form-control" placeholder="อีเมล" value="">
+                                            <label style="margin-right: 35px;">อีเมล :<a style="color: red;"> *</a></label>  
+                                            <input type="email" style="width: 270px;" name="login[]" id="user_email" tabindex="1" class="form-control" placeholder="อีเมล" value="" required>
                                         </div><br>
                                         <div class="row">
-                                            <label style="margin-right: 15px;">รหัสผ่าน :</label>  
-                                            <input type="password" style="width: 270px;" name="login[]" id="user_password" tabindex="2" class="form-control" placeholder="รหัสผ่าน">
+                                            <label style="margin-right: 15px;">รหัสผ่าน :<a style="color: red;"> *</a></label>  
+                                            <input type="password" style="width: 270px;" name="login[]" id="user_password" tabindex="2" class="form-control" placeholder="รหัสผ่าน" required>
                                         </div>
 
                                         <br><br>
@@ -106,28 +107,28 @@ img{
                                             <h4 class="text-center text-login m-b-20">สมัครสมาชิก</h4>
                                         </div>
                                         <div class="row">
-                                            <label style=" margin-right: 70px;">อีเมล :</label>  
-                                            <input type="email" style="width: 235px;" name="register[]" id="user_email" tabindex="1" class="form-control" placeholder="อีเมล" value="">
+                                            <label style=" margin-right: 70px;">อีเมล :<a style="color: red;"> *</a></label>  
+                                            <input type="email" style="width: 235px;" name="register[]" id="user_email" tabindex="1" class="form-control" placeholder="อีเมล" value="" required>
                                         </div><br>
                                         <div class="row">
-                                            <label style=" margin-right: 86px;">ชื่อ :</label>  
-                                            <input type="text" style="width: 235px;" name="register[]" id="user_fname" tabindex="1" class="form-control" placeholder="ชื่อ" value="">
+                                            <label style=" margin-right: 86px;">ชื่อ :<a style="color: red;"> *</a></label>  
+                                            <input type="text" style="width: 235px;" name="register[]" id="user_fname" tabindex="1" class="form-control" placeholder="ชื่อ" value="" required>
                                         </div><br>
                                         <div class="row">
-                                            <label style=" margin-right: 49px;">นามสกุล :</label>  
-                                            <input type="text" style="width: 235px;" name="register[]" id="user_lname" tabindex="1" class="form-control" placeholder="นามสกุล" value="">
+                                            <label style=" margin-right: 49px;">นามสกุล :<a style="color: red;"> *</a></label>  
+                                            <input type="text" style="width: 235px;" name="register[]" id="user_lname" tabindex="1" class="form-control" placeholder="นามสกุล" value="" required>
                                         </div><br>
                                         <div class="row">
-                                            <label style=" margin-right: 52px;">รหัสผ่าน :</label>  
-                                            <input type="password" style="width: 235px;" name="register[]" id="user_password" tabindex="2" class="form-control" placeholder="รหัสผ่าน">
+                                            <label style=" margin-right: 52px;">รหัสผ่าน :<a style="color: red;"> *</a></label>  
+                                            <input type="password" style="width: 235px;" name="register[]" id="user_password" tabindex="2" class="form-control" placeholder="รหัสผ่าน" required>
                                         </div><br>
                                         <div class="row">
-                                            <label style=" margin-right: 10px;">รหัสผ่านอีกครั้ง :</label>  
-                                            <input type="password" style="width: 235px;" id="confirm-password" tabindex="2" class="form-control" placeholder="รหัสผ่านอีกครั้ง">
+                                            <label style=" margin-right: 10px;">รหัสผ่านอีกครั้ง :<a style="color: red;"> *</a></label>  
+                                            <input type="password" style="width: 235px;" id="confirm-password" tabindex="2" class="form-control" placeholder="รหัสผ่านอีกครั้ง" required>
                                         </div><br>
                                         <div class="row">
-                                            <label style=" margin-right: 18px;">เบอร์โทรศัพท์ :</label>  
-                                            <input type="tel" style="width: 235px;" name="register[]" id="user_phone" tabindex="2" class="form-control" placeholder="เบอร์โทรศัพท์" pattern="[0-9]{3}[0-9]{3}[0-9]{4}">
+                                            <label style=" margin-right: 18px;">เบอร์โทรศัพท์ :<a style="color: red;"> *</a></label>  
+                                            <input type="tel" style="width: 235px;" name="register[]" id="user_phone" tabindex="2" class="form-control" placeholder="เบอร์โทรศัพท์" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required>
                                         </div>
 
                                         <br><br>
@@ -184,6 +185,7 @@ img{
 </html>
 
 <script>
+    
     $('#login-form-link').click(function(e) {
         $("#login-form").delay(100).fadeIn(100);
         $("#register-form").fadeOut(100);
@@ -237,7 +239,13 @@ img{
                         arrayData: formData
                     },
                 }).done(function(returnData) {
-                    alert('สมัครสำเร็จ')
+                    Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Register Complete',
+                    showConfirmButton: false,
+                    timer: 1000
+                    })
 
                     $("#login-form").delay(100).fadeIn(100);
                     $("#register-form").fadeOut(100);

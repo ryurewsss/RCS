@@ -51,19 +51,19 @@
                         </div><br>
                         <div class="row">
                             <label style="text-indent: 20px;  margin-right: 90px;">ชื่อ </label>: &ensp;
-                            <input type="text" style="width: 250px;" class="form-control" name="user_fname" id="user_fname" value="<?= $val->user_fname ?>" placeholder="ชื่อ">
+                            <input type="text" style="width: 250px;" class="form-control" name="user_fname" id="user_fname" value="<?= $val->user_fname ?>" placeholder="ชื่อ" required>
                         </div><br>
                         <div class="row">
                             <label style="text-indent: 20px;  margin-right: 53px;">นามสกุล </label>: &ensp;
-                            <input type="text" style="width: 250px;" class="form-control" name="user_lname" id="user_lname" value="<?= $val->user_lname ?>" placeholder="นามสกุล">
+                            <input type="text" style="width: 250px;" class="form-control" name="user_lname" id="user_lname" value="<?= $val->user_lname ?>" placeholder="นามสกุล" required>
                         </div><br>
                         <div class="row">
                             <label style="text-indent: 20px;  margin-right: 18px;">เบอร์โทรศัพท์ </label>: &ensp;
-                            <input type="text" style="width: 250px;" class="form-control" name="user_phone" id="user_phone" value="<?= $val->user_phone ?>" placeholder="">
+                            <input type="text" style="width: 250px;" class="form-control" name="user_phone" id="user_phone" value="<?= $val->user_phone ?>" placeholder="" required>
                         </div><br>
                         <div class="row">
                             <label style="text-indent: 20px;  margin-right: 62px;">รูปภาพ </label>: &ensp;
-                            <input type="file" style="width: 250px;" class="form-control" name="user_upload" id="user_upload" onchange="readURL(this,'add'); " placeholder="">
+                            <input type="file" style="width: 250px;" class="form-control" name="user_upload" id="user_upload" onchange="readURL(this,'add'); " placeholder="" required>
                         </div><br>
                         <div class="row">
                         <div class="col-1"></div>

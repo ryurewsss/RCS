@@ -60,15 +60,15 @@
                         <div class="col-3">
                             <label >เลขทะเบียน <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="car_registration" id="car_registration" autocomplete="off" placeholder="เลขทะเบียนรถยนต์">
+                        <input style="width: 250px;" type="text" class="form-control" name="car_registration" id="car_registration" autocomplete="off" placeholder="เลขทะเบียนรถยนต์" required>
                     </div>
 
                     <div class="row">
                         <div class="col-3">
                             <label>ยี่ห้อรถยนต์ <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <select style="width: 250px;" id="car_brand_id" class="form-control form-control-line" name="car_brand_id">
-                            <option disabled selected>เลือกยี่ห้อรถยนต์</option>
+                        <select style="width: 250px;" id="car_brand_id" class="form-control form-control-line" name="car_brand_id" required>
+                            <option disabled selected value="">เลือกยี่ห้อรถยนต์</option>
                             <?php
                             if (isset($select)) {
                                 foreach ($select as $key => $val) {
@@ -83,8 +83,8 @@
                         <div class="col-3">
                             <label >รุ่นรถยนต์ <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <select style="width: 250px;" id="car_model_id" class="form-control form-control-line" name="car_model_id">
-                            <option disabled selected>เลือกรุ่นรถยนต์</option>
+                        <select style="width: 250px;" id="car_model_id" class="form-control form-control-line" name="car_model_id" required>
+                            <option disabled selected value="">เลือกรุ่นรถยนต์</option>
                         </select>
                     </div>
 
@@ -109,7 +109,7 @@
                         <div class="col-3">
                             <label >ราคาต่อวัน <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <input style="width: 250px;" type="number" min="0" step="0" oninput="validity.valid||(value='');" class="form-control" name="car_price" id="car_price" autocomplete="off" placeholder="0">
+                        <input style="width: 250px;" type="number" min="0" step="0" oninput="validity.valid||(value='');" class="form-control" name="car_price" id="car_price" autocomplete="off" placeholder="0" required>
                         <label style="margin-left: 11px;"> บาท </label>
                         <label style="margin-left: 20px;" id="incomeError" class="text-danger"></label>
                     </div>
@@ -117,7 +117,7 @@
                         <div class="col-3">
                             <label >รูปรถยนต์ <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <input style="width: 250px;" type="file" class="form-control" name="car_upload" id="car_upload" onchange="readURL(this,'add'); src='' ">
+                        <input style="width: 250px;" type="file" class="form-control" name="car_upload" id="car_upload" onchange="readURL(this,'add'); src='' " required>
                     </div>
                     <div class="row">
                         <div class="col-3"></div>
@@ -150,15 +150,15 @@
                         <div class="col-3">
                             <label >เลขทะเบียน <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <input style="width: 250px;" type="text" class="form-control" name="car_registration" id="e_car_registration" autocomplete="off" placeholder="เลขทะเบียนรถยนต์">
+                        <input style="width: 250px;" type="text" class="form-control" name="car_registration" id="e_car_registration" autocomplete="off" placeholder="เลขทะเบียนรถยนต์" required>
                     </div>
 
                     <div class="row">
                         <div class="col-3">
                             <label>ยี่ห้อรถยนต์ <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <select style="width: 250px;" id="e_car_brand_id" class="form-control form-control-line" name="car_brand_id">
-                            <option disabled selected>เลือกยี่ห้อรถยนต์</option>
+                        <select style="width: 250px;" id="e_car_brand_id" class="form-control form-control-line" name="car_brand_id" required>
+                            <option disabled selected value="">เลือกยี่ห้อรถยนต์</option>
                             <?php
                             if (isset($select)) {
                                 foreach ($select as $key => $val) {
@@ -173,8 +173,8 @@
                         <div class="col-3">
                             <label >รุ่นรถยนต์<a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <select style="width: 250px;" id="e_car_model_id" class="form-control form-control-line" name="car_model_id">
-                            <option disabled selected>เลือกรุ่นรถยนต์</option>
+                        <select style="width: 250px;" id="e_car_model_id" class="form-control form-control-line" name="car_model_id" required>
+                            <option disabled selected value="">เลือกรุ่นรถยนต์</option>
                         </select>
                     </div>
 
@@ -199,7 +199,7 @@
                         <div class="col-3">
                             <label >ราคาต่อวัน <a style="color: red;"> *</a></label>
                         </div>  : &ensp;
-                        <input style="width: 250px;" type="number" min="0" step="0" oninput="validity.valid||(value='');" class="form-control" name="car_price" id="e_car_price" autocomplete="off" placeholder="0">
+                        <input style="width: 250px;" type="number" min="0" step="0" oninput="validity.valid||(value='');" class="form-control" name="car_price" id="e_car_price" autocomplete="off" placeholder="0" required>
                         <label style="margin-left: 11px;"> บาท </label>
                         <label style="margin-left: 20px;" id="incomeError" class="text-danger"></label>
                     </div>

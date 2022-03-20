@@ -147,8 +147,8 @@
                                 <div class="col-4">
                                     <h4 >สถานที่รับส่งรถเช่า <a style="color: red;"> *</a></h4>
                                 </div>  : &ensp;
-                                <select style="width: 350px;" class="form-control form-control-line" name="place_id" id="place_id">
-                                    <option disabled selected>เลือกสถานที่รับส่ง</option>
+                                <select style="width: 350px;" class="form-control form-control-line" name="place_id" id="place_id" required>
+                                    <option disabled selected value="">เลือกสถานที่รับส่ง</option>
                                     <?php
                                     if (isset($placeSelect)) {
                                         foreach ($placeSelect as $key => $place) {
@@ -165,9 +165,9 @@
                                     <h4 >วันและเวลาที่รับ <a style="color: red;"> *</a></h4>
                                 </div>  : &ensp;
                                 <!-- <input type="text" style="width: 350px;" class="form-control" name="datetimes" id="datetimes" /> -->
-                                <input type="text" style="width: 170px;" class="form-control" name="datepicker" id="datepicker" autocomplete="off">
+                                <input type="text" style="width: 170px;" class="form-control" name="datepicker" id="datepicker" autocomplete="off" required>
                                 &ensp; : &ensp;
-                                <input type="text" style="width: 150px; text-align: center;" class="form-control" name="datetimepicker" id="datetimepicker">
+                                <input type="text" style="width: 150px; text-align: center;" class="form-control" name="datetimepicker" id="datetimepicker" required>
                             </div>
 
                             <br>
@@ -175,9 +175,9 @@
                                 <div class="col-4">
                                     <h4 >วันและเวลาที่คืน <a style="color: red;"> *</a></h4>
                                 </div>  : &ensp;
-                                <input type="text" style="width: 170px;" class="form-control" name="datepicker2" id="datepicker2" autocomplete="off">
+                                <input type="text" style="width: 170px;" class="form-control" name="datepicker2" id="datepicker2" autocomplete="off" required>
                                 &ensp; : &ensp;
-                                <input type="text" style="width: 150px; text-align: center;" class="form-control" name="datetimepicker2" id="datetimepicker2">
+                                <input type="text" style="width: 150px; text-align: center;" class="form-control" name="datetimepicker2" id="datetimepicker2" required>
                             </div>
 
                             <br>
@@ -238,7 +238,7 @@
                                     <h4 >เอกสารระบุตัวตน <br>(หนังสือเดินทางหรือบัตรประชาชน) </h4>
                                 </div>
                                 <div class="col-5 text-center">
-                                    <input type="file" class="form-control" name="iden_upload" id="iden_upload" onchange="readURL(this,'iden'); src='' ">
+                                    <input type="file" class="form-control" name="iden_upload" id="iden_upload" onchange="readURL(this,'iden'); src='' " required>
                                 </div>
                             </div>
                             <br><div class="row">
@@ -256,7 +256,7 @@
                                     <h4 >ใบอนุญาตขับขี่ </a></h4>
                                 </div>
                                 <div class="col-5 text-center">
-                                    <input type="file" class="form-control" name="license_upload" id="license_upload" onchange="readURL(this,'license'); src='' ">
+                                    <input type="file" class="form-control" name="license_upload" id="license_upload" onchange="readURL(this,'license'); src='' " required>
                                 </div>
                             </div>
                             <br><div class="row">
@@ -322,7 +322,7 @@
                                     <h4>หลักฐานการโอนเงิน </a></h4>
                                 </div>
                                 <div class="col-5 text-center">
-                                    <input type="file" class="form-control" name="transaction_upload" id="transaction_upload" onchange="readURL(this,'transaction'); src='' ">
+                                    <input type="file" class="form-control" name="transaction_upload" id="transaction_upload" onchange="readURL(this,'transaction'); src='' " required>
                                 </div>
                             </div>
                             <br><div class="row">

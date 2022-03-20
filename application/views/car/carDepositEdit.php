@@ -104,15 +104,15 @@
                                 <div class="col-4">
                                     <h4 >ทะเบียนรถยนต์ <a style="color: red;"> *</a></h4>
                                 </div>  : &ensp;
-                                <input type="text" style="width: 250px; text-align: center;" class="form-control" name="car_registration" id="car_registration" value="<?php echo $val->car_registration; ?>">
+                                <input type="text" style="width: 250px; text-align: center;" class="form-control" name="car_registration" id="car_registration" value="<?php echo $val->car_registration; ?>" required>
                             </div>
                             <br>
                             <div class="row">
                                 <div class="col-4">
                                     <h4 >ยี่ห้อรถยนต์ <a style="color: red;"> *</a></h4>
                                 </div>  : &ensp;
-                                <select style="width: 250px;" id="car_brand_id" class="form-control form-control-line" name="car_brand_id">
-                                    <option disabled>เลือกยี่ห้อรถยนต์</option>
+                                <select style="width: 250px;" id="car_brand_id" class="form-control form-control-line" name="car_brand_id" required>
+                                    <option disabled value="">เลือกยี่ห้อรถยนต์</option>
                                     <?php
                                     if (isset($brand)) {
                                         foreach ($brand as $key => $val_brand) {
@@ -132,8 +132,8 @@
                                     <h4 >รุ่นรถยนต์ <a style="color: red;"> *</a></h4>
                                 </div>  : &ensp;
                                 <input type="hidden" id="model_id" value="<?php echo $val->car_model_id; ?>"/>
-                                <select style="width: 250px;" id="car_model_id" class="form-control form-control-line" name="car_model_id">
-                                    <option disabled selected>เลือกรุ่นรถยนต์</option>
+                                <select style="width: 250px;" id="car_model_id" class="form-control form-control-line" name="car_model_id" required>
+                                    <option disabled selected value="">เลือกรุ่นรถยนต์</option>
                                 </select>
                             </div>
                             <br>
@@ -141,7 +141,7 @@
                                 <div class="col-4">
                                     <h4 >ราคาต่อวัน <a style="color: red;"> *</a></h4>
                                 </div>  : &ensp;
-                                <input type="text" style="width: 250px; text-align: right;" class="form-control" name="car_price" id="car_price" value="<?php echo $val->car_price; ?>" />
+                                <input type="text" style="width: 250px; text-align: right;" class="form-control" name="car_price" id="car_price" value="<?php echo $val->car_price; ?>" required/>
                                 <h5 style="margin-top:10px;">&ensp; บาท/วัน</h5>
                             </div>
                             <br>
