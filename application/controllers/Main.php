@@ -1,6 +1,17 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
+/**
+ * CRS System
+ *
+ * @see       https://github.com/ryurewsss/RCS The Car Rental System project
+ * 
+ * @author    Sirapop Koonsinchai (ryurewsss) <rewsirapop@gmail.com>
+ * @author    Tiwa Singhaphaisarn (Bryantz) <61160059@go.buu.ac.th>
+ * 
+ * @copyright 2022 Final Project
+ * 
+ * @license   SOFTWARE ENGINEERING FACULTY OF INFORMATICS, BURAPHA UNIVERSITY
+ */
 class Main extends CI_Controller
 {
         public function index()
@@ -24,24 +35,6 @@ class Main extends CI_Controller
                 if ($getData['pathView'] != "getData") {
                         $json['html'] = $this->load->view($getData['pathView'], $data, TRUE);
                 }
-                $this->output->set_content_type('application/json')->set_output(json_encode($json));
-        }
-
-        public function getChart()
-        {
-                $getData = $this->input->post();
-                $record = $this->crsModel->getAll($getData['tableName'], $getData['colName'], $getData['where'], $getData['order'], $getData['arrayJoinTable'], $getData['groupBy']);
-                $json['table'] = $record;
-                $data = [];
-
-                foreach ($record as $row) {
-                        $data['month'][] = $row->month;
-                        $data['incomes'][] = $row->incomes;
-                        $data['expends'][] = abs($row->expends);
-                }
-                $data['chart_data'] = json_encode($data);
-
-                $json['html'] = $this->load->view($getData['pathView'], $data, TRUE);
                 $this->output->set_content_type('application/json')->set_output(json_encode($json));
         }
 

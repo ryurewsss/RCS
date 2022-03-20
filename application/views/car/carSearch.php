@@ -16,7 +16,7 @@
         display: block;
         margin-left: auto;
         margin-right: auto;
-        max-width: 500px;
+        max-width: 415px;
         max-height: auto;
     }
 
@@ -45,74 +45,83 @@
     <!-- <button id="test"> API </button> -->
     <div class="card-body">
         <div class="row">
-            <div class="col-1">
-                <label>ยี่ห้อรถยนต์ <a style="color: red;"> *</a></label>
-            </div>  : &ensp;
-            <select style="width: 250px;" id="car_brand_id" class="form-control form-control-line" name="inputData[]">
-                <option selected value="*">เลือกทั้งหมด</option>
-                <?php
-                if (isset($car_brand)) {
-                    foreach ($car_brand as $key => $val) {
-                        echo "<option value=" . $val->car_brand_id . ">" . $val->car_brand_name_en . "</option>";
-                    }
-                }
+            <div class="col-xs-12 col-md-6 col-sm-6">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label>ยี่ห้อรถยนต์ <a style="color: red;"> *</a></label>
+                    </div>  : &ensp;
+                    <select style="width: 250px;" id="car_brand_id" class="form-control form-control-line" name="inputData[]">
+                        <option selected value="*">เลือกทั้งหมด</option>
+                        <?php
+                        if (isset($car_brand)) {
+                            foreach ($car_brand as $key => $val) {
+                                echo "<option value=" . $val->car_brand_id . ">" . $val->car_brand_name_en . "</option>";
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label>รุ่นรถยนต์<a style="color: red;"> *</a></label>
+                    </div>  : &ensp;
+                    <select style="width: 250px;" id="car_model_id" class="form-control form-control-line" name="inputData[]">
+                        <option selected value="*">เลือกทั้งหมด</option>
+                        <?php
+                        if (isset($select)) {
+                            foreach ($select as $key => $val) {
+                                echo "<option value=" . $val->car_model_id . ">" . $val->car_model_name . "</option>";
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label>ประเภท <a style="color: red;"> *</a></label>
+                    </div>  : &ensp;
+                    <select style="width: 250px;" id="car_status" class="form-control form-control-line" name="inputData[]">
+                        <option selected value="*">เลือกทั้งหมด</option>
+                        <option value="1">รถของบริษัท RCS</option>
+                        <option value="10">รถฝากเช่า</option>
+                    </select>
+                </div>
+                <br>
+
+                <?php 
+                    $price_array =  array(
+                        "0-1000",
+                        "1001-2000",
+                        "2001-3000",
+                        "3001-4000",
+                        "4001-5000",
+                        "5000-10000",
+                    );
                 ?>
-            </select>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label>ช่วงราคา <a style="color: red;"> *</a></label>
+                    </div>  : &ensp;
+                    <select style="width: 250px;" id="price_range" class="form-control form-control-line" name="inputData[]">
+                        <option selected value="*">เลือกทั้งหมด</option>
+                        <?php
+                        foreach ($price_array as $key => $val) {
+                            echo "<option value=" . $val . ">" . $val . "</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <br>
+                <button type="button" class="btn btn-primary" id="search_btn">ค้นหารถเช่า</button> &ensp;
+                <button type="button" class="btn btn-success" id="reset_btn">รีเซท</button> &ensp;
+            </div>
+            <div class="col-xs-12 col-md-6 col-sm-6">
+                <img id="car_main" src="<?= base_url() ?>assets/img/by_my_car.svg" />
+            </div>
         </div>
-        <br>
-        <div class="row">
-            <div class="col-1">
-                <label>รุ่นรถยนต์<a style="color: red;"> *</a></label>
-            </div>  : &ensp;
-            <select style="width: 250px;" id="car_model_id" class="form-control form-control-line" name="inputData[]">
-                <option selected value="*">เลือกทั้งหมด</option>
-                <?php
-                if (isset($select)) {
-                    foreach ($select as $key => $val) {
-                        echo "<option value=" . $val->car_model_id . ">" . $val->car_model_name . "</option>";
-                    }
-                }
-                ?>
-            </select>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-1">
-                <label>ประเภท <a style="color: red;"> *</a></label>
-            </div>  : &ensp;
-            <select style="width: 250px;" id="car_status" class="form-control form-control-line" name="inputData[]">
-                <option selected value="*">เลือกทั้งหมด</option>
-                <option value="1">รถของบริษัท RCS</option>
-                <option value="10">รถฝากเช่า</option>
-            </select>
-        </div>
-        <br>
-<?php 
-    $price_array =  array(
-        "0-1000",
-        "1001-2000",
-        "2001-3000",
-        "3001-4000",
-        "4001-5000",
-        "5000-10000",
-    );
-?>
-        <div class="row">
-            <div class="col-1">
-                <label>ช่วงราคา <a style="color: red;"> *</a></label>
-            </div>  : &ensp;
-            <select style="width: 250px;" id="price_range" class="form-control form-control-line" name="inputData[]">
-                <option selected value="*">เลือกทั้งหมด</option>
-                <?php
-                foreach ($price_array as $key => $val) {
-                    echo "<option value=" . $val . ">" . $val . "</option>";
-                }
-                ?>
-            </select>
-        </div>
-        <br>
-        <button type="button" class="btn btn-primary" id="search_btn">ค้นหารถเช่า</button> &ensp;
-        <button type="button" class="btn btn-success" id="reset_btn">รีเซท</button> &ensp;
+
         <br><hr class="rounded">
         <div id="carTable"></div>
         

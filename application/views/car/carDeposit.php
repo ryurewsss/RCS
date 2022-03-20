@@ -159,6 +159,10 @@
                             </div>
                             <br>
                         </div>
+                        <div class="col-xs-12 col-sm-5" style="user-select: auto;">
+                            <br><br>
+                            <img id="car_main" src="<?= base_url() ?>assets/img/undraw_co-working_re_w93t.svg" />
+                        </div>
                     </div>
                 </div>
             </div>
