@@ -271,12 +271,10 @@
     </div>
 </div>
 <script>
-    
 
 $("#car_brand_id").on('change', function(event) {
     getModel()
 })
-
 
 $('#addCarDepositForm').on('submit', function(event) {
     event.preventDefault(); //ใช้หยุดการเกิดเหตุการณ์ที่เป็นของ browser
