@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2022 at 07:10 AM
+-- Generation Time: Mar 21, 2022 at 08:19 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -55,8 +55,7 @@ INSERT INTO `crs_car` (`car_id`, `car_registration`, `car_model_id`, `car_owner_
 (32, 'รด 9412 สมุทรปราการ', 21, 1, 2000, '1', 'vios20191.jpg', 'vios20191.jpg', NULL, '2022-02-20 16:06:57', '2022-03-04 20:37:17', 1, 1),
 (33, 'คฟ 7456 ชลบุรี', 22, 1, 1800, '1', 'TOYOTA_SIENTA_2020.jpg', 'TOYOTA_SIENTA_2020.jpg', NULL, '2022-02-20 16:11:05', '2022-03-04 20:37:18', 1, 1),
 (34, 'กอ 1254 กรุงเทพมหานคร', 23, 1, 2800, '1', 'HONDA_MOBILIO_2019_RS.jpg', 'HONDA_MOBILIO_2019_RS.jpg', NULL, '2022-02-20 16:12:25', '2022-03-04 20:37:23', 1, 1),
-(35, 'รย 5412 ชลบุรี', 24, 1, 2500, '1', 'mazda31.jpg', 'mazda31.jpg', NULL, '2022-02-20 16:16:29', '2022-03-04 20:37:26', 1, 1),
-(58, '12 กกยน ชลบุรี', 20, 3, 1500, '9', '1gz2q23.jpg', '300px-Scared_Hamster.jpg', '', '2022-03-15 22:47:04', '2022-03-16 11:26:30', 3, 3);
+(35, 'รย 5412 ชลบุรี', 24, 1, 2500, '1', 'mazda31.jpg', 'mazda31.jpg', NULL, '2022-02-20 16:16:29', '2022-03-04 20:37:26', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -141,7 +140,7 @@ CREATE TABLE `crs_place` (
 
 INSERT INTO `crs_place` (`place_id`, `place_name`, `place_address`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
 (1, 'สนามบินสุวรรณภูมิ', 'shorturl.at/ghvL0', '2022-01-13 19:04:27', '2022-01-13 19:05:39', 1, 1),
-(2, 'สนามบินเชียงใหม่', 'shorturl.at/biF28', '2022-01-13 19:07:26', '2022-01-13 19:07:26', 1, 1);
+(2, 'สนามบินเชียงใหม่', 'shorturl.at/bsEX8', '2022-01-13 19:07:26', '2022-03-21 12:31:00', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -180,10 +179,8 @@ CREATE TABLE `crs_transaction` (
 --
 
 INSERT INTO `crs_transaction` (`transaction_id`, `car_id`, `user_lessor_id`, `user_rental_id`, `user_depositor_id`, `user_doc_id`, `place_id`, `transaction_receive_date`, `transaction_return_date`, `transaction_status`, `transaction_price`, `transaction_lessor_approve`, `transaction_rental_approve`, `transaction_depositor_approve`, `transaction_image`, `transaction_iden_approve`, `transaction_transfer_approve`, `transaction_reject_iden`, `transaction_reject_transfer`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
-(1, 35, 1, 3, 0, 14, 2, '2022-03-08 06:00:00', '2022-03-10 06:00:00', '6', 5000, '1', '1', '', 'tran_img.PNG', '1', '1', '', '', '2022-03-05 19:53:30', '2022-03-15 22:37:56', 3, 3),
-(2, 35, 1, 3, 0, 14, 2, '2022-03-15 06:00:00', '2022-03-16 06:00:00', '5', 2500, '1', '1', '', 'tran_img2.PNG', '1', '1', '', '', '2022-03-05 20:05:16', '2022-03-05 21:55:31', 3, 3),
-(3, 34, 1, 3, 0, 14, 2, '2022-03-09 06:00:00', '2022-03-10 06:00:00', '5', 2800, '1', '1', '', 'tran_img3.PNG', '1', '1', '', '', '2022-03-06 10:36:06', '2022-03-06 10:47:55', 3, 3),
-(9, 58, 1, 0, 3, 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '9', 0, '', '', '', '', '', '', '', '', '2022-03-15 22:47:37', '2022-03-15 23:09:41', 0, 0);
+(1, 35, 1, 3, 0, 14, 2, '2022-03-22 06:00:00', '2022-03-23 06:00:00', '5', 2500, '1', '1', '', 'tran_img4.PNG', '1', '1', 'หน้าหนู', 'ห๊ะ', '2022-03-17 16:49:37', '2022-03-19 16:40:57', 3, 3),
+(8, 62, 1, 4, 3, 16, 2, '2022-03-15 06:00:00', '2022-03-19 16:43:00', '4', 999, '1', '1', '', 'tran_img11.PNG', '1', '1', '', 'กาก', '2022-03-19 15:39:17', '2022-03-19 16:42:07', 4, 4);
 
 -- --------------------------------------------------------
 
@@ -217,18 +214,6 @@ CREATE TABLE `crs_transaction_temp` (
   `transaction_image` varchar(100) NOT NULL,
   `create_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `crs_transaction_temp`
---
-
-INSERT INTO `crs_transaction_temp` (`transaction_temp_id`, `transaction_id`, `transaction_depositor_token`, `transaction_lessor_token`, `transaction_rental_token`, `transaction_depositor_approve`, `transaction_rental_approve`, `transaction_lessor_approve`, `car_id`, `user_rental_id`, `user_lessor_id`, `user_depositor_id`, `user_doc_id`, `place_id`, `transaction_iden_approve`, `transaction_transfer_approve`, `transaction_reject_iden`, `transaction_reject_transfer`, `transaction_receive_date`, `transaction_return_date`, `transaction_status`, `transaction_price`, `transaction_image`, `create_date`) VALUES
-(43, 0, '6230b5d0736cc', '6230b5d0736c6', '6230b5d0736cb', '0', NULL, '0', 58, 0, 0, 3, 0, 0, '', '', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '12', 0, '', '2022-03-15 15:50:40'),
-(47, 9, '6230bb6135766', '6230bb6135762', '6230bb6135765', '0', NULL, '0', 58, 0, 1, 3, 0, 0, '', '', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '9', 0, '', '2022-03-15 16:14:25'),
-(48, 9, '6230bb85b8e07', '6230bb85b8e04', '6230bb85b8e06', '0', NULL, '0', 58, 0, 1, 3, 0, 0, '', '', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '9', 0, '', '2022-03-15 16:15:01'),
-(49, 0, '62316d9fa71a5', '62316d9fa71a0', '62316d9fa71a4', NULL, '0', '0', 35, 3, 0, 0, 14, 2, '', '', '', '', '2022-03-20 06:00:00', '2022-03-21 06:00:00', '1', 2500, 'tran_img6.PNG', '2022-03-16 04:54:55'),
-(50, 0, '62316e756cb20', '62316e756cb1d', '62316e756cb1f', NULL, '0', '0', 35, 3, 0, 0, 14, 2, '', '', '', '', '2022-03-19 06:00:00', '2022-03-20 06:00:00', '1', 2500, 'tran_img7.PNG', '2022-03-16 04:58:29'),
-(51, 0, '62316f6508547', '62316f6508543', '62316f6508546', NULL, '0', '0', 35, 3, 0, 0, 14, 2, '', '', '', '', '2022-03-18 06:00:00', '2022-03-20 06:00:00', '1', 5000, 'tran_img8.PNG', '2022-03-16 05:02:29');
 
 -- --------------------------------------------------------
 
@@ -268,8 +253,9 @@ CREATE TABLE `crs_user` (
 
 INSERT INTO `crs_user` (`user_id`, `user_type_id`, `user_email`, `user_password`, `user_fname`, `user_lname`, `user_phone`, `user_image`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
 (1, 1, 'rewsirapop@gmail.com', '$2y$10$Rl73nMUKaOFGoE9k7vpEtOYL21FJpMmeLUsWT49eciWDzy99rFrUe', 'Sirapop', 'Koonsinchai', '0809425365', '5ebbaa1dedc5d_thumb900.jpg', '2022-01-06 11:23:14', '2022-03-15 22:35:20', 1, 1),
-(2, 3, 'tiwaza13@gmail.com', '$2y$10$A1F5iYn39ogCH/Kyi3oTjOYbMpTggw5X1ETsz8joyOwHG.wXGAw7O', 'Tiwa', 'Singsong', '0817711410', NULL, '2022-01-26 14:31:17', '2022-03-15 16:06:05', 0, 0),
-(3, 3, '61160076@go.buu.ac.th', '$2y$10$HIQDSNUqsB/IazU0rPITieDkhJsOaIgcVM3FTzECTN.FwN1qPwWHG', 'Sirapop', 'Koonsin', '0809425365', '300px-Scared_Hamster.jpg', '2022-01-31 16:26:40', '2022-03-15 16:18:56', 0, 3);
+(2, 3, 'tiwaza13@gmail.com', '$2y$10$A1F5iYn39ogCH/Kyi3oTjOYbMpTggw5X1ETsz8joyOwHG.wXGAw7O', 'Tiwa', 'Singsong', '0817711410', NULL, '2022-01-26 14:31:17', '2022-03-17 17:21:42', 0, 0),
+(3, 3, '61160076@go.buu.ac.th', '$2y$10$HIQDSNUqsB/IazU0rPITieDkhJsOaIgcVM3FTzECTN.FwN1qPwWHG', 'Sirapop', 'Koonsin', '0809425365', '300px-Scared_Hamster.jpg', '2022-01-31 16:26:40', '2022-03-15 16:18:56', 0, 3),
+(4, 2, 'ryu_sirapop@hotmail.com', '$2y$10$EovsuoeJNFC8tn/IIIAhOuoGzgyaheEakKSsOkcBqwgCHvpO7vU2G', 'คูณสินชัย', 'สิรภพ', '0819974412', NULL, '2022-03-18 14:03:52', '2022-03-20 18:00:33', 0, 4);
 
 -- --------------------------------------------------------
 
@@ -293,8 +279,9 @@ CREATE TABLE `crs_user_doc` (
 --
 
 INSERT INTO `crs_user_doc` (`user_doc_id`, `user_id`, `user_doc_iden_image`, `user_doc_license_image`, `create_date`, `update_date`, `user_create_id`, `user_update_id`) VALUES
-(14, 3, 'id_card.PNG', 'driving_img.PNG', '2022-02-14 11:51:39', '2022-03-05 19:45:53', 3, 3),
-(15, 1, 'id_card1.PNG', 'driving_img1.PNG', '2022-02-25 17:39:56', '2022-03-04 00:47:41', 1, 1);
+(14, 3, 'driving_img.PNG', 'id_card.PNG', '2022-02-14 11:51:39', '2022-03-17 17:00:15', 3, 3),
+(15, 1, 'id_card1.PNG', 'driving_img1.PNG', '2022-02-25 17:39:56', '2022-03-04 00:47:41', 1, 1),
+(16, 4, 'id_card2.PNG', 'driving_img2.PNG', '2022-03-18 15:53:50', '2022-03-18 15:53:50', 4, 4);
 
 -- --------------------------------------------------------
 
@@ -395,7 +382,7 @@ ALTER TABLE `crs_user_type`
 -- AUTO_INCREMENT for table `crs_car`
 --
 ALTER TABLE `crs_car`
-  MODIFY `car_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `car_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `crs_car_brand`
@@ -419,25 +406,25 @@ ALTER TABLE `crs_place`
 -- AUTO_INCREMENT for table `crs_transaction`
 --
 ALTER TABLE `crs_transaction`
-  MODIFY `transaction_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `transaction_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `crs_transaction_temp`
 --
 ALTER TABLE `crs_transaction_temp`
-  MODIFY `transaction_temp_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `transaction_temp_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `crs_user`
 --
 ALTER TABLE `crs_user`
-  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `crs_user_doc`
 --
 ALTER TABLE `crs_user_doc`
-  MODIFY `user_doc_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `user_doc_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `crs_user_type`
