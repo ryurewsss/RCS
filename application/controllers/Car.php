@@ -1083,7 +1083,7 @@ class Car extends Main
 			$filenameCar = $data['file_name'];
 		}
 
-		if($_SESSION['type'] = 2){
+		if($_SESSION['type'] == 2){
 			$arrayData = array(
 				'user_type_id' => 3,
 				'user_update_id' => $_SESSION['id']

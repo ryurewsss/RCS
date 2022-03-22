@@ -16,7 +16,7 @@
             <?php
             if (isset($table) && $table) {
                 // var_dump($table);
-                $i = 1 //กำหนดลำดับ 
+                $i = 1; //กำหนดลำดับ
             ?>
                 <?php foreach ($table as $key => $val) { ?>
                     <tr class="text-center">

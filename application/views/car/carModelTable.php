@@ -173,7 +173,7 @@
                                 <label >คุณสมบัติรถยนต์ <a style="color: red;"> *</a></label>
                             </div>  : &ensp;
                             <div class="form-inline">
-                                <input style="width: 250px;" type="text" class="form-control" name="feature[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์" required> &ensp;               
+                                <input style="width: 250px;" type="text" class="form-control" name="feature[]" id="car_model_feature" autocomplete="off" placeholder="คุณสมบัติรถยนต์" > &ensp;               
                                 <button type="button" class="add_button btn waves-effect waves-light btn-success" title="Add field">+</button>                                
                             </div>
                         </div>
