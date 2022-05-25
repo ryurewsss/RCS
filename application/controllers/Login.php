@@ -24,66 +24,41 @@ class Login extends Main
 
 	public function checkUsername()
 	{
-		$arrayData = array(
-			'tableName' => 'rmap_user',
-			'colName' => '',
-			'where' => 'user_username = "'.$this->input->post('user_username').'"',
-			'order' => '',
-			'arrayJoinTable' => '',
-			'groupBy' => ''
-		);
-
-		$data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
-
-		$this->output->set_content_type('application/json')->set_output(json_encode($data['table']));
-	}
-
-	public function checkEmail()
-	{
-		$arrayData = array(
-			'tableName' => 'rmap_user',
-			'colName' => '',
-			'where' => 'user_email = "'.$this->input->post('user_email').'"',
-			'order' => '',
-			'arrayJoinTable' => '',
-			'groupBy' => ''
-		);
-
-		$data['table'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
-
-		$this->output->set_content_type('application/json')->set_output(json_encode($data['table']));
+		$getData = $this->input->post();
+		$returnData = $this->crsModel->getAll($getData['tableName'], '', array($getData['columnName'] => $getData['user_email']));
+		$this->output->set_content_type('application/json')->set_output(json_encode($returnData));
 	}
 
 	public function addUser()
 	{
-		$arrayData = $this->input->post();
-		// $arrayData['user_password'] = password_hash($arrayData['user_password'], PASSWORD_DEFAULT);
-		$arrayData['user_password'] = md5($arrayData['user_password']);
+		$getData = $this->input->post();
+		$arrayData = $getData['arrayData'];
+		$arrayData['user_type_id'] = 2;
+		$arrayData['user_password'] = password_hash($arrayData['user_password'], PASSWORD_DEFAULT);
 
-		$result = "";
-		$generator = "1526380947";
-		for ($i = 1; $i <= 6; $i++) {
-			$result .= substr($generator, (rand() % (strlen($generator))), 1);
-		}//get verification code
-		$arrayData['user_verification_code'] = $result;
-
-		$this->output->set_content_type('application/json')->set_output(json_encode($this->crsModel->add('rmap_user', $arrayData)));
+		$this->crsModel->add('crs_user', $arrayData);
 	}
 
 	public function login()
 	{
 		$getData = $this->input->post();
-		$json['username'] = $getData['user_username'];
+		$json['email'] = $getData['user_email'];
 		$json['password'] = $getData['user_password'];
 
-		$result = $this->crsModel->getAll('rmap_user', '', array('user_username' => $json['username']));
-		
+		$result = $this->crsModel->getAll('crs_user', '*', array('user_email' => $json['email']));
+		// 'user_delete_status' => 'active'
+		// echo $result;
+		// die();
 		if ($result) {
 			if ($result[0]->user_password) {
-				if(md5($json['password']) == $result[0]->user_password){
+				if (password_verify($json['password'], $result[0]->user_password)) {
+					$_SESSION['name'] = $result[0]->user_fname . ' ' . $result[0]->user_lname;
 					$_SESSION['id'] = $result[0]->user_id;
+					$_SESSION['type'] = $result[0]->user_type_id;
+					$_SESSION['user_img'] = $result[0]->user_image;
+					// $_SESSION['username'] = $result->row()->username;
 					$json['login'] = 'True';
-				}else {
+				} else {
 					$json['login'] = 'False';
 				} //wrong password
 			}
@@ -98,25 +73,5 @@ class Login extends Main
 	{
 		session_destroy();
 		redirect(base_url());
-	}
-
-	public function sendEmail()
-	{
-		$arrayData = array(
-			'tableName' => 'rmap_user',
-			'colName' => '
-				user_email,
-				user_username,
-				user_verification_code',
-			'where' => 'user_id = '. $this->input->post("tran_id"),
-			'order' => '',
-			'arrayJoinTable' => '',
-			'groupBy' => ''
-		);
-		$data['select'] = $this->crsModel->getAll($arrayData['tableName'], $arrayData['colName'], $arrayData['where'], $arrayData['order'], $arrayData['arrayJoinTable'], $arrayData['groupBy']);
-
-		$data['user_type'] = $this->input->post("user_type");
-		$arrayData = array('pathView' => 'phpMailer/sendEmail');
-		$this->load->view($arrayData['pathView'], $data, TRUE);
 	}
 }
